@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext, useEffect, useMemo, useCallback } from 'react';
+import React, { useRef, useState, useContext, useEffect, useMemo, useCallback } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Pressable, Image, StatusBar, ActivityIndicator, DrawerLayoutAndroid, Dimensions } from 'react-native';
 import { TextInput, Button, IconButton, MD3Colors, Icon, Appbar } from 'react-native-paper';
 import { DataContext } from '../context/contextData.tsx';

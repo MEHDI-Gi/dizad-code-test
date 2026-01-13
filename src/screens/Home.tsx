@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';                                                                                                                                                                                                                                                                                                             
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import { Text, ProgressBarAndroidBase, View, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView, Pressable, Image, StatusBar, DrawerLayoutAndroid, ProgressBarAndroid } from 'react-native';
 import { TextInput, Button, IconButton, MD3Colors, Avatar, Icon, Appbar, } from 'react-native-paper';
 import { DataContext } from '../context/contextData.tsx';
@@ -33,7 +33,7 @@ const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Home() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const { screen } = useSize()
+    const { screen, lessons } = useSize()
     const { user, initializing } = useGoogleSignIn();
 
 
@@ -77,9 +77,9 @@ export default function Home() {
 
     // `${imageBase}/cover/${item.cover}.png`
     const contentItems = [
-        { cond: 'Qst', label: 'أسئلة', img: questCover ?? null, sub: QUESTIONS_CURRENT_LABEL ?? "undefined", },
         { cond: 'Sgn', label: 'إشارات', img: signsCover ?? null, sub: "undefined", },
         { cond: 'Pri', label: 'أولوية', img: priorityCover ?? null, sub: '', },
+        { cond: 'Qst', label: 'أسئلة', img: questCover ?? null, sub: QUESTIONS_CURRENT_LABEL ?? "undefined", },
         { cond: 'Exm', label: "إمتحان", img: examsCover ?? null, sub: "undefined", },
     ]
     const youtubeChanels = [
@@ -101,7 +101,7 @@ export default function Home() {
     //         </View>
     //     )
     // }
-    
+
     return (
         <View style={[styles.container, {
             width: screen.width,
@@ -283,9 +283,9 @@ export default function Home() {
                 <View style={{
                     alignItems: 'center',
                     justifyContent: 'space-evenly',
-
+                    backgroundColor: 'transparent',
                     flexDirection: 'row',
-                    width: '95%',
+                    width: '90%',
                     flex: 1,
                     flexWrap: 'wrap',
                     gap: 10,
@@ -294,6 +294,7 @@ export default function Home() {
                     {contentItems.map((item: any, index: number) => {
                         const QUESTIONS_CONTENT = lessonsData?.content?.questions?.content || [];
                         const QUESTIONS_CONTENT_LENGTH = QUESTIONS_CONTENT.length;
+                        const totalSigns = Object.keys(lessonsData?.content?.signs?.content?.[index]?.items || {}).length;
 
                         if (!QUESTIONS_CURRENT_LABEL) return (
                             <ShimmerPlaceHolder
@@ -315,126 +316,114 @@ export default function Home() {
                                 onPress={() => { }}
                                 key={`key-${index}`}
                                 style={[{
-                                    alignItems: 'flex-start',
+                                    alignItems: 'center',
                                     backgroundColor: colors.secondary,
                                     width: '100%',
                                     borderRadius: 8,
-                                    flexDirection: 'row-reverse',
-                                    justifyContent: 'space-evenly',
-                                    paddingHorizontal: 20,
-                                    paddingVertical: 10,
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
                                     overflow: 'hidden',
-                                    elevation: 5,
+                                    elevation: 2,
                                 },
                                 item.cond === 'Qst' &&
                                 {
-                                    height: screen.width * 0.25,
+                                    height: screen.width * 0.35,
 
                                 },
                                 item.cond === 'Exm' &&
                                 {
-                                    borderTopRightRadius: 0,
-                                    borderBottomRightRadius: 0,
-                                    borderRightWidth: 4,
-                                    borderRightColor: 'orange',
-                                    height: screen.width * 0.25,
-
+                                    height: screen.width * 0.35,
                                 },
 
                                 item.cond === 'Sgn' && {
-                                    height: screen.width * 0.35,
+                                    height: screen.width * 0.45,
                                     width: screen.width * 0.35,
 
                                 },
                                 item.cond === 'Pri' && {
-                                    height: screen.width * 0.35,
+                                    height: screen.width * 0.45,
                                     flex: 1
                                 }
 
-                                ]}>
+                                ]}
+                            >
 
-                                {false && <View style={{
-                                    position: 'absolute',
-                                    bottom: 0,
-                                    left: 0,
-                                    right: 0,
-                                    top: 0,
-                                    backgroundColor: 'black',
-                                    opacity: 0.7,
-                                    zIndex: 1
-                                }} />}
-                               
-                                {false &&
-                                    <View style={{
-                                        position: 'absolute',
-                                        top: 0,
-                                        bottom: 0,
-                                        right: 0,
-                                        left: 0,
+                                <View
+                                    style={[{
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        opacity: 1,
-                                        padding: 0
+                                        width: "100%",
+                                        height: "100%",
+                                        overflow: 'hidden',
+                                        flex: 1,
+                                    }]}>
 
-                                    }}>
-
+                                    {item?.img ?
                                         <Image
-                                            source={{ uri: item?.img }}
                                             style={{
-                                                width: "100%",
-                                                height: "100%",
-                                                opacity: 1,
+                                                width: '100%',
+                                                height: '100%',
+                                                borderRadius: 0,
 
-                                            }} />
+                                            }}
+                                            source={{ uri: item?.img }}
+                                        />
+                                        :
+
+                                        <ShimmerPlaceHolder
+                                            style={{ width: "100%", height: "100%", }}
+                                            shimmerColors={[colors.secondary, '#6161617c', colors.secondary]}
+                                        />
+                                    }
+
+
+                                </View>
+                                <View
+                                    style={[{
+                                        alignItems: 'flex-end',
+                                        justifyContent: 'center',
+                                        backgroundColor: 'transparent',
+                                        width: '100%',
+                                        paddingHorizontal: 10,
+                                        paddingVertical: 10,
+
+
+                                    }]}>
+                                    <View style={{
+                                        position: 'absolute',
+                                        left: 0,
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        zIndex: 2,
+                                        padding: 15,
+                                    }}>
+                                        <MaterialCommunityIcons
+                                            name='arrow-left'
+                                            color={colors.text.secondary}
+                                            size={20}
+                                        />
+
                                     </View>
-                                }
-                                <View style={{
-                                    flexDirection: 'column',
-                                    alignItems: 'flex-end',
-                                    justifyContent: 'center',
-                                    flex: 1,
-                                    rowGap: 5,
-                                    zIndex: 2,
-
-                                }}>
-                                    <Text style={{
-                                        fontFamily: 'Cairo-Bold',
-                                        color: colors.text.primary,
-                                        fontSize: 16,
-                                        textAlign: 'center'
-                                    }}>
+                                    <Text style={{ fontFamily: "Cairo-Bold", color: colors.text.primary, fontSize: 16, }}>
                                         {item.label}
+                                        {/* {Object.keys(SignsContentInfo[index + 1].label)} */}
                                     </Text>
                                     <Text style={{
-                                        fontFamily: 'Cairo',
-                                        color: colors.text.primary,
-                                        fontSize: 15,
-                                        textAlign: 'right'
+                                        fontFamily: "Cairo",
+
+                                        color: colors.text.secondary,
+                                        fontSize: 12,
+                                        flexDirection: 'row',
+
                                     }}>
-                                        {item.sub}
+                                        {totalSigns} إشــــارة
                                     </Text>
-
                                 </View>
-                                <View style={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    left: 0,
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    padding: 10,
-                                    zIndex: 2,
-                                    opacity: 0.5
 
-                                }}>
-                                    <MaterialCommunityIcons
-                                        name='arrow-left'
-                                        color={colors.text.primary}
-                                        size={20}
-                                    />
 
-                                </View>
                             </Pressable>
+
                         )
                     })}
 
@@ -467,7 +456,8 @@ export default function Home() {
                         height: 0.5
 
                     }} />
-                </View>
+                </View> 
+                
                 <View style={{
                     alignItems: 'center',
                     justifyContent: 'space-evenly',
@@ -532,26 +522,7 @@ export default function Home() {
 
                                 ]}>
 
-                                {/* <View style={{
-                                position: 'absolute',
-                                bottom: 0,                 // <- ADD THIS  
-                                left: 0,                   // <- ADD THIS
-                                right: 0,
-                                top: 0,
-                                backgroundColor: colors.opacity.images,
-                                opacity: 1,
-                                zIndex: 1
-                            }} /> */}
-                                {false && <Image
-                                    source={{ uri: item?.img }}
-                                    style={{
-                                        position: 'absolute',
-                                        top: 0,
-                                        bottom: 0,
-                                        right: 0,
-                                        left: 0,
-                                    }}
-                                />}
+                        
                                 <View style={{
                                     flexDirection: 'column',
                                     alignItems: 'flex-end',
@@ -603,7 +574,7 @@ export default function Home() {
                     })}
 
 
-                </View>
+                </View> 
 
             </ScrollView>
 

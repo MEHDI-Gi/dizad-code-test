@@ -505,7 +505,7 @@ const SignsItems = () => {
                         justifyContent: 'center',
                         width: 40,
                         height: 40,
-                        backgroundColor: colors.primary
+                        backgroundColor: colors.secondary
                       }}
                       onPress={() => { }}
                     >
@@ -522,7 +522,7 @@ const SignsItems = () => {
                         justifyContent: 'center',
                         width: 40,
                         height: 40,
-                        backgroundColor: colors.primary
+                        backgroundColor: colors.secondary
                       }}
                       onPress={() => handleBookmark('signs', {
                         id: item.id ?? `signs-${signsItemsIndex}-${index}`,

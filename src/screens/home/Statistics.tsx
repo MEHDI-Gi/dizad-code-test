@@ -13,7 +13,7 @@ export default function Statistics() {
     globFalseAns, isGradient, dataLength, speed,
     user,
     //  usersData,
-      userName, userImage,
+    userName, userImage,
     statisticsCard, setStatisticsCard,
 
   } = useContext(DataContext);
@@ -101,7 +101,7 @@ export default function Statistics() {
           style={[
             {
               flexDirection: "column",
-              justifyContent: 'space-between',
+              justifyContent: 'center',
               borderRadius: 8,
               width: '95%',
               height: '100%',
@@ -116,21 +116,13 @@ export default function Statistics() {
               overflow: 'hidden'
             }
           ]}>
-         
+
+          
           <View style={{
-            flexDirection: "column",
+            flexDirection: "row",
             justifyContent: 'center',
             width: '100%',
-            alignItems: "center",
-            flex: 1,
-          }}>
-
-          </View>
-          <View style={{
-            flexDirection: "row-reverse",
-            justifyContent: 'flex-start',
-            width: '100%',
-            alignItems: "center",
+            alignItems: "flex-end",
             paddingHorizontal: 15,
             flex: 1,
             gap: 10
@@ -140,7 +132,8 @@ export default function Statistics() {
               flexDirection: "row-reverse",
               justifyContent: 'center',
               alignItems: "center",
-              gap: 2
+              gap: 2,
+              flex: 1
             }}>
               <View
                 style={{
@@ -161,7 +154,9 @@ export default function Statistics() {
               flexDirection: "row-reverse",
               justifyContent: 'center',
               alignItems: "center",
-              gap: 2
+              gap: 2,
+              flex: 1
+
             }}>
               <View
                 style={{
@@ -183,7 +178,9 @@ export default function Statistics() {
               flexDirection: "row-reverse",
               justifyContent: 'center',
               alignItems: "center",
-              gap: 2
+              gap: 2,
+              flex: 1
+
             }}>
               <View
                 style={{
@@ -205,9 +202,10 @@ export default function Statistics() {
             flexDirection: "row",
             justifyContent: 'center',
             width: '100%',
-            alignItems: "center",
+            alignItems: "flex-end",
             flex: 1,
             paddingHorizontal: 15,
+            paddingVertical: 5,
 
           }}>
             <View style={{

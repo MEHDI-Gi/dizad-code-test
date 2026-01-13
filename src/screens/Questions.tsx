@@ -247,7 +247,7 @@ export default function Questions() {
                             elevation: 5,
                         }}>
                         <ShimmerPlaceHolder
-                            style={{ width: "100%", height: "100%",}}
+                            style={{ width: "100%", height: "100%", }}
                             shimmerColors={[colors.secondary, '#6161617c', colors.secondary]}
                         />
                     </View>
@@ -441,17 +441,19 @@ export default function Questions() {
                                         width: "100%",
                                         height: 70,
                                         paddingHorizontal: 10,
+                                        columnGap: 10,
                                         // backgroundColor: 'blue'
                                     }}>
                                         <Pressable
                                             android_ripple={{ color: colors.primary, borderless: false, foreground: true }}
                                             style={{
                                                 overflow: 'hidden',
-                                                borderRadius: 50,
+                                                borderRadius: 8,
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
-                                                width: 50,
-                                                height: 50,
+                                                width: 40,
+                                                height: 40,
+                                                backgroundColor: colors.secondary
                                             }}
                                             onPress={() => { }}
                                         >
@@ -463,11 +465,12 @@ export default function Questions() {
                                             android_ripple={{ color: colors.primary, borderless: false, foreground: true }}
                                             style={{
                                                 overflow: 'hidden',
-                                                borderRadius: 50,
+                                                borderRadius: 8,
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
-                                                width: 50,
-                                                height: 50,
+                                                width: 40,
+                                                height: 40,
+                                                backgroundColor: colors.secondary
                                             }}
                                             onPress={() => { }}
                                         >
