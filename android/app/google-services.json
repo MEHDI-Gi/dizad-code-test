@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "545139079478",
+    "firebase_url": "https://dizadcodetest-default-rtdb.firebaseio.com",
+    "project_id": "dizadcodetest",
+    "storage_bucket": "dizadcodetest.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545139079478:android:da302e103f828ce1099b97",
+        "android_client_info": {
+          "package_name": "com.dizadcodetest.edu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545139079478-b7or97en1sjhf2p1k8hq457m9q5pap85.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dizadcodetest.edu",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "545139079478-ate37f0pbau0mhkv5r356reh1pluljv2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWhoA1zdBRxVcpZl1tGUBwixVcQJhG_JE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545139079478-ate37f0pbau0mhkv5r356reh1pluljv2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "545139079478-ttdqp14oum88vu6ldru9s6mr4vcj183p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dizadcodetest.edu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

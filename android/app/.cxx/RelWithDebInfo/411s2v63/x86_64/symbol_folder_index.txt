@@ -1,0 +1,1 @@
+C:\Users\amatek\Desktop\apps_dev\DizadCodeTest\android\app\build\intermediates\cxx\RelWithDebInfo\411s2v63\obj\x86_64

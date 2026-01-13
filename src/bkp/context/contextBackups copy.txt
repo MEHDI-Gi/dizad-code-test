@@ -1,0 +1,806 @@
+19.10.25
+
+
+import React, { createContext, useRef, useState, useEffect } from 'react';
+import { AppState, Vibration, } from 'react-native';
+
+// import data from '../assets/data/Quiz.json';
+import { database } from './firebaseConfig';
+import { ref, onValue, set } from "firebase/database";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Audio } from 'expo-av';
+import { useGoogleSignIn } from '../context/auth';
+import Animated, {
+    useSharedValue,
+    withTiming,
+    useAnimatedStyle,
+    Easing,
+} from 'react-native-reanimated';
+const DataContext = createContext();
+
+const DataProvider = ({ children }) => {
+  const { user, request, promptAsync, initializing, logout } = useGoogleSignIn();
+
+
+const [ dataLevelIndex , setDataLevelIndex ] = useState(1);
+const [ quizData, setQuizData] = useState({});
+const [ usersData, setUsersData] = useState({});
+
+useEffect(() => {
+  const quizDataRef = ref(database, '/quiz');
+  const usersDataRef = ref(database, '/users');
+
+  const unsubscribeQuiz = onValue(quizDataRef, (snapshot) => {
+    const fetchedData = snapshot.val();
+    if (fetchedData) {
+      setQuizData(fetchedData);
+      console.log('Quiz data loaded');
+    } else {
+      console.log('No quiz data');
+    }
+  });
+
+  const unsubscribeUsers = onValue(usersDataRef, (snapshot) => {
+    const fetchedData = snapshot.val();
+    if (fetchedData) {
+      setUsersData(fetchedData);
+      console.log('Users data are loaded');
+    } else {
+      console.log('No users data');
+    }
+  });
+
+  // Set loading false once both listeners receive data, or implement your own logic
+  // Example: if you want to disable loading once quiz data is loaded:
+  // setLoading(false);
+
+  return () => {
+    unsubscribeQuiz();
+    unsubscribeUsers();
+  };
+}, []);
+useEffect(() => {
+  if (!user || !user.uid) return;
+
+  const userRef = ref(database, `users/${user.uid}`);
+
+  const unsubscribe = onValue(userRef, (snapshot) => {
+
+    const firebaseData = snapshot.val();
+    const creationTime = auth.currentUser?.metadata?.creationTime || new Date().toISOString();
+    if (firebaseData) {
+      // Update React states
+      setUserXp(firebaseData.UserXp ?? null);
+      setSpeed(firebaseData.Speed ?? 0);
+      setUserName(firebaseData.Username ?? '');
+      setUserImage(firebaseData.UserImage ?? null);
+      setLanguage(firebaseData.Language ?? 'arabic');
+      setGlobTrueAns(firebaseData.GlobTrueAns ?? 0);
+      setGlobFalseAns(firebaseData.GlobFalseAns ?? 0);
+      setIsGradient(firebaseData.Gradient ?? false);
+      setVibrate(firebaseData.Vibrate ?? true);
+      setSound(firebaseData.Sound ?? true);
+      setHelpPoint(firebaseData.HelpPoint ?? 0);
+      setLivesHeart(firebaseData.LivesHeart ?? 5);
+      setDataLevelIndex(firebaseData.DataLevelIndex ?? 1);
+      setQuestIndices(firebaseData.QuestIndices ?? { lv1:1, lv2:1, lv3:1 });
+      setAnswerStats(firebaseData.AnswerStats ?? { lv1:{correct:0,false:0}, lv2:{correct:0,false:0}, lv3:{correct:0,false:0} });
+
+      // Update AsyncStorage accordingly
+      AsyncStorage.multiSet([
+        ['Xp', JSON.stringify(firebaseData.UserXp ?? null)],
+        ['Speed', JSON.stringify(firebaseData.Speed ?? 0)],
+        ['Username', JSON.stringify(firebaseData.Username ?? '')],
+        ['UserImage', JSON.stringify(firebaseData.UserImage ?? null)],
+        ['Language', JSON.stringify(firebaseData.Language ?? 'arabic')],
+        ['GlobTrueAns', JSON.stringify(firebaseData.GlobTrueAns ?? 0)],
+        ['GlobFalseAns', JSON.stringify(firebaseData.GlobFalseAns ?? 0)],
+        ['Gradient', JSON.stringify(firebaseData.Gradient ?? false)],
+        ['Vibrate', JSON.stringify(firebaseData.Vibrate ?? true)],
+        ['Sound', JSON.stringify(firebaseData.Sound ?? true)],
+        ['HelpPoint', JSON.stringify(firebaseData.HelpPoint ?? 0)],
+        ['LivesHeart', JSON.stringify(firebaseData.LivesHeart ?? 5)],
+        ['DataLevelIndex', JSON.stringify(firebaseData.DataLevelIndex ?? 1)],
+        ['QuestIndices', JSON.stringify(firebaseData.QuestIndices ?? { lv1:1, lv2:1, lv3:1 })],
+        ['AnswerStats', JSON.stringify(firebaseData.AnswerStats ?? { lv1:{correct:0,false:0}, lv2:{correct:0,false:0}, lv3:{correct:0,false:0} })]
+      ]).catch(console.error);
+    }
+  });
+
+  return () => unsubscribe();
+}, [user]);
+
+
+  const dataArray = Object.values(quizData);
+  const dataLength = Object.keys(quizData).length;
+  const [ isPicAdd, setIsPicAdd ] = useState(false);
+  const [ userImage, setUserImage ] = useState(null);
+  const [ loading, setLoading ] = useState(true)
+  const [ isAccountDeleted, setIsAccountDeleted ] = React.useState(null)
+  const [ snackOptions , setSnackOptions ] = useState({label: '', icon: ''})
+  const [ loadingOptions , setLoadingOptions ] = useState({label: '', icon: ''})
+  const [loadScreen, setLoadScreen] = useState(false)
+  let snackVisibility = {
+      logout: false,
+      accountDeleted: false,
+      apparence: false,
+      reset: false
+    } ;
+  const [ isActIndicator , setIsActIndicator ] = useState(false);
+  
+  const colorsList = {
+    darkColors : {
+      primary: "#0f1729",
+      secondary: "#1c2536",
+      answers: "#212f3d",
+      //the old clr secondary: "#2A2C30",
+      buttons: "#274c77",
+      priText: 'white',
+      secText: 'lightgray',
+      quizExitIcon: 'lightgray',
+      border: "#2eb8aa",
+      nextBtn: '#2e436e',
+      settingsItems: "#1d2834",
+      gradPri: 'rgba(97, 82, 82, 0.8)',
+      gradSec: '#212f3d'
+    },
+    lightColors : {
+      primary: "lightgray",
+      secondary: "white",
+      answers: "white",
+      buttons: "#274c77",
+      priText: 'black',
+      secText: 'gray',
+      quizExitIcon: 'black',
+      border: "orange",
+      nextBtn: '#2e436e',
+      settingsItems: "#1d2834",
+      gradPri: 'rgba(242, 234, 234, 0.8)',
+      gradSec: 'rgba(142, 138, 138, 0.8)'
+    },
+  }
+
+const languagesList = {
+  arabic: {
+    // Profile
+    langAr: 'العربية',
+    langEn: 'الإنجليزية',
+    settingsEdt: 'إعدادات',
+    profileEdt: "تعديل الملف الشخصي",
+    langEdt: "اللغة",
+    soundEdt: "الصوت",
+    vibrateEdt: "الإهتزاز",
+    apparenceEdt: "المضهر",
+    reportEdt: 'الإبلاغ عن مشكلة',
+    reportPlh: 'يمكنك ان تكتب مشكلة هنا ...',
+    lang: '',
+    reportEdt: "ابلاغ عن مشكلة",
+    email: 'البريد الإلكتروني',
+    restEdt: "اعادة ضبط",
+    deleteEdt: "حذف الحساب",
+    logout: "تسجيل الخروج",
+    soundEnable: 'تم تفعيل الصوت',
+    soundDisable: 'تم تعطيل الصوت',
+    vibrateEnable: 'تم تفعيل الإهتزاز',
+    vibrateDisable: 'تم تعطيل الإهتزاز',
+    dark: 'داكن',
+    light: 'فاتح',
+    gradient: 'تدرج',
+
+    // Statistics
+    rank: 'التصنيف',
+    correct: 'الصحيحة',
+    wrong: 'الخاطئة',
+    fast: 'السرعة',
+    quest: 'الاسئلة',
+    questIndex: 'الحالي',
+
+    // Levels
+    level: 'المرحلة',
+    quests: 'أسئلة',
+
+    //SnackBars
+    languageChanged: 'تم تغيير اللغة بنجاح',
+    accountDeleted: 'تم حذف الحساب بنجاح',
+    dataReseted: 'تم حذف البيانات بنجاح',
+    themeChanged: 'تم تغيير المضهر الى',
+    logoutDone: 'تم تسجيل الخروج'
+
+  },
+  english: {
+    // Profile
+    langEn: 'English',
+    langAr: 'Arabic',
+    settingsEdt: 'Settings',
+    profileEdt: "Edit Profile",
+    langEdt: "Language",
+    soundEdt: "Sound",
+    vibrateEdt: "Vibrate",
+    apparenceEdt: "Appearance",
+    reportEdt: "Report Issue",
+    restEdt: "Reset",
+    reportEdt: 'Report Issue',
+    reportPlh: 'Write your report here...',
+    email: 'Email',
+
+    deleteEdt: "Delete Account",
+    logout: "Logout",
+    soundEnable: 'Sound Enable',
+    soundDisable: 'Sound Disable',
+    vibrateEnable: 'Vibration Enable',
+    vibrateDisable: 'Vibration Disable',
+    dark: 'Dark',
+    light: 'Light',
+    gradient: 'Gradient',
+
+    // Statistics
+    rank: 'Rank',
+    correct: 'Correct',
+    wrong: 'Wrong',
+    fast: 'Fast',
+    quest: 'Questions',
+    questIndex: 'Index',
+    // Levels
+    level: 'Level',
+    quests: 'Questions',
+
+    // SnackBars
+    languageChanged: 'Language Changed successfully',
+    accountDeleted: 'Account Deleted successfully',
+    dataReseted: 'Data Reseted successfully',
+    themeChanged: 'Theme Changed to',
+    logoutDone: "logout successfully"
+
+
+  },
+};
+
+function useAsyncStorageState(key, initialValue) {
+  const [state, setState] = useState(initialValue);
+
+  useEffect(() => {
+    AsyncStorage.getItem(key)
+      .then(value => {
+        if (value !== null) setState(JSON.parse(value));
+      })
+      .catch(console.error);
+  }, [key]);
+  
+  useEffect(() => {
+    AsyncStorage.setItem(key, JSON.stringify(state)).catch(console.error);
+  }, [key, state]);
+
+  return [state, setState];
+}
+
+const [userXp, setUserXp] = useAsyncStorageState('Xp', 0);
+const [language, setLanguage] = useAsyncStorageState('Language', 'arabic');
+const [globTrueAns, setGlobTrueAns] = useAsyncStorageState('GlobTrueAns', 0);
+const [globFalseAns, setGlobFalseAns] = useAsyncStorageState('GlobFalseAns', 0);
+const [isGradient, setIsGradient] = useAsyncStorageState('Gradient', false);
+const [userName, setUserName] = useAsyncStorageState('Username', '');
+const [vibrate, setVibrate ] = useAsyncStorageState('Vibrate', true);
+const [sound, setSound ] = useAsyncStorageState('Sound', true);
+const [helpPoint, setHelpPoint ] = useAsyncStorageState('HelpPoint', 0);
+const [speed, setSpeed ] = useAsyncStorageState('Speed', 0);
+
+// useEffect(() => {
+//   async function init() {
+//     const keys = [
+//       'Xp', 
+//       'Language', 
+//       'GlobTrueAns', 
+//       'GlobFalseAns', 
+//       'Gradient', 
+//       'Username', 
+//       'Vibrate', 
+//       'Sound', 
+//       'HelpPoint' ,
+//       'Speed' ,
+//       'livesHeart' ,
+//       'DataLevelIndex' , 
+//       'QuestIndices' ,
+//       'AnswerStats' /* ... */];
+//     const stores = await AsyncStorage.multiGet(keys);
+//     stores.forEach(([key, val]) => {
+//       if (val !== null) {
+//         const parsed = JSON.parse(val);
+//         switch(key) {
+//           case 'Xp': setUserXp(parsed); break;
+//           case 'Language': setLanguage(parsed); break;
+//           case 'GlobTrueAns': setGlobTrueAns(parsed); break;
+//           case 'GlobFalseAns': setGlobFalseAns(parsed); break;
+//           case 'Gradient': setIsGradient(parsed); break;
+//           case 'Username': setUserName(parsed); break;
+//           case 'Vibrate': setVibrate(parsed); break;
+//           case 'Sound': setSound(parsed); break;
+//           case 'HelpPoint': setHelpPoint(parsed); break;
+//           case 'Speed': setSpeed(parsed); break;
+//           case 'livesHeart': setLivesHeart(parsed); break;
+//           case 'DataLevelIndex': setDataLevelIndex(parsed); break;
+//           case 'QuestIndices': setQuestIndices(parsed); break;
+//           case 'AnswerStats': setAnswerStats(parsed); break;
+//           // ... other setters
+//         }
+//       }
+//     });
+//   }
+//   init();
+// }, []);
+// useEffect(() => {
+//   AsyncStorage.setItem('Xp', JSON.stringify(userXp));
+//   AsyncStorage.setItem('Language', JSON.stringify(language));
+//   AsyncStorage.setItem('GlobTrueAns', JSON.stringify(globTrueAns));
+//   AsyncStorage.setItem('GlobFalseAns', JSON.stringify(globFalseAns));
+//   AsyncStorage.setItem('Gradient', JSON.stringify(isGradient));
+//   AsyncStorage.setItem('Username', JSON.stringify(userName));
+//   AsyncStorage.setItem('Vibrate', JSON.stringify(vibrate));
+//   AsyncStorage.setItem('Sound', JSON.stringify(sound));
+//   AsyncStorage.setItem('HelpPoint', JSON.stringify(helpPoint));
+//   AsyncStorage.setItem('Speed', JSON.stringify(speed));
+//   AsyncStorage.setItem('livesHeart', JSON.stringify(livesHeart));
+//   AsyncStorage.setItem('DataLevelIndex', JSON.stringify(dataLevelIndex));
+//   AsyncStorage.setItem('QuestIndices', JSON.stringify(questIndices));
+//   AsyncStorage.setItem('AnswerStats', JSON.stringify(answerStats));
+// }, [userXp, language, globTrueAns, globFalseAns, isGradient, userName, vibrate ,sound, helpPoint, speed, livesHeart , dataLevelIndex, questIndices, answerStats]);
+
+useEffect(() => {
+  if (globTrueAns > 0 && globTrueAns % 5 === 0) {
+    setHelpPoint(prev => Math.min(prev + 1, 50));
+  }
+}, [globTrueAns]);
+
+useEffect(() => {
+  if (globFalseAns > 0 && globFalseAns % 1 === 0 && livesHeart > 0) {
+      setLivesHeart(prevPoint => {
+        const newPoints = prevPoint - 1;
+        return newPoints === 0 ? 0 : newPoints; // cap points at 50
+      });
+  }
+}, [globFalseAns]);
+
+
+const texts = languagesList[language];
+  const THEME_DARK = 'dark';
+  const THEME_LIGHT = 'light';
+  
+  const [currentTheme, setCurrentTheme] = useState(THEME_DARK);
+  const [colors, setColors] = useState(colorsList.darkColors);
+  
+  // Load saved theme on mount
+  useEffect(() => {
+    const loadTheme = async () => {
+      const savedTheme = await AsyncStorage.getItem('Apparence');
+      if (savedTheme && [THEME_DARK , THEME_LIGHT].includes(savedTheme)) {
+        setCurrentTheme(savedTheme);
+        setColors(colorsList[`${savedTheme}Colors`]);
+      } else {
+        // Default theme
+        setCurrentTheme(THEME_DARK);
+        setColors(colorsList.darkColors);
+      }
+    };
+    loadTheme();
+  }, []);
+  
+  // Save theme whenever it changes
+  useEffect(() => {
+    AsyncStorage.setItem('Apparence', currentTheme);
+  }, [currentTheme]);
+  
+
+      
+  
+
+
+  
+  const allowedUserName = /^(?=.{3,15}$)(?!.* {3})[A-Za-zأ-ي0-9]+( [A-Za-zأ-ي0-9]+){0,2}$/;
+  const drawer = useRef(null);
+  const answersRef = useRef([]);
+  const answersList = [`answer1`, 'answer2', 'answer3'];
+  
+  const [ levelEndState , setlevelEndState ] = useState(false);
+  const [timeEndState, setTimeEndState] = useState(false);
+  const [exitBtn, setExitBtn] = React.useState(false);
+
+  const [timer, setTimer] = useState(45);
+  const timerTimeout = useRef(null)
+  // dont forget the timer
+  useEffect(() => {
+    if (timer > 0 ) {
+      timerTimeout.current = setTimeout(() => {
+        setTimer(prev => prev - 1);
+      }, 1000);
+      return () => clearTimeout(timerTimeout.current);
+    } else if (timer === 0 && !levelEndState) {
+      setGlobFalseAns((prev) => prev + 1);
+      setTimeEndState(true);
+      setExitBtn(false);
+      if(vibrate){
+        Vibration.vibrate(200)
+      }
+    } 
+  }, [timer]);
+
+  const appState = useRef(AppState.currentState);
+  const deadline = useRef(Date.now() + timer * 1000); // deadline timestamp
+  const [ handleTimerBackground, setHandleTimerBackground ] = useState(false);
+  useEffect(()=>{
+    console.log(`timer in background ${setHandleTimerBackground}`)
+  },[setHandleTimerBackground])
+  // Update timer on app foreground
+// dont forget to fix the timer when the ad is shown or 
+// add only if not add work or the ans is checked
+  useEffect(() => {
+    if (!handleTimerBackground) {
+      const subscription = AppState.addEventListener('change', nextAppState => {
+        if (
+          appState.current.match(/background|inactive/) &&
+          nextAppState === 'active'
+        ) {
+          // Calculate remaining time
+          const remaining = Math.max(0, Math.round((deadline.current - Date.now()) / 1000));
+          setTimer(remaining);
+        }
+        appState.current = nextAppState;
+      });
+  
+      return () => subscription.remove();
+    }
+  }, [handleTimerBackground]);
+
+  // When timer or question resets, update deadline accordingly
+  const resetTimer = (newTime) => {
+    setTimer(newTime);
+    deadline.current = Date.now() + newTime * 1000;
+  };
+    
+  // lives heart state & stored
+  
+const MAX_LIVES = 5;
+const LIFE_RESTORE_INTERVAL = 1 * 60 * 60 * 1000; // 45 minutes in ms
+
+function useLives() {
+  const [livesHeart, setLivesHeart] = useState(MAX_LIVES);
+  const [livesHeartEnd, setLivesHeartEnd] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(LIFE_RESTORE_INTERVAL);
+  const [lastLifeUpdate, setLastLifeUpdate] = useState(Date.now());
+
+  // Load lives and last update time from AsyncStorage on mount
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const livesStored = await AsyncStorage.getItem('LivesHeart');
+        const lastUpdateStored = await AsyncStorage.getItem('lastLifeUpdate');
+
+        const lives = livesStored ? JSON.parse(livesStored) : MAX_LIVES;
+        setLivesHeart(lives);
+
+        const now = Date.now();
+
+        if (lastUpdateStored) {
+          const lastUpdate = parseInt(lastUpdateStored, 10);
+          setLastLifeUpdate(lastUpdate);
+
+          if (lives < MAX_LIVES) {
+            const elapsed = now - lastUpdate;
+            const livesToAdd = Math.floor(elapsed / LIFE_RESTORE_INTERVAL);
+
+            if (livesToAdd > 0) {
+              const newLives = Math.min(lives + livesToAdd, MAX_LIVES);
+              setLivesHeart(newLives);
+
+              // Calculate leftover time for next life restore
+              const remainder = elapsed % LIFE_RESTORE_INTERVAL;
+              const newLastUpdate = now - remainder;
+              setLastLifeUpdate(newLastUpdate);
+              await AsyncStorage.setItem('lastLifeUpdate', newLastUpdate.toString());
+            }
+          } else {
+            // If lives are full, reset lastLifeUpdate to now
+            setLastLifeUpdate(now);
+            await AsyncStorage.setItem('lastLifeUpdate', now.toString());
+          }
+        } else {
+          // No last update stored, initialize it
+          setLastLifeUpdate(now);
+          await AsyncStorage.setItem('lastLifeUpdate', now.toString());
+        }
+      } catch (e) {
+        console.error('Failed to load lives data', e);
+      }
+    }
+    loadData();
+  }, []);
+
+  // Save livesHeart to AsyncStorage whenever it changes
+  useEffect(() => {
+    AsyncStorage.setItem('livesHeart', JSON.stringify(livesHeart));
+    setLivesHeartEnd(livesHeart === 0);
+  }, [livesHeart]);
+
+  // Timer to restore one life after the remaining time
+  useEffect(() => {
+    if (livesHeart < MAX_LIVES) {
+      const now = Date.now();
+      const elapsed = now - lastLifeUpdate;
+      const timeRemaining = LIFE_RESTORE_INTERVAL - elapsed;
+
+      const timerId = setTimeout(async () => {
+        setLivesHeart(prev => {
+          const newLives = Math.min(prev + 1, MAX_LIVES);
+          return newLives;
+        });
+        const newLastUpdate = Date.now();
+        setLastLifeUpdate(newLastUpdate);
+        await AsyncStorage.setItem('lastLifeUpdate', newLastUpdate.toString());
+      }, timeRemaining > 0 ? timeRemaining : 0);
+
+      return () => clearTimeout(timerId);
+    } else {
+      // If lives are full, reset timeLeft to 0
+      setTimeLeft(0);
+    }
+  }, [livesHeart, lastLifeUpdate]);
+
+  // Interval to update timeLeft every second
+  useEffect(() => {
+    if (livesHeart < MAX_LIVES) {
+      const intervalId = setInterval(() => {
+        const now = Date.now();
+        const elapsed = now - lastLifeUpdate;
+        const timeRemaining = LIFE_RESTORE_INTERVAL - elapsed;
+
+        setTimeLeft(timeRemaining > 0 ? timeRemaining : 0);
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    } else {
+      setTimeLeft(0);
+    }
+  }, [livesHeart, lastLifeUpdate]);
+
+  return { livesHeart, setLivesHeart, livesHeartEnd, timeLeft };
+}
+const { livesHeart, livesHeartEnd, timeLeft , setLivesHeart} = useLives();
+
+
+  const [ isRewardAdd , setIsRewardAdd ] = useState(false);
+
+  const [ levelsRank , setLevelsRank ] = useState(null)
+  
+  const [questIndices, setQuestIndices] = useState({ lv1: 1, lv2: 1, lv3: 1 });
+  const [answerStats, setAnswerStats] = useState({
+    lv1: { correct: 0, false: 0 },
+    lv2: { correct: 0, false: 0 },
+    lv3: { correct: 0, false: 0 }
+  });
+  // Load all indices on mount
+  useEffect(() => {
+      const loadIndices = async () => {
+          const levels = ['lv1', 'lv2', 'lv3'];
+          let loaded = {};
+          let loadedStats = {};
+          for (let level of levels) {
+              const stored = await AsyncStorage.getItem(`questIndex_${level}`);
+              loaded[level] = stored ? JSON.parse(stored) : 1;
+              const storedStats = await AsyncStorage.getItem(`answerStats_${level}`);
+              loadedStats[level] = storedStats ? JSON.parse(storedStats) : { correct: 0, false: 0 };
+          }
+          setQuestIndices(loaded);
+          setAnswerStats(loadedStats);
+      };
+      loadIndices();
+  }, []);
+
+  // Save index when any changes
+  useEffect(() => {
+      const saveIndices = async () => {
+          const pairs = Object.entries(questIndices).map(
+              ([level, idx]) => [`questIndex_${level}`, JSON.stringify(idx)]
+          );
+          await AsyncStorage.multiSet(pairs);
+      };
+      saveIndices();
+  }, [questIndices]);
+  const updateQuestIndex = (level, newIndex) => {
+    setQuestIndices(prev => ({ ...prev, [level]: newIndex }));
+  };
+  useEffect(() => {
+    const saveStats = async () => {
+      const pairs = Object.entries(answerStats).map(
+        ([level, stats]) => [`answerStats_${level}`, JSON.stringify(stats)]
+      );
+      await AsyncStorage.multiSet(pairs);
+    };
+    saveStats();
+  }, [answerStats]);
+
+  const updateAnswerStats = (level, { correct = 0, false: falseCount = 0 , time= 0 }) => {
+    setAnswerStats(prev => ({
+      ...prev,
+      [level]: {
+        correct: prev[level].correct + correct,
+        false: prev[level].false + falseCount,
+      }
+    }));
+  };
+
+  const resetAnswerStats = (level) => {
+    setAnswerStats(prev => ({
+      ...prev,
+      [level]: { correct: 0, false: 0 }
+    }));
+  };
+
+  const levelListItemsRef = useRef([]);
+  const updateStyleDirectly = (index) => {
+    if (levelListItemsRef.current) {
+      levelListItemsRef.current.forEach((item, idx) => {
+        if (item) {
+          item.setNativeProps({
+            style: {
+              opacity: idx <= index ? 1 : 0.4,
+            },
+          });
+        }
+      });
+    }
+  };
+  
+  const [ updateNextLevelState , setUpdateNextLevelState ] = useState(0)
+  useEffect(()=>{
+    updateStyleDirectly(updateNextLevelState)
+  },[updateNextLevelState])
+
+  const [progressByLevel, setProgressByLevel] = useState({});
+  const levelKey = `lv${dataLevelIndex}`;
+  const totalQuestions = Object.keys(quizData?.[levelKey] || {}).length;
+  const currentProgress = questIndices[levelKey] ? questIndices[levelKey] - 1 : 0;
+  const percentage = totalQuestions > 0 ? (currentProgress / totalQuestions) * 100 : 0;
+  // useEffect(() => {
+  //   if (questIndices[`lv${dataLevelIndex}`] !== undefined) {
+  //     setProgressByLevel(prev => ({
+  //       ...prev,
+  //       [`lv${dataLevelIndex}`]: questIndices[`lv${dataLevelIndex}`] - 1, // your logic
+  //     }));
+  //   }
+  // }, [questIndices, dataLevelIndex]);
+    const currentQuestionsIndex = questIndices[`lv${dataLevelIndex}`];
+    const currentLevelIndex = Object.keys(quizData?.[`lv${dataLevelIndex}`] || {}).length;
+  
+  const sounds = useRef({});
+
+  useEffect(() => {
+    async function loadSounds() {
+      const soundFiles = {
+        quizButton: require('../assets/sound-effect/ui-pop-sound-316482.mp3'),
+        settingsButton: require('../assets/sound-effect/ui-pop-sound-316482.mp3'),
+        levelsButton: require('../assets/sound-effect/ui-pop-sound-316482.mp3'),
+        welcomeIntro: require('../assets/sound-effect/intro-sound-1-269293.mp3'),
+        levelEnd: require('../assets/sound-effect/game-bonus-144751.mp3'),
+        timeOut: require('../assets/sound-effect/pop-off-269284.mp3'),
+        correctAnswer: require('../assets/sound-effect/level-up-191997.mp3'),
+        wrongAnswer: require('../assets/sound-effect/error-call-to-attention-129258.mp3'),
+        alert: require('../assets/sound-effect/message-13716.mp3'),
+        reAddHearts: require('../assets/sound-effect/multi-pop-1-188165.mp3'),
+       
+        // add more sounds here
+      };
+
+      for (const key in soundFiles) {
+        const { sound } = await Audio.Sound.createAsync(soundFiles[key]);
+        sounds.current[key] = sound;
+      }
+    }
+
+    loadSounds();
+
+    return () => {
+      for (const key in sounds.current) {
+        sounds.current[key]?.unloadAsync();
+      }
+    };
+  }, []);
+
+  const playSound = async (key) => {
+    const sound = sounds.current[key];
+    if (sound) {
+      try {
+        await sound.replayAsync();
+      } catch (e) {
+        console.warn('Error playing sound:', e);
+        
+        setSound(false)
+      }
+    }
+  };
+    const [snackbarState, setSnackbarState] = useState(false)
+    const [heartsCard, setHeartsCard] = useState(false)
+
+  useEffect(() => {
+    if (!user?.uid) return;
+
+    const userRef = ref(database, `users/${user.uid}`);
+
+  const dataToUpdate = {
+    UserXp: userXp,
+    Speed: speed,
+    Username: userName,
+    UserImage: userImage,
+    Language: language,
+    GlobTrueAns: globTrueAns,
+    GlobFalseAns: globFalseAns,
+    Gradient: isGradient,
+    Vibrate: vibrate,
+    Sound: sound,
+    HelpPoint: helpPoint,
+    LivesHeart: livesHeart,
+    DataLevelIndex: dataLevelIndex,
+    QuestIndices: questIndices,
+    AnswerStats: answerStats,
+  };
+    set(userRef, dataToUpdate).catch(console.error);
+  }, [userXp, speed,userName,userImage,language,globTrueAns,globFalseAns,isGradient,vibrate,sound,  helpPoint,livesHeart,dataLevelIndex,questIndices,answerStats, user]);
+
+// Call this wherever you have access to the authenticated user object:
+  return (
+    <DataContext.Provider
+      value={{
+        speed, setSpeed,
+        userXp, setUserXp,
+        heartsCard, setHeartsCard,
+        snackbarState, setSnackbarState,
+        playSound,
+        currentQuestionsIndex, currentLevelIndex,
+        // pushToProgress ,setPushToProgress,
+        quizData ,dataLength, dataArray,usersData,
+        dataLevelIndex , setDataLevelIndex,
+        questIndices, answerStats,
+        updateQuestIndex,
+        updateAnswerStats,resetAnswerStats,
+        updateNextLevelState , setUpdateNextLevelState,
+        levelListItemsRef,
+        updateStyleDirectly,
+        percentage,
+        livesHeart, setLivesHeart, livesHeartEnd ,
+        globTrueAns, setGlobTrueAns ,
+        globFalseAns, setGlobFalseAns ,
+        helpPoint, setHelpPoint,
+        // questIndex, setQuestIndex,
+        loading ,
+        userName, setUserName,
+        isPicAdd,
+        setIsPicAdd,
+        userImage,
+        setUserImage,
+        answersRef,
+        answersList,
+        isActIndicator , setIsActIndicator,
+        timer, setTimer,resetTimer,
+        levelEndState , setlevelEndState,
+        timeEndState, setTimeEndState,
+        timerTimeout,
+        language, setLanguage,
+        exitBtn, setExitBtn,
+        colors,setColors, setLivesHeart,
+        currentTheme,setCurrentTheme, 
+        THEME_DARK,THEME_LIGHT,
+        isRewardAdd , setIsRewardAdd,
+        levelsRank , setLevelsRank, MAX_LIVES ,livesHeartEnd, timeLeft, livesHeartEnd,
+        vibrate, setVibrate,
+        sound, setSound,
+        setHandleTimerBackground, colorsList,
+        isGradient, setIsGradient,
+        languagesList , texts, 
+        isAccountDeleted, setIsAccountDeleted,
+        snackVisibility ,
+        snackOptions , setSnackOptions,
+        loadingOptions , setLoadingOptions,
+        loadScreen, setLoadScreen
+      }}>
+      {children}
+    </DataContext.Provider>
+  );
+};
+export { DataContext, DataProvider };

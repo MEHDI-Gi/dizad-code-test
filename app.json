@@ -1,4 +1,7 @@
 {
   "name": "DizadCodeTest",
-  "displayName": "DizadCodeTest"
+  "displayName": "DizadCodeTest",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-7985985128504090~3066277268"
+  }
 }
