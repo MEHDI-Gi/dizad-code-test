@@ -415,6 +415,9 @@ const DataProvider = ({ children }: DataProviderProps) => {
   };
 
 
+  useEffect(() => {
+    setColors(currentTheme === THEME_DARK ? colorsList.darkColors : colorsList.lightColors);
+  }, [currentTheme]);
 
   // const [userXp, setUserXp] = useAsyncStorageState<number>('UserXp', 0);
   // const [userOnline, setUserOnline] = useAsyncStorageState<boolean>('UserOnline', false);
@@ -800,11 +803,10 @@ const DataProvider = ({ children }: DataProviderProps) => {
     currentTheme,
     userName,
     userImage,
-
     vibrate,
-    sound,           // Theme ⭐
-    language,                 // Language ⭐
-    userXp,                   // Profile ⭐
+    sound,
+    language,
+    userXp,
     bookmarks,                // Bookmarks ⭐
     firebaseLoaded,           // Loading ⭐
     userVip,                  // VIP ⭐

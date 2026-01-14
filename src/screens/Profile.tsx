@@ -72,6 +72,8 @@ const Profile = () => {
   } = useContext(DataContext);
 
 
+  const [initTheme, setInitTheme] = useState<boolean>(false);
+
   function SettingsCard(props: any) {
     const switchProps = {
       width: 28,
@@ -264,22 +266,20 @@ const Profile = () => {
         logAllStoredData()
         break;
       case 'vibrate':
+        // setInitTheme(true);
         setVibrate((prev: boolean) => !prev);
         // if (!vibrate) {
         //   Vibration.vibrate(200)
         // }
         break;
       case 'dark':
-        if (currentTheme === 'light') {
-          setColors(colorsList.darkColors);
-          setCurrentTheme(THEME_DARK);
-        } else {
-          setColors(colorsList.lightColors);
-          setCurrentTheme(THEME_LIGHT);
-        }
+        // setInitTheme(true);
+        const newTheme = currentTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
+        setCurrentTheme(newTheme);
         break;
 
       case 'sound':
+        // setInitTheme(true);
         setSound((prev: any) => !prev)
         break;
 
@@ -335,6 +335,18 @@ const Profile = () => {
       </View>
     )
   }
+
+
+  // if (initTheme) {
+  //   setTimeout(() => {
+  //     setInitTheme(false);
+  //   }, 1000);
+  //   return (
+  //     <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
+  //       <ActivityIndicator size={30} />
+  //     </View>
+  //   )
+  // }
 
   return (
     <View style={{
@@ -594,9 +606,6 @@ const Profile = () => {
               if (user) { handleLogout(navigation) }
               else { logoutFun() }
             }} />
-
-
-
         </View>
 
       </ScrollView>

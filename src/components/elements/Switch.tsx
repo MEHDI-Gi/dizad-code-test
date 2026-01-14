@@ -1,16 +1,12 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import { Alert, Portal, Modal, TouchableWithoutFeedback, Keyboard, Pressable, TextInput, BackgroundImage, Dimensions, StatusBar, Text, Image, TouchableOpacity, SafeAreaView, StyleSheet, View, Box, VStack, FormControl, Input, Radio, Divider, Checkbox, Card, Appbar, KeyboardAvoidingView, ScrollView, Platform, Vibration } from 'react-native';
+import { Alert, Modal, TouchableWithoutFeedback, Keyboard, Pressable, TextInput, Dimensions, StatusBar, Text, Image, TouchableOpacity,  StyleSheet, View, KeyboardAvoidingView, ScrollView, Platform, Vibration } from 'react-native';
 import { RadioButton, Button, IconButton, } from 'react-native-paper';
 import { DataContext } from '../../context/contextData';
 import { useNavigation } from '@react-navigation/native';
-import * as FileSystem from 'expo-file-system';
-import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MaterialIcons, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import * as Application from 'expo-application';
-import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Switch(props) {
+
+export default function Switch(props:any) {
     const navigation = useNavigation();
 
     const {
@@ -20,6 +16,8 @@ export default function Switch(props) {
         isGradient, setIsGradient, texts, language,
         apparence, setApparence, setColors, colorsList, currentTheme, setCurrentTheme
     } = useContext(DataContext);
+
+    
 
     return (
         <View
