@@ -346,7 +346,9 @@ const SignsItems = () => {
             })}
             keyExtractor={(item, idx) => `item-${idx}`}
             renderItem={({ item, index }: ListRenderItemInfo<any>) => (
-              <View style={{ width: screenWidth, alignItems: 'center', justifyContent: 'center' }}>
+              <View style={{
+                width: screenWidth, alignItems: 'center', justifyContent: 'center',
+              }}>
                 <Pressable
                   android_ripple={{ borderless: false, color: colors.primary, foreground: true }}
                   style={{
@@ -375,13 +377,14 @@ const SignsItems = () => {
                 </Pressable>
                 <View style={{
                   width: "100%",
-                  height: "100%",
+                  flex: 1,
                   backgroundColor: colors.primary,
                   flexDirection: 'column',
                   alignItems: 'center',
-                  justifyContent: 'flex-start',
+                  justifyContent: 'center',
                   overflow: 'hidden',
                   padding: 10,
+
                 }}>
                   {/* IMAGE */}
 
@@ -540,32 +543,10 @@ const SignsItems = () => {
                       }
                     </Pressable>
                   </View>
-
-
-
                 </View>
               </View>
             )}
           />
-          <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-            <Pressable
-              android_ripple={{ color: colors.secondary, borderless: true, foreground: true }}
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                width: 40,
-                height: 40,
-                borderRadius: 50,
-                overflow: 'hidden',
-                marginHorizontal: 15,
-              }}
-              onPress={() => {
-                setOpenSignsModal(false);
-                if (sound) playSound('settingsButton');
-              }}>
-              {/* <MaterialIcons name='close' color={colors.text.secondary} size={35} /> */}
-            </Pressable>
-          </View>
         </View>
       </Modal>
     </View >

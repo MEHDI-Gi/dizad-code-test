@@ -7,14 +7,26 @@ import {
 import { DataProvider } from './src/context/contextData';
 
 import Main from './src/screens/Main';
+import { useEffect } from 'react';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 function App() {
+
+  useEffect(() => {
+    // Option A: Hide it normally (it comes back on touch)
+    // SystemNavigationBar.navigationHide();
+
+    // Option B: Sticky Immersive (Recommended for games/full screen)
+    // It stays hidden and semi-transparently overlays if swiped up
+    SystemNavigationBar.stickyImmersive();
+  }, []);
+
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <StatusBar hidden={true} barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
         <DataProvider>
           <Main />
         </DataProvider>
@@ -26,7 +38,7 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-            opacity: 1,
+    opacity: 1,
 
   },
 });
