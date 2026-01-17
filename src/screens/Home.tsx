@@ -28,6 +28,7 @@ import BottomTab from '../components/elements/BottomTab.tsx';
 import { useSize } from '../context/useSize.ts';
 import { BlurView } from '@react-native-community/blur';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import FreeCard from '../components/FreeCard.tsx';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -57,13 +58,13 @@ export default function Home() {
         setUserOnline,
         lessonsData,
         examsData,
-        questionsItemsIndex
+        questionsItemsIndex,
+        examData,
+        freeCard,
+        vipCard,
     } = useContext(DataContext);
 
 
-
-    const QUESTIONS_CURRENT_COVER = lessonsData?.content?.questions?.content[questionsItemsIndex]?.cover;
-    const EXAMS_COVER = examsData?.img;
     const QUESTIONS_CURRENT_LABEL = lessonsData?.content?.questions?.content[questionsItemsIndex]?.label;
     const imageBase = 'https://cdn.jsdelivr.net/gh/MEHDI-Gi/dizad_road_test_assets@main/assets';
     const questCover = `${imageBase}/cover/qst.png`
@@ -71,16 +72,21 @@ export default function Home() {
     const priorityCover = `${imageBase}/cover/prio.png`
     const signsCover = `${imageBase}/cover/sgn.png`
 
-    const SIGNS_CURRENT_COVER = lessonsData?.content?.signs?.content[questionsItemsIndex]?.img;
-    const SIGNS_CURRENT_LABEL = lessonsData?.content?.signs?.content[questionsItemsIndex]?.label;
-
 
     // `${imageBase}/cover/${item.cover}.png`
+    let totalSgn = 0;
+    (lessonsData?.content?.signs?.content || []).forEach((current: { items: any; }) => {
+        totalSgn += Object.keys(current?.items || {}).length;
+    });
+    const totalQst = Object.keys(lessonsData?.content?.questions?.content || {}).length;
+    const totalPri = Object.keys(lessonsData?.content?.priority?.content?.items || {}).length;
+    const totalExm = Object.keys(examData?.content?.items || {}).length;
+
     const contentItems = [
-        { cond: 'Sgn', label: 'إشارات', img: signsCover ?? null, sub: "undefined", },
-        { cond: 'Pri', label: 'أولوية', img: priorityCover ?? null, sub: '', },
-        { cond: 'Qst', label: 'أسئلة', img: questCover ?? null, sub: QUESTIONS_CURRENT_LABEL ?? "undefined", },
-        { cond: 'Exm', label: "إمتحان", img: examsCover ?? null, sub: "undefined", },
+        { cond: 'Exm', label: "إمتحان", img: examsCover ?? null, sub: "", length: totalExm },
+        { cond: 'Sgn', label: 'إشارات', img: signsCover ?? null, sub: "", length: totalSgn },
+        { cond: 'Pri', label: 'أولوية', img: priorityCover ?? null, sub: '', length: totalPri },
+        { cond: 'Qst', label: 'أسئلة', img: questCover ?? null, sub: "", length: totalQst },
     ]
     const youtubeChanels = [
         { label: "إمتحان", img: examsCover ?? null, sub: QUESTIONS_CURRENT_LABEL ?? "undefined", },
@@ -110,6 +116,8 @@ export default function Home() {
             justifyContent: "space-between",
             alignItems: "center",
         }]}>
+            <FreeCard />
+
             <View style={[{
                 zIndex: 9,
                 width: "100%",
@@ -292,10 +300,6 @@ export default function Home() {
                 }}>
 
                     {contentItems.map((item: any, index: number) => {
-                        const QUESTIONS_CONTENT = lessonsData?.content?.questions?.content || [];
-                        const QUESTIONS_CONTENT_LENGTH = QUESTIONS_CONTENT.length;
-                        const totalSigns = Object.keys(lessonsData?.content?.signs?.content?.[index]?.items || {}).length;
-
                         if (!QUESTIONS_CURRENT_LABEL) return (
                             <ShimmerPlaceHolder
                                 duration={1500}
@@ -310,60 +314,141 @@ export default function Home() {
                         return (
                             <Pressable
                                 android_ripple={{
-                                    borderless: false, color: colors.primary, foreground: true
+                                    borderless: false, color: colors.secondary, foreground: true
                                 }
                                 }
                                 onPress={() => { }}
                                 key={`key-${index}`}
                                 style={[{
                                     alignItems: 'center',
-                                    backgroundColor: colors.secondary,
+                                    backgroundColor: 'transparent',
                                     width: '100%',
+                                    height: screen.width * 0.25,
+
                                     borderRadius: 8,
-                                    flexDirection: 'column',
-                                    justifyContent: 'space-between',
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
                                     overflow: 'hidden',
-                                    elevation: 2,
+                                   
                                 },
-                                item.cond === 'Qst' &&
-                                {
-                                    height: screen.width * 0.35,
+                                    // item.cond === 'Qst' &&
+                                    // {
+                                    //     height: screen.width * 0.35,
 
-                                },
-                                item.cond === 'Exm' &&
-                                {
-                                    height: screen.width * 0.35,
-                                },
+                                    // },
+                                    // item.cond === 'Exm' &&
+                                    // {
+                                    //     height: screen.width * 0.35,
+                                    // },
 
-                                item.cond === 'Sgn' && {
-                                    height: screen.width * 0.45,
-                                    width: screen.width * 0.35,
+                                    // item.cond === 'Sgn' && {
+                                    //     height: screen.width * 0.45,
+                                    //     width: screen.width * 0.35,
 
-                                },
-                                item.cond === 'Pri' && {
-                                    height: screen.width * 0.45,
-                                    flex: 1
-                                }
+                                    // },
+                                    // item.cond === 'Pri' && {
+                                    //     height: screen.width * 0.45,
+                                    //     flex: 1
+                                    // }
 
                                 ]}
                             >
+                                {<View style={{
+                                    position: 'absolute',
+                                    left: 0,
+                                        
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    zIndex: 2,
+                                    padding: 15,
+                                }}>
+                                    <MaterialCommunityIcons
+                                        name='arrow-left'
+                                        color={colors.text.secondary}
+                                        size={20}
+                                    />
 
+                                </View>}
+                                <View
+                                    style={[{
+                                        alignItems: 'flex-end',
+                                        justifyContent: 'space-evenly',
+                                        backgroundColor: 'transparent',
+                                        width: '100%',
+                                        height: '100%',
+                                        paddingHorizontal: 10,
+                                        paddingVertical: 10,
+                                        flex: 1,
+
+
+                                    }]}>
+
+                                    <Text style={{ fontFamily: "Cairo-Bold", color: colors.text.primary, fontSize: 16, }}>
+                                        {item.label}
+                                        {/* {Object.keys(SignsContentInfo[index + 1].label)} */}
+                                    </Text>
+                                    <Text style={{
+                                        fontFamily: "Cairo",
+
+                                        color: colors.text.secondary,
+                                        fontSize: 12,
+
+                                    }}>
+                                        {item.length} {item.sub}
+                                    </Text>
+                                    {item.cond === 'Exm' &&
+                                        <View style={{
+                                            flexDirection: "row",
+                                            justifyContent: 'center',
+                                            alignItems: "center",
+
+
+                                        }}>
+                                            <View style={{
+                                                width: '80%',
+                                                height: 10,
+                                                backgroundColor: colors.text.secondary,
+                                                borderRadius: 10,
+                                                flexDirection: "row-reverse",
+                                                justifyContent: 'flex-start',
+                                                alignItems: "center",
+                                                overflow: 'hidden'
+                                            }}>
+                                                <View style={{
+                                                    width: '50%',
+                                                    height: '100%',
+                                                    backgroundColor: 'green',
+                                                    borderRadius: 10,
+                                                    borderTopEndRadius: 0,
+                                                    borderBottomRightRadius: 0,
+
+                                                }} />
+
+                                            </View>
+                                        </View>
+                                    }
+                                </View>
                                 <View
                                     style={[{
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        width: "100%",
-                                        height: "100%",
+                                        height: '100%',
+                                        width: screen.width * 0.25,
                                         overflow: 'hidden',
-                                        flex: 1,
+                                        padding: 0,
+                                        borderRadius: 0,
+
                                     }]}>
 
                                     {item?.img ?
                                         <Image
                                             style={{
-                                                width: '100%',
-                                                height: '100%',
-                                                borderRadius: 0,
+                                                width: "85%",
+                                                height: "85%", 
+                                                borderRadius: 10,
+                                                resizeMode: 'cover',
+
 
                                             }}
                                             source={{ uri: item?.img }}
@@ -377,48 +462,6 @@ export default function Home() {
                                     }
 
 
-                                </View>
-                                <View
-                                    style={[{
-                                        alignItems: 'flex-end',
-                                        justifyContent: 'center',
-                                        backgroundColor: 'transparent',
-                                        width: '100%',
-                                        paddingHorizontal: 10,
-                                        paddingVertical: 10,
-
-
-                                    }]}>
-                                    <View style={{
-                                        position: 'absolute',
-                                        left: 0,
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        zIndex: 2,
-                                        padding: 15,
-                                    }}>
-                                        <MaterialCommunityIcons
-                                            name='arrow-left'
-                                            color={colors.text.secondary}
-                                            size={20}
-                                        />
-
-                                    </View>
-                                    <Text style={{ fontFamily: "Cairo-Bold", color: colors.text.primary, fontSize: 16, }}>
-                                        {item.label}
-                                        {/* {Object.keys(SignsContentInfo[index + 1].label)} */}
-                                    </Text>
-                                    <Text style={{
-                                        fontFamily: "Cairo",
-
-                                        color: colors.text.secondary,
-                                        fontSize: 12,
-                                        flexDirection: 'row',
-
-                                    }}>
-                                        {totalSigns} إشــــارة
-                                    </Text>
                                 </View>
 
 
@@ -456,8 +499,8 @@ export default function Home() {
                         height: 0.5
 
                     }} />
-                </View> 
-                
+                </View>
+
                 <View style={{
                     alignItems: 'center',
                     justifyContent: 'space-evenly',
@@ -522,7 +565,7 @@ export default function Home() {
 
                                 ]}>
 
-                        
+
                                 <View style={{
                                     flexDirection: 'column',
                                     alignItems: 'flex-end',
@@ -574,91 +617,9 @@ export default function Home() {
                     })}
 
 
-                </View> 
+                </View>
 
             </ScrollView>
-
-            {
-                isRewardAdd &&
-                <View style={{
-                    position: 'absolute',
-                    backgroundColor: '#63606037',
-                    width: '100%',
-                    height: '100%',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}>
-                    <View style={{
-                        position: 'absolute',
-                        width: '80%',
-                        height: '50%',
-                        borderRadius: 18,
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        overflow: 'hidden',
-                    }}>
-                        <View style={{
-                            position: 'absolute',
-                            backgroundColor: colors.primary,
-                            width: '100%',
-                            height: '100%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}></View>
-                        <View style={{
-                            width: '100%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            paddingVertical: 15
-                        }}>
-                            <TouchableOpacity onPress={() => { setIsRewardAdd(false) }} style={{ position: 'absolute', left: 0, paddingHorizontal: 15 }}>
-                                <MaterialCommunityIcons name='close' size={25} color={colors.secText} />
-                            </TouchableOpacity>
-                            <Text style={{ color: colors.text.primary, fontWeight: 'bold', fontSize: 17, }}>Reward</Text>
-                        </View>
-
-                        <View style={{
-                            width: '100%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            paddingVertical: 20
-                        }}>
-                            <MaterialCommunityIcons name='gift-open' color={colors.text.primary} size={60} />
-                            <Text style={{ color: colors.text.primary, fontFamily: 'Cairo_600SemiBold', fontSize: 15, }}>تهانينا</Text>
-                        </View>
-                        <View style={{
-                            width: '100%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            flexDirection: 'row',
-
-                        }}>
-                            <AntDesign name='heart' size={15} color={'red'} style={{ marginHorizontal: 0 }} />
-                            <Text style={{ marginHorizontal: 5, color: colors.text.primary, fontSize: 15, fontWeight: 'bold' }}>1</Text>
-                            <Text style={{ marginHorizontal: 5, color: colors.text.primary, fontFamily: 'Cairo_700Bold', fontSize: 15, }}>لقد حصلت على</Text>
-                        </View>
-                        <View style={{
-                            padding: 20,
-                            width: "100%",
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }}>
-                            <TouchableOpacity style={{
-                                backgroundColor: 'green',
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                width: '60%',
-                                paddingVertical: 3,
-                                borderRadius: 5,
-                            }}
-                                onPress={() => { setIsRewardAdd(false) }}>
-                                <Text style={{ color: colors.text.primary, fontWeight: 'bold', fontSize: 17, }}>continue</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-            }
         </View >
     );
 };

@@ -48,18 +48,7 @@ export default function FreeCard() {
         freeCard, setFreeCard
     } = useContext(DataContext);
 
-    const [backEffect, setBackEffect] = useState(false)
 
-    const heartCardAnim = useSharedValue(1000); // start closed (down)
-
-    const timeOutConfig = {
-        duration: 300,
-        easing: Easing.out(Easing.exp),
-    };
-
-    const heartCardAnimStyle = useAnimatedStyle(() => ({
-        transform: [{ translateY: withTiming(heartCardAnim.value, timeOutConfig) }],
-    }));
 
     // useEffect(() => {
     //     if (freeCard) {

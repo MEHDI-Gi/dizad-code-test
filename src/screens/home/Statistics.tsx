@@ -36,7 +36,7 @@ export default function Statistics() {
 
     return (
       <Pressable
-        android_ripple={{ color: colors.screenBack, borderless: false }}
+        android_ripple={{ color: colors.screenBack, borderless: false ,foreground: true }}
         onPress={props.press}
         style={[
           styles.statisticsItems,
@@ -77,7 +77,7 @@ export default function Statistics() {
         flexDirection: "row",
         justifyContent: 'center',
         alignItems: "center",
-        width: "100%",
+        width: "95%",
         marginTop: 5,
         height: 80,
       }]} >
@@ -96,11 +96,11 @@ export default function Statistics() {
             />
           )} */}
         <Pressable
-          android_ripple={{ color: colors.primary, foreground: true, borderless: false }}
+          android_ripple={{ color: colors.secondary, foreground: true, borderless: false }}
           onPress={() => { }}
           style={[
             {
-              flexDirection: "column",
+              flexDirection: "row",
               justifyContent: 'center',
               borderRadius: 8,
               width: '95%',
@@ -111,131 +111,107 @@ export default function Statistics() {
             },
             {
               position: 'relative',
-              backgroundColor: colors.secondary,
-              elevation: 5,
               overflow: 'hidden'
             }
           ]}>
 
-          
+
+          {false && <View style={{
+            flexDirection: "column",
+            justifyContent: 'center',
+            alignItems: "center",
+            paddingHorizontal: 15,
+            gap: 10,
+            height: '100%',
+
+          }}>
+
+            <View
+              style={{
+                width: 10,
+                height: 10,
+                backgroundColor: colors.text.secondary,
+                borderRadius: 50,
+              }}
+            />
+            <View
+              style={{
+                width: 10,
+                height: 10,
+                backgroundColor: '#008700',
+                borderRadius: 50,
+              }}
+            />
+            <View
+              style={{
+                width: 10,
+                height: 10,
+                backgroundColor: 'red',
+                borderRadius: 50,
+              }}
+            />
+
+          </View>}
           <View style={{
             flexDirection: "row",
             justifyContent: 'center',
-            width: '100%',
-            alignItems: "flex-end",
-            paddingHorizontal: 15,
+            alignItems: "center",
+            height: '100%',
             flex: 1,
-            gap: 10
+
 
           }}>
-            <View style={{
-              flexDirection: "row-reverse",
-              justifyContent: 'center',
-              alignItems: "center",
-              gap: 2,
-              flex: 1
-            }}>
-              <View
-                style={{
-                  width: 5,
-                  height: 5,
-                  backgroundColor: colors.primary,
-                  borderRadius: 50,
-                }}
-              />
-              <Text style={{
-                color: 'white',
 
-              }}>
-                Total
-              </Text>
+            <View style={{
+              flex: 1,
+              justifyContent: 'space-evenly',
+              alignItems: "center",
+              height: '100%',
+              
+            }}>
+              <Text style={{
+                fontFamily: "Cairo-Bold",
+                color: colors.text.secondary,
+                fontSize: 16,
+              }}>مجموع</Text>
+              <Text style={{
+                color: colors.text.primary,
+                fontSize: 19,
+              }}>280</Text>
             </View>
             <View style={{
-              flexDirection: "row-reverse",
-              justifyContent: 'center',
-              alignItems: "center",
-              gap: 2,
-              flex: 1
+              flex: 1,
+              justifyContent: 'space-evenly',
 
+              alignItems: "center",
+              height: '100%',
             }}>
-              <View
-                style={{
-                  width: 5,
-                  height: 5,
-                  backgroundColor: '#008700',
-                  borderRadius: 50,
-                }}
-              />
               <Text style={{
-                color: 'white',
-
-              }}>
-                Correct
-              </Text>
-            </View>
-
-            <View style={{
-              flexDirection: "row-reverse",
-              justifyContent: 'center',
-              alignItems: "center",
-              gap: 2,
-              flex: 1
-
-            }}>
-              <View
-                style={{
-                  width: 5,
-                  height: 5,
-                  backgroundColor: 'red',
-                  borderRadius: 50,
-                }}
-              />
+                fontFamily: "Cairo-Bold",
+                color: colors.text.secondary,
+                fontSize: 16,
+              }}>خاطئة</Text>
               <Text style={{
-                color: 'white',
-
-              }}>
-                Wrong
-              </Text>
+                color: colors.text.primary,
+                fontSize: 19,
+              }}>15</Text>
             </View>
-          </View>
-          <View style={{
-            flexDirection: "row",
-            justifyContent: 'center',
-            width: '100%',
-            alignItems: "flex-end",
-            flex: 1,
-            paddingHorizontal: 15,
-            paddingVertical: 5,
-
-          }}>
             <View style={{
-              width: '100%',
-              height: 3,
-              backgroundColor: '#535353',
-              borderRadius: 10,
-              flexDirection: "row-reverse",
-              justifyContent: 'flex-start',
+              flex: 1,
+              justifyContent: 'space-evenly',
+
               alignItems: "center",
-              overflow: 'hidden'
+              height: '100%',
             }}>
-              <View style={{
-                width: '50%',
-                height: '100%',
-                backgroundColor: '#3f8839ff',
-                borderRadius: 10,
-                borderTopStartRadius: 0,
-                borderBottomLeftRadius: 0,
-
-              }} />
-              <View style={{
-                width: '20%',
-                height: '100%',
-                backgroundColor: '#632b2b',
-                borderRadius: 10,
-                borderBottomRightRadius: 0,
-                borderTopEndRadius: 0,
-
-              }} />
+              <Text style={{
+                fontFamily: "Cairo-Bold",
+                color: colors.text.secondary,
+                fontSize: 16,
+              }}>صحيحة</Text>
+              <Text style={{
+                color: colors.text.primary,
+                fontSize: 19,
+              }}>23</Text>
             </View>
           </View>
 

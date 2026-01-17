@@ -162,24 +162,20 @@ export default function Questions() {
                                 width: "90%",
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                flexDirection: 'row',
+                                flexDirection: 'row-reverse',
                                 borderRadius: 8,
                                 backgroundColor: colors.secondary,
                                 overflow: 'hidden',
-                                paddingVertical: 10,
-                                paddingHorizontal: 15,
                                 elevation: 5,
                             },
                             {
-                                borderTopRightRadius: 0,
-                                borderBottomRightRadius: 0,
-                                borderRightWidth: 4,
-                                borderRightColor: sideColors(index),
+
+
                                 overflow: 'hidden'
                             }
                         ]}
                     >
-                        <View style={{
+                        {false&&<View style={{
                             position: 'absolute',
                             bottom: 0,                 // <- ADD THIS  
                             left: 0,                   // <- ADD THIS
@@ -188,8 +184,8 @@ export default function Questions() {
                             backgroundColor: colors.primary,
                             opacity: 0.9,
                             zIndex: 1,
-                        }} />
-                        {item?.cover ? <Image
+                        }} />}
+                        {false ? <Image
                             source={{ uri: item?.cover }}
                             resizeMode='cover'
                             resizeMethod='none'
@@ -204,29 +200,51 @@ export default function Questions() {
                         <View
                             style={[
                                 {
-                                    width: "100%",
+                                    paddingHorizontal: 5,
+                                    height: "100%",
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    overflow: 'hidden',
+                                    zIndex: 1,
+                                    backgroundColor: sideColors(index),
+
+                                },
+
+                            ]}
+                        >
+                            <Text style={{
+                                color: colors.text.primary,
+                                fontSize: 18,
+
+
+                            }}>
+                                {index + 1}
+                            </Text>
+                        </View>
+                        <View
+                            style={[
+                                {
+                                    flex: 1,
+                                    height: "100%",
                                     flexDirection: 'row-reverse',
                                     justifyContent: 'flex-start',
                                     alignItems: 'center',
                                     overflow: 'hidden',
-                                    columnGap: 15,
                                     zIndex: 1,
+                                    paddingHorizontal: 15,
+                                    paddingVertical: 15,
+
                                 },
 
                             ]}
                         >
                             <Text style={{
                                 fontFamily: "Cairo",
-                                color: colors.text.primary,
-                                fontSize: 16,
-                            }}>
-                                {index + 1}
-                            </Text>
-                            <Text style={{
-                                fontFamily: "Cairo",
                                 textAlign: 'right',
                                 color: colors.text.primary,
-                                fontSize: 16,
+                                fontSize: 18,
+
                             }}>
                                 {item.label}
                             </Text>
