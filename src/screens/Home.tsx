@@ -20,20 +20,22 @@ import Animated, {
 import VipBadge from '../components/elements/VipBadge.tsx';
 import HeartBadge from '../components/elements/FreeBadge.tsx';
 
-import { useNavigation, useNavigationState, useRoute } from '@react-navigation/native';
+import { CompositeNavigationProp, NavigatorScreenParams, useNavigation, useNavigationState, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types.ts';
 import FreeBadge from '../components/elements/FreeBadge.tsx';
-import BottomTab from '../components/elements/BottomTab.tsx';
 import { useSize } from '../context/useSize.ts';
 import { BlurView } from '@react-native-community/blur';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import FreeCard from '../components/FreeCard.tsx';
+import { MaterialTopTabNavigationProp } from '@react-navigation/material-top-tabs';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Home() {
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    type RootStackParamList = {
+        MainTabs: NavigatorScreenParams<any>;
+    };
     const { screen, lessons } = useSize()
     const { user, initializing } = useGoogleSignIn();
 
@@ -65,6 +67,8 @@ export default function Home() {
     } = useContext(DataContext);
 
 
+    const navigation = useNavigation<any>();
+
     const QUESTIONS_CURRENT_LABEL = lessonsData?.content?.questions?.content[questionsItemsIndex]?.label;
     const imageBase = 'https://cdn.jsdelivr.net/gh/MEHDI-Gi/dizad_road_test_assets@main/assets';
     const questCover = `${imageBase}/cover/qst.png`
@@ -88,11 +92,31 @@ export default function Home() {
         { cond: 'Pri', label: 'أولوية', img: priorityCover ?? null, sub: '', length: totalPri },
         { cond: 'Qst', label: 'أسئلة', img: questCover ?? null, sub: "", length: totalQst },
     ]
+    const contentItemsPress = (item: any) => {
+        switch (item.cond) {
+            case 'Exm':
+                navigation.navigate('MainTabs', { screen: 'Exams' });
+                break;
+            case 'Sgn':
+                navigation.navigate('MainTabs', { screen: 'Lessons', params: { screen: 'Signs', initial: false } });
+
+                break;
+            case 'Pri':
+                navigation.navigate('MainTabs', { screen: 'Lessons', params: { screen: 'Priority', initial: false } });
+
+                break;
+            case 'Qst':
+                navigation.navigate('MainTabs', { screen: 'Lessons', params: { screen: 'Questions', initial: false } });
+                break;
+            default:
+                break;
+        }
+    }
     const youtubeChanels = [
-        { label: "إمتحان", img: examsCover ?? null, sub: QUESTIONS_CURRENT_LABEL ?? "undefined", },
-        { label: 'إشارات', img: examsCover ?? null, sub: QUESTIONS_CURRENT_LABEL ?? "undefined", },
-        { label: 'أولوية', img: questCover ?? null, sub: '', },
-        { label: 'أسئلة', img: questCover ?? null, sub: QUESTIONS_CURRENT_LABEL ?? "undefined", },
+        { label: "", img: examsCover ?? null, sub: '', },
+        { label: '', img: examsCover ?? null, sub: '', },
+        { label: '', img: questCover ?? null, sub: '', },
+        { label: '', img: questCover ?? null, sub: '', },
     ]
 
 
@@ -156,75 +180,51 @@ export default function Home() {
                     }}>
                         <View style={
                             {
-                                width: 35,
-                                height: 35,
+                                width: 45,
+                                height: 45,
+                                borderRadius: 50,
+                                overflow: 'hidden',
                                 justifyContent: "center",
                                 alignItems: "center",
+                                borderColor: colors.text.primary,
+                                borderWidth: 2,
                             }
                         }>
 
                             <TouchableOpacity
                                 onPress={() => {
-
                                     if (sound) playSound('settingsButton')
                                     navigation.navigate('Profile');
                                 }}>
                                 {userImage ? <Image style={
                                     {
-                                        width: 35,
-                                        height: 35,
-                                        borderRadius: 50,
-                                        borderColor: 'lightgray',
-                                        borderWidth: 0
+                                        width: 45,
+                                        height: 45,
+
                                     }}
                                     source={{ uri: userImage }} /> :
                                     <MaterialIcons
                                         name='person'
-                                        size={25}
+                                        size={35}
                                         color={colors.text.primary}
                                     />
                                 }
-
-                                {user && <View style={{
-                                    zIndex: 1,
-                                    backgroundColor: colors.primary,
-                                    position: 'absolute',
-                                    bottom: 0,
-                                    right: 0,
-                                    width: 10,
-                                    height: 10,
-                                    padding: 1,
-                                    borderRadius: 50,
-                                    alignItems: 'center',
-                                    justifyContent: "center"
-                                }}>
-                                    <View
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                            backgroundColor: 'green',
-                                            borderRadius: 50,
-                                        }}
-                                    />
-                                </View>}
                             </TouchableOpacity>
                         </View>
 
-                        <View style={
-                            {
+                        <View style={{
+                            backgroundColor: 'transparent',
+                            alignItems: 'flex-start',
+                            justifyContent: 'center',
+                            height: 50,
+
+                        }}>
+                            <View style={{
+                                flexDirection: 'column',
                                 backgroundColor: 'transparent',
                                 alignItems: 'flex-start',
                                 justifyContent: 'center',
-                                height: 50,
-
                             }}>
-                            <View style={
-                                {
-                                    flexDirection: 'column',
-                                    backgroundColor: 'transparent',
-                                    alignItems: 'flex-start',
-                                    justifyContent: 'center',
-                                }}>
                                 <View style={{
                                     flexDirection: "row",
                                     alignItems: 'center',
@@ -265,7 +265,7 @@ export default function Home() {
                             icon={true}
                         /> :
                         <FreeBadge
-                            backColor={colors.secondary}
+                            backColor={'transparent'}
                             elevation={0}
                         />
                     }
@@ -317,7 +317,7 @@ export default function Home() {
                                     borderless: false, color: colors.secondary, foreground: true
                                 }
                                 }
-                                onPress={() => { }}
+                                onPress={() => contentItemsPress(item)}
                                 key={`key-${index}`}
                                 style={[{
                                     alignItems: 'center',
@@ -329,7 +329,7 @@ export default function Home() {
                                     flexDirection: 'row',
                                     justifyContent: 'center',
                                     overflow: 'hidden',
-                                   
+
                                 },
                                     // item.cond === 'Qst' &&
                                     // {
@@ -356,7 +356,7 @@ export default function Home() {
                                 {<View style={{
                                     position: 'absolute',
                                     left: 0,
-                                        
+
                                     flexDirection: 'column',
                                     alignItems: 'center',
                                     justifyContent: 'center',
@@ -445,7 +445,7 @@ export default function Home() {
                                         <Image
                                             style={{
                                                 width: "85%",
-                                                height: "85%", 
+                                                height: "85%",
                                                 borderRadius: 10,
                                                 resizeMode: 'cover',
 

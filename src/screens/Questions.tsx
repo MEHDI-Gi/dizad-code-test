@@ -46,7 +46,8 @@ export default function Questions() {
         toggleBookmark,
         isBookmarked,
         setQuestionsItemsIndex,
-        questionsItemsIndex
+        questionsItemsIndex,
+        bookmarkLoading,    
     } = useContext(DataContext);
 
     const handleBookmark = useCallback((category: string, item: any) => {
@@ -175,7 +176,7 @@ export default function Questions() {
                             }
                         ]}
                     >
-                        {false&&<View style={{
+                        {false && <View style={{
                             position: 'absolute',
                             bottom: 0,                 // <- ADD THIS  
                             left: 0,                   // <- ADD THIS
@@ -515,12 +516,14 @@ export default function Questions() {
 
                                             })}
                                         >
-                                            {!isBookmarked('questions', { id: item.id ?? `questions-${index}` })
+
+                                            {bookmarkLoading
                                                 ? (
-                                                    <MaterialCommunityIcons size={30} color={colors.text.primary} name='bookmark-outline' />
+                                                    <ActivityIndicator size={'small'} color={colors.text.primary} />
                                                 ) : (
-                                                    <MaterialCommunityIcons size={30} color={colors.text.primary} name='bookmark' />
-                                                )}
+                                                    <MaterialCommunityIcons size={25} color={colors.text.primary} name={
+                                                        !isBookmarked('questions', { id: item.id ?? `questions-${index}` }) ?
+                                                            'bookmark-outline' : 'bookmark'} />)}
                                         </Pressable>
                                     </View>
                                 </View>

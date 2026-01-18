@@ -14,7 +14,6 @@ import { RootStackParamList } from '../../types.ts';
 
 import { useSize } from '../context/useSize.ts';
 import { useGoogleSignIn } from '../context/auth.ts';
-import BottomTab from '../components/elements/BottomTab.tsx';
 
 export default function Exams() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();

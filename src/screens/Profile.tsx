@@ -273,7 +273,7 @@ const Profile = () => {
         // }
         break;
       case 'dark':
-        // setInitTheme(true);
+        setInitTheme(true);
         const newTheme = currentTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
         setCurrentTheme(newTheme);
         break;
@@ -337,16 +337,16 @@ const Profile = () => {
   }
 
 
-  // if (initTheme) {
-  //   setTimeout(() => {
-  //     setInitTheme(false);
-  //   }, 1000);
-  //   return (
-  //     <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
-  //       <ActivityIndicator size={30} />
-  //     </View>
-  //   )
-  // }
+  if (initTheme) {
+    setTimeout(() => {
+      setInitTheme(false);
+    }, 500);
+    return (
+      <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
+        <ActivityIndicator size={30} />
+      </View>
+    )
+  }
 
   return (
     <View style={{

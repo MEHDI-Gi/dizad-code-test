@@ -41,11 +41,22 @@ export default function Priority() {
     } = useContext(DataContext);
 
     const title = "Priority"
+    const itemsSideColors = [
+        '#4a2b14ff',  // Saddle Brown
+        '#36344aff',  // Dark Slate Blue
+        '#4f6031ff',  // Dark Olive Green
+        '#756230ff',  // Dark Goldenrod
+        '#6e1c2dff',  // Crimson
+        '#2F4F4F',
+
+    ]
+    const sideColors = (index: number) =>
+        itemsSideColors[index % itemsSideColors.length] ?? 'white';
 
     if (initializing || !signsData) {
         return (
             <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
-                <ActivityIndicator size={30} color={'purple'} />
+                <ActivityIndicator size={30} color={sideColors(6)} />
             </View>
         )
     }

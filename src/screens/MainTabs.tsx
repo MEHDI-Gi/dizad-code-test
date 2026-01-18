@@ -7,8 +7,12 @@ import BottomTab from '../components/elements/BottomTab';
 import Bookmarks from './Bookmarks';
 import Exams from './Exams';
 import Lessons from './Lessons';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
-const Tab = createMaterialTopTabNavigator();
+
+
+
+const Tab = createMaterialTopTabNavigator<any>();
 
 export function MainTabs() {
     return (
