@@ -1,15 +1,28 @@
-import React, { createContext, useRef, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
-import { AppState, Vibration, View, } from 'react-native';
+import React, {
+  createContext,
+  useRef,
+  useState,
+  useEffect,
+  ReactNode,
+  useMemo,
+  useCallback,
+} from 'react';
+import { AppState, Vibration, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAsyncStorageState } from './useAsyncStorageState';
 import Sound from 'react-native-sound';
 import { useGoogleSignIn } from './auth';
 import { database, auth } from './firebaseConfig';
-import { ref, set, onValue, update, firebase } from '@react-native-firebase/database';
+import {
+  ref,
+  set,
+  onValue,
+  update,
+  firebase,
+} from '@react-native-firebase/database';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import Bookmarks from '../screens/Bookmarks';
 import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
-
 
 const DataContext = createContext<any>(null);
 
@@ -18,10 +31,8 @@ interface DataProviderProps {
 }
 
 const DataProvider = ({ children }: DataProviderProps) => {
-
   const { user, initializing, signIn, logout } = useGoogleSignIn();
   // 1. Get your signs data
-
 
   const THEME_DARK = 'dark';
   const THEME_LIGHT = 'light';
@@ -34,13 +45,23 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const [userImage, setUserImage] = useState<string | null>(null);
   const [userVip, setUserVip] = useState<string>('');
 
-  const [language, setLanguage] = useAsyncStorageState<string>('Language', 'english');
-  const [isGradient, setIsGradient] = useAsyncStorageState<boolean>('Gradient', false);
+  const [language, setLanguage] = useAsyncStorageState<string>(
+    'Language',
+    'english',
+  );
+  const [isGradient, setIsGradient] = useAsyncStorageState<boolean>(
+    'Gradient',
+    false,
+  );
   const [vibrate, setVibrate] = useAsyncStorageState<boolean>('Vibrate', true);
   const [sound, setSound] = useAsyncStorageState<boolean>('Sound', true);
   const [speed, setSpeed] = useAsyncStorageState<number>('Speed', 0);
-  const [currentTheme, setCurrentTheme] = useAsyncStorageState<Theme>('CurrentTheme', THEME_DARK);
-  const [questionsItemsIndex, setQuestionsItemsIndex] = useAsyncStorageState<number>('QuestionsItemIndex', 0);
+  const [currentTheme, setCurrentTheme] = useAsyncStorageState<Theme>(
+    'CurrentTheme',
+    THEME_DARK,
+  );
+  const [questionsItemsIndex, setQuestionsItemsIndex] =
+    useAsyncStorageState<number>('QuestionsItemIndex', 0);
 
   type CategoryBookmarks = Record<string, BookmarkItem>;
   type BookmarksState = {
@@ -56,7 +77,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
   });
 
   const [dataLevelIndex, setDataLevelIndex] = useState<number>(1);
-  const [quizCategoriesData, setQuizCategoriesData] = useState<string[]>([])
+  const [quizCategoriesData, setQuizCategoriesData] = useState<string[]>([]);
 
   // const [usersData, setUsersData] = useState<Record<string, any>>({});
   const [examsData, setExamsData] = useState<Record<string, any>>({});
@@ -68,7 +89,9 @@ const DataProvider = ({ children }: DataProviderProps) => {
   // const [usersLoaded, setUsersLoaded] = useState<boolean>(false);
   const [userLoaded, setUserLoaded] = useState<boolean>(false);
 
-  const [globalQuestionsLength, setGobalQuestionsLength] = useState<number | null>(null)
+  const [globalQuestionsLength, setGobalQuestionsLength] = useState<
+    number | null
+  >(null);
 
   const unsubscribeLessonsListener = useRef<(() => void) | null>(null);
   const unsubscribeExamsListener = useRef<(() => void) | null>(null);
@@ -76,32 +99,29 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const unsubscribeUserListener = useRef<(() => void) | null>(null);
 
   useEffect(() => {
-
     const lessonsDataRef = ref(database, '/lessons');
     const examsDataRef = ref(database, '/exams');
     // const usersDataRef = ref(database, '/users');
 
-    unsubscribeLessonsListener.current = onValue(lessonsDataRef, (snapshot) => {
+    unsubscribeLessonsListener.current = onValue(lessonsDataRef, snapshot => {
       const fetchedData = snapshot.val();
       if (fetchedData) {
         setLessonsData(fetchedData);
         setLessonsLoaded(true);
         console.log('Lessons data loaded');
-
       } else {
         console.log('No lessons data');
       }
     });
 
-    unsubscribeExamsListener.current = onValue(examsDataRef, (snapshot) => {
+    unsubscribeExamsListener.current = onValue(examsDataRef, snapshot => {
       const fetchedData = snapshot.val();
       if (fetchedData) {
         const keys = Object.keys(fetchedData);
-        setQuizCategoriesData(keys)
+        setQuizCategoriesData(keys);
         setExamsData(fetchedData);
         console.log('Quiz data loaded');
         setExamsLoaded(true);
-
       } else {
         console.log('No quiz data');
       }
@@ -119,22 +139,23 @@ const DataProvider = ({ children }: DataProviderProps) => {
     // });
 
     const handleUserData = async () => {
-      if (!user?.uid) {
-        console.log('Guest mode');
-        setUserLoaded(false);
-        const guestName = await AsyncStorage.getItem('guestUserName') || 'Guest';
-        const guestImage = await AsyncStorage.getItem('guestImage') || null;
-        setUserName(guestName);
-        setUserImage(guestImage);
-        return;
-      }
-      console.log('Authenticated user');
-      await AsyncStorage.multiRemove(['guestUserName', 'guestImage']);
+      // if (!user?.uid) {
+      //   console.log('Guest mode');
+      //   setUserLoaded(false);
+      //   const guestName = await AsyncStorage.getItem('guestUserName') || 'Guest';
+      //   const guestImage = await AsyncStorage.getItem('guestImage') || null;
+      //   setUserName(guestName);
+      //   setUserImage(guestImage);
+      //   return;
+      // }
+      // console.log('Authenticated user');
+      // await AsyncStorage.multiRemove(['guestUserName', 'guestImage']);
 
       const userDataRef = ref(database, `users/${user.uid}`);
 
-      unsubscribeUserListener.current = onValue(userDataRef, (snapshot) => {
-        const creationTime = auth.currentUser?.metadata?.creationTime || new Date().toISOString();
+      unsubscribeUserListener.current = onValue(userDataRef, snapshot => {
+        const creationTime =
+          auth.currentUser?.metadata?.creationTime || new Date().toISOString();
 
         const firebaseData = snapshot.val();
         if (firebaseData) {
@@ -143,7 +164,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
           if (!firebaseData.firstSignIn) {
             update(ref(database, `users/${user.uid}`), {
-              firstSignIn: creationTime
+              firstSignIn: creationTime,
             }).catch(console.error);
           }
           setUserOnline(firebaseData.UserOnline ?? false);
@@ -156,7 +177,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
           if (!firebaseData.Bookmarks) {
             const emptyBookmarks = { signs: {}, questions: {}, priority: {} };
             update(ref(database, `users/${user.uid}`), {
-              Bookmarks: emptyBookmarks
+              Bookmarks: emptyBookmarks,
             }).catch(console.error);
             setBookmarks(emptyBookmarks);
           } else {
@@ -164,7 +185,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
           }
         }
       });
-    }
+    };
 
     handleUserData();
 
@@ -190,11 +211,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
   }, [lessonsLoaded, examsLoaded, userLoaded]);
   // usersLoaded,
 
-
   const [signsItemsIndex, setSignsItemsIndex] = useState<number>(0);
-
-
-
 
   function memberSinceString(firstSignInDateStr: string | number | Date) {
     const firstSignInDate = new Date(firstSignInDateStr);
@@ -216,7 +233,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
       return `Member since 1 month`;
     } else {
       return `Member since ${totalMonths} months`;
-
     }
   }
   const memberSince = '';
@@ -226,117 +242,123 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
   const [isPicAdd, setIsPicAdd] = useState<boolean>(false);
 
-  console.log('your global data')
-  const [loading, setLoading] = useState<boolean>(true)
-  const [isAccountDeleted, setIsAccountDeleted] = React.useState<boolean | null>(null)
-  const [snackOptions, setSnackOptions] = useState<{ label: string; icon: string }>({ label: '', icon: '' })
-  const [loadingOptions, setLoadingOptions] = useState({ label: '', icon: '' })
-  const [loadScreen, setLoadScreen] = useState<boolean>(false)
+  console.log('your global data');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [isAccountDeleted, setIsAccountDeleted] = React.useState<
+    boolean | null
+  >(null);
+  const [snackOptions, setSnackOptions] = useState<{
+    label: string;
+    icon: string;
+  }>({ label: '', icon: '' });
+  const [loadingOptions, setLoadingOptions] = useState({ label: '', icon: '' });
+  const [loadScreen, setLoadScreen] = useState<boolean>(false);
   let snackVisibility = {
     logout: false,
     accountDeleted: false,
     apparence: false,
-    reset: false
+    reset: false,
   };
   const [isActIndicator, setIsActIndicator] = useState<boolean>(false);
 
   const colorsList: any = {
     darkColors: {
-      primary: "#181818ff",
-      secondary: "#2b2b2bff",
+      primary: '#16161e',
+      secondary: '#1a1b26',
+      exm: '#282a3a',
       opacity: {
-        images: '#00000098',
+        primary: '#00000098',
       },
       text: {
-        primary: "#ebebebff",
-        secondary: "#adadadff",
+        primary: '#ebebebff',
+        secondary: '#adadadff',
       },
       button: {
-        primary: "#dba400",
-        secondary: "#a98003ff",
+        primary: '#dba400',
+        secondary: '#a98003ff',
         subTab: {
-          prim: "#2b2b2bff",
-          second: "#a98003ff",
+          prim: '#2b2b2bff',
+          second: '#a98003ff',
         },
-
       },
       shimmer: {
         first: ['#6161617c', '#2b2b2bff', '#6161617c'],
-        second: ['#2b2b2bff', '#6161617c', '#2b2b2bff']
+        second: ['#2b2b2bff', '#6161617c', '#2b2b2bff'],
       },
       bottomTab: {
         color: '#dba400',
         items: {
-          primary: "black",
-          secondary: "lightgray",
-        }
+          primary: 'black',
+          secondary: 'lightgray',
+        },
       },
       subTab: {
         color: '#2b2b2bff',
         items: {
-          primary: "white",
-          secondary: "gray",
-        }
-      }
+          primary: 'white',
+          secondary: 'gray',
+        },
+      },
     },
 
     lightColors: {
-      primary: "#eaeaeaff",
-      secondary: "white",
+      primary: '#eaeaeaff',
+      secondary: 'white',
+      exm: '#282a3a',
+
       opacity: {
         images: '#6e6e6e98',
       },
       text: {
-        primary: "#181818ff",
-        secondary: "#494949ff",
+        primary: '#181818ff',
+        secondary: '#494949ff',
       },
       button: {
-        primary: "#dba400",
-        secondary: "#a98003ff",
+        primary: '#dba400',
+        secondary: '#a98003ff',
         subTab: {
-          primary: "#dba400",
-          secondary: "#a98003ff",
-        }
+          primary: '#dba400',
+          secondary: '#a98003ff',
+        },
       },
       shimmer: {
-        colors: ['#eaeaeaff', 'white', '#eaeaeaff']
+        colors: ['#eaeaeaff', 'white', '#eaeaeaff'],
       },
       bottomTab: {
         color: '#dba400',
         items: {
-          primary: "black",
-          secondary: "black",
-        }
+          primary: 'black',
+          secondary: 'black',
+        },
       },
       subTab: {
         color: 'white',
         items: {
-          primary: "black",
-          secondary: "gray",
-        }
-      }
+          primary: 'black',
+          secondary: 'gray',
+        },
+      },
     },
-
-  }
+  };
 
   const languagesList = {
     arabic: {
       langAr: 'العربية',
       langEn: 'الإنجليزية',
       settingsEdt: 'إعدادات',
-      profileEdt: "تعديل الملف الشخصي",
+      profileEdt: 'تعديل الملف الشخصي',
       leaderBoard: 'لوحة المتصدرين',
-      langEdt: "اللغة",
-      soundEdt: "الصوت",
-      vibrateEdt: "الإهتزاز",
-      apparenceEdt: "المضهر",
+      langEdt: 'اللغة',
+      soundEdt: 'الصوت',
+      vibrateEdt: 'الإهتزاز',
+      apparenceEdt: 'المضهر',
       reportEdt: 'الإبلاغ عن مشكلة',
       reportPlh: 'يمكنك ان تكتب مشكلة هنا ...',
       lang: '',
       email: 'البريد الإلكتروني',
-      restEdt: "اعادة ضبط",
-      deleteEdt: "حذف الحساب",
-      logout: "تسجيل الخروج",
+      restEdt: 'اعادة ضبط',
+      deleteEdt: 'حذف الحساب',
+      logout: 'تسجيل الخروج',
       soundEnable: 'تم تفعيل الصوت',
       soundDisable: 'تم تعطيل الصوت',
       vibrateEnable: 'تم تفعيل الإهتزاز',
@@ -362,27 +384,26 @@ const DataProvider = ({ children }: DataProviderProps) => {
       accountDeleted: 'تم حذف الحساب بنجاح',
       dataReseted: 'تم حذف البيانات بنجاح',
       themeChanged: 'تم تغيير المضهر الى',
-      logoutDone: 'تم تسجيل الخروج'
-
+      logoutDone: 'تم تسجيل الخروج',
     },
     english: {
       // Profile
       langEn: 'English',
       langAr: 'Arabic',
       settingsEdt: 'Settings',
-      profileEdt: "Edit Profile",
+      profileEdt: 'Edit Profile',
       leaderBoard: 'Leaderboard',
-      langEdt: "Language",
-      soundEdt: "Sound",
-      vibrateEdt: "Vibrate",
-      apparenceEdt: "Appearance",
-      reportEdt: "Report Issue",
-      restEdt: "Reset",
+      langEdt: 'Language',
+      soundEdt: 'Sound',
+      vibrateEdt: 'Vibrate',
+      apparenceEdt: 'Appearance',
+      reportEdt: 'Report Issue',
+      restEdt: 'Reset',
       reportPlh: 'Write your report here...',
       email: 'Email',
 
-      deleteEdt: "Delete Account",
-      logout: "Logout",
+      deleteEdt: 'Delete Account',
+      logout: 'Logout',
       soundEnable: 'Sound Enable',
       soundDisable: 'Sound Disable',
       vibrateEnable: 'Vibration Enable',
@@ -408,15 +429,16 @@ const DataProvider = ({ children }: DataProviderProps) => {
       accountDeleted: 'Account Deleted successfully',
       dataReseted: 'Data Reseted successfully',
       themeChanged: 'Theme Changed to',
-      logoutDone: "logout successfully"
-
-
+      logoutDone: 'logout successfully',
     },
   };
 
-
   useEffect(() => {
-    setColors(currentTheme === THEME_DARK ? colorsList.darkColors : colorsList.lightColors);
+    setColors(
+      currentTheme === THEME_DARK
+        ? colorsList.darkColors
+        : colorsList.lightColors,
+    );
   }, [currentTheme]);
 
   // const [userXp, setUserXp] = useAsyncStorageState<number>('UserXp', 0);
@@ -432,17 +454,15 @@ const DataProvider = ({ children }: DataProviderProps) => {
   // const [speed, setSpeed] = useAsyncStorageState<number>('Speed', 0);
   // const [userVip, setUserVip] = useAsyncStorageState<string>('UserVip', '');
 
-
-
-
   type Language = 'arabic' | 'english';
-  type LanguageTexts = typeof languagesList.arabic;  // Infers all text properties
+  type LanguageTexts = typeof languagesList.arabic; // Infers all text properties
 
   // Then fix:
   const texts: LanguageTexts = languagesList[language as Language];
 
-
-  const [colors, setColors] = useState<typeof colorsList.darkColors>(colorsList.darkColors);
+  const [colors, setColors] = useState<typeof colorsList.darkColors>(
+    colorsList.darkColors,
+  );
 
   // Load saved theme on mount
   // useEffect(() => {
@@ -464,8 +484,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
   // useEffect(() => {
   //   AsyncStorage.setItem('Apparence', currentTheme);
   // }, [currentTheme]);
-
-
 
   interface BookmarkItem {
     id?: string;
@@ -490,7 +508,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
       const itemId = String(item.id);
       // OPTIMISTIC UPDATE - store ONLY ID reference
-      setBookmarks((prevBookmarks) => {
+      setBookmarks(prevBookmarks => {
         const currentCategory = prevBookmarks?.[category] ?? {};
         const categoryBookmarks = { ...currentCategory };
         const wasBookmarked = !!categoryBookmarks[itemId];
@@ -501,14 +519,14 @@ const DataProvider = ({ children }: DataProviderProps) => {
           // Store MINIMAL data - just ID + basics for display
           categoryBookmarks[itemId] = {
             id: itemId,
-            timestamp: Date.now()
+            timestamp: Date.now(),
           };
         }
 
         const fullBookmarks = {
           signs: prevBookmarks?.signs ?? {},
           questions: prevBookmarks?.questions ?? {},
-          priority: prevBookmarks?.priority ?? {}
+          priority: prevBookmarks?.priority ?? {},
         };
         fullBookmarks[category] = categoryBookmarks;
 
@@ -517,26 +535,34 @@ const DataProvider = ({ children }: DataProviderProps) => {
           .then(() => {
             console.log(`✅ Firebase SUCCESS`);
             setBookmarkLoading(false); // Hide on success
-          }).catch((error) => {
+          })
+          .catch(error => {
             console.error('🔥 Firebase bookmark sync failed:', error);
             setBookmarkLoading(false);
           });
 
-        console.log(`📱 Bookmark ${wasBookmarked ? 'REMOVED' : 'ADDED'}:`, itemId, 'in', category);
+        console.log(
+          `📱 Bookmark ${wasBookmarked ? 'REMOVED' : 'ADDED'}:`,
+          itemId,
+          'in',
+          category,
+        );
 
         return {
           ...prevBookmarks,
-          [category]: categoryBookmarks
+          [category]: categoryBookmarks,
         };
       });
-
     } catch (error) {
       console.error('💥 Bookmark toggle CRASH:', error);
       setBookmarkLoading(false);
     }
   };
 
-  const isBookmarked = (category: keyof BookmarksState, item: BookmarkItem): boolean => {
+  const isBookmarked = (
+    category: keyof BookmarksState,
+    item: BookmarkItem,
+  ): boolean => {
     const itemKey = buildItemKey(item);
     if (!itemKey) return false;
     const categoryBookmarks = bookmarks[category] || {};
@@ -544,7 +570,10 @@ const DataProvider = ({ children }: DataProviderProps) => {
   };
 
   // NEW: Load bookmark details from main data
-  const getBookmarkedItem = (category: keyof BookmarksState, itemId: string) => {
+  const getBookmarkedItem = (
+    category: keyof BookmarksState,
+    itemId: string,
+  ) => {
     // Fetch from main data source using ID
     // e.g., firebase.database().ref(`learn/.../${itemId}`).once('value')
     const bookmark = bookmarks[category]?.[itemId];
@@ -554,14 +583,11 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const resetBookmarks = (category: keyof BookmarksState) => {
     setBookmarks(prev => ({
       ...prev,
-      [category]: {}
+      [category]: {},
     }));
   };
 
   const [isRewardAdd, setIsRewardAdd] = useState(false);
-
-
-
 
   Sound.setCategory('Playback');
 
@@ -598,21 +624,19 @@ const DataProvider = ({ children }: DataProviderProps) => {
     });
   };
 
-
   const playSound = (key: string | number) => {
     const sound = sounds.current[key];
-    if (sound) sound.play(success => {
-      if (!success) console.error(`Failed to play sound "${key}".`);
-    });
+    if (sound)
+      sound.play(success => {
+        if (!success) console.error(`Failed to play sound "${key}".`);
+      });
   };
 
-
-  const [snackbarState, setSnackbarState] = useState<boolean>(false)
-  const [vipCard, setVipCard] = useState<boolean>(false)
-  const [freeCard, setFreeCard] = useState<boolean>(false)
-  const [statisticsCard, setStatisticsCard] = useState<boolean>(false)
-  const [vipPlansCard, setVipPlansCard] = useState<boolean>(false)
-
+  const [snackbarState, setSnackbarState] = useState<boolean>(false);
+  const [vipCard, setVipCard] = useState<boolean>(false);
+  const [freeCard, setFreeCard] = useState<boolean>(false);
+  const [statisticsCard, setStatisticsCard] = useState<boolean>(false);
+  const [vipPlansCard, setVipPlansCard] = useState<boolean>(false);
 
   const [dataAsync, setDataAsync] = useState<boolean>(false);
 
@@ -647,7 +671,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
   //   if (JSON.stringify(prevDataRef.current) !== JSON.stringify(dataToUpdate)) {
   //     prevDataRef.current = dataToUpdate;
 
-
   //     setDataAsync(true);
   //     update(ref(database, `users/${user.uid}`), dataToUpdate)
   //       .then(() => {
@@ -665,19 +688,26 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
   // FIXED Logout
 
-  const dataToUpdate = useMemo(() => ({
-    UserName: userName,
-    userImage: userImage,
-    UserOnline: userOnline,
-    UserXp: userXp,
-    GlobTrueAns: globTrueAns,
-    GlobFalseAns: globFalseAns,
-    UserVip: userVip,
-  }), [
-    userName, userImage, userOnline, userXp,
-    globTrueAns, globFalseAns,
-    userVip,
-  ]);
+  const dataToUpdate = useMemo(
+    () => ({
+      UserName: userName,
+      userImage: userImage,
+      UserOnline: userOnline,
+      UserXp: userXp,
+      GlobTrueAns: globTrueAns,
+      GlobFalseAns: globFalseAns,
+      UserVip: userVip,
+    }),
+    [
+      userName,
+      userImage,
+      userOnline,
+      userXp,
+      globTrueAns,
+      globFalseAns,
+      userVip,
+    ],
+  );
 
   useEffect(() => {
     if (!user?.uid || dataAsync) return;
@@ -685,142 +715,187 @@ const DataProvider = ({ children }: DataProviderProps) => {
     if (JSON.stringify(prevDataRef.current) !== JSON.stringify(dataToUpdate)) {
       prevDataRef.current = dataToUpdate;
       setDataAsync(true);
-      update(ref(database, `users/${user.uid}`), dataToUpdate)
-        .finally(() => setDataAsync(false));
+      update(ref(database, `users/${user.uid}`), dataToUpdate).finally(() =>
+        setDataAsync(false),
+      );
     }
   }, [user?.uid, dataAsync, dataToUpdate]);
 
-  const [leaderBoardIcon, setLeaderBoardIcon] = useState(false)
+  const [leaderBoardIcon, setLeaderBoardIcon] = useState(false);
 
-
-  const [isLogout, setIsLogout] = useState(true)
+  const [isLogout, setIsLogout] = useState(true);
   const keysToRemove = [
     'QuestionsItemIndex',
-    'UserOnline', 'UserXp', 'UserVip', 'Speed', 'Language', 'GlobTrueAns',
-    'GlobFalseAns', 'Gradient', 'Vibrate', 'Sound', 'HelpPoint',
-    'LivesHeart', 'DataLevelIndex', 'QuestIndices', 'AnswerStats',
-    'Apparence', 'lastLifeUpdate',
+    'UserOnline',
+    'UserXp',
+    'UserVip',
+    'Speed',
+    'Language',
+    'GlobTrueAns',
+    'GlobFalseAns',
+    'Gradient',
+    'Vibrate',
+    'Sound',
+    'HelpPoint',
+    'LivesHeart',
+    'DataLevelIndex',
+    'QuestIndices',
+    'AnswerStats',
+    'Apparence',
+    'lastLifeUpdate',
   ];
   const handleLogout = async (navigation: NavigationProp<ParamListBase>) => {
-
     if (user) {
       try {
-        setIsLogout(false)
+        setIsLogout(false);
         unsubscribeLessonsListener.current?.();
         unsubscribeExamsListener.current?.();
         // unsubscribeUsersListener.current?.();
         unsubscribeUserListener.current?.();
-        await logout()
+        await logout();
         await AsyncStorage.multiRemove(keysToRemove);
-        navigation.navigate('Login')
+        navigation.navigate('Login');
       } catch (error) {
         console.error('Logout error:', error);
       } finally {
-        setIsLogout(true)
+        setIsLogout(true);
       }
     }
   };
 
-  const toggleBookmarkMemo = useCallback(toggleBookmark, [user?.uid, bookmarks]);
+  const toggleBookmarkMemo = useCallback(toggleBookmark, [
+    user?.uid,
+    bookmarks,
+  ]);
   const playSoundMemo = useCallback(playSound, []);
   const handleLogoutMemo = useCallback(handleLogout, [user?.uid]);
 
+  const contextValue = useMemo(
+    () => ({
+      bookmarkLoading,
+      setBookmarkLoading,
+      globalQuestionsLength,
+      dataAsync,
+      isLogout,
+      setIsLogout,
+      handleLogout: handleLogoutMemo,
+      firebaseLoaded,
+      setFirebaseLoaded,
+      setExamsLoaded,
+      // setUsersLoaded,
+      setUserLoaded,
+      unsubscribeExamsListener,
+      // unsubscribeUsersListener,
+      unsubscribeUserListener,
+      userVip,
+      setUserVip,
+      quizCategoriesData,
+      leaderBoardIcon,
+      setLeaderBoardIcon,
+      memberSince,
+      speed,
+      setSpeed,
+      userXp,
+      setUserXp,
+      userOnline,
+      setUserOnline,
+      vipCard,
+      setVipCard,
+      freeCard,
+      setFreeCard,
+      statisticsCard,
+      setStatisticsCard,
+      vipPlansCard,
+      setVipPlansCard,
+      snackbarState,
+      setSnackbarState,
+      playSound: playSoundMemo,
+      // pushToProgress ,setPushToProgress,
+      examsData,
+      dataLength,
+      dataArray,
+      //  usersData,
+      dataLevelIndex,
+      setDataLevelIndex,
 
-  const contextValue = useMemo(() => ({
-    bookmarkLoading, setBookmarkLoading,
-    globalQuestionsLength,
-    dataAsync,
-    isLogout, setIsLogout,
-    handleLogout: handleLogoutMemo,
-    firebaseLoaded,
-    setFirebaseLoaded,
-    setExamsLoaded,
-    // setUsersLoaded,
-    setUserLoaded,
-    unsubscribeExamsListener,
-    // unsubscribeUsersListener,
-    unsubscribeUserListener,
-    userVip, setUserVip,
-    quizCategoriesData,
-    leaderBoardIcon, setLeaderBoardIcon,
-    memberSince,
-    speed, setSpeed,
-    userXp, setUserXp,
-    userOnline, setUserOnline,
-    vipCard, setVipCard,
-    freeCard, setFreeCard,
-    statisticsCard, setStatisticsCard,
-    vipPlansCard, setVipPlansCard,
-    snackbarState, setSnackbarState,
-    playSound: playSoundMemo,
-    // pushToProgress ,setPushToProgress,
-    examsData, dataLength, dataArray,
-    //  usersData,
-    dataLevelIndex, setDataLevelIndex,
+      questionsItemsIndex,
+      setQuestionsItemsIndex,
 
-
-    questionsItemsIndex, setQuestionsItemsIndex,
-
-    bookmarks, setBookmarks,
-    resetBookmarks,
-    toggleBookmark: toggleBookmarkMemo,
-    isBookmarked,
-    globTrueAns, setGlobTrueAns,
-    globFalseAns, setGlobFalseAns,
-    loading,
-    userName, setUserName,
-    isPicAdd,
-    setIsPicAdd,
-    userImage,
-    setUserImage,
-    isActIndicator, setIsActIndicator,
-    language, setLanguage,
-    colors, setColors,
-    currentTheme, setCurrentTheme,
-    THEME_DARK, THEME_LIGHT,
-    isRewardAdd, setIsRewardAdd,
-    vibrate, setVibrate,
-    sound, setSound,
-    colorsList,
-    isGradient, setIsGradient,
-    languagesList, texts,
-    isAccountDeleted, setIsAccountDeleted,
-    snackVisibility,
-    snackOptions, setSnackOptions,
-    loadingOptions, setLoadingOptions,
-    loadScreen, setLoadScreen,
-    lessonsData,
-    lessonsLoaded,
-    setSignsItemsIndex,
-    signsItemsIndex,
-
-  }), [
-    questionsItemsIndex,
-    signsItemsIndex,
-    lessonsData,
-    examsData,
-    colors,
-    currentTheme,
-    userName,
-    userImage,
-    vibrate,
-    sound,
-    language,
-    userXp,
-    bookmarks,                // Bookmarks ⭐
-    firebaseLoaded,           // Loading ⭐
-    userVip,                  // VIP ⭐
-    globTrueAns,              // Stats ⭐
-    globFalseAns,
-    bookmarkLoading
-  ]);
-
+      bookmarks,
+      setBookmarks,
+      resetBookmarks,
+      toggleBookmark: toggleBookmarkMemo,
+      isBookmarked,
+      globTrueAns,
+      setGlobTrueAns,
+      globFalseAns,
+      setGlobFalseAns,
+      loading,
+      userName,
+      setUserName,
+      isPicAdd,
+      setIsPicAdd,
+      userImage,
+      setUserImage,
+      isActIndicator,
+      setIsActIndicator,
+      language,
+      setLanguage,
+      colors,
+      setColors,
+      currentTheme,
+      setCurrentTheme,
+      THEME_DARK,
+      THEME_LIGHT,
+      isRewardAdd,
+      setIsRewardAdd,
+      vibrate,
+      setVibrate,
+      sound,
+      setSound,
+      colorsList,
+      isGradient,
+      setIsGradient,
+      languagesList,
+      texts,
+      isAccountDeleted,
+      setIsAccountDeleted,
+      snackVisibility,
+      snackOptions,
+      setSnackOptions,
+      loadingOptions,
+      setLoadingOptions,
+      loadScreen,
+      setLoadScreen,
+      lessonsData,
+      lessonsLoaded,
+      setSignsItemsIndex,
+      signsItemsIndex,
+    }),
+    [
+      questionsItemsIndex,
+      signsItemsIndex,
+      lessonsData,
+      examsData,
+      colors,
+      currentTheme,
+      userName,
+      userImage,
+      vibrate,
+      sound,
+      language,
+      userXp,
+      bookmarks, // Bookmarks ⭐
+      firebaseLoaded, // Loading ⭐
+      userVip, // VIP ⭐
+      globTrueAns, // Stats ⭐
+      globFalseAns,
+      bookmarkLoading,
+    ],
+  );
 
   return (
-    <DataContext.Provider value={contextValue}
-    >
-      {children}
-    </DataContext.Provider>
+    <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>
   );
 };
 export { DataContext, DataProvider };

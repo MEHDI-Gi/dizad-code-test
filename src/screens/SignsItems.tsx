@@ -356,7 +356,7 @@ const SignsItems = () => {
                     backgroundColor: colors.secondary,
                     width: 30,
                     height: 30,
-                    borderRadius: 50,
+                    borderRadius: 8,
                     top: 8,
                     right: 8,
                     position: 'absolute',
@@ -433,9 +433,9 @@ const SignsItems = () => {
                       {item?.label ? (
                         <Text style={{
                           textAlign: 'center',
-                          fontFamily: 'Cairo',
+                          fontFamily: 'Cairo-Bold',
                           color: colors.text.primary,
-                          fontSize: 16,
+                          fontSize: 18,
 
                         }}>
                           {item.label}
@@ -454,7 +454,7 @@ const SignsItems = () => {
                             textAlign: 'center',
                             fontFamily: 'Cairo',
                             color: colors.text.secondary,
-                            fontSize: 16,
+                            fontSize: 18,
 
                           }}>
                           {item.description}
@@ -496,26 +496,7 @@ const SignsItems = () => {
                     height: 70,
                     paddingHorizontal: 10,
                     gap: 8,
-
-                    // backgroundColor: 'blue'
                   }}>
-                    <Pressable
-                      android_ripple={{ color: colors.primary, borderless: false, foreground: true }}
-                      style={{
-                        overflow: 'hidden',
-                        borderRadius: 8,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 40,
-                        height: 40,
-                        backgroundColor: colors.secondary
-                      }}
-                      onPress={() => { }}
-                    >
-
-                      <MaterialIcons size={25} color={colors.text.primary} name='report-gmailerrorred' />
-
-                    </Pressable>
                     <Pressable
                       android_ripple={{ color: colors.primary, borderless: false, foreground: true }}
                       style={{

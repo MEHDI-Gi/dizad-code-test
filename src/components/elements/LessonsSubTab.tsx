@@ -139,15 +139,13 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
                                 height: '100%',
                                 overflow: 'hidden',
                             },]}>
-
-                                <Text style={
-                                    {
-                                        color: colors.subTab.items.primary,
-                                        fontFamily: 'Cairo',
-                                    }}>{config.label}</Text>
+                                <Text style={{
+                                    color: colors.subTab.items.primary,
+                                    fontFamily: 'Cairo-Bold',
+                                    fontSize: 15,
+                                }}>{config.label}</Text>
                             </View>}
                         </Pressable >
-
                     )
                 })}
                 {/* <View style={{ position: 'absolute', backgroundColor: colors.secText, height: '30%', width: 0.5 }}></View> */}

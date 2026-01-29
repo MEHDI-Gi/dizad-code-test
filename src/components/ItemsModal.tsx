@@ -41,7 +41,6 @@ export default function ItemsModal(props: any) {
     const { lessons, screen } = useSize();
 
     const {
-
         colors,
         sound, playSound,
         isGradient,
@@ -56,8 +55,6 @@ export default function ItemsModal(props: any) {
     const handleBookmark = useCallback((category: string, item: any) => {
         toggleBookmark(category, item);
     }, [toggleBookmark]);
-
-
 
     if (!props.visible) {
         return null;

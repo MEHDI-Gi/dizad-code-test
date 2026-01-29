@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator, } from '@react-navigation/native-stack';
@@ -33,6 +33,8 @@ import Questions from './Questions.tsx';
 import Priority from './Priority.tsx';
 import { MainTabs } from './MainTabs.tsx';
 import SplashScreen from './SplashScreen.tsx';
+import { useAd } from '../context/useAd.ts';
+import { usePeriodicAd } from '../context/usePeriodicAd.ts';
 
 export default function Main() {
 
@@ -43,6 +45,7 @@ export default function Main() {
         vipPlansCard,
         statisticsCard,
         snackOptions,
+        
     } = useContext(DataContext);
 
     const [adLoaded, setAdLoaded] = useState<boolean>(false);
@@ -55,6 +58,7 @@ export default function Main() {
             });
     }, []);
 
+    usePeriodicAd();
     const [showLoader, setShowLoader] = useState<boolean>(false);
     // useEffect(() => {
     //     if (dataAsync) {

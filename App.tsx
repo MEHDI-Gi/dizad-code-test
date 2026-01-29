@@ -1,8 +1,6 @@
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { StatusBar, StyleSheet,  useColorScheme, View } from 'react-native';
 import {
   SafeAreaProvider,
-  useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import { DataProvider } from './src/context/contextData';
 
@@ -13,11 +11,6 @@ import SystemNavigationBar from 'react-native-system-navigation-bar';
 function App() {
 
   useEffect(() => {
-    // Option A: Hide it normally (it comes back on touch)
-    // SystemNavigationBar.navigationHide();
-
-    // Option B: Sticky Immersive (Recommended for games/full screen)
-    // It stays hidden and semi-transparently overlays if swiped up
     SystemNavigationBar.stickyImmersive();
   }, []);
 
@@ -32,14 +25,13 @@ function App() {
         </DataProvider>
       </View>
     </SafeAreaProvider>
-  );
+  ); 
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     opacity: 1,
-
   },
 });
 

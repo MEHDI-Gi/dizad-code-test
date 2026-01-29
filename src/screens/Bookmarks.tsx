@@ -108,62 +108,59 @@ function BookmarkedSigns({ bookmarksSizes, bookmarks, lessonsData, colors }: any
                     justifyContent: 'center',
                 }}>
                     {signsContent?.map((item) => {
-                        if (true) {
-                            return (
-                                <Pressable
-                                    key={item.id}
-                                    android_ripple={{ color: colors.primary, borderless: false, foreground: true }}
-                                    onPress={() => { }}
-                                    style={[
-                                        {
-                                            width: bookmarksSizes.signs.width,
-                                            height: bookmarksSizes.signs.height,
-                                            borderRadius: 8,
-                                            margin: 5,
-                                            flexDirection: 'column',
-                                            backgroundColor: colors.secondary,
-                                            overflow: 'hidden',
-                                            opacity: 1,
-                                            elevation: 5,
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                        },
+                        return (
+                            <Pressable
+                                key={item.id}
+                                android_ripple={{ color: colors.primary, borderless: false, foreground: true }}
+                                onPress={() => { }}
+                                style={[
+                                    {
+                                        width: bookmarksSizes.signs.width,
+                                        height: bookmarksSizes.signs.height,
+                                        borderRadius: 8,
+                                        margin: 5,
+                                        flexDirection: 'column',
+                                        backgroundColor: colors.secondary,
+                                        overflow: 'hidden',
+                                        opacity: 1,
+                                        elevation: 5,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    },
 
-                                    ]}
-                                >
-                                    <View
-                                        style={[{
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            backgroundColor: colors.primary,
-                                            width: '90%',
-                                            height: '90%',
-                                            overflow: 'hidden',
-                                            borderRadius: 5,
-                                        }]}>
+                                ]}
+                            >
+                                <View
+                                    style={[{
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        // backgroundColor: colors.primary,
+                                        width: '90%',
+                                        height: '90%',
+                                        overflow: 'hidden',
+                                        borderRadius: 5,
+                                    }]}>
 
-                                        {item?.img ?
+                                    {item?.img ?
 
-                                            <Image
-                                                style={{
-                                                    width: '80%',
-                                                    height: '80%',
+                                        <Image
+                                            style={{
+                                                width: '80%',
+                                                height: '80%',
 
-                                                }}
-                                                source={{ uri: item?.img }}
-                                            />
-                                            :
+                                            }}
+                                            source={{ uri: item?.img }}
+                                        />
+                                        :
 
-                                            <ShimmerPlaceHolder
-                                                style={{ width: "100%", height: "100%", }}
-                                                shimmerColors={[colors.secondary, '#6161617c', colors.secondary]}
-                                            />
-                                        }
-                                    </View>
-                                </Pressable>
-                            )
-                        }
-
+                                        <ShimmerPlaceHolder
+                                            style={{ width: "100%", height: "100%", }}
+                                            shimmerColors={[colors.secondary, '#6161617c', colors.secondary]}
+                                        />
+                                    }
+                                </View>
+                            </Pressable>
+                        )
                     })}
                 </View>
             </ScrollView>
@@ -214,20 +211,39 @@ function BookmarkedQuestions({ bookmarks, lessonsData, colors }: any) {
             backgroundColor: colors.primary,
 
         }}>
-            <ScrollView style={{
-                flex: 1,
-                paddingVertical: 50,
-
-            }}>
+            <ScrollView
+                contentContainerStyle={{
+                    rowGap: 10,
+                    alignItems: 'center',
+                }}
+                style={{
+                    flex: 1,
+                    width: '100%',
+                    paddingVertical: 50,
+                }}>
                 {bookmarkedQuestions.map((item: any) => (
-                    <Text key={item.id} style={{
-                        fontFamily: "Cairo",
-                        color: colors.text.primary,
-                        fontSize: 16,
-                        marginVertical: 5
-                    }}>
-                        {item.label}
-                    </Text>
+                    <Pressable
+                        key={item.id}
+                        style={{
+                            backgroundColor: colors.secondary,
+                            padding: 15,
+                            width: '90%',
+                            flexDirection: 'row-reverse',
+                            alignItems: 'center',
+                            justifyContent: 'flex-start',
+                            borderRadius: 8,
+                            elevation: 3,
+                        }}
+                    >
+                        <Text style={{
+                            fontFamily: "Cairo",
+                            color: colors.text.primary,
+                            fontSize: 18,
+                            textAlign: 'right',
+                        }}>
+                            {item.label}
+                        </Text>
+                    </Pressable>
                 ))}
             </ScrollView>
         </View>

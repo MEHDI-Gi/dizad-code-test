@@ -92,7 +92,7 @@ export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBar
                                 height: '100%',
                                 width: "100%",
                                 borderRadius: isFocused ? 8 : 50,
-                                backgroundColor: isFocused ? colors.subTab.color : "transparent",
+                                backgroundColor: isFocused ? colors.secondary : "transparent",
                                 overflow: 'hidden',
                             },
                             ]}

@@ -259,9 +259,7 @@ const Profile = () => {
 
   const settingsListPress = (item: any) => {
     if (sound) playSound('settingsButton');
-
     switch (item.condition) {
-
       case 'language':
         logAllStoredData()
         break;
@@ -286,9 +284,6 @@ const Profile = () => {
       case 'report':
         navigation.navigate('Report');
         break;
-
-      // Add other cases as needed
-
       default:
         break;
     }
@@ -366,11 +361,11 @@ const Profile = () => {
         width: "100%",
         height: 70,
         backgroundColor: 'transparent',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         paddingHorizontal: 5,
 
       }}>
-        <View style={{
+        {/* <View style={{
           alignItems: 'center',
           justifyContent: 'center',
           flexDirection: 'row',
@@ -454,10 +449,10 @@ const Profile = () => {
               />}
             </View>
           </View>
-        </View>
+        </View> */}
 
         <Pressable
-          android_ripple={{ color: colors.secondary, borderless: true }}
+          android_ripple={{ color: colors.secondary, borderless: true, foreground: true }}
           style={{
             alignItems: "center",
             justifyContent: "center",

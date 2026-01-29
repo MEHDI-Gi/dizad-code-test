@@ -3,7 +3,8 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "src/context/authtjs"
+    "src/context/authtjs",
+    "src/context/AdFooter.tsx"
   ],
   "exclude": [
     "**/node_modules",

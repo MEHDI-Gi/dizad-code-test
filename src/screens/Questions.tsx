@@ -47,7 +47,7 @@ export default function Questions() {
         isBookmarked,
         setQuestionsItemsIndex,
         questionsItemsIndex,
-        bookmarkLoading,    
+        bookmarkLoading,
     } = useContext(DataContext);
 
     const handleBookmark = useCallback((category: string, item: any) => {
@@ -150,7 +150,7 @@ export default function Questions() {
                         key={item.id.toString()}
                         android_ripple={{
                             foreground: true,
-                            color: colors.primary,
+                            color: colors.secondary,
                             borderless: false
                         }}
                         onPress={() => {
@@ -160,69 +160,38 @@ export default function Questions() {
                         }}
                         style={[
                             {
-                                width: "90%",
+                                width: "95%",
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 flexDirection: 'row-reverse',
                                 borderRadius: 8,
-                                backgroundColor: colors.secondary,
                                 overflow: 'hidden',
+                                backgroundColor: colors.secondary,
                                 elevation: 5,
+                                minHeight: 70,
                             },
-                            {
-
-
-                                overflow: 'hidden'
-                            }
                         ]}
                     >
-                        {false && <View style={{
-                            position: 'absolute',
-                            bottom: 0,                 // <- ADD THIS  
-                            left: 0,                   // <- ADD THIS
-                            right: 0,
-                            top: 0,
-                            backgroundColor: colors.primary,
-                            opacity: 0.9,
-                            zIndex: 1,
-                        }} />}
-                        {false ? <Image
-                            source={{ uri: item?.cover }}
-                            resizeMode='cover'
-                            resizeMethod='none'
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                bottom: 0,
-                                right: 0,
-                                left: 0,
-                            }}
-                        /> : null}
-                        <View
-                            style={[
-                                {
-                                    paddingHorizontal: 5,
-                                    height: "100%",
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    overflow: 'hidden',
-                                    zIndex: 1,
-                                    backgroundColor: sideColors(index),
-
-                                },
-
-                            ]}
+                        {/* <View
+                            style={[{
+                                paddingHorizontal: 10,
+                                paddingVertical: 10,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                overflow: 'hidden',
+                                borderRadius: 10,
+                                zIndex: 1,
+                                // backgroundColor: sideColors(index),
+                            },]}
                         >
                             <Text style={{
-                                color: colors.text.primary,
+                                color: sideColors(index),
                                 fontSize: 18,
-
-
                             }}>
                                 {index + 1}
                             </Text>
-                        </View>
+                        </View> */}
                         <View
                             style={[
                                 {
@@ -235,25 +204,23 @@ export default function Questions() {
                                     zIndex: 1,
                                     paddingHorizontal: 15,
                                     paddingVertical: 15,
-
-                                },
-
-                            ]}
+                                },]}
                         >
                             <Text style={{
                                 fontFamily: "Cairo",
                                 textAlign: 'right',
                                 color: colors.text.primary,
                                 fontSize: 18,
-
                             }}>
                                 {item.label}
                             </Text>
                         </View>
+
                     </Pressable>
-                )}
+                )
+                }
                 ListEmptyComponent={
-                    <View
+                    < View
                         style={{
                             width: '90%',
                             height: 70,
@@ -269,14 +236,14 @@ export default function Questions() {
                             style={{ width: "100%", height: "100%", }}
                             shimmerColors={[colors.secondary, '#6161617c', colors.secondary]}
                         />
-                    </View>
+                    </View >
                 }
             />
-            <Modal
+            < Modal
                 visible={questionsModal}
                 onRequestClose={() => setQuestionsModal(false)}
                 transparent
-                animationType="slide">
+                animationType="slide" >
                 <View style={{
                     flex: 1,
                     alignItems: 'center', justifyContent: 'center',
@@ -285,7 +252,7 @@ export default function Questions() {
                     <View style={{
                         position: "static",
                         top: 0,
-                        backgroundColor: 'transparent',
+                        backgroundColor: colors.primary,
                         width: "100%", height: 4, flexDirection: 'row',
                         zIndex: 9
                     }}>
@@ -336,7 +303,7 @@ export default function Questions() {
                                             backgroundColor: colors.secondary,
                                             width: 30,
                                             height: 30,
-                                            borderRadius: 50,
+                                            borderRadius: 8,
                                             top: 8,
                                             right: 8,
                                             position: 'absolute',
@@ -391,7 +358,7 @@ export default function Questions() {
                                                 <Text style={{
                                                     fontFamily: 'Cairo',
                                                     color: colors.text.primary,
-                                                    fontSize: 16,
+                                                    fontSize: 18,
                                                     textAlign: 'center'
                                                 }}>
                                                     {item.label}
@@ -421,9 +388,9 @@ export default function Questions() {
                                             <Text
                                                 key={index}
                                                 style={{
-                                                    fontFamily: 'Cairo',
+                                                    fontFamily: 'Cairo-Bold',
                                                     color: colors.text.secondary,
-                                                    fontSize: 16,
+                                                    fontSize: 18,
                                                     textAlign: 'right',
                                                     alignSelf: 'flex-end',
                                                     padding: 5,
@@ -448,12 +415,12 @@ export default function Questions() {
                                                 }}>
                                                 {item}
                                             </Text>
-                                        ))
-                                        }
-
+                                        ))}
                                     </ScrollView>
 
                                     <View style={{
+                                        position: 'absolute',
+                                        bottom: 0,
                                         alignItems: 'center',
                                         justifyContent: 'flex-end',
                                         flexDirection: 'row',
@@ -461,8 +428,16 @@ export default function Questions() {
                                         height: 70,
                                         paddingHorizontal: 10,
                                         columnGap: 10,
-                                        // backgroundColor: 'blue'
                                     }}>
+                                        <View style={{
+                                            position: 'absolute',
+                                            bottom: 0,
+                                            left: 0,
+                                            right: 0,
+                                            top: 0,
+                                            backgroundColor: colors.primary,
+                                            opacity: 0.9
+                                        }} />
                                         <Pressable
                                             android_ripple={{ color: colors.primary, borderless: false, foreground: true }}
                                             style={{
@@ -476,9 +451,7 @@ export default function Questions() {
                                             }}
                                             onPress={() => { }}
                                         >
-
                                             <MaterialIcons size={30} color={colors.text.primary} name='report-gmailerrorred' />
-
                                         </Pressable>
                                         <Pressable
                                             android_ripple={{ color: colors.primary, borderless: false, foreground: true }}
@@ -493,7 +466,6 @@ export default function Questions() {
                                             }}
                                             onPress={() => { }}
                                         >
-
                                             <MaterialCommunityIcons
                                                 size={30}
                                                 color={colors.text.primary}
@@ -516,7 +488,6 @@ export default function Questions() {
 
                                             })}
                                         >
-
                                             {bookmarkLoading
                                                 ? (
                                                     <ActivityIndicator size={'small'} color={colors.text.primary} />
@@ -531,9 +502,8 @@ export default function Questions() {
                             </View>
                         )}
                     />
-
                 </View>
-            </Modal>
+            </Modal >
         </View >
     );
 };
