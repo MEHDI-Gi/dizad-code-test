@@ -19,6 +19,7 @@ import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import { BlurView } from '@react-native-community/blur';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ItemsModal from '../components/ItemsModal.tsx';
+import { useAd } from '../context/useAd.ts';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -39,7 +40,7 @@ export default function Questions() {
         answerStats,
         levelsRank, setLevelsRank,
         quizCategoriesData,
-        userVip,
+        userPlan,
         sound, playSound, isGradient, texts, language,
         isRewardAdd, setIsRewardAdd,
         lessonsData,
@@ -117,6 +118,9 @@ export default function Questions() {
     const sideColors = (index: number) =>
         itemsSideColors[index % itemsSideColors.length] ?? 'white';
 
+
+    const ad = useAd();
+
     if (initializing || !QUESTIONS_CONTENT) {
         return (
             <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
@@ -155,8 +159,13 @@ export default function Questions() {
                         }}
                         onPress={() => {
                             setSelectedQuestion(index);
-                            // setQuestionsItemsIndex(index);  
                             setQuestionsModal(true);
+                            const timer = setTimeout(() => {
+                                ad.isLoaded && ad.show()
+                            }, 2000);
+                            // setQuestionsItemsIndex(index);  
+                            return () => clearTimeout(timer);
+
                         }}
                         style={[
                             {
@@ -324,7 +333,7 @@ export default function Questions() {
                                     </Pressable>
                                     <View style={{
                                         width: '100%',
-                                        height: screenWidth * 0.6,
+                                        height: screenWidth * 0.4,
                                         position: 'relative',
                                         overflow: 'hidden',
                                     }}>

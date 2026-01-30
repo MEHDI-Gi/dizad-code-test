@@ -17,7 +17,7 @@ const AdFooter = React.memo(({ adLoaded, setAdLoaded }) => {
         percentage,
         currentQuestionsIndex, currentLevelIndex,
         livesHeart, setLivesHeart, livesHeartEnd,
-        timeLeft, setUserVip, vipCard, setVipCard,
+        timeLeft, setUserPlan, vipCard, setVipCard,
     } = useContext(DataContext);
     return !vipCard && adLoaded ? (
         <View style={styles.adsContainer}>

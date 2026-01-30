@@ -29,7 +29,7 @@ export default function HeartBadge(props) {
         playSound,
         isGradient,
         texts,
-        userVip
+        userPlan
     } = useContext(DataContext);
 
     return (

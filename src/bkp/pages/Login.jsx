@@ -27,7 +27,7 @@ export default function Login({ navigation }) {
     userImage, setUserImage, sound, playSound, setLoadScreen,
     isGradient, isAccountDeleted, setIsAccountDeleted, texts,
     setUserXp,
-    setUserVip,
+    setUserPlan,
     setLanguage,
     setVibrate,
     setDataLevelIndex,
@@ -43,7 +43,7 @@ export default function Login({ navigation }) {
     setQuizLoaded,
     setUsersLoaded,
     setUserLoaded,
-    userXp, userVip,
+    userXp, userPlan,
     setLivesHeart,
     handleLogout,
     isLogout, setIsLogout,
@@ -155,7 +155,7 @@ export default function Login({ navigation }) {
     userName,
     userImage,
     userXp,
-    userVip,
+    userPlan,
 
   ]
 

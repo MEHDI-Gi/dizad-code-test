@@ -42,7 +42,7 @@ export default function Home() {
     playSound,
     isGradient,
     texts, currentTheme, setLoadScreen,
-    userVip
+    userPlan
   } = useContext(DataContext);
 
   if (initializing || !quizData) {
@@ -174,7 +174,7 @@ export default function Home() {
 
             </View>
           </View>
-          {userVip ?
+          {userPlan ?
             <VipBadge
               width={28}
               height={28}

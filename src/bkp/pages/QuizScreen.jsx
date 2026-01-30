@@ -50,7 +50,7 @@ const QuizScreen = () => {
     exitBtn, setExitBtn,
     setHandleTimerBackground, vibrate, sound, playSound,
     isGradient, setSnackbarState, setSnackOptions, setHeartsCard,
-    setUserXp, setQuizActive, userVip
+    setUserXp, setQuizActive, userPlan
   } = useContext(DataContext);
 
   const [isChecked, setIsChecked] = useState(false);
@@ -301,7 +301,7 @@ const QuizScreen = () => {
   });
 
 
-  if (livesHeartEnd && !userVip) {
+  if (livesHeartEnd && !userPlan) {
     return <LivesHeartEnd />;
   } else if (!levelEndState) {
     return (
@@ -351,7 +351,7 @@ const QuizScreen = () => {
                 width: 40,
                 height: 24,
               }}>
-                {userVip ?
+                {userPlan ?
                   <Ionicons
                     name='infinite'
                     size={18}
@@ -381,7 +381,7 @@ const QuizScreen = () => {
                 flexDirection: 'row',
               }]}
               >
-                {userVip ?
+                {userPlan ?
                   <VipBadge
                     width={50}
                     height={28}

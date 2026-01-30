@@ -25,7 +25,7 @@ export default function VipBadge(props: any) {
         playSound,
         isGradient,
         texts,
-        userVip, vipCard, setVipCard
+        userPlan, vipCard, setVipCard
     } = useContext(DataContext);
 
     return (
@@ -43,19 +43,7 @@ export default function VipBadge(props: any) {
                 elevation: props.elevation
             }}
             onPress={() => { setVipCard(true) }}>
-            {isGradient && <LinearGradient
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    opacity: 0.5
-                }}
-                colors={[colors.gradSec, colors.gradPri]}
-            />}
+            
             {props.title && <Text style={{ color: props.titleColor, fontSize: props.textSize, fontWeight: 'bold', marginHorizontal: 3, }}>
                 VIP
             </Text>}

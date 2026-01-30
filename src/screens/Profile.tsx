@@ -1,5 +1,25 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import { Alert, Modal, ActivityIndicator, TouchableWithoutFeedback, Keyboard, Pressable, TextInput, Dimensions, StatusBar, Text, Image, TouchableOpacity, SafeAreaView, StyleSheet, View, KeyboardAvoidingView, ScrollView, Platform, Vibration } from 'react-native';
+import {
+  Alert,
+  Modal,
+  ActivityIndicator,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Pressable,
+  TextInput,
+  Dimensions,
+  StatusBar,
+  Text,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+  Vibration,
+} from 'react-native';
 import { DataContext } from '../context/contextData';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,20 +38,22 @@ import CopyrightsFooter from '../components/CopyrightsFooter';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types';
 import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
+import FreeBadge from '../components/elements/FreeBadge.tsx';
 
 const Profile = () => {
   const { user, initializing, signIn, logout } = useGoogleSignIn();
 
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const {
-    userVip,
+    userPlan,
     dataLevelIndex,
     setSnackbarState,
     setUpdateNextLevelState,
     selectedImageUri,
-    userName, userImage,
+    userName,
+    userImage,
     setHelpPoint,
     setLivesHeart,
     setQuestIndex,
@@ -49,28 +71,39 @@ const Profile = () => {
     language,
     texts,
 
-    snackInfo, setSnackOptions,
-    loadingOptions, setLoadingOptions,
-    loadScreen, setLoadScreen,
-    setUserXp, userXp, memberSince,
-    leaderBoardIcon, setLeaderBoardIcon,
+    snackInfo,
+    setSnackOptions,
+    loadingOptions,
+    setLoadingOptions,
+    loadScreen,
+    setLoadScreen,
+    setUserXp,
+    userXp,
+    memberSince,
+    leaderBoardIcon,
+    setLeaderBoardIcon,
     livesHeart,
     setUserImage,
-    setUserVip,
+    setUserPlan,
     setLanguage,
-    setVibrate, resetBookmarks,
+    setVibrate,
+    resetBookmarks,
 
     setSound,
 
     handleLogout,
     isLogout,
     dataAsync,
-    THEME_DARK, THEME_LIGHT,
+    THEME_DARK,
+    THEME_LIGHT,
     setIsGradient,
-    apparence, setApparence, setColors, colorsList, currentTheme, setCurrentTheme
-
+    apparence,
+    setApparence,
+    setColors,
+    colorsList,
+    currentTheme,
+    setCurrentTheme,
   } = useContext(DataContext);
-
 
   const [initTheme, setInitTheme] = useState<boolean>(false);
 
@@ -99,7 +132,11 @@ const Profile = () => {
           <Switch
             {...switchProps}
             radioFlex={currentTheme === THEME_DARK ? 'flex-start' : 'flex-end'}
-            radioColor={currentTheme === THEME_DARK ? colors.button.primary : colors.text.secondary}
+            radioColor={
+              currentTheme === THEME_DARK
+                ? colors.button.primary
+                : colors.text.secondary
+            }
           />
         );
       }
@@ -122,92 +159,167 @@ const Profile = () => {
       // );
     };
     return (
-
       <Pressable
         android_ripple={{
-          color: colors.secondary, borderless: false,
-          foreground: true
+          color: colors.primary,
+          borderless: false,
+          foreground: true,
         }}
         style={{
-          alignItems: "center",
-          width: "100%",
-          height: 47,
-          borderRadius: 15,
+          alignItems: 'center',
+          width: '100%',
+          height: 60,
           borderBottomColor: colors.secondary,
-          borderBottomWidth: props.index >= Object.keys(props.objectKey)?.length - 1 ? 0 : 0,
+          borderBottomWidth:
+            props.index >= Object.keys(props.objectKey)?.length - 1 ? 0 : 0,
           overflow: 'hidden',
-          justifyContent: "space-between",
+          justifyContent: 'space-between',
           flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
         }}
         onPress={props.press}
       >
-        <View style={{
-          width: 47,
-          height: 47,
-          alignItems: "center",
-          justifyContent: "center",
-        }}>
-          {props.itemIconSet === 'MaterialCommunityIcons' ? <MaterialCommunityIcons
-            name={props.icon}
-            color={props.color}
-            size={18}
-            style={props.itemId === 5 && { transform: [{ rotate: '-30deg' }] }}
-          /> :
+        <View
+          style={{
+            width: 47,
+            height: 47,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {props.itemIconSet === 'MaterialCommunityIcons' ? (
+            <MaterialCommunityIcons
+              name={props.icon}
+              color={props.color}
+              size={18}
+              style={
+                props.itemId === 4 && { transform: [{ rotate: '-30deg' }] }
+              }
+            />
+          ) : (
             <MaterialIcons
               name={props.icon}
               color={props.color}
               size={18}
-              style={props.itemId === 5 && { transform: [{ rotate: '-30deg' }] }}
-            />}
+              style={
+                props.itemId === 4 && { transform: [{ rotate: '-30deg' }] }
+              }
+            />
+          )}
         </View>
         <View
-          style={[{
-            alignItems: "center",
-            flex: 1, height: 47,
-            flexDirection: 'row',
-            justifyContent: language === 'english' ? "flex-start" : "flex-end",
-
-          }]}
+          style={[
+            {
+              alignItems: 'center',
+              flex: 1,
+              height: 47,
+              flexDirection: 'row',
+              justifyContent:
+                language === 'english' ? 'flex-start' : 'flex-end',
+            },
+          ]}
         >
-          <Text style={{
-            color: props.labelColor,
-            fontSize: 15,
-            fontFamily: "Cairo_600SemiBold",
-          }}>{props.label}</Text>
+          <Text
+            style={{
+              color: props.labelColor,
+              fontSize: 15,
+              fontFamily: 'Cairo_600SemiBold',
+            }}
+          >
+            {props.label}
+          </Text>
         </View>
-        <View style={[{
-          width: 47,
-          height: 47,
-          alignItems: "center",
-          justifyContent: "center",
-        }]}>
+        <View
+          style={[
+            {
+              width: 47,
+              height: 47,
+              alignItems: 'center',
+              justifyContent: 'center',
+            },
+          ]}
+        >
           <RightContent />
         </View>
       </Pressable>
-    )
+    );
   }
   const settingsList = [
-    { id: 1, label: texts.langEdt, condition: 'language', icon: 'translate', color: 'gray', iconSet: 'MaterialCommunityIcons' },
-    { id: 2, label: texts.soundEdt, condition: 'sound', icon: sound ? 'volume-source' : 'volume-variant-off', color: 'gray', iconSet: 'MaterialCommunityIcons' },
-    { id: 3, label: texts.vibrateEdt, condition: 'vibrate', icon: vibrate ? 'vibrate' : 'vibrate-off', color: 'gray', iconSet: 'MaterialCommunityIcons' },
-    { id: 4, label: 'Dark Mode', condition: 'dark', icon: 'moon-waning-crescent', color: 'gray', iconSet: 'MaterialCommunityIcons' },
-    { id: 5, label: texts.reportEdt, condition: 'report', icon: 'report', color: 'gray', iconSet: 'MaterialIcons' },
+    {
+      id: 1,
+      label: texts.langEdt,
+      condition: 'language',
+      icon: 'translate',
+      color: 'gray',
+      iconSet: 'MaterialCommunityIcons',
+    },
+    {
+      id: 2,
+      label: texts.soundEdt,
+      condition: 'sound',
+      icon: sound ? 'volume-source' : 'volume-variant-off',
+      color: 'gray',
+      iconSet: 'MaterialCommunityIcons',
+    },
+    {
+      id: 3,
+      label: texts.vibrateEdt,
+      condition: 'vibrate',
+      icon: vibrate ? 'vibrate' : 'vibrate-off',
+      color: 'gray',
+      iconSet: 'MaterialCommunityIcons',
+    },
+    {
+      id: 4,
+      label: 'Dark Mode',
+      condition: 'dark',
+      icon: 'moon-waning-crescent',
+      color: 'gray',
+      iconSet: 'MaterialCommunityIcons',
+    },
+    {
+      id: 5,
+      label: texts.reportEdt,
+      condition: 'report',
+      icon: 'report',
+      color: 'gray',
+      iconSet: 'MaterialIcons',
+    },
+    {
+      id: 6,
+      label: 'Contact Us',
+      condition: 'contact',
+      icon: 'message',
+      color: 'gray',
+      iconSet: 'MaterialIcons',
+    },
   ];
   const DangerSettingsList = [
-    { id: 1, label: texts.restEdt, condition: 'reset data', icon: 'refresh', color: '#9f707096' },
-    { id: 2, label: texts.deleteEdt, condition: 'delete account', icon: 'delete', color: '#9f707096' },
+    {
+      id: 1,
+      label: texts.restEdt,
+      condition: 'reset data',
+      icon: 'refresh',
+      color: '#9f707096',
+    },
+    {
+      id: 2,
+      label: texts.deleteEdt,
+      condition: 'delete account',
+      icon: 'delete',
+      color: '#9f707096',
+    },
   ];
 
   const toggleVibrate = () => setVibrate((prev: boolean) => !prev);
 
   function resetStorage() {
-    setUserXp(0)
+    setUserXp(0);
     setGlobTrueAns(0);
     setGlobFalseAns(0);
-    updateQuestIndex("ct1", 1);
-    updateQuestIndex("ct2", 1);
-    updateQuestIndex("ct3", 1);
-    updateQuestIndex("ct4", 1);
+    updateQuestIndex('ct1', 1);
+    updateQuestIndex('ct2', 1);
+    updateQuestIndex('ct3', 1);
+    updateQuestIndex('ct4', 1);
     setUpdateNextLevelState(0);
     resetBookmarks('signs');
     resetBookmarks('questions');
@@ -223,7 +335,10 @@ const Profile = () => {
     }
   };
 
-  const startTimer = (callback: { (): void; (): void; (): void; (): void; }, delay = 3000) => {
+  const startTimer = (
+    callback: { (): void; (): void; (): void; (): void },
+    delay = 3000,
+  ) => {
     clearExistingTimer();
     timerRef.current = setTimeout(callback, delay);
   };
@@ -231,7 +346,7 @@ const Profile = () => {
     switch (item.condition) {
       case 'reset data':
         setLoadScreen(true);
-        setLoadingOptions({ icon: 'refresh' })
+        setLoadingOptions({ icon: 'refresh' });
         resetStorage();
         startTimer(() => {
           setSnackbarState(true);
@@ -241,7 +356,7 @@ const Profile = () => {
 
       case 'delete account':
         setLoadScreen(true);
-        setLoadingOptions({ icon: 'delete-empty' })
+        setLoadingOptions({ icon: 'delete-empty' });
         resetStorage();
         setIsPicAdd(false);
         startTimer(() => {
@@ -254,14 +369,13 @@ const Profile = () => {
       default:
         break;
     }
-  }
-
+  };
 
   const settingsListPress = (item: any) => {
     if (sound) playSound('settingsButton');
     switch (item.condition) {
       case 'language':
-        logAllStoredData()
+        logAllStoredData();
         break;
       case 'vibrate':
         // setInitTheme(true);
@@ -278,7 +392,7 @@ const Profile = () => {
 
       case 'sound':
         // setInitTheme(true);
-        setSound((prev: any) => !prev)
+        setSound((prev: any) => !prev);
         break;
 
       case 'report':
@@ -289,14 +403,14 @@ const Profile = () => {
     }
   };
 
-  const [logoutLoad, setLogoutLoad] = useState<boolean>(false)
+  const [logoutLoad, setLogoutLoad] = useState<boolean>(false);
   function logoutFun() {
-    setLogoutLoad(true)
+    setLogoutLoad(true);
     startTimer(() => {
-      setLogoutLoad(false)
-      navigation.navigate('Login')
-      setSnackbarState(true)
-      setSnackOptions({ label: texts.logoutDone, icon: 'logout' })
+      setLogoutLoad(false);
+      navigation.navigate('Login');
+      setSnackbarState(true);
+      setSnackOptions({ label: texts.logoutDone, icon: 'logout' });
     });
   }
 
@@ -318,209 +432,275 @@ const Profile = () => {
   };
   if (!isLogout) {
     return (
-      <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
+      <View
+        style={[
+          {
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colors.primary,
+          },
+        ]}
+      >
         <ActivityIndicator size={30} />
       </View>
-    )
+    );
   }
   if (logoutLoad) {
     return (
-      <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
+      <View
+        style={[
+          {
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colors.primary,
+          },
+        ]}
+      >
         <ActivityIndicator size={30} />
       </View>
-    )
+    );
   }
-
 
   if (initTheme) {
     setTimeout(() => {
       setInitTheme(false);
     }, 500);
     return (
-      <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
+      <View
+        style={[
+          {
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colors.primary,
+          },
+        ]}
+      >
         <ActivityIndicator size={30} />
       </View>
-    )
+    );
   }
 
   return (
-    <View style={{
-      flex: 1,
-      position: 'relative',
-      flexDirection: "column",
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: colors.primary,
-      paddingHorizontal: 20,
-    }}>
-
-
-      <View style={{
-        alignItems: "center",
-        flexDirection: 'row',
-        width: "100%",
-        height: 70,
-        backgroundColor: 'transparent',
-        justifyContent: 'flex-end',
-        paddingHorizontal: 5,
-
-      }}>
-        {/* <View style={{
+    <View
+      style={{
+        flex: 1,
+        position: 'relative',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colors.primary,
+        paddingHorizontal: 20,
+      }}
+    >
+      <View
+        style={{
           alignItems: 'center',
-          justifyContent: 'center',
           flexDirection: 'row',
-          height: 50,
-          gap: 10,
-        }}>
-          <View style={
-            {
+          width: '100%',
+          height: 70,
+          backgroundColor: 'transparent',
+          justifyContent: 'space-between',
+          paddingHorizontal: 5,
+        }}
+      >
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'row',
+            height: 50,
+            gap: 10,
+          }}
+        >
+          <View
+            style={{
               width: 35,
               height: 35,
-              justifyContent: "center",
-              alignItems: "center",
-            }
-          }>
-            {userImage ? <Image style={
-              {
-                width: 35,
-                height: 35,
-                borderRadius: 50,
-                borderColor: 'lightgray',
-                borderWidth: 0
-              }}
-              source={{ uri: userImage }} /> :
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {userImage ? (
+              <Image
+                style={{
+                  width: 35,
+                  height: 35,
+                  borderRadius: 8,
+                  borderColor: 'lightgray',
+                  borderWidth: 0,
+                }}
+                source={{ uri: userImage }}
+              />
+            ) : (
               <MaterialIcons
-                name='person'
+                name="person"
                 size={25}
                 color={colors.text.primary}
               />
-            }
+            )}
+          </View>
 
-            <View style={{
-              zIndex: 1,
-              backgroundColor: colors.primary,
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              width: 10,
-              height: 10,
-              padding: 1,
-              borderRadius: 50,
-              alignItems: 'center',
-              justifyContent: "center"
-            }}>
-              <View
+          <View
+            style={{
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}
+            >
+
+              <Text
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundColor: 'green',
-                  borderRadius: 50,
+                  color: colors.text.primary,
+                  fontSize: 17,
+                  fontWeight: '700',
+                  alignItems: 'center',
                 }}
-              />
+              >
+                {userName}{' '}
+              </Text>
+              {userPlan === 'free' ?
+                (<FreeBadge
+                  width={20}
+                  height={20}
+                  backColor={colors.secondary}
+                  elevation={0} />)
+                : userPlan === 'monthly' || userPlan === 'yearly' || userPlan === 'lifetime' ?
+                  (<VipBadge
+                    width={27}
+                    height={15}
+                    title={true}
+                    iconSize={12}
+                    iconColor={'#dba400'}
+                    radius={2}
+                    backColor={colors.secondary}
+                    titleColor={colors.text.primary}
+                    elevation={0}
+                    textSize={10}
+                    icon={false}
+                  />) : null}
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  marginRight: 5,
+                  color: colors.text.secondary,
+                  fontSize: 12,
+                  fontWeight: '600',
+                }}
+              >
+                {userXp} XP
+              </Text>
+
             </View>
           </View>
-
-          <View style={{
-            height: "100%",
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            justifyContent: "center",
-          }}>
-            <Text style={{ color: colors.text.primary, fontSize: 17, fontWeight: '700', alignItems: 'center' }}>{userName} </Text>
-            <View style={{
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              alignItems: "center",
-            }}>
-              <Text style={{ marginRight: 5, color: colors.text.secondary, fontSize: 12, fontWeight: '600' }}>{userXp} XP</Text>
-              {userVip && <VipBadge
-                width={22}
-                height={15}
-                title={true}
-                iconSize={8}
-                iconColor={"#67d6dcff"}
-                radius={3}
-                backColor={colors.secondary}
-                titleColor={colors.text.primary}
-                elevation={2}
-                textSize={8}
-                icon={false}
-
-              />}
-            </View>
-          </View>
-        </View> */}
+        </View>
 
         <Pressable
-          android_ripple={{ color: colors.secondary, borderless: true, foreground: true }}
+          android_ripple={{
+            color: colors.primary,
+            borderless: true,
+            foreground: true,
+          }}
           style={{
-            alignItems: "center",
-            justifyContent: "center",
-            width: 25,
-            height: 25,
-            borderRadius: 50,
+            backgroundColor: colors.secondary,
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 30,
+            height: 30,
+            borderRadius: 8,
             overflow: 'hidden',
           }}
           onPress={() => {
-            navigation.navigate("MainTabs", { screen: 'Home' })
-            if (sound) playSound('settingsButton')
-
-          }}>
-          <MaterialIcons name='close' color={colors.text.secondary} size={22} />
+            navigation.navigate('MainTabs', { screen: 'Home' });
+            if (sound) playSound('settingsButton');
+          }}
+        >
+          <MaterialIcons name="close" color={colors.text.secondary} size={22} />
         </Pressable>
       </View>
 
-      {!user &&
-        <View style={{
-          width: '100%',
-          backgroundColor: 'transparent',
-          flexDirection: "row",
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginTop: 0,
-          zIndex: 1,
-          paddingHorizontal: 20,
-
-        }}>
+      {!user && (
+        <View
+          style={{
+            width: '100%',
+            backgroundColor: 'transparent',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 0,
+            zIndex: 1,
+            paddingHorizontal: 20,
+          }}
+        >
           <Text
             style={{
               marginVertical: 0,
               flex: 1,
               textAlign: 'left',
-              color: colors.text.primary, fontSize: 12, fontWeight: '300', alignItems: 'center'
-            }}>to save your data & progress to cloud you should sign in with Google.</Text>
-          <Pressable
-            style={[{
-              backgroundColor: colors.secondary,
-              flexDirection: 'row',
+              color: colors.text.primary,
+              fontSize: 12,
+              fontWeight: '300',
               alignItems: 'center',
-              justifyContent: 'space-evenly',
-              borderRadius: 8,
-              overflow: 'hidden',
-              height: 35
-            }]}
+            }}
+          >
+            to save your data & progress to cloud you should sign in with
+            Google.
+          </Text>
+          <Pressable
+            style={[
+              {
+                backgroundColor: colors.secondary,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
+                borderRadius: 8,
+                overflow: 'hidden',
+                height: 35,
+              },
+            ]}
             android_ripple={{ color: colors.primary, borderless: false }}
             onPress={signIn}
           >
-            {isGradient && <LinearGradient
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
+            {isGradient && (
+              <LinearGradient
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  opacity: 0.5,
+                }}
+                colors={['#2e487acc', colors.secondary]}
+              />
+            )}
+            <View
               style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                width: '100%',
+                width: 35,
                 height: '100%',
-                opacity: 0.5
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
-              colors={["#2e487acc", colors.secondary]}
-            />}
-            <View style={{
-              width: 35,
-              height: "100%",
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
+            >
               <Image
                 source={require('../assets/icons/google.png')}
                 style={{
@@ -529,38 +709,52 @@ const Profile = () => {
                 }}
               />
             </View>
-            <View style={{
-              height: "100%",
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingRight: 10
-            }}>
-              <Text style={{
-                color: 'white',
-                fontSize: 15,
-                fontWeight: '600',
-              }}>SignIn</Text>
+            <View
+              style={{
+                height: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingRight: 10,
+              }}
+            >
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 15,
+                  fontWeight: '600',
+                }}
+              >
+                SignIn
+              </Text>
             </View>
           </Pressable>
-        </View>}
+        </View>
+      )}
       <ScrollView
         showsHorizontalScrollIndicator={false}
         horizontal={false}
-        contentContainerStyle={[{
-          flexGrow: 1,
-          marginTop: 5,
-          alignItems: 'center',
-          justifyContent: 'flex-start'
-        }]} >
+        contentContainerStyle={[
+          {
+            flexGrow: 1,
+            marginTop: 5,
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            gap: 10,
+          },
+        ]}
+      >
+        <Statistics />
 
-        <View style={{
-          width: "100%",
-          alignItems: "center",
-          justifyContent: "center",
-          borderWidth: 0,
-          borderRadius: 10,
-          overflow: 'hidden',
-        }}>
+        <View
+          style={{
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderWidth: 0,
+            borderRadius: 10,
+            overflow: 'hidden',
+          }}
+        >
           {settingsList.map((item, index) => (
             <SettingsCard
               itemIconSet={item.iconSet}
@@ -598,15 +792,18 @@ const Profile = () => {
             icon={'logout'}
             color={colors.text.secondary}
             press={() => {
-              if (user) { handleLogout(navigation) }
-              else { logoutFun() }
-            }} />
+              if (user) {
+                handleLogout(navigation);
+              } else {
+                logoutFun();
+              }
+            }}
+          />
         </View>
-
       </ScrollView>
       <CopyrightsFooter />
     </View>
   );
-}
+};
 
 export default Profile;

@@ -45,7 +45,7 @@ export default function Main() {
         vipPlansCard,
         statisticsCard,
         snackOptions,
-        
+
     } = useContext(DataContext);
 
     const [adLoaded, setAdLoaded] = useState<boolean>(false);
@@ -83,35 +83,9 @@ export default function Main() {
             opacity: 1,
             backgroundColor: colors.primary
         }]}>
-            {false && <View style={
-                {
-                    zIndex: 1,
-                    position: 'absolute',
-                    top: 0,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: 'rgba(0,0,0,0.5)',
-                }
-            }>
-                <View style={
-                    {
-                        position: 'absolute',
-                        width: '80%',
-                        height: 100,
-                        alignItems: 'center',
-                        justifyContent: 'space-evenly',
-                        backgroundColor: 'white'
-                    }
-                }>
-                    <Text style={{
-
-                        color: 'black', fontSize: 14, fontWeight: '600', alignItems: 'center'
-                    }}>your data is uploading to the server</Text>
-                    <ActivityIndicator size="large" color={'blue'} />
-                </View>
-            </View>}
-            {freeCard && !vipCard && <FreeCard />}
-            {vipCard != '' && !freeCard && <VipCard />}
+           
+            {freeCard && <FreeCard />}
+            {vipCard && <VipCard />}
             {vipPlansCard && <VipPlansCard />}
             {statisticsCard && <StatisticsCard />}
             <NavigationContainer>

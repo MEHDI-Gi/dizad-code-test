@@ -22,7 +22,7 @@ const Profile = () => {
   const navigation = useNavigation();
 
   const {
-    userVip,
+    userPlan,
     dataLevelIndex,
     setSnackbarState,
     setUpdateNextLevelState,
@@ -57,7 +57,7 @@ const Profile = () => {
     leaderBoardIcon, setLeaderBoardIcon,
     livesHeart,
     setUserImage,
-    setUserVip,
+    setUserPlan,
     setLanguage,
     setVibrate,
     setDataLevelIndex,
@@ -283,7 +283,7 @@ const Profile = () => {
               alignItems: "center",
             }}>
               <Text style={{ marginRight: 5, color: colors.secText, fontSize: 12, fontWeight: '600' }}>{userXp} XP</Text>
-              {userVip && <VipBadge
+              {userPlan && <VipBadge
                 width={22}
                 height={15}
                 title={true}

@@ -22,7 +22,7 @@ export default function VipBadge(props) {
         playSound,
         isGradient,
         texts,
-        userVip, vipCard, setVipCard
+        userPlan, vipCard, setVipCard
     } = useContext(DataContext);
 
     return (

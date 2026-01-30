@@ -70,7 +70,7 @@ export default function Home({ route }: any) {
     texts,
     currentTheme,
     setLoadScreen,
-    userVip,
+    userPlan,
     userOnline,
     setUserOnline,
     lessonsData,
@@ -357,23 +357,26 @@ export default function Home({ route }: any) {
               </View> */}
             </View>
           </View>
-          {userVip != '' ? (
-            <VipBadge
-              width={28}
-              height={28}
-              title={false}
-              iconSize={15}
-              iconColor={'#dba400'}
-              radius={8}
-              backColor={'transparent'}
-              titleColor={colors.text.primary}
-              elevation={0}
-              textSize={12}
-              icon={true}
-            />
-          ) : (
-            <FreeBadge backColor={'transparent'} elevation={0} />
-          )}
+          {userPlan === 'free' ?
+            (
+              <FreeBadge backColor={colors.secondary} elevation={0} height={28} />
+            )
+            : userPlan === 'monthly' || userPlan === 'yearly' || userPlan === 'lifetime' ?
+              (
+                <VipBadge
+                  width={40}
+                  height={28}
+                  title={false}
+                  iconSize={15}
+                  iconColor={'#dba400'}
+                  radius={8}
+                  backColor={colors.secondary}
+                  titleColor={colors.text.primary}
+                  elevation={0}
+                  textSize={12}
+                  icon={true}
+                />
+              ) : null}
         </View>
       </View>
       <ScrollView

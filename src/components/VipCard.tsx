@@ -32,14 +32,14 @@ export default function VipCard() {
         vipPlansCard, setVipPlansCard,
         heartsCard, setHeartsCard,
         setHelpPoint,
-        colors, userVip,
+        colors, userPlan,
         dataLevelIndex, setDataLevelIndex,
         updateQuestIndex, updateAnswerStats,
         questIndices, answerStats,
         percentage,
         currentQuestionsIndex, currentLevelIndex,
         livesHeart, setLivesHeart, livesHeartEnd,
-        setUserVip, vipCard, setVipCard,
+        setUserPlan, vipCard, setVipCard,
     } = useContext(DataContext);
 
     const vipItems = [
@@ -169,19 +169,7 @@ export default function VipCard() {
                                         borderRadius: 8,
                                         marginVertical: 2,
                                     }}>
-                                    {true &&
-                                        <LinearGradient
-                                            start={{ x: 0, y: 0 }}
-                                            end={{ x: 1, y: 0 }}
-                                            style={{
-                                                position: "absolute",
-                                                bottom: 0,
-                                                width: '100%',
-                                                height: '100%',
-                                                opacity: 0.7
-                                            }}
-                                            colors={['#dba400b6', '#dba40053', '#dba4002a', '#dba40016', 'rgba(0, 0, 0, 0)']}
-                                        />}
+                                   
                                     <View style={{
                                         alignItems: 'center',
                                         justifyContent: 'center',
@@ -213,15 +201,9 @@ export default function VipCard() {
                     }}>
                         <Text style={{ color: "lightgray", fontWeight: '600' }}>VIP Membership TimeLeft: </Text>
                         <Text style={{ color: "white", fontWeight: '700' }}>
-                            {userVip === 'monthly' ? '30day' : userVip === 'lifeTime' ? 'LifeTime' : 'undefind'}
+                            {userPlan === 'monthly' ? '30 day' : userPlan === 'yearly' ? 'LifeTime' : userPlan === 'lifeTime' ? 'LifeTime' : null}
                         </Text>
                     </View>
-                    <Pressable
-                        style={{ paddingVertical: 6 }}
-                        onPress={() => setUserVip(false)}
-                    >
-                        <Text style={{ color: "lightgray", fontWeight: '600' }}>Reset</Text>
-                    </Pressable>
                 </View>
 
             </View>

@@ -43,7 +43,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const [globFalseAns, setGlobFalseAns] = useState<number>(0);
   const [userName, setUserName] = useState<string>('');
   const [userImage, setUserImage] = useState<string | null>(null);
-  const [userVip, setUserVip] = useState<string>('');
+  const [userPlan, setUserPlan] = useState<string>('free');
 
   const [language, setLanguage] = useAsyncStorageState<string>(
     'Language',
@@ -169,7 +169,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
           }
           setUserOnline(firebaseData.UserOnline ?? false);
           setUserXp(firebaseData.UserXp ?? 0);
-          setUserVip(firebaseData.UserVip ?? '');
+          setUserPlan(firebaseData.userPlan ?? '');
           setUserName(firebaseData.Username ?? user.displayName);
           setUserImage(firebaseData.UserImage ?? user.photoURL);
           setGlobTrueAns(firebaseData.GlobTrueAns ?? 0);
@@ -452,7 +452,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
   // const [vibrate, setVibrate] = useAsyncStorageState<boolean>('Vibrate', true);
   // const [sound, setSound] = useAsyncStorageState<boolean>('Sound', true);
   // const [speed, setSpeed] = useAsyncStorageState<number>('Speed', 0);
-  // const [userVip, setUserVip] = useAsyncStorageState<string>('UserVip', '');
+  // const [userPlan, setUserPlan] = useAsyncStorageState<string>('userPlan', '');
 
   type Language = 'arabic' | 'english';
   type LanguageTexts = typeof languagesList.arabic; // Infers all text properties
@@ -662,7 +662,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
   //     Gradient: isGradient,
   //     Vibrate: vibrate,
   //     Sound: sound,
-  //     UserVip: userVip,
+  //     userPlan: userPlan,
   //     CurrentTheme: currentTheme,
   //     QuestionsItemsIndex: questionsItemsIndex,
   //   };
@@ -683,7 +683,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
   // }, [user?.uid, dataAsync,
   //   questionsItemsIndex, currentTheme, userName, userImage, userXp, userOnline, speed, language,
   //   globTrueAns, globFalseAns, isGradient, vibrate, sound,
-  //   dataLevelIndex, userVip
+  //   dataLevelIndex, userPlan
   // ]);
 
   // FIXED Logout
@@ -696,7 +696,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
       UserXp: userXp,
       GlobTrueAns: globTrueAns,
       GlobFalseAns: globFalseAns,
-      UserVip: userVip,
+      userPlan: userPlan,
     }),
     [
       userName,
@@ -705,7 +705,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
       userXp,
       globTrueAns,
       globFalseAns,
-      userVip,
+      userPlan,
     ],
   );
 
@@ -728,7 +728,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
     'QuestionsItemIndex',
     'UserOnline',
     'UserXp',
-    'UserVip',
+    'userPlan',
     'Speed',
     'Language',
     'GlobTrueAns',
@@ -787,8 +787,8 @@ const DataProvider = ({ children }: DataProviderProps) => {
       unsubscribeExamsListener,
       // unsubscribeUsersListener,
       unsubscribeUserListener,
-      userVip,
-      setUserVip,
+      userPlan,
+      setUserPlan,
       quizCategoriesData,
       leaderBoardIcon,
       setLeaderBoardIcon,
@@ -885,9 +885,12 @@ const DataProvider = ({ children }: DataProviderProps) => {
       sound,
       language,
       userXp,
+      freeCard,
+      vipCard,
+      vipPlansCard,
       bookmarks, // Bookmarks ⭐
       firebaseLoaded, // Loading ⭐
-      userVip, // VIP ⭐
+      userPlan, // VIP ⭐
       globTrueAns, // Stats ⭐
       globFalseAns,
       bookmarkLoading,

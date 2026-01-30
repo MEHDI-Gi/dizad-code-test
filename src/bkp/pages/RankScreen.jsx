@@ -27,7 +27,7 @@ export default function RankScreen() {
         colors,
         userName,
         userImage,
-        isGradient, texts, language, userVip
+        isGradient, texts, language, userPlan
     } = useContext(DataContext);
     const usersArray = Object.entries(usersData).map(([id, user]) => ({ id, ...user }));
 
@@ -79,7 +79,7 @@ export default function RankScreen() {
                             alignItems: 'flex-start',
                             justifyContent: 'flex-end'
                         }}>
-                            {props.isUserVip && <VipBadge
+                            {props.isuserPlan && <VipBadge
                                 width={20}
                                 height={12}
                                 title={true}
@@ -333,7 +333,7 @@ export default function RankScreen() {
                             marginRight: 6
                         }}>{item.Username}</Text>
 
-                        {item.UserVip &&
+                        {item.userPlan &&
                             <VipBadge
                                 width={23}
                                 height={13}
@@ -425,7 +425,7 @@ export default function RankScreen() {
                                     icnName="crown"
                                     wth={80}
                                     rewardIcon={secondIcon}
-                                    isUserVip={topUsers[1]?.UserVip}
+                                    isuserPlan={topUsers[1]?.userPlan}
                                 />
                             </View>
 
@@ -445,7 +445,7 @@ export default function RankScreen() {
                                     icnName='crown'
                                     wth={90}
                                     rewardIcon={firstIcon}
-                                    isUserVip={topUsers[0]?.UserVip}
+                                    isuserPlan={topUsers[0]?.userPlan}
 
                                 />
                             </View>
@@ -466,7 +466,7 @@ export default function RankScreen() {
                                     icnName="crown"
                                     wth={70}
                                     rewardIcon={thirdIcon}
-                                    isUserVip={topUsers[2]?.UserVip}
+                                    isuserPlan={topUsers[2]?.userPlan}
 
                                 />
                             </View>
@@ -534,7 +534,7 @@ export default function RankScreen() {
                                                 fontWeight: 700,
                                                 marginRight: 6
                                             }}>{currentUser.Username}</Text>
-                                        {userVip &&
+                                        {userPlan &&
                                             <VipBadge
                                                 width={23}
                                                 height={13}

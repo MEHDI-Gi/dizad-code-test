@@ -34,7 +34,7 @@ export default function Priority() {
         answerStats,
         levelsRank, setLevelsRank,
         quizCategoriesData,
-        userVip,
+        userPlan,
         sound, playSound, isGradient, texts, language,
         isRewardAdd, setIsRewardAdd,
         setOpenItems,

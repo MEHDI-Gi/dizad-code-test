@@ -103,7 +103,7 @@ const DataProvider = ({ children }) => {
             .catch(console.error);
         }
         setUserXp(firebaseData.UserXp ?? 0);
-        setUserVip(firebaseData.UserVip ?? '', null);
+        setUserPlan(firebaseData.userPlan ?? '', null);
         setSpeed(firebaseData.Speed ?? 0);
         setUserName(firebaseData.Username ?? '');
         setUserImage(firebaseData.UserImage ?? null);
@@ -128,7 +128,7 @@ const DataProvider = ({ children }) => {
           ['Speed', JSON.stringify(firebaseData.Speed ?? 0)],
           ['UserName', JSON.stringify(firebaseData.Username ?? '')],
           ['UserImage', JSON.stringify(firebaseData.UserImage ?? null)],
-          ['UserVip', JSON.stringify(firebaseData.UserVip ?? '', null)],
+          ['userPlan', JSON.stringify(firebaseData.userPlan ?? '', null)],
           ['Language', JSON.stringify(firebaseData.Language ?? 'arabic')],
           ['GlobTrueAns', JSON.stringify(firebaseData.GlobTrueAns ?? 0)],
           ['GlobFalseAns', JSON.stringify(firebaseData.GlobFalseAns ?? 0)],
@@ -428,7 +428,7 @@ const DataProvider = ({ children }) => {
   const [sound, setSound] = useAsyncStorageState('Sound', true);
   const [helpPoint, setHelpPoint] = useAsyncStorageState('HelpPoint', 0);
   const [speed, setSpeed] = useAsyncStorageState('Speed', 0);
-  const [userVip, setUserVip] = useAsyncStorageState('UserVip', '', false);
+  const [userPlan, setUserPlan] = useAsyncStorageState('userPlan', '', false);
 
   useEffect(() => {
     if (globTrueAns > 0 && globTrueAns % 5 === 0) {
@@ -439,13 +439,13 @@ const DataProvider = ({ children }) => {
 
 
   useEffect(() => {
-    if (userVip) return; // Early return if VIP
+    if (userPlan) return; // Early return if VIP
 
     if (globFalseAns > 0 && globFalseAns % 1 === 0 && livesHeart > 0) {
       setLivesHeart(prev => Math.max(prev - 1, 0));
       console.log(`${livesHeart} from global false data context`)
     }
-  }, [globFalseAns, userVip, livesHeart]);
+  }, [globFalseAns, userPlan, livesHeart]);
 
 
   const texts = languagesList[language];
@@ -496,7 +496,7 @@ const DataProvider = ({ children }) => {
   // dont forget the timer
   useEffect(() => {
     if (!quizActive) return;
-    if (!userVip) {
+    if (!userPlan) {
       if (timer > 0) {
         timerTimeout.current = setTimeout(() => {
           setTimer(prev => prev - 1);
@@ -512,7 +512,7 @@ const DataProvider = ({ children }) => {
         }
       }
     }
-  }, [timer, quizActive, userVip]);
+  }, [timer, quizActive, userPlan]);
 
   const appState = useRef(AppState.currentState);
   const deadline = useRef(Date.now() + timer * 1000); // deadline timestamp
@@ -612,7 +612,7 @@ const DataProvider = ({ children }) => {
 
   //   // Timer to restore one life after the remaining time
   //   useEffect(() => {
-  //     if (!userVip) {
+  //     if (!userPlan) {
   //       if (livesHeart < MAX_LIVES) {
   //         const now = Date.now();
   //         const elapsed = now - lastLifeUpdate;
@@ -635,11 +635,11 @@ const DataProvider = ({ children }) => {
   //       }
   //     }
 
-  //   }, [livesHeart, lastLifeUpdate, userVip]);
+  //   }, [livesHeart, lastLifeUpdate, userPlan]);
 
   //   // Interval to update timeLeft every second
   //   useEffect(() => {
-  //     if (!userVip) {
+  //     if (!userPlan) {
   //       if (livesHeart < MAX_LIVES) {
   //         const intervalId = setInterval(() => {
   //           const now = Date.now();
@@ -655,13 +655,13 @@ const DataProvider = ({ children }) => {
   //         setTimeLeft(0);
   //       }
   //     }
-  //   }, [livesHeart, lastLifeUpdate, userVip]);
+  //   }, [livesHeart, lastLifeUpdate, userPlan]);
 
   //   useEffect(() => {
-  //     if (userVip) {
+  //     if (userPlan) {
   //       setLivesHeart(5);
   //     }
-  //   }, [userVip]);
+  //   }, [userPlan]);
 
   //   return { livesHeart, setLivesHeart, livesHeartEnd, timeLeft };
   // }
@@ -846,7 +846,7 @@ const DataProvider = ({ children }) => {
       DataLevelIndex: dataLevelIndex,
       QuestIndices: questIndices,
       AnswerStats: answerStats,
-      UserVip: userVip,
+      userPlan: userPlan,
     };
 
     // FIXED: Only update if data actually changed
@@ -864,7 +864,7 @@ const DataProvider = ({ children }) => {
     }
   }, [user?.uid, firebaseLoaded, userXp, speed, userName, userImage, language,
     globTrueAns, globFalseAns, isGradient, vibrate, sound, helpPoint,
-    livesHeart, dataLevelIndex, questIndices, answerStats, userVip]);
+    livesHeart, dataLevelIndex, questIndices, answerStats, userPlan]);
 
   // FIXED Logout
   const [leaderBoardIcon, setLeaderBoardIcon] = useState(false)
@@ -872,7 +872,7 @@ const DataProvider = ({ children }) => {
 
   const [isLogout, setIsLogout] = useState(true)
   const keysToRemove = [
-    'UserXp', 'UserVip', 'Speed', 'UserName', 'UserImage', 'Language', 'GlobTrueAns',
+    'UserXp', 'userPlan', 'Speed', 'UserName', 'UserImage', 'Language', 'GlobTrueAns',
     'GlobFalseAns', 'Gradient', 'Vibrate', 'Sound', 'HelpPoint',
     'LivesHeart', 'DataLevelIndex', 'QuestIndices', 'AnswerStats',
     'Apparence', 'lastLifeUpdate',
@@ -895,7 +895,7 @@ const DataProvider = ({ children }) => {
 
       setUserName('');
       setUserImage(null);
-      setUserVip('', false);
+      setUserPlan('', false);
       setUserXp(0);
       setLivesHeart(5);
       setLanguage('english');
@@ -937,7 +937,7 @@ const DataProvider = ({ children }) => {
         unsubscribeQuizListener,
         unsubscribeUsersListener,
         unsubscribeUserListener,
-        userVip, setUserVip,
+        userPlan, setUserPlan,
         quizCategoriesData,
         leaderBoardIcon, setLeaderBoardIcon,
         memberSince,

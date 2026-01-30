@@ -35,14 +35,14 @@ export default function VipCard(props) {
         vipPlansCard, setVipPlansCard,
         heartsCard, setHeartsCard,
         setHelpPoint,
-        colors, userVip,
+        colors, userPlan,
         dataLevelIndex, setDataLevelIndex,
         updateQuestIndex, updateAnswerStats,
         questIndices, answerStats,
         percentage,
         currentQuestionsIndex, currentLevelIndex,
         livesHeart, setLivesHeart, livesHeartEnd,
-        timeLeft, setUserVip, vipCard, setVipCard,
+        timeLeft, setUserPlan, vipCard, setVipCard,
     } = useContext(DataContext);
 
     const [backEffect, setBackEffect] = useState(false)
@@ -243,12 +243,12 @@ export default function VipCard(props) {
                 }}>
                     <Text style={{ color: "lightgray", fontWeight: '600' }}>VIP Membership TimeLeft: </Text>
                     <Text style={{ color: "white", fontWeight: '700' }}>
-                        {userVip === 'monthly' ? '30day' : 'lifeTime' ? 'LifeTime' : 'undefind'}
+                        {userPlan === 'monthly' ? '30day' : 'lifeTime' ? 'LifeTime' : 'undefind'}
                     </Text>
                 </View>
                 <Pressable
                     style={{ paddingVertical: 6 }}
-                    onPress={() => setUserVip(false)}
+                    onPress={() => setUserPlan(false)}
                 >
                     <Text style={{ color: "lightgray", fontWeight: '600' }}>Reset</Text>
 

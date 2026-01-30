@@ -39,9 +39,11 @@ export default function Statistics() {
       justifyContent: 'center',
       alignItems: 'center',
       width: "95%",
-      marginTop: 5,
+      marginVertical: 5,
+      gap: 10,
+
     }]} >
-        {/* {StatisticsList.map((item, index) =>
+        {StatisticsList.map((item, index) =>
           <Pressable
             key={index}
             android_ripple={{ color: colors.screenBack, borderless: false, foreground: true }}
@@ -56,7 +58,7 @@ export default function Statistics() {
                 justifyContent: 'space-between',
                 backgroundColor: colors.secondary,
                 borderRadius: 8,
-                flex: 1,
+                paddingHorizontal: 10,
                 
                 height: 100,
                 alignItems: "center",
@@ -65,18 +67,18 @@ export default function Statistics() {
               {
                 position: 'relative',
                 elevation: 5,
-                overflow: 'hidden'
+                overflow: 'hidden',
               },
 
             ]}>
             <MaterialIcons name={item.icon} size={20} color={item.iconColor} />
-            <Text style={[styles.statisticsItemsTitle, {
+            <Text style={[{
               color: colors.text.primary, fontFamily: 'cairo', fontSize: 15
             }]}>{item.resault}</Text>
-            <Text style={[styles.statisticsItemsTitle, { color: colors.text.primary }]}>{item.label}</Text>
+            <Text style={[{ color: colors.text.primary }]}>{item.label}</Text>
           </Pressable>
-        )} */}
-        {true && <Pressable
+        )} 
+        {false && <Pressable
           android_ripple={{ color: colors.secondary, foreground: true, borderless: false }}
           onPress={() => { }}
           style={[

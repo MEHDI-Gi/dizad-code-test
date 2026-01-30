@@ -39,7 +39,7 @@ export default function FreeCard() {
         vipPlansCard, setVipPlansCard,
         heartsCard, setHeartsCard,
         setHelpPoint,
-        colors, userVip, setUserVip,
+        colors, userPlan, setUserPlan,
         dataLevelIndex, setDataLevelIndex,
         updateQuestIndex, updateAnswerStats,
         questIndices, answerStats,
@@ -97,7 +97,8 @@ export default function FreeCard() {
                         setFreeCard(false)
                     }} />
                 <View style={[{
-                    width: '95%',
+                    width: '90%',
+                    height: '60%',
                     backgroundColor: colors.secondary,
                     zIndex: 99999,
                     borderRadius: 10,
@@ -147,7 +148,11 @@ export default function FreeCard() {
                         }}>
 
                             <Pressable
-                                android_ripple={{ color: colors.primary, borderless: false }}
+                                android_ripple={{
+                                    color: colors.primary,
+                                    borderless: false,
+                                    foreground: true
+                                }}
                                 onPress={() => {
                                     setFreeCard(false)
                                 }}
@@ -161,7 +166,7 @@ export default function FreeCard() {
                                 <MaterialCommunityIcons
                                     name='close'
                                     color={'lightgray'}
-                                    size={20}
+                                    size={25}
                                 />
                             </Pressable>
                         </View>
@@ -228,7 +233,8 @@ export default function FreeCard() {
                         })}
                     </View>
                     <View style={{
-                        height: 50,
+                        paddingVertical: 15,
+                        width: '100%',
                         alignItems: 'center',
                         justifyContent: "center",
                         flexDirection: 'row'
@@ -236,26 +242,22 @@ export default function FreeCard() {
                         <Pressable
                             android_ripple={{ color: colors.secondary, foreground: true, borderless: false }}
                             style={{
-                                width: '50%',
+                                width: '70%',
                                 height: 35,
                                 borderRadius: 8,
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 backgroundColor: colors.button.primary
                             }}
-                            onPress={() => setVipPlansCard(true)}
+                            onPress={() => {
+                                setFreeCard(false)
+                                setVipPlansCard(true)
+                            }}
                         >
                             <Text style={{ color: 'black', fontWeight: '900' }}>UPGRADE</Text>
 
                         </Pressable>
                     </View>
-                    <Pressable
-                        style={{ paddingVertical: 6 }}
-                        onPress={() => setUserVip('')}
-                    >
-                        <Text style={{ color: "lightgray", fontWeight: '600' }}>Reset</Text>
-
-                    </Pressable>
                 </View>
 
             </View>

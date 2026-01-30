@@ -31,7 +31,7 @@ export default function CategoriesList() {
         setTimeEndState, answerStats,
         levelsRank, setLevelsRank,
         quizCategoriesData,
-        livesHeart, userVip,
+        livesHeart, userPlan,
         sound, playSound, isGradient, texts, language, setQuizActive,
     } = useContext(DataContext);
 
@@ -145,7 +145,7 @@ export default function CategoriesList() {
                                             opacity: 1,
                                             elevation: 5,
                                         },
-                                        userVip || livesHeart > 0 ? {
+                                        userPlan || livesHeart > 0 ? {
                                             opacity: 1,
                                             elevation: 5,
                                         } : {
@@ -153,7 +153,7 @@ export default function CategoriesList() {
                                             elevation: 0,
                                         },
                                     ]}
-                                    disabled={!userVip && livesHeart === 0} // optionally disable press if previous level not completed
+                                    disabled={!userPlan && livesHeart === 0} // optionally disable press if previous level not completed
                                 >
                                     {isGradient &&
                                         <LinearGradient

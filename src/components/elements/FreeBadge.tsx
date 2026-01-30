@@ -11,7 +11,7 @@ import Animated, {
     withSpring
 } from 'react-native-reanimated';
 
-export default function FreeBadge(props: { backColor: any; elevation: any; }) {
+export default function FreeBadge(props: any) {
     const {
         userXp,
         quizData,
@@ -25,7 +25,7 @@ export default function FreeBadge(props: { backColor: any; elevation: any; }) {
         playSound,
         isGradient,
         texts,
-        userVip,
+        userPlan,
         setFreeCard
     } = useContext(DataContext);
 
@@ -33,8 +33,8 @@ export default function FreeBadge(props: { backColor: any; elevation: any; }) {
         <Pressable
             android_ripple={{ color: colors.primary, borderless: false, foreground: true }}
             style={{
-                width: 40,
-                height: 28,
+                width: props.width,
+                height: props.height,
                 backgroundColor: props.backColor,
                 borderRadius: 8,
                 overflow: 'hidden',

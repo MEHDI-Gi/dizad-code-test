@@ -7,25 +7,25 @@ import { DataContext } from './contextData';
 export default function VipMonthly() {
     const {
 
-        colors, userVip,
-        setUserVip, vipCard, setVipCard,
+        colors, userPlan,
+        setUserPlan, vipCard, setVipCard,
     } = useContext(DataContext);
 
     const [timer, setTimer] = useState(7200);
     const timerTimeout = useRef(null)
     // dont forget the timer
     useEffect(() => {
-        if (userVip === false) return;
-        if (timer > 0 && userVip === 'monthly') {
+        if (userPlan === false) return;
+        if (timer > 0 && userPlan === 'monthly') {
             timerTimeout.current = setTimeout(() => {
                 setTimer(prev => prev - 1);
             }, 1000);
             return () => clearTimeout(timerTimeout.current);
         } else if (timer === 0) {
-            setUserVip(false);
+            setUserPlan(false);
 
         }
-    }, [timer, userVip]);
+    }, [timer, userPlan]);
 
     const appState = useRef(AppState.currentState);
     const deadline = useRef(Date.now() + timer * 1000); // deadline timestamp

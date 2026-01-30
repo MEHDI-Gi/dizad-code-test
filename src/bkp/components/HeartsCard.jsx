@@ -40,7 +40,7 @@ export default function HeartsCard(props) {
         percentage,
         currentQuestionsIndex, currentLevelIndex,
         livesHeart, setLivesHeart, livesHeartEnd,
-        timeLeft, setUserVip, setVipPlansCard, vipPlansCard
+        timeLeft, setUserPlan, setVipPlansCard, vipPlansCard
     } = useContext(DataContext);
     function formatTime(ms) {
         const totalSeconds = Math.floor(ms / 1000);

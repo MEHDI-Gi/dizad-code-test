@@ -34,6 +34,9 @@ import { BlurView } from '@react-native-community/blur';
 import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 import { firebase } from '@react-native-firebase/auth';
 import ItemsModal from '../components/ItemsModal';
+
+import { useAd } from '../context/useAd';
+
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 
@@ -124,6 +127,8 @@ const SignsItems = () => {
     toggleBookmark(category, item);
   }, [toggleBookmark]);
 
+  const ad = useAd();
+  
   if (!signsItemsList) {
     return (
       <View style={
@@ -176,10 +181,9 @@ const SignsItems = () => {
             position: 'absolute',
             alignItems: "center",
             justifyContent: "center",
-            left: 0,
-            width: 35,
-            height: 35,
-            borderRadius: 50,
+            right: 0,
+            width: 30,
+            height: 30,
             overflow: 'hidden',
             marginHorizontal: 15,
           }}
@@ -187,7 +191,7 @@ const SignsItems = () => {
             navigation.navigate('MainTabs', { screen: 'Lessons' })
             if (sound) playSound('settingsButton')
           }}>
-          <MaterialIcons name='close' color={colors.text.secondary} size={22} />
+          <MaterialIcons name='close' color={colors.text.secondary} size={25} />
         </Pressable>
       </View>
 
@@ -197,7 +201,6 @@ const SignsItems = () => {
         showsVerticalScrollIndicator={false}
         style={{
           flex: 1, width: '100%',
-
         }}
         contentContainerStyle={{
           paddingTop: 50,
@@ -230,6 +233,10 @@ const SignsItems = () => {
                     setCurrentScrollIndex(index + 1)
                     setSelectedSign(index);   // remember which Sx was tapped
                     setOpenSignsModal(true);
+                    const timer = setTimeout(() => {
+                        ad.isLoaded && ad.show()
+                    }, 2000);
+                    return () => clearTimeout(timer);
                   }}
                   style={[
                     {

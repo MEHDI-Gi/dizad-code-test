@@ -33,7 +33,7 @@ export default function VipPlansCard(props) {
     const {
         heartsCard, setHeartsCard, setVipCard,
         vipPlansCard, setVipPlansCard,
-        setUserVip,
+        setUserPlan,
         setHelpPoint,
         helpPoint,
         quizData,
@@ -325,12 +325,12 @@ export default function VipPlansCard(props) {
                         android_ripple={{ color: colors.secondary, borderless: false }}
                         onPress={() => {
                             if (activePlan === 'monthly') {
-                                setUserVip('monthly', true)
+                                setUserPlan('monthly', true)
                                 setVipCard(true)
                                 setHeartsCard(false)
                                 setVipPlansCard(false)
                             } else if (activePlan === 'lifetime') {
-                                setUserVip('lifetime', true)
+                                setUserPlan('lifetime', true)
                                 setVipCard(true)
                                 setHeartsCard(false)
                                 setVipPlansCard(false)

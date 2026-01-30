@@ -37,7 +37,7 @@ export default function VipPlansCard() {
     const {
         heartsCard, setHeartsCard, setVipCard,
         vipPlansCard, setVipPlansCard,
-        setUserVip,
+        setUserPlan,
         setHelpPoint,
         helpPoint,
         quizData,
@@ -46,20 +46,7 @@ export default function VipPlansCard() {
         globFalseAns,
         setGlobFalseAns,
         colors,
-        dataLevelIndex, setDataLevelIndex,
-        updateQuestIndex, updateAnswerStats,
-        questIndices, answerStats,
-        percentage,
-        currentQuestionsIndex, currentLevelIndex,
-        livesHeart, setLivesHeart, livesHeartEnd,
-        timer, setTimer, resetTimer,
-        levelEndState, setlevelEndState,
-        timeEndState, setTimeEndState,
-        timerTimeout,
-        exitBtn, setExitBtn,
-        setHandleTimerBackground, vibrate, sound, playSound,
-        isGradient, setSnackbarState, setSnackOptions,
-        timeLeft, backEffect
+        userPlan,
     } = useContext(DataContext);
 
 
@@ -68,11 +55,13 @@ export default function VipPlansCard() {
     const [activePlan, setActivePlan] = useState(null);
     const plansListPress = (item: { label: any; price?: string; planType: any; }) => {
         setActivePlan(item.label === item.planType ? null : item.planType);
-         // Toggle or switch
+
+        // Toggle or switch
     };
     const plansList = [
-        { label: 'Monthly plan', price: '0.99$', planType: 'monthly' },
-        { label: 'Lifetime plan', price: '5.00$', planType: 'lifetime' }
+        { label: 'Monthly plan', price: '0.99$', planType: 'monthly', period: 'month' },
+        { label: 'Yearly plan', price: '10.00$', planType: 'yearly', period: 'year' },
+        { label: 'Lifetime plan', price: '20.00$', planType: 'lifetime', period: 'lifetime' }
     ]
 
     const vipItems = [
@@ -288,7 +277,7 @@ export default function VipPlansCard() {
                                     }}>
                                         <Text style={{ fontWeight: '700', color: colors.text.primary }}>{item.price}</Text>
                                         <Text style={{ fontWeight: '600', color: colors.text.primary }}> / </Text>
-                                        <Text style={{ fontWeight: '600', color: colors.text.primary }}>month</Text>
+                                        <Text style={{ fontWeight: '600', color: colors.text.primary }}>{item.period}</Text>
                                     </View>
                                 </Pressable>
                             )
@@ -304,11 +293,15 @@ export default function VipPlansCard() {
                             android_ripple={{ color: colors.secondary, borderless: false }}
                             onPress={() => {
                                 if (activePlan === 'monthly') {
-                                    setUserVip('monthly')
+                                    setUserPlan('monthly')
                                     setVipCard(true)
                                     setVipPlansCard(false)
                                 } else if (activePlan === 'lifetime') {
-                                    setUserVip('lifetime')
+                                    setUserPlan('lifetime')
+                                    setVipCard(true)
+                                    setVipPlansCard(false)
+                                } else if (activePlan === 'yearly') {
+                                    setUserPlan('yearly')
                                     setVipCard(true)
                                     setVipPlansCard(false)
                                 }

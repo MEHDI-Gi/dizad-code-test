@@ -32,7 +32,7 @@ export default function Login({ navigation }: LoginProps) {
     userImage, setUserImage, sound, playSound, setLoadScreen,
     isGradient, isAccountDeleted, setIsAccountDeleted, texts,
     setUserOnline,
-    userXp, userVip,
+    userXp, userPlan,
     handleLogout,
     isLogout, setIsLogout, firebaseData
   } = useContext(DataContext);
