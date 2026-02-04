@@ -1,1 +1,0 @@
-C:\Users\amatek\Desktop\apps_dev\DizadCodeTest\android\app\build\intermediates\cxx\Debug\6q643u1q\obj\arm64-v8a

@@ -19,7 +19,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../types.ts';
-import { useSize } from '../../context/useSize.ts';
+import { useSize } from '../../hooks/useSize.ts';
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 
 export default function BottomTab({ state, navigation }: MaterialTopTabBarProps) {

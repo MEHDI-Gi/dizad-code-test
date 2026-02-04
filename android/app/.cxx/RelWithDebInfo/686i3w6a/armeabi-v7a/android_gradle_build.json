@@ -1,5 +1,6 @@
 {
   "buildFiles": [
+    "/home/mehdi/Desktop/DizadCodeTest/node_modules/@d11/react-native-fast-image/android/build/generated/source/codegen/jni/CMakeLists.txt",
     "/home/mehdi/Desktop/DizadCodeTest/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/CMakeLists.txt",
     "/home/mehdi/Desktop/DizadCodeTest/node_modules/@react-native-community/blur/android/build/generated/source/codegen/jni/CMakeLists.txt",
     "/home/mehdi/Desktop/DizadCodeTest/node_modules/@react-native-google-signin/google-signin/android/build/generated/source/codegen/jni/CMakeLists.txt",
@@ -42,6 +43,11 @@
         "/home/mehdi/.gradle/caches/8.14.3/transforms/d8146eb3b8d47abfca291a5ddcb45f9b/transformed/react-android-0.81.4-release/prefab/modules/jsi/libs/android.armeabi-v7a/libjsi.so",
         "/home/mehdi/.gradle/caches/8.14.3/transforms/d8146eb3b8d47abfca291a5ddcb45f9b/transformed/react-android-0.81.4-release/prefab/modules/reactnative/libs/android.armeabi-v7a/libreactnative.so"
       ]
+    },
+    "react_codegen_RNFastImageSpec::@5f53d33017f3c907f455": {
+      "toolchain": "toolchain",
+      "abi": "armeabi-v7a",
+      "artifactName": "react_codegen_RNFastImageSpec"
     },
     "react_codegen_RNGoogleMobileAdsSpec::@c00c605517d10bc7886c": {
       "toolchain": "toolchain",

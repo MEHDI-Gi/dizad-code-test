@@ -12,6 +12,31 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "/home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/Debug/5ce4f6f6/armeabi-v7a/CMakeFiles/cmake.verify_globs")
 endif()
 
+# react_codegen_SRCS at /home/mehdi/Desktop/DizadCodeTest/node_modules/@d11/react-native-fast-image/android/build/generated/source/codegen/jni/CMakeLists.txt:9 (file)
+file(GLOB NEW_GLOB LIST_DIRECTORIES true "/home/mehdi/Desktop/DizadCodeTest/node_modules/@d11/react-native-fast-image/android/build/generated/source/codegen/jni/*.cpp")
+set(OLD_GLOB
+  "/home/mehdi/Desktop/DizadCodeTest/node_modules/@d11/react-native-fast-image/android/build/generated/source/codegen/jni/RNFastImageSpec-generated.cpp"
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "/home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/Debug/5ce4f6f6/armeabi-v7a/CMakeFiles/cmake.verify_globs")
+endif()
+
+# react_codegen_SRCS at /home/mehdi/Desktop/DizadCodeTest/node_modules/@d11/react-native-fast-image/android/build/generated/source/codegen/jni/CMakeLists.txt:9 (file)
+file(GLOB NEW_GLOB LIST_DIRECTORIES true "/home/mehdi/Desktop/DizadCodeTest/node_modules/@d11/react-native-fast-image/android/build/generated/source/codegen/jni/react/renderer/components/RNFastImageSpec/*.cpp")
+set(OLD_GLOB
+  "/home/mehdi/Desktop/DizadCodeTest/node_modules/@d11/react-native-fast-image/android/build/generated/source/codegen/jni/react/renderer/components/RNFastImageSpec/ComponentDescriptors.cpp"
+  "/home/mehdi/Desktop/DizadCodeTest/node_modules/@d11/react-native-fast-image/android/build/generated/source/codegen/jni/react/renderer/components/RNFastImageSpec/EventEmitters.cpp"
+  "/home/mehdi/Desktop/DizadCodeTest/node_modules/@d11/react-native-fast-image/android/build/generated/source/codegen/jni/react/renderer/components/RNFastImageSpec/Props.cpp"
+  "/home/mehdi/Desktop/DizadCodeTest/node_modules/@d11/react-native-fast-image/android/build/generated/source/codegen/jni/react/renderer/components/RNFastImageSpec/RNFastImageSpecJSI-generated.cpp"
+  "/home/mehdi/Desktop/DizadCodeTest/node_modules/@d11/react-native-fast-image/android/build/generated/source/codegen/jni/react/renderer/components/RNFastImageSpec/ShadowNodes.cpp"
+  "/home/mehdi/Desktop/DizadCodeTest/node_modules/@d11/react-native-fast-image/android/build/generated/source/codegen/jni/react/renderer/components/RNFastImageSpec/States.cpp"
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "/home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/Debug/5ce4f6f6/armeabi-v7a/CMakeFiles/cmake.verify_globs")
+endif()
+
 # react_codegen_SRCS at /home/mehdi/Desktop/DizadCodeTest/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/CMakeLists.txt:9 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "/home/mehdi/Desktop/DizadCodeTest/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/*.cpp")
 set(OLD_GLOB

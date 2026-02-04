@@ -24,7 +24,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import type { RootStackParamList } from '../../types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useSize } from '../context/useSize';
+import { useSize } from '../hooks/useSize';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 

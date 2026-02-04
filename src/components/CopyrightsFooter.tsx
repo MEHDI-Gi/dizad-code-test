@@ -19,6 +19,7 @@ export default function CopyrightsFooter() {
             position: 'absolute',
             bottom: 0,
             justifyContent: 'center',
+            
         }}>
             <View style={{
                 alignItems: 'center',

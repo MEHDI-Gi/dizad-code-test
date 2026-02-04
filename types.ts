@@ -4,6 +4,7 @@ export type RootStackParamList = {
     Profile: undefined;
     QuizScreen: undefined;
     SignsItems: undefined;
+    PriorityItems: undefined;
     TestsScreen: undefined;
     Language: undefined;
     Apparence: undefined;

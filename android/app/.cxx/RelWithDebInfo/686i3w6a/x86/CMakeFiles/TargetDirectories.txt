@@ -1,6 +1,9 @@
 /home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/CMakeFiles/appmodules.dir
 /home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/CMakeFiles/edit_cache.dir
 /home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/CMakeFiles/rebuild_cache.dir
+/home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/RNFastImageSpec_autolinked_build/CMakeFiles/react_codegen_RNFastImageSpec.dir
+/home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/RNFastImageSpec_autolinked_build/CMakeFiles/edit_cache.dir
+/home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/RNFastImageSpec_autolinked_build/CMakeFiles/rebuild_cache.dir
 /home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir
 /home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/rnasyncstorage_autolinked_build/CMakeFiles/edit_cache.dir
 /home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/rnasyncstorage_autolinked_build/CMakeFiles/rebuild_cache.dir

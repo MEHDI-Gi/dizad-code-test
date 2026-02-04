@@ -44,6 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
+  include("/home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/RNFastImageSpec_autolinked_build/cmake_install.cmake")
   include("/home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/rnasyncstorage_autolinked_build/cmake_install.cmake")
   include("/home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/rnblurview_autolinked_build/cmake_install.cmake")
   include("/home/mehdi/Desktop/DizadCodeTest/android/app/.cxx/RelWithDebInfo/686i3w6a/x86/RNGoogleSignInCGen_autolinked_build/cmake_install.cmake")

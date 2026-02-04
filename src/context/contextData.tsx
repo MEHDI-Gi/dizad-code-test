@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import { AppState, Vibration, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useAsyncStorageState } from './useAsyncStorageState';
+import { useAsyncStorageState } from '../hooks/useAsyncStorageState';
 import Sound from 'react-native-sound';
 import { useGoogleSignIn } from './auth';
 import { database, auth } from './firebaseConfig';
@@ -21,8 +21,6 @@ import {
   firebase,
 } from '@react-native-firebase/database';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
-import Bookmarks from '../screens/Bookmarks';
-import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
 
 const DataContext = createContext<any>(null);
 
@@ -32,7 +30,6 @@ interface DataProviderProps {
 
 const DataProvider = ({ children }: DataProviderProps) => {
   const { user, initializing, signIn, logout } = useGoogleSignIn();
-  // 1. Get your signs data
 
   const THEME_DARK = 'dark';
   const THEME_LIGHT = 'light';
@@ -41,8 +38,8 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const [userOnline, setUserOnline] = useState<boolean>(false);
   const [globTrueAns, setGlobTrueAns] = useState<number>(0);
   const [globFalseAns, setGlobFalseAns] = useState<number>(0);
-  const [userName, setUserName] = useState<string>('');
-  const [userImage, setUserImage] = useState<string | null>(null);
+  // const [userName, setUserName] = useState<string>('');
+  // const [userImage, setUserImage] = useState<string | null>(null);
   const [userPlan, setUserPlan] = useState<string>('free');
 
   const [language, setLanguage] = useAsyncStorageState<string>(
@@ -88,6 +85,8 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const [lessonsLoaded, setLessonsLoaded] = useState<boolean>(false);
   // const [usersLoaded, setUsersLoaded] = useState<boolean>(false);
   const [userLoaded, setUserLoaded] = useState<boolean>(false);
+  const [userName, setUserName] = useAsyncStorageState('UserName', '');
+  const [userImage, setUserImage] = useAsyncStorageState('UserImage', null);
 
   const [globalQuestionsLength, setGobalQuestionsLength] = useState<
     number | null
@@ -139,17 +138,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
     // });
 
     const handleUserData = async () => {
-      // if (!user?.uid) {
-      //   console.log('Guest mode');
-      //   setUserLoaded(false);
-      //   const guestName = await AsyncStorage.getItem('guestUserName') || 'Guest';
-      //   const guestImage = await AsyncStorage.getItem('guestImage') || null;
-      //   setUserName(guestName);
-      //   setUserImage(guestImage);
-      //   return;
-      // }
-      // console.log('Authenticated user');
-      // await AsyncStorage.multiRemove(['guestUserName', 'guestImage']);
 
       const userDataRef = ref(database, `users/${user.uid}`);
 
@@ -169,7 +157,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
           }
           setUserOnline(firebaseData.UserOnline ?? false);
           setUserXp(firebaseData.UserXp ?? 0);
-          setUserPlan(firebaseData.userPlan ?? '');
+          setUserPlan(firebaseData.userPlan ?? 'free');
           setUserName(firebaseData.Username ?? user.displayName);
           setUserImage(firebaseData.UserImage ?? user.photoURL);
           setGlobTrueAns(firebaseData.GlobTrueAns ?? 0);
@@ -183,6 +171,10 @@ const DataProvider = ({ children }: DataProviderProps) => {
           } else {
             setBookmarks(firebaseData.Bookmarks);
           }
+          AsyncStorage.multiSet([
+            ['UserName', JSON.stringify(user.displayName ?? '')],
+            ['UserImage', JSON.stringify(user.photoURL ?? null)],
+          ]).catch(console.error);
         }
       });
     };
@@ -192,16 +184,14 @@ const DataProvider = ({ children }: DataProviderProps) => {
     return () => {
       unsubscribeLessonsListener.current?.();
       unsubscribeExamsListener.current?.();
-      // unsubscribeUsersListener.current?.();
       unsubscribeUserListener.current?.();
       console.log('Unsubscribed Firebase listeners');
       setLessonsLoaded(false);
       setExamsLoaded(false);
-      // setUsersLoaded(false);
       setUserLoaded(false);
     };
   }, [user?.uid]);
-  // && usersLoaded
+
   useEffect(() => {
     if (lessonsLoaded && examsLoaded && userLoaded) {
       setFirebaseLoaded(true);
@@ -209,33 +199,10 @@ const DataProvider = ({ children }: DataProviderProps) => {
       setFirebaseLoaded(false);
     }
   }, [lessonsLoaded, examsLoaded, userLoaded]);
-  // usersLoaded,
+
 
   const [signsItemsIndex, setSignsItemsIndex] = useState<number>(0);
-
-  function memberSinceString(firstSignInDateStr: string | number | Date) {
-    const firstSignInDate = new Date(firstSignInDateStr);
-    const now = new Date();
-
-    const years = now.getFullYear() - firstSignInDate.getFullYear();
-    const months = now.getMonth() - firstSignInDate.getMonth();
-    const days = now.getDate() - firstSignInDate.getDate();
-
-    // Adjust months and years if days negative
-    let totalMonths = years * 12 + months;
-    if (days < 0) {
-      totalMonths -= 1;
-    }
-
-    if (totalMonths < 1) {
-      return `Member since less than 1 month`;
-    } else if (totalMonths === 1) {
-      return `Member since 1 month`;
-    } else {
-      return `Member since ${totalMonths} months`;
-    }
-  }
-  const memberSince = '';
+  const [priorityItemsIndex, setPriorityItemsIndex] = useState<number>(0);
 
   const dataArray = Object.values(examsData);
   const dataLength = Object.keys(examsData).length;
@@ -265,6 +232,8 @@ const DataProvider = ({ children }: DataProviderProps) => {
     darkColors: {
       primary: '#16161e',
       secondary: '#1a1b26',
+      // secondary: '#1B2631',
+
       exm: '#282a3a',
       opacity: {
         primary: '#00000098',
@@ -463,27 +432,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const [colors, setColors] = useState<typeof colorsList.darkColors>(
     colorsList.darkColors,
   );
-
-  // Load saved theme on mount
-  // useEffect(() => {
-  //   const loadTheme = async () => {
-  //     const savedTheme = await AsyncStorage.getItem('Apparence');
-  //     if (savedTheme && [THEME_DARK, THEME_LIGHT, THEME_DEFAULT].includes(savedTheme)) {
-  //       setCurrentTheme(savedTheme as Theme);
-  //       setColors(colorsList[`${savedTheme}Colors`]);
-  //     } else {
-  //       // Default theme
-  //       setCurrentTheme(THEME_DARK);
-  //       setColors(colorsList.darkColors);
-  //     }
-  //   };
-  //   loadTheme();
-  // }, []);
-
-  // // Save theme whenever it changes
-  // useEffect(() => {
-  //   AsyncStorage.setItem('Apparence', currentTheme);
-  // }, [currentTheme]);
 
   interface BookmarkItem {
     id?: string;
@@ -770,6 +718,8 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const playSoundMemo = useCallback(playSound, []);
   const handleLogoutMemo = useCallback(handleLogout, [user?.uid]);
 
+  const imgBase = "https://cdn.jsdelivr.net/gh/MEHDI-Gi/dizad_road_test_assets@main/assets"
+
   const contextValue = useMemo(
     () => ({
       bookmarkLoading,
@@ -792,7 +742,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
       quizCategoriesData,
       leaderBoardIcon,
       setLeaderBoardIcon,
-      memberSince,
       speed,
       setSpeed,
       userXp,
@@ -871,10 +820,13 @@ const DataProvider = ({ children }: DataProviderProps) => {
       lessonsLoaded,
       setSignsItemsIndex,
       signsItemsIndex,
+      priorityItemsIndex, setPriorityItemsIndex,
+      imgBase
     }),
     [
       questionsItemsIndex,
       signsItemsIndex,
+      priorityItemsIndex,
       lessonsData,
       examsData,
       colors,
@@ -888,10 +840,10 @@ const DataProvider = ({ children }: DataProviderProps) => {
       freeCard,
       vipCard,
       vipPlansCard,
-      bookmarks, // Bookmarks ⭐
-      firebaseLoaded, // Loading ⭐
-      userPlan, // VIP ⭐
-      globTrueAns, // Stats ⭐
+      bookmarks,
+      firebaseLoaded,
+      userPlan,
+      globTrueAns,
       globFalseAns,
       bookmarkLoading,
     ],

@@ -19,7 +19,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../types.ts';
-import { useSize } from '../../context/useSize.ts';
+import { useSize } from '../../hooks/useSize.ts';
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -54,8 +54,7 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
             right: 0,
             top: 0,
             zIndex: 1,
-            height: 60,
-            elevation: 2,
+            height: 50,
             alignItems: 'center',
             justifyContent: 'center',
         }}>
@@ -71,14 +70,12 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
             <View style={{
                 elevation: 4,
                 width: '90%',
-                height: 40,
+                height: 30,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
                 zIndex: 999999,
                 overflow: 'hidden',
-                padding: 5,
-
             }}>
                 {state.routes.map((route, index) => {
                     const isFocused = state.index === index;
@@ -103,7 +100,7 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
                                 flex: config.label ? 1.5 : 1,
                                 height: '100%',
                                 borderRadius: config.label ? 8 : 50,
-                                // backgroundColor: isFocused ? colors.subTab.color : "transparent",
+                                backgroundColor: isFocused ? colors.secondary : "transparent",
                                 overflow: 'hidden',
                             },]}
                             onPress={onPress}>
