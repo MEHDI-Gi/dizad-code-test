@@ -8,6 +8,7 @@ import {
   Pressable,
   Image,
   Linking,
+  ActivityIndicator,
 } from 'react-native';
 import { DataContext } from '../context/contextData.tsx';
 import LinearGradient from 'react-native-linear-gradient';
@@ -190,19 +191,21 @@ export default function Home({ route }: any) {
     { label: '', img: questCover ?? null, sub: '' },
   ];
 
-  // if (initializing) {
-  //     return (
-  //         <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
-  //             <ActivityIndicator size={30} color={'#566456'} />
-  //         </View>
-  //     )
-  // }
 
   const StatisticsList = [
     { label: 'xp', resault: `${userXp}`, icon: 'check', iconColor: '#555555' },
     { label: texts.wrong, resault: `59`, icon: 'clear', iconColor: '#c94141' },
     { label: texts.correct, resault: `23`, icon: 'check', iconColor: 'green' },
   ];
+
+  if (initializing) {
+    return (
+      <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
+        <ActivityIndicator size={30} color={'#fbff00'} />
+      </View>
+    )
+  }
+
   return (
     <View
       style={[

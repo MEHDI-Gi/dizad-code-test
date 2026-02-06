@@ -15,16 +15,6 @@ export default function VipBadge(props: any) {
         setHeartsCard,
         quizData,
         colors,
-        userName,
-        userImage,
-        helpPoint,
-        livesHeart,
-        isRewardAdd,
-        setIsRewardAdd,
-        sound,
-        playSound,
-        isGradient,
-        texts,
         userPlan, vipCard, setVipCard
     } = useContext(DataContext);
 

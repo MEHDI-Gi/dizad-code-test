@@ -337,7 +337,6 @@ export default function PriorityItems({ route }: any) {
                             size={20}
                         />
                     </Pressable>}
-                    {/* INLINE FlatList - NO renderItem prop */}
                     <FlatList
                         showsHorizontalScrollIndicator={false}
                         data={priorityItemsList}
@@ -348,7 +347,6 @@ export default function PriorityItems({ route }: any) {
                             setHiddenLabel(true)
                         }}
                         horizontal
-                        // keyExtractor={(item) => item.id.toString()}
                         snapToInterval={ITEM_WIDTH}
                         decelerationRate="fast"
                         initialScrollIndex={selectedPriority}

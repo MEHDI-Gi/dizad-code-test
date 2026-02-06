@@ -49,7 +49,8 @@ export default function Login({ navigation }: LoginProps) {
 
   const [inputUserName, setInputUserName] = useState('')
 
-
+  const title = 'رخصتي';
+  const sub = 'تعليم قوانين المرور الجزائرية'
 
   const handleChange = (text: string) => {
     setInputUserName(text);
@@ -122,22 +123,6 @@ export default function Login({ navigation }: LoginProps) {
     }
   };
 
-
-
-
-  // useEffect(() => {
-  //   if (user ) {
-  //     if (user.uid) {
-  //       setUserImage(user.photoURL);
-  //       setUserName(user.displayName)
-  //       // update(ref(database, `users/${user.uid}`), {
-  //       //   Username: user.displayName || userName,
-  //       //   UserImage: user.photoURL || userImage
-  //       // }).catch(console.error);
-  //     }
-  //   }
-  // }, [user]);
-
   useEffect(() => {
     if (user && !initializing) {
       setTimeout(() => {
@@ -146,148 +131,17 @@ export default function Login({ navigation }: LoginProps) {
     }
   }, [user, initializing, navigation]);
 
-  const title = 'رخصتي';
-  const sub = 'تعليم قوانين المرور الجزائرية'
-  if (user || initializing) {
+  if (initializing) {
     return (
       <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
         <ActivityIndicator size={30} />
       </View>
     );
   }
-  // function UserIn() {
-  //   if (initializing || !userImage || !userName) {
-  //     console.log('authInProgress initializing')
-  //     return (
-  //       <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
-  //         <ActivityIndicator size={30} />
-  //       </View>
-  //     )
-  //   }
-  //   return (
-  //     <View style={styles.main}>
-
-  //       {userImage ?
-  //         <Image style={
-  //           {
-  //             width: 50,
-  //             height: 50,
-  //             borderRadius: 5,
-  //             borderWidth: 0,
-  //             borderColor: colors.priText,
-  //           }}
-  //           source={{ uri: userImage }} />
-  //         :
-  //         <MaterialIcons
-  //           name='person'
-  //           size={35}
-  //           color={colors.priText}
-  //         />
-  //       }
-  //       <View style={
-  //         {
-  //           backgroundColor: 'transparent',
-  //           alignItems: 'center',
-  //           justifyContent: 'center',
-  //           marginTop: 10,
-  //         }}>
-  //         <Text style={
-  //           {
-  //             fontSize: 20,
-  //             fontWeight: "600",
-  //             color: colors.text.primary
-  //           }}>
-  //           {userName}
-  //         </Text>
-  //       </View>
-  //       <View style={{
-  //         height: 25,
-  //         zIndex: 99,
-  //         backgroundColor: "transparent",
-  //         width: "100%",
-  //         justifyContent: 'center',
-  //         alignItems: "center",
-  //       }}>
-  //         <View style={{
-  //           backgroundColor: colors.secondary,
-  //           height: 0.5,
-  //           width: "50%",
-  //         }}>
-  //         </View>
-  //       </View>
-  //       <Pressable
-  //         android_ripple={{ foreground: true, color: colors.primary, borderless: false }}
-  //         style={[{
-  //           borderRadius: 8,
-  //           width: '80%',
-  //           height: 35,
-  //           overflow: 'hidden',
-  //           backgroundColor: colors.button.primary,
-  //           flexDirection: 'row',
-  //           alignItems: "center",
-  //           justifyContent: "space-evenly",
-  //           padding: 5,
-  //           elevation: 2
-  //         }]}
-  //         onPress={() => {
-  //           if (user) {
-  //             setUserOnline(true);
-  //             navigation.navigate("MainTabs");
-  //             console.log('enter pressed')
-  //           }
-  //         }}>
-
-
-  //         <MaterialIcons
-  //           name="arrow-forward-ios"
-  //           color={colors.primary}
-  //           size={15}
-  //         />
-  //       </Pressable>
-  //       <Pressable
-  //         android_ripple={{ foreground: true, color: colors.primary, borderless: false }}
-  //         style={[{
-  //           borderRadius: 8,
-  //           width: '20%',
-  //           height: 35,
-  //           overflow: 'hidden',
-  //           backgroundColor: colors.secondary,
-  //           flexDirection: 'row',
-  //           alignItems: "center",
-  //           justifyContent: "center",
-  //           padding: 5,
-  //           elevation: 2,
-  //           marginVertical: 5
-  //         }]}
-  //         onPress={() => handleLogout(navigation)}>
-
-
-  //         <MaterialIcons
-  //           name="logout"
-  //           color={colors.text.primary}
-  //           size={15}
-  //         />
-  //       </Pressable>
-  //     </View>
-  //   )
-  // }
-
-  // if (initializing) {
-  //   console.log('authInProgress initializing')
-  //   return (
-  //     <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
-  //       <ActivityIndicator size={30} color={'orange'} />
-  //     </View>
-  //   )
-  // }
-
-
-
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={[styles.container, { backgroundColor: colors.primary }]}>
-
         <View style={{
           position: 'absolute',
           top: 0,
@@ -306,7 +160,6 @@ export default function Login({ navigation }: LoginProps) {
             fontSize: 20,
 
           }}>{title}</Text>
-
         </View>
         <View style={styles.main}>
           <View style={{

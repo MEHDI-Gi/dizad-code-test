@@ -13,19 +13,7 @@ import Animated, {
 
 export default function FreeBadge(props: any) {
     const {
-        userXp,
-        quizData,
         colors,
-        userName,
-        userImage,
-        helpPoint,
-        isRewardAdd,
-        setIsRewardAdd,
-        sound,
-        playSound,
-        isGradient,
-        texts,
-        userPlan,
         setFreeCard
     } = useContext(DataContext);
 

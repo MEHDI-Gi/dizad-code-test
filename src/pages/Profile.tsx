@@ -554,6 +554,7 @@ const Profile = () => {
                 flexDirection: 'row',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
+                gap: 8
               }}
             >
 
@@ -565,7 +566,7 @@ const Profile = () => {
                   alignItems: 'center',
                 }}
               >
-                {userName}{' '}
+                {userName}
               </Text>
               {userPlan === 'free' ?
                 (<FreeBadge

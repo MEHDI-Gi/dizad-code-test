@@ -35,17 +35,9 @@ export default function Statistics() {
     speed,
     user,
     //  usersData,
-    userName,
-    userImage,
     statisticsCard,
     setStatisticsCard,
   } = useContext(DataContext);
-  // const usersArray = Object.entries(usersData).map(([id, user]) => ({
-  //   id,
-  //   ...(user as any)
-  // }));
-  // const onTopUsers = usersArray.slice().sort((a, b) => (b.UserXp || 0) - (a.UserXp || 0));
-  // const currentUser = usersArray.find(user => user.Username === userName && user.UserImage === userImage);
 
   const StatisticsList = [
     {

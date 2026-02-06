@@ -38,8 +38,8 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const [userOnline, setUserOnline] = useState<boolean>(false);
   const [globTrueAns, setGlobTrueAns] = useState<number>(0);
   const [globFalseAns, setGlobFalseAns] = useState<number>(0);
-  // const [userName, setUserName] = useState<string>('');
-  // const [userImage, setUserImage] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string>('');
+  const [userImage, setUserImage] = useState<string | null>(null);
   const [userPlan, setUserPlan] = useState<string>('free');
 
   const [language, setLanguage] = useAsyncStorageState<string>(
@@ -85,8 +85,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const [lessonsLoaded, setLessonsLoaded] = useState<boolean>(false);
   // const [usersLoaded, setUsersLoaded] = useState<boolean>(false);
   const [userLoaded, setUserLoaded] = useState<boolean>(false);
-  const [userName, setUserName] = useAsyncStorageState('UserName', '');
-  const [userImage, setUserImage] = useAsyncStorageState('UserImage', null);
 
   const [globalQuestionsLength, setGobalQuestionsLength] = useState<
     number | null
@@ -171,10 +169,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
           } else {
             setBookmarks(firebaseData.Bookmarks);
           }
-          AsyncStorage.multiSet([
-            ['UserName', JSON.stringify(user.displayName ?? '')],
-            ['UserImage', JSON.stringify(user.photoURL ?? null)],
-          ]).catch(console.error);
+
         }
       });
     };
@@ -673,6 +668,8 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
   const [isLogout, setIsLogout] = useState(true);
   const keysToRemove = [
+    'UserImage',
+    'UserName',
     'QuestionsItemIndex',
     'UserOnline',
     'UserXp',

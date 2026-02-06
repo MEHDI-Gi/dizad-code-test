@@ -20,28 +20,9 @@ export default function Sound() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Profile', 'RankScreen'>>();
 
     const {
-        snackbarState, setSnackbarState,
-        setSnackOptions,
-        globTrueAns,
-        globFalseAns,
-        dataLevelIndex,
-        setUpdateNextLevelState,
-        selectedImageUri,
-        userName,
-        setHelpPoint, setLivesHeart, livesHeartEnd,
-        setQuestIndex,
-        setGlobTrueAns,
         colors,
-        setGlobFalseAns,
-        setIsActIndicator,
-        setUserName,
-        updateQuestIndex,
-        toggleTheme, setIsPicAdd,
-        THEME_DARK, THEME_LIGHT,
-        THEME_DARK_GRADIENT, THEME_LIGHT_GRADIENT,
         resetAnswerStats, setVibrate, vibrate, playSound, sound, setSound,
         isGradient, setIsGradient, texts, language, SnackBarTransition,
-        apparence, setApparence, setColors, colorsList, currentTheme, setCurrentTheme
     } = useContext(DataContext);
     const isFirstRun = useRef(true);
     // useEffect(() => {
