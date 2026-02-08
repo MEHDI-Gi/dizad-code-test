@@ -37,7 +37,6 @@ export default function CategoriesList() {
         answerStats,
         levelsRank, setLevelsRank,
         quizCategoriesData,
-        userPlan,
         sound, playSound, isGradient, texts, language,
     } = useContext(DataContext);
 

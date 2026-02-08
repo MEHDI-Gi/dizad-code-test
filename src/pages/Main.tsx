@@ -21,7 +21,6 @@ import VipPlansCard from '../components/VipPlansCard.tsx';
 import Home from './Home.tsx';
 import Login from './Login';
 import Profile from './Profile.tsx';
-import QuizScreen from './QuizScreen.tsx';
 import VipCard from '../components/VipCard.tsx';
 import StatisticsCard from '../components/StatisticsCard.tsx';
 import FreeCard from '../components/FreeCard.tsx';
@@ -58,27 +57,14 @@ export default function Main() {
                 setAdLoaded(true);
             });
     }, []);
-
     usePeriodicAd();
-    const [showLoader, setShowLoader] = useState<boolean>(false);
-    // useEffect(() => {
-    //     if (dataAsync) {
-    //         setShowLoader(true);
-    //         const timeout = setTimeout(() => setShowLoader(false), 10000); // 10s max
-    //         return () => clearTimeout(timeout);
-    //     } else {
-    //         setShowLoader(false);
-    //     }
-    // }, [dataAsync]);
     const [splash, setSplash] = useState(true);
 
     useEffect(() => {
-        // Check AsyncStorage/Firebase, then set first screen
-        setTimeout(() => setSplash(false), 2000); // Splash duration
+        setTimeout(() => setSplash(false), 2000);
     }, []);
 
     if (splash) return <SplashScreen />;
-    // if (true) return <Offline />;
 
     return (
         <View style={[styles.container, {
@@ -108,7 +94,6 @@ export default function Main() {
                     <Stack.Screen name="TestsScreen" component={TestsScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Report" component={Report} options={{ headerShown: false }} />
                     <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
-                    <Stack.Screen name="QuizScreen" component={QuizScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Vibrate" component={Vibrate} options={{ headerShown: false }} />
                     <Stack.Screen name="Sound" component={Sound} options={{ headerShown: false }} />
                     <Stack.Screen name="Apparence" component={Apparence} options={{ headerShown: false }} />

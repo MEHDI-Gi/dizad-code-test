@@ -1,18 +1,21 @@
-import { useMemo } from "react";
-import { useAsyncStorageState } from "./useAsyncStorageState"; // Path to your hook
+// useVip.ts
+import { useMemo, useContext } from "react";
+import { DataContext } from "../context/contextData";
 
 export const useVip = () => {
+    const context = useContext(DataContext);
 
-    const [userPlan, setUserPlan] = useAsyncStorageState<string>('userPlan', 'free');
+    // GUARD: If context is null, return default values instead of crashing
+    if (!context) {
+        return { userVip: false, userPlan: 'free', setUserPlan: () => { } };
+    }
+
+    const { userPlan, setUserPlan } = context;
 
     const userVip = useMemo(() => {
         const vipPlans = ['yearly', 'monthly', 'lifetime'];
-        return vipPlans.includes(userPlan);
+        return vipPlans.includes(userPlan || 'free');
     }, [userPlan]);
 
-    return {
-        userVip,
-        userPlan,
-        setUserPlan
-    };
+    return { userVip, userPlan, setUserPlan: context?.setUserPlan };
 };

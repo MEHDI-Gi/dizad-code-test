@@ -45,6 +45,7 @@ import { useAutoInterstitial } from '../hooks/useAutoInterstitial.ts';
 import { TestIds, useInterstitialAd } from 'react-native-google-mobile-ads';
 import { useAd } from '../hooks/useAd.ts';
 import { useColors } from '../hooks/useColors.ts';
+import { useVip } from '../hooks/useVip.ts';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Home({ route }: any) {
@@ -53,12 +54,12 @@ export default function Home({ route }: any) {
   };
   const { screen, lessons } = useSize();
   const { user, initializing } = useGoogleSignIn();
+  const { userVip } = useVip();
   const colors = useColors();
   const {
     userXp,
     setHeartsCard,
     quizData,
-    userVip,
     userName,
     userImage,
     helpPoint,

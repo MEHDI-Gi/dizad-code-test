@@ -32,13 +32,16 @@ import Animated, {
     withSpring
 } from 'react-native-reanimated';
 import { useColors } from '../hooks/useColors';
+import { useVip } from '../hooks/useVip';
+import { auth, database } from '../context/firebaseConfig';
+import { ref, update } from '@react-native-firebase/database';
 const rewardedAd = RewardedAd.createForAdRequest(TestIds.REWARDED);
 
 export default function VipPlansCard() {
+    const { userPlan, setUserPlan } = useVip()
     const {
         heartsCard, setHeartsCard, setVipCard,
         vipPlansCard, setVipPlansCard,
-        setUserPlan,
         setHelpPoint,
         helpPoint,
         quizData,
@@ -46,13 +49,42 @@ export default function VipPlansCard() {
         globTrueAns, setGlobTrueAns,
         globFalseAns,
         setGlobFalseAns,
-        userPlan,
     } = useContext(DataContext);
     const colors = useColors();
 
 
 
     const [activePlan, setActivePlan] = useState(null);
+
+    const handleSubscribe = async () => {
+        // No parentheses after auth!
+        const currentUser = auth.currentUser;
+
+        if (!activePlan || !currentUser) {
+            console.log("Cannot subscribe: No plan selected or user not found");
+            return;
+        }
+
+        try {
+            // 1. Write to Firebase (The Master Truth)
+            // Note: Using your 'database' export from config
+            await update(ref(database, `users/${currentUser.uid}`), {
+                UserPlan: activePlan
+            });
+
+            // 2. Update local state
+            setUserPlan(activePlan);
+
+            // 3. Close the card
+            setVipCard(true);
+            setVipPlansCard(false);
+
+            console.log("✅ Firebase updated with plan:", activePlan);
+        } catch (error) {
+            console.error("❌ Firebase update failed:", error);
+        }
+    };
+
     const plansListPress = (item: { label: any; price?: string; planType: any; }) => {
         setActivePlan(item.label === item.planType ? null : item.planType);
 
@@ -291,29 +323,16 @@ export default function VipPlansCard() {
                     }}>
                         <Pressable
                             android_ripple={{ color: colors.secondary, borderless: false }}
-                            onPress={() => {
-                                if (activePlan === 'monthly') {
-                                    setUserPlan('monthly')
-                                    setVipCard(true)
-                                    setVipPlansCard(false)
-                                } else if (activePlan === 'lifetime') {
-                                    setUserPlan('lifetime')
-                                    setVipCard(true)
-                                    setVipPlansCard(false)
-                                } else if (activePlan === 'yearly') {
-                                    setUserPlan('yearly')
-                                    setVipCard(true)
-                                    setVipPlansCard(false)
-                                }
-                            }}
-                            style={{
+                            onPress={handleSubscribe}
+                            disabled={!activePlan}
+                            style={[{
                                 backgroundColor: 'orange',
                                 width: '90%',
                                 height: 45,
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 borderRadius: 8,
-                            }}
+                            }, !activePlan && { opacity: 0.7 }]}
                         >
                             <Text style={{ fontWeight: '700' }}>Subscribe</Text>
                         </Pressable>

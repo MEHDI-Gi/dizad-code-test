@@ -32,14 +32,14 @@ interface DataProviderProps {
 
 const DataProvider = ({ children }: DataProviderProps) => {
   const { user, initializing, signIn, logout } = useGoogleSignIn();
-  const { userVip, userPlan, setUserPlan } = useVip();
+
   const [userXp, setUserXp] = useState<number>(0);
   const [userOnline, setUserOnline] = useState<boolean>(false);
   const [globTrueAns, setGlobTrueAns] = useState<number>(0);
   const [globFalseAns, setGlobFalseAns] = useState<number>(0);
   const [userName, setUserName] = useState<string>('');
   const [userImage, setUserImage] = useState<string | null>(null);
-
+  const [userPlan, setUserPlan] = useAsyncStorageState<string>('UserPlan', 'free');
 
   const [language, setLanguage] = useAsyncStorageState<string>(
     'Language',
@@ -102,12 +102,25 @@ const DataProvider = ({ children }: DataProviderProps) => {
     setUserLoaded,
     setFirebaseLoaded,
     setUserData: (data) => {
-      // Map your individual setters here
+      if (!data.Username && user?.displayName) {
+        update(ref(database, `users/${user.uid}`), { Username: user.displayName });
+        setUserName(user.displayName);
+      } else {
+        // Fallback to Google display name if Firebase data is somehow empty
+        setUserName(data.Username ?? user?.displayName ?? '');
+      }
+
+      // Image Logic
+      if (!data.UserImage && user?.photoURL) {
+        update(ref(database, `users/${user.uid}`), { UserImage: user.photoURL });
+        setUserImage(user.photoURL);
+      } else {
+        setUserImage(data.UserImage ?? user?.photoURL ?? null);
+      }
+
       setUserOnline(data.UserOnline ?? false);
       setUserXp(data.UserXp ?? 0);
       setUserPlan(data.UserPlan ?? 'free');
-      setUserName(data.Username ?? user.displayName);
-      setUserImage(data.UserImage ?? user.photoURL);
       setGlobTrueAns(data.GlobTrueAns ?? 0);
       setGlobFalseAns(data.GlobFalseAns ?? 0);
       setBookmarks(data.Bookmarks ?? { signs: {}, questions: {}, priority: {} });
@@ -407,22 +420,14 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
   const dataToUpdate = useMemo(
     () => ({
-      UserName: userName,
-      UserImage: userImage,
-      UserOnline: userOnline,
       UserXp: userXp,
       GlobTrueAns: globTrueAns,
       GlobFalseAns: globFalseAns,
-      UserPlan: userPlan,
     }),
     [
-      userName,
-      userImage,
-      userOnline,
       userXp,
       globTrueAns,
       globFalseAns,
-      userPlan,
     ],
   );
 
@@ -596,7 +601,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
       signsItemsIndex,
       priorityItemsIndex, setPriorityItemsIndex,
       imgBase,
-      userVip,
     }),
     [
       user, initializing, signIn, logout,
@@ -618,7 +622,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
       bookmarks,
       firebaseLoaded,
       userPlan,
-      userVip,
       globTrueAns,
       globFalseAns,
       bookmarkLoading,

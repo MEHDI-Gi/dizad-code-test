@@ -22,40 +22,31 @@ import BottomTab from '../components/elements/BottomTab.tsx';
 import FastImage from '@d11/react-native-fast-image';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useColors } from '../hooks/useColors.ts';
+import { useVip } from '../hooks/useVip.ts';
 
 export default function Priority() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const { user, logout, initializing } = useGoogleSignIn();
     const { lessons, screen } = useSize();
+    const { userVip } = useVip();
+
     const colors = useColors();
     const {
-        signsData,
-        lessonsQuestIndices,
-        lessonPercentage,
-        lessonsCurrentLevelIndex,
-        signsDataLength,
-        setDataLevelIndex,
-        answerStats,
-        levelsRank, setLevelsRank,
-        quizCategoriesData,
-        userPlan,
-        sound, playSound, isGradient, texts, language,
-        isRewardAdd, setIsRewardAdd,
-        lessonsData,
-        priorityItemsIndex, setPriorityItemsIndex,
+        sound, playSound,
+        lessonsData, setPriorityItemsIndex,
         imgBase
     } = useContext(DataContext);
 
     const itemsSideColors = [
-        '#4a2b14ff',  // Saddle Brown
-        '#36344aff',  // Dark Slate Blue
-        '#4f6031ff',  // Dark Olive Green
-        '#756230ff',  // Dark Goldenrod
-        '#6e1c2dff',  // Crimson
+        '#4a2b14ff',  
+        '#36344aff',  
+        '#4f6031ff',  
+        '#756230ff', 
+        '#6e1c2dff', 
         '#2F4F4F',
-
     ]
+    
     const sideColors = (index: number) =>
         itemsSideColors[index % itemsSideColors.length] ?? 'white';
 
@@ -129,7 +120,7 @@ export default function Priority() {
                         if (PRIORITY_CONTENT) {
                             return (
                                 <Pressable
-                                    disabled={userPlan === 'free' && index > 3}
+                                    disabled={!userVip && index > 3}
                                     key={index}
                                     android_ripple={{
                                         foreground: true,
@@ -152,7 +143,7 @@ export default function Priority() {
 
                                     ]}
                                 >
-                                    {userPlan === 'free' && index > 3 &&
+                                    {!userVip && index > 3 &&
                                         <View style={{
                                             backgroundColor: colors.opacity.primary,
                                             position: "absolute",

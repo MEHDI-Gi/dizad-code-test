@@ -41,14 +41,15 @@ import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer
 import FreeBadge from '../components/elements/FreeBadge.tsx';
 import { useColors } from '../hooks/useColors.ts';
 import { useTheme } from '../hooks/useTheme.ts';
+import { useVip } from '../hooks/useVip.ts';
 const Profile = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const colors = useColors();
+  const { userVip } = useVip();
   const { currentTheme, setCurrentTheme, THEME_DARK, THEME_LIGHT, } = useTheme()
   const {
     user, initializing, signIn, logout,
-    userPlan,
     dataLevelIndex,
     setSnackbarState,
     setUpdateNextLevelState,
@@ -84,7 +85,6 @@ const Profile = () => {
     setLeaderBoardIcon,
     livesHeart,
     setUserImage,
-    setUserPlan,
     setLanguage,
     setVibrate,
     resetBookmarks,
@@ -575,13 +575,13 @@ const Profile = () => {
               >
                 {userName}
               </Text>
-              {userPlan === 'free' ?
+              {!userVip ?
                 (<FreeBadge
                   width={35}
                   height={15}
                   backColor={colors.secondary}
                   elevation={0} />)
-                : userPlan === 'monthly' || userPlan === 'yearly' || userPlan === 'lifetime' ?
+                : userVip ?
                   (<VipBadge
                     width={27}
                     height={15}

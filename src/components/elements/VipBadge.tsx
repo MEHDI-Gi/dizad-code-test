@@ -15,7 +15,7 @@ export default function VipBadge(props: any) {
         userXp,
         setHeartsCard,
         quizData,
-        userPlan, vipCard, setVipCard
+         vipCard, setVipCard
     } = useContext(DataContext);
     const colors = useColors();
 

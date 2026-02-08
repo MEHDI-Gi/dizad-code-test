@@ -24,23 +24,25 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { DataContext } from '../context/contextData';
 import { useColors } from '../hooks/useColors';
+import { useVip } from '../hooks/useVip';
 
 
 
 
 export default function VipCard() {
+    const { userPlan, setUserPlan } = useVip()
+
     const {
         vipPlansCard, setVipPlansCard,
         heartsCard, setHeartsCard,
         setHelpPoint,
-        userPlan,
         dataLevelIndex, setDataLevelIndex,
         updateQuestIndex, updateAnswerStats,
         questIndices, answerStats,
         percentage,
         currentQuestionsIndex, currentLevelIndex,
         livesHeart, setLivesHeart, livesHeartEnd,
-        setUserPlan, vipCard, setVipCard,
+        vipCard, setVipCard,
     } = useContext(DataContext);
     const colors = useColors();
     const vipItems = [
