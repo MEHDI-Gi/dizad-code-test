@@ -15,6 +15,7 @@ import BottomTab from '../components/elements/BottomTab.tsx';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import { useAutoInterstitial } from '../hooks/useAutoInterstitial.ts';
 import { useAd } from '../hooks/useAd.ts';
+import { useColors } from '../hooks/useColors.ts';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Signs() {
@@ -24,10 +25,10 @@ export default function Signs() {
 
     const { user, logout, initializing } = useGoogleSignIn();
     const { lessons, screen } = useSize();
+    const colors = useColors();
     const {
         lessonsData,
         setSignsItemsIndex,
-        colors,
         sound, playSound, isGradient,
         isRewardAdd, setIsRewardAdd,
         imgBase

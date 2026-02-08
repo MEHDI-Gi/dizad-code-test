@@ -31,6 +31,7 @@ import Animated, {
     Easing,
     withSpring
 } from 'react-native-reanimated';
+import { useColors } from '../hooks/useColors';
 const rewardedAd = RewardedAd.createForAdRequest(TestIds.REWARDED);
 
 export default function VipPlansCard() {
@@ -45,10 +46,9 @@ export default function VipPlansCard() {
         globTrueAns, setGlobTrueAns,
         globFalseAns,
         setGlobFalseAns,
-        colors,
         userPlan,
     } = useContext(DataContext);
-
+    const colors = useColors();
 
 
 

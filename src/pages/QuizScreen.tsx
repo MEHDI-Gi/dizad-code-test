@@ -33,9 +33,11 @@ import LivesHeartEnd from './quiz/LivesHeartEnd';
 
 import type { RootStackParamList } from '../../types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useColors } from '../hooks/useColors';
 
 const QuizScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Home'>>();
+  const colors = useColors();
   const {
     setHelpPoint,
     helpPoint,
@@ -44,7 +46,6 @@ const QuizScreen = () => {
     globTrueAns, setGlobTrueAns,
     globFalseAns,
     setGlobFalseAns,
-    colors,
     dataLevelIndex, setDataLevelIndex,
     updateQuestIndex, updateAnswerStats,
     questIndices, answerStats,

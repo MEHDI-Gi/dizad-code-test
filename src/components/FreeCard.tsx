@@ -32,6 +32,7 @@ import Animated, {
     withSpring
 } from 'react-native-reanimated';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import { useColors } from '../hooks/useColors';
 
 
 export default function FreeCard() {
@@ -39,7 +40,7 @@ export default function FreeCard() {
         vipPlansCard, setVipPlansCard,
         heartsCard, setHeartsCard,
         setHelpPoint,
-        colors, userPlan, setUserPlan,
+        userPlan, setUserPlan,
         dataLevelIndex, setDataLevelIndex,
         updateQuestIndex, updateAnswerStats,
         questIndices, answerStats,
@@ -47,7 +48,7 @@ export default function FreeCard() {
         currentQuestionsIndex, currentLevelIndex,
         freeCard, setFreeCard
     } = useContext(DataContext);
-
+    const colors = useColors();
 
 
     // useEffect(() => {

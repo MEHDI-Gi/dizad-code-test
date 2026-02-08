@@ -33,20 +33,20 @@ import { RootStackParamList } from '../../types.ts';
 
 import { useSize } from '../hooks/useSize.ts';
 import { useGoogleSignIn } from '../context/auth.ts';
+import { useColors } from '../hooks/useColors.ts';
 
 export default function Exams() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const { user, logout, initializing } = useGoogleSignIn();
   const { lessons, screen } = useSize();
+  const colors = useColors();
   const {
     signsData,
     setSignsItemsIndex,
     signsItemsIndex,
     lessonPercentage,
     lessonsCurrentLevelIndex,
-    colors,
     signsDataLength,
     setDataLevelIndex,
     answerStats,

@@ -20,6 +20,7 @@ import { BlurView } from '@react-native-community/blur';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ItemsModal from '../components/ItemsModal.tsx';
 import { useAd } from '../hooks/useAd.ts';
+import { useColors } from '../hooks/useColors.ts';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -28,13 +29,13 @@ export default function Questions() {
 
     const { user, logout, initializing } = useGoogleSignIn();
     const { lessons, screen } = useSize();
+    const colors = useColors();
     const {
         signsData,
         setSignsItemsIndex,
         signsItemsIndex,
         lessonPercentage,
         lessonsCurrentLevelIndex,
-        colors,
         signsDataLength,
         setDataLevelIndex,
         answerStats,

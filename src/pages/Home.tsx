@@ -44,6 +44,7 @@ import { MaterialTopTabNavigationProp } from '@react-navigation/material-top-tab
 import { useAutoInterstitial } from '../hooks/useAutoInterstitial.ts';
 import { TestIds, useInterstitialAd } from 'react-native-google-mobile-ads';
 import { useAd } from '../hooks/useAd.ts';
+import { useColors } from '../hooks/useColors.ts';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Home({ route }: any) {
@@ -52,12 +53,12 @@ export default function Home({ route }: any) {
   };
   const { screen, lessons } = useSize();
   const { user, initializing } = useGoogleSignIn();
-
+  const colors = useColors();
   const {
     userXp,
     setHeartsCard,
     quizData,
-    colors,
+    userVip,
     userName,
     userImage,
     helpPoint,
@@ -84,6 +85,7 @@ export default function Home({ route }: any) {
     dataLength,
     speed,
     setStatisticsCard,
+    firebaseLoaded
   } = useContext(DataContext);
 
   const navigation = useNavigation<any>();
@@ -198,7 +200,7 @@ export default function Home({ route }: any) {
     { label: texts.correct, resault: `23`, icon: 'check', iconColor: 'green' },
   ];
 
-  if (initializing) {
+  if (!firebaseLoaded) {
     return (
       <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
         <ActivityIndicator size={30} color={'#fbff00'} />
@@ -317,10 +319,10 @@ export default function Home({ route }: any) {
                     color: colors.text.primary,
                   }}
                 >
-                  {userName}
+                  {userName ?? userName}
                 </Text>
               </View>
-              {/* <View
+              <View
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
@@ -328,47 +330,32 @@ export default function Home({ route }: any) {
                   flex: 1,
                 }}
               >
-                {StatisticsList.map((item, index) => (
-                  <View
-                    style={[
-                      {
-                        flexDirection: 'row',
-                        justifyContent: 'space-evenly',
-                        alignItems: 'center',
-                        paddingHorizontal: 5,
-                        columnGap: 10,
-                        position: 'relative',
-                        overflow: 'hidden',
-                      },
-                    ]}
-                  >
-                    <View
-                      style={{
-                        borderRadius: 50,
-                        padding: 5,
-                        backgroundColor: item.iconColor,
-                      }}
-                    />
-                    <Text
-                      style={[
-                        {
-                          color: colors.text.primary,
-                          fontSize: 12,
-                        },
-                      ]}
-                    >
-                      {item?.resault}
-                    </Text>
-                  </View>
-                ))}
-              </View> */}
+                <Text
+                  style={[
+                    {
+                      color: colors.text.primary,
+                      fontSize: 12,
+                    },
+                  ]}
+                >
+                  {userXp ?? userXp} %
+                </Text>
+              </View>
             </View>
+            {/* <Pressable
+              android_ripple={{ borderless: false, color: colors.secondary, foreground: true }}>
+              <MaterialCommunityIcons
+                name='chart-box'
+                color={colors.text.primary}
+                size={40}
+              />
+            </Pressable> */}
           </View>
-          {userPlan === 'free' ?
+          {!userVip ?
             (
               <FreeBadge backColor={colors.secondary} elevation={0} height={28} width={40} />
             )
-            : userPlan === 'monthly' || userPlan === 'yearly' || userPlan === 'lifetime' ?
+            : userVip ?
               (
                 <VipBadge
                   width={40}

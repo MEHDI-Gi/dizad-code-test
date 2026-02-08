@@ -2,10 +2,11 @@ import React, { useRef, useState, useContext, useEffect } from 'react';
 import { TouchableWithoutFeedback, Alert, Keyboard, ActivityIndicator, Text, Image, TouchableOpacity, StyleSheet, View, Pressable } from 'react-native';
 import { DataContext } from '../context/contextData';
 import CopyrightsFooter from '../components/CopyrightsFooter.tsx';
+import { useColors } from '../hooks/useColors.ts';
 
 export default function SplashScreen() {
 
-    const { colors } = useContext(DataContext);
+    const colors = useColors();
 
     const title = 'رخصتي';
     const slog = 'تعليم قوانين المرور الجزائرية'

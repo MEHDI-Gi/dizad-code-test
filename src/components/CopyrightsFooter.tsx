@@ -2,11 +2,12 @@ import React, { useRef, useState, useContext, useEffect } from 'react';
 import { Text, View, ScrollView, } from 'react-native';
 import { DataContext } from '../context/contextData';
 import DeviceInfo from 'react-native-device-info';
+import { useColors } from '../hooks/useColors';
 
 const appVersion = DeviceInfo.getVersion();
 export default function CopyrightsFooter() {
 
-    const { colors } = useContext(DataContext);
+    const colors = useColors();
 
     return (
         <View style={{
@@ -19,7 +20,7 @@ export default function CopyrightsFooter() {
             position: 'absolute',
             bottom: 0,
             justifyContent: 'center',
-            
+
         }}>
             <View style={{
                 alignItems: 'center',

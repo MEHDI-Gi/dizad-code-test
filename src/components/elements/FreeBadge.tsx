@@ -10,13 +10,13 @@ import Animated, {
     Easing,
     withSpring
 } from 'react-native-reanimated';
+import { useColors } from '../../hooks/useColors';
 
 export default function FreeBadge(props: any) {
     const {
-        colors,
         setFreeCard
     } = useContext(DataContext);
-
+    const colors = useColors();
     return (
         <Pressable
             android_ripple={{ color: colors.primary, borderless: false, foreground: true }}

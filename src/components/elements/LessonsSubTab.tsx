@@ -23,15 +23,16 @@ import { useSize } from '../../hooks/useSize.ts';
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useColors } from '../../hooks/useColors.ts';
 
 export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarProps) {
 
     const { screen } = useSize()
 
     const {
-        colors,
         isGradient, texts, language
     } = useContext(DataContext);
+    const colors = useColors();
     const route = useRoute();
 
     function getTabConfig(name: string, isFocused: boolean) {

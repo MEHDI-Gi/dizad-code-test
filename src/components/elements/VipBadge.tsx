@@ -7,6 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { useColors } from '../../hooks/useColors';
 
 
 export default function VipBadge(props: any) {
@@ -14,9 +15,9 @@ export default function VipBadge(props: any) {
         userXp,
         setHeartsCard,
         quizData,
-        colors,
         userPlan, vipCard, setVipCard
     } = useContext(DataContext);
+    const colors = useColors();
 
     return (
         <Pressable
@@ -33,7 +34,7 @@ export default function VipBadge(props: any) {
                 elevation: props.elevation
             }}
             onPress={() => { setVipCard(true) }}>
-            
+
             {props.title && <Text style={{ color: props.titleColor, fontSize: props.textSize, fontWeight: 'bold', marginHorizontal: 3, }}>
                 VIP
             </Text>}

@@ -29,6 +29,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import { ColorSpace } from 'react-native-reanimated';
 import { BlurView } from '@react-native-community/blur';
+import { useColors } from '../hooks/useColors';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 
@@ -36,10 +37,9 @@ const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 const SignsItems = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { lessons, screen } = useSize();
-
+  const colors = useColors();
   const {
 
-    colors,
     sound, playSound,
     isGradient,
     signsData,

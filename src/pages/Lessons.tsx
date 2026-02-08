@@ -21,15 +21,15 @@ import Signs from './Signs.tsx';
 import Questions from './Questions.tsx';
 import Priority from './Priority.tsx';
 import LessonsSubTabs from '../components/elements/LessonsSubTab.tsx';
+import { useColors } from '../hooks/useColors.ts';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 export default function Lessons() {
-
+    const colors = useColors();
     const { lessons, screen, bookmarksSizes } = useSize();
     const {
-        colors,
 
-
+        firebaseLoaded,
         bookmarks,
     } = useContext(DataContext);
 

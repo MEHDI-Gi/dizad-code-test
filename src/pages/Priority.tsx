@@ -20,18 +20,20 @@ import { useSize } from '../hooks/useSize.ts';
 import { useGoogleSignIn } from '../context/auth';
 import BottomTab from '../components/elements/BottomTab.tsx';
 import FastImage from '@d11/react-native-fast-image';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useColors } from '../hooks/useColors.ts';
 
 export default function Priority() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const { user, logout, initializing } = useGoogleSignIn();
     const { lessons, screen } = useSize();
+    const colors = useColors();
     const {
         signsData,
         lessonsQuestIndices,
         lessonPercentage,
         lessonsCurrentLevelIndex,
-        colors,
         signsDataLength,
         setDataLevelIndex,
         answerStats,
@@ -127,6 +129,7 @@ export default function Priority() {
                         if (PRIORITY_CONTENT) {
                             return (
                                 <Pressable
+                                    disabled={userPlan === 'free' && index > 3}
                                     key={index}
                                     android_ripple={{
                                         foreground: true,
@@ -145,9 +148,28 @@ export default function Priority() {
                                             elevation: 5,
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                        },
+                                        }
+
                                     ]}
                                 >
+                                    {userPlan === 'free' && index > 3 &&
+                                        <View style={{
+                                            backgroundColor: colors.opacity.primary,
+                                            position: "absolute",
+                                            top: 0,
+                                            bottom: 0,
+                                            right: 0,
+                                            left: 0,
+                                            zIndex: 9,
+                                            alignItems: 'center',
+                                            justifyContent: 'center'
+                                        }}>
+                                            <Ionicons
+                                                name='diamond-sharp'
+                                                color={colors.button.primary}
+                                                size={30}
+                                            />
+                                        </View>}
                                     <View
                                         style={[{
                                             position: "absolute",
@@ -196,7 +218,7 @@ export default function Priority() {
                                             borderRadius: 5,
                                             paddingVertical: 3,
                                         }]}>
-                                        
+
                                         <Text style={{
 
                                             fontFamily: "Cairo-Bold", color: colors.text.primary, fontSize: 16,
@@ -205,7 +227,7 @@ export default function Priority() {
                                             {/* {Object.keys(SignsContentInfo[index + 1].label)} */}
                                         </Text>
                                     </View>
-                                     <View
+                                    <View
                                         style={[{
                                             alignItems: "flex-end",
                                             justifyContent: "center",
@@ -217,10 +239,10 @@ export default function Priority() {
                                             borderRadius: 5,
                                             paddingVertical: 3,
                                         }]}>
-                                        
+
                                         <Text style={{
                                             fontFamily: "Cairo-Bold",
-                                            
+
                                             color: colors.text.secondary,
                                             fontSize: 12,
                                             flexDirection: 'row',

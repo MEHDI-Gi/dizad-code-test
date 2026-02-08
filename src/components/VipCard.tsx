@@ -23,6 +23,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { DataContext } from '../context/contextData';
+import { useColors } from '../hooks/useColors';
 
 
 
@@ -32,7 +33,7 @@ export default function VipCard() {
         vipPlansCard, setVipPlansCard,
         heartsCard, setHeartsCard,
         setHelpPoint,
-        colors, userPlan,
+        userPlan,
         dataLevelIndex, setDataLevelIndex,
         updateQuestIndex, updateAnswerStats,
         questIndices, answerStats,
@@ -41,7 +42,7 @@ export default function VipCard() {
         livesHeart, setLivesHeart, livesHeartEnd,
         setUserPlan, vipCard, setVipCard,
     } = useContext(DataContext);
-
+    const colors = useColors();
     const vipItems = [
         { label: 'Unlimited Hearts' },
         { label: 'Unlock all Theams' },
@@ -169,7 +170,7 @@ export default function VipCard() {
                                         borderRadius: 8,
                                         marginVertical: 2,
                                     }}>
-                                   
+
                                     <View style={{
                                         alignItems: 'center',
                                         justifyContent: 'center',

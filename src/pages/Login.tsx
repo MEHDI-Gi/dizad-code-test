@@ -17,16 +17,16 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useGoogleSignIn } from '../context/auth.ts';
 import { ref, set, update } from '@react-native-firebase/database';
 import { database } from '../context/firebaseConfig.js';
+import { useColors } from '../hooks/useColors.ts';
 
 type LoginProps = {
   navigation: any;
 };
 export default function Login({ navigation }: LoginProps) {
 
-  const { user, initializing, signIn, logout } = useGoogleSignIn();
-
+  const colors = useColors();
   const {
-    colors, currentTheme,
+    currentTheme,
     userName, setUserName,
     isPicAdd, setIsPicAdd, language,
     userImage, setUserImage, sound, playSound, setLoadScreen,
@@ -34,18 +34,18 @@ export default function Login({ navigation }: LoginProps) {
     setUserOnline,
     userXp, userPlan,
     handleLogout,
-    isLogout, setIsLogout, firebaseData
+    isLogout, setIsLogout, firebaseData,
+    user, initializing, signIn, logout,
+    firebaseLoaded
   } = useContext(DataContext);
-
+  const [isAuthProcessing, setIsAuthProcessing] = useState(false);
   const [isInpFocused, setIsInpFocused] = useState(false);
 
-  const [loginExplane, setLoginExplane] = useState(false)
   const loginInputRef = useRef<any>(null);
 
 
   const allowedUserName = /^(?=.{3,15}$)(?!.* {3})[A-Za-zأ-ي0-9]+( [A-Za-zأ-ي0-9]+){0,2}$/;
   const [isValidUserName, setIsValidUserName] = useState(true);
-  const [authInProgress, setAuthInProgress] = useState(false);
 
   const [inputUserName, setInputUserName] = useState('')
 
@@ -123,18 +123,38 @@ export default function Login({ navigation }: LoginProps) {
     }
   };
 
-  useEffect(() => {
-    if (user && !initializing) {
-      setTimeout(() => {
-        navigation.navigate('MainTabs');
-      }, 100);
-    }
-  }, [user, initializing, navigation]);
 
-  if (initializing) {
+  const handleGoogleSignIn = async () => {
+    setIsAuthProcessing(true);
+    try {
+      await signIn();
+      // We don't wait for navigation here. 
+      // Once this finishes, 'user' will update, causing the UI to change.
+    } catch (error) {
+      console.error("Sign In Failed", error);
+    } finally {
+      setIsAuthProcessing(false); // ✅ ALWAYS stop the button spinner
+    }
+  };
+
+  useEffect(() => {
+    // We only act if initializing is finished
+    if (initializing) return;
+
+    if (user) {
+      console.log("User detected, redirecting...");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'MainTabs' }],
+      });
+    }
+  }, [user, initializing]); // Only depend on these two
+
+
+  if (user && (!firebaseLoaded || initializing)) {
     return (
-      <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
-        <ActivityIndicator size={30} />
+      <View style={[{ flex: 1, justifyContent: 'center', alignItems: 'center' }, { backgroundColor: colors.primary }]}>
+        <ActivityIndicator size="large" color={colors.text.primary} />
       </View>
     );
   }
@@ -316,7 +336,7 @@ export default function Login({ navigation }: LoginProps) {
           </View>
           <View style={styles.googleLoginArea}>
             <Pressable
-              disabled={user}
+              disabled={isAuthProcessing}
               style={[{
                 backgroundColor: colors.secondary,
                 flexDirection: 'row',
@@ -324,11 +344,11 @@ export default function Login({ navigation }: LoginProps) {
                 justifyContent: 'center',
                 borderRadius: 8,
                 overflow: 'hidden',
-                height: 40,
+                height: 50,
                 width: '85%'
-              }]}
+              }, { opacity: isAuthProcessing ? 0.7 : 1 }]}
               android_ripple={{ foreground: true, color: colors.primary, borderless: false }}
-              onPress={signIn}
+              onPress={handleGoogleSignIn}
             >
               <View style={{
                 width: 40,
@@ -351,11 +371,13 @@ export default function Login({ navigation }: LoginProps) {
                 justifyContent: 'center',
                 paddingRight: 15
               }}>
-                <Text style={{
-                  color: 'white',
-                  fontSize: 15,
-                  fontWeight: '600',
-                }}>Continue with Google</Text>
+                {isAuthProcessing ? (
+                  <ActivityIndicator color="blue" /> // Or your theme color
+                ) : (
+                  <Text style={{ fontSize: 15, fontWeight: '600', color: '#ffffff' }}>
+                    Continue with Google
+                  </Text>
+                )}
               </View>
             </Pressable>
           </View>

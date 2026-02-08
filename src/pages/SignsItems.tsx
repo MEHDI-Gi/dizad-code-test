@@ -36,6 +36,7 @@ import { firebase } from '@react-native-firebase/auth';
 import ItemsModal from '../components/ItemsModal';
 
 import { useAd } from '../hooks/useAd';
+import { useColors } from '../hooks/useColors';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -44,10 +45,9 @@ const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 const SignsItems = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { lessons, screen } = useSize();
-
+  const colors = useColors();
   const {
 
-    colors,
     sound, playSound,
     isGradient,
     signsItemsIndex,

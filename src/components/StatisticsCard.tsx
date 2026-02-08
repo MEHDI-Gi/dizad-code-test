@@ -5,13 +5,14 @@ import { DataContext } from '../context/contextData';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { ColorValue } from 'react-native';
+import { useColors } from '../hooks/useColors';
 
 export default function StatisticsCard(props: any) {
     const {
-        colors,
         globTrueAns,
         globFalseAns, isGradient, dataLength
     } = useContext(DataContext);
+    const colors = useColors();
     return (
         <Pressable
             android_ripple={{ color: colors.screenBack, borderless: false }}
@@ -20,7 +21,7 @@ export default function StatisticsCard(props: any) {
                 styles.statisticsItems,
                 {
                     position: 'relative',
-                    backgroundColor:'red',
+                    backgroundColor: 'red',
                     elevation: 5,
                     overflow: 'hidden'
                 }

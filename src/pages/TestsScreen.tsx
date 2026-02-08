@@ -33,6 +33,7 @@ import type { RootStackParamList } from '../../types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import BottomTab from '../components/elements/BottomTab';
 import CategoriesList from './home/CategoriesList';
+import { useColors } from '../hooks/useColors';
 
 const TestsScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -42,11 +43,10 @@ const TestsScreen = () => {
     quizData,
     answersRef,
     setGlobFalseAns,
-    colors,
     dataLevelIndex, setDataLevelIndex,
-    
-  } = useContext(DataContext);
 
+  } = useContext(DataContext);
+  const colors = useColors();
 
   return (
     <View style={

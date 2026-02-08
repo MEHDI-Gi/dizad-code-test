@@ -11,6 +11,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import LinearGradient from 'react-native-linear-gradient';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../types';
+import { useColors } from '../../hooks/useColors';
 // import {
 //     BallIndicator,
 //     BarIndicator,
@@ -27,9 +28,8 @@ import { RootStackParamList } from '../../../types';
 
 export default function CategoriesList() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Profile', 'RankScreen'>>();
-
+    const colors = useColors();
     const {
-        colors,
         dataLength,
         setDataLevelIndex,
         quizData,

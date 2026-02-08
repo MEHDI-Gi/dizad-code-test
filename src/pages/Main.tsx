@@ -37,10 +37,10 @@ import { useAd } from '../hooks/useAd.ts';
 import { usePeriodicAd } from '../hooks/usePeriodicAd.ts';
 import PriorityItems from './PriorityItems.tsx';
 import Offline from './Offline.tsx';
+import { useColors } from '../hooks/useColors.ts';
 export default function Main() {
-
+    const colors = useColors();
     const {
-        colors,
         freeCard,
         vipCard,
         vipPlansCard,

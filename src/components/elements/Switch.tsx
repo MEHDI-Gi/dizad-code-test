@@ -10,7 +10,6 @@ export default function Switch(props:any) {
     const navigation = useNavigation();
 
     const {
-        colors,
         THEME_DARK, THEME_LIGHT,
         playSound, sound, setSound,
         isGradient, setIsGradient, texts, language,

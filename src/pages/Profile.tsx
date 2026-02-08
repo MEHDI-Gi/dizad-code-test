@@ -39,14 +39,15 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types';
 import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 import FreeBadge from '../components/elements/FreeBadge.tsx';
-
+import { useColors } from '../hooks/useColors.ts';
+import { useTheme } from '../hooks/useTheme.ts';
 const Profile = () => {
-  const { user, initializing, signIn, logout } = useGoogleSignIn();
-
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
+  const colors = useColors();
+  const { currentTheme, setCurrentTheme, THEME_DARK, THEME_LIGHT, } = useTheme()
   const {
+    user, initializing, signIn, logout,
     userPlan,
     dataLevelIndex,
     setSnackbarState,
@@ -58,7 +59,6 @@ const Profile = () => {
     setLivesHeart,
     setQuestIndex,
     setGlobTrueAns,
-    colors,
     setGlobFalseAns,
     setIsActIndicator,
     updateQuestIndex,
@@ -94,15 +94,13 @@ const Profile = () => {
     handleLogout,
     isLogout,
     dataAsync,
-    THEME_DARK,
-    THEME_LIGHT,
+
     setIsGradient,
     apparence,
     setApparence,
     setColors,
     colorsList,
-    currentTheme,
-    setCurrentTheme,
+
   } = useContext(DataContext);
 
   const [initTheme, setInitTheme] = useState<boolean>(false);
@@ -243,6 +241,14 @@ const Profile = () => {
     );
   }
   const settingsList = [
+    {
+      id: 0,
+      label: 'Statistics',
+      condition: 'statistics',
+      icon: 'chart-box',
+      color: 'gray',
+      iconSet: 'MaterialCommunityIcons',
+    },
     {
       id: 1,
       label: texts.langEdt,
@@ -386,7 +392,8 @@ const Profile = () => {
       case 'dark':
         setInitTheme(true);
         const newTheme = currentTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
-        setCurrentTheme(newTheme);
+        setCurrentTheme(newTheme as any);
+
         break;
 
       case 'sound':

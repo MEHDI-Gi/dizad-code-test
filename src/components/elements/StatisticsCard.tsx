@@ -25,9 +25,10 @@ import Animated, {
     Easing,
     withSpring
 } from 'react-native-reanimated';
+import { useColors } from '../../hooks/useColors';
 const rewardedAd = RewardedAd.createForAdRequest(TestIds.REWARDED);
 
-export default function StatisticsCard(props:any) {
+export default function StatisticsCard(props: any) {
     const {
         heartsCard, setHeartsCard,
         statisticsCard, setStatisticsCard,
@@ -38,7 +39,6 @@ export default function StatisticsCard(props:any) {
         globTrueAns, setGlobTrueAns,
         globFalseAns,
         setGlobFalseAns,
-        colors,
         dataLevelIndex, setDataLevelIndex,
         updateQuestIndex, updateAnswerStats,
         questIndices, answerStats,
@@ -54,7 +54,7 @@ export default function StatisticsCard(props:any) {
         isGradient, setSnackbarState, setSnackOptions,
         timeLeft
     } = useContext(DataContext);
-
+    const colors = useColors();
 
     const statisticAnimeW = useSharedValue(0); // start closed (down)
     const statisticAnimeH = useSharedValue(0); // start closed (down)

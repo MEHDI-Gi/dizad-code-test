@@ -12,14 +12,14 @@ import Animated, {
     Easing, runOnJS
 } from 'react-native-reanimated';
 import { View } from 'react-native';
+import { useColors } from '../../hooks/useColors';
 
 export default function SnackBar(props: { bottom: any; icon: any; label: any; },) {
     const {
-        colors,
         setIsAccountDeleted, texts,
         snackbarState, setSnackbarState, language
     } = useContext(DataContext);
-
+    const colors = useColors();
     const SnackBarTransition = useSharedValue(0);
 
     useEffect(() => {

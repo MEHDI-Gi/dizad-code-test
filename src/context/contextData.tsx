@@ -21,6 +21,8 @@ import {
   firebase,
 } from '@react-native-firebase/database';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import { useVip } from '../hooks/useVip';
+import { useFirebaseData } from '../hooks/useFirebaseData';
 
 const DataContext = createContext<any>(null);
 
@@ -30,17 +32,14 @@ interface DataProviderProps {
 
 const DataProvider = ({ children }: DataProviderProps) => {
   const { user, initializing, signIn, logout } = useGoogleSignIn();
-
-  const THEME_DARK = 'dark';
-  const THEME_LIGHT = 'light';
-  type Theme = 'dark' | 'light';
+  const { userVip, userPlan, setUserPlan } = useVip();
   const [userXp, setUserXp] = useState<number>(0);
   const [userOnline, setUserOnline] = useState<boolean>(false);
   const [globTrueAns, setGlobTrueAns] = useState<number>(0);
   const [globFalseAns, setGlobFalseAns] = useState<number>(0);
   const [userName, setUserName] = useState<string>('');
   const [userImage, setUserImage] = useState<string | null>(null);
-  const [userPlan, setUserPlan] = useState<string>('free');
+
 
   const [language, setLanguage] = useAsyncStorageState<string>(
     'Language',
@@ -53,12 +52,17 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const [vibrate, setVibrate] = useAsyncStorageState<boolean>('Vibrate', true);
   const [sound, setSound] = useAsyncStorageState<boolean>('Sound', true);
   const [speed, setSpeed] = useAsyncStorageState<number>('Speed', 0);
-  const [currentTheme, setCurrentTheme] = useAsyncStorageState<Theme>(
-    'CurrentTheme',
-    THEME_DARK,
-  );
+
   const [questionsItemsIndex, setQuestionsItemsIndex] =
     useAsyncStorageState<number>('QuestionsItemIndex', 0);
+
+  const [currentTheme, setCurrentTheme] = useAsyncStorageState<'dark' | 'light'>(
+    'Apparence',
+    'dark',
+  );
+
+  // 2. Derive colors automatically based on the theme
+
 
   type CategoryBookmarks = Record<string, BookmarkItem>;
   type BookmarksState = {
@@ -79,7 +83,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
   // const [usersData, setUsersData] = useState<Record<string, any>>({});
   const [examsData, setExamsData] = useState<Record<string, any>>({});
   const [lessonsData, setLessonsData] = useState<Record<string, any>>({});
-
   const [firebaseLoaded, setFirebaseLoaded] = useState<boolean>(false);
   const [examsLoaded, setExamsLoaded] = useState<boolean>(false);
   const [lessonsLoaded, setLessonsLoaded] = useState<boolean>(false);
@@ -90,103 +93,26 @@ const DataProvider = ({ children }: DataProviderProps) => {
     number | null
   >(null);
 
-  const unsubscribeLessonsListener = useRef<(() => void) | null>(null);
-  const unsubscribeExamsListener = useRef<(() => void) | null>(null);
-  // const unsubscribeUsersListener = useRef<(() => void) | null>(null);
-  const unsubscribeUserListener = useRef<(() => void) | null>(null);
-
-  useEffect(() => {
-    const lessonsDataRef = ref(database, '/lessons');
-    const examsDataRef = ref(database, '/exams');
-    // const usersDataRef = ref(database, '/users');
-
-    unsubscribeLessonsListener.current = onValue(lessonsDataRef, snapshot => {
-      const fetchedData = snapshot.val();
-      if (fetchedData) {
-        setLessonsData(fetchedData);
-        setLessonsLoaded(true);
-        console.log('Lessons data loaded');
-      } else {
-        console.log('No lessons data');
-      }
-    });
-
-    unsubscribeExamsListener.current = onValue(examsDataRef, snapshot => {
-      const fetchedData = snapshot.val();
-      if (fetchedData) {
-        const keys = Object.keys(fetchedData);
-        setQuizCategoriesData(keys);
-        setExamsData(fetchedData);
-        console.log('Quiz data loaded');
-        setExamsLoaded(true);
-      } else {
-        console.log('No quiz data');
-      }
-    });
-
-    // unsubscribeUsersListener.current = onValue(usersDataRef, (snapshot) => {
-    //   const fetchedData = snapshot.val();
-    //   if (fetchedData) {
-    //     setUsersData(fetchedData);
-    //     setUsersLoaded(true);
-    //     console.log('Users data loaded');
-    //   } else {
-    //     console.log('No users data');
-    //   }
-    // });
-
-    const handleUserData = async () => {
-
-      const userDataRef = ref(database, `users/${user.uid}`);
-
-      unsubscribeUserListener.current = onValue(userDataRef, snapshot => {
-        const creationTime =
-          auth.currentUser?.metadata?.creationTime || new Date().toISOString();
-
-        const firebaseData = snapshot.val();
-        if (firebaseData) {
-          console.log('User data loaded');
-          setUserLoaded(true);
-
-          if (!firebaseData.firstSignIn) {
-            update(ref(database, `users/${user.uid}`), {
-              firstSignIn: creationTime,
-            }).catch(console.error);
-          }
-          setUserOnline(firebaseData.UserOnline ?? false);
-          setUserXp(firebaseData.UserXp ?? 0);
-          setUserPlan(firebaseData.userPlan ?? 'free');
-          setUserName(firebaseData.Username ?? user.displayName);
-          setUserImage(firebaseData.UserImage ?? user.photoURL);
-          setGlobTrueAns(firebaseData.GlobTrueAns ?? 0);
-          setGlobFalseAns(firebaseData.GlobFalseAns ?? 0);
-          if (!firebaseData.Bookmarks) {
-            const emptyBookmarks = { signs: {}, questions: {}, priority: {} };
-            update(ref(database, `users/${user.uid}`), {
-              Bookmarks: emptyBookmarks,
-            }).catch(console.error);
-            setBookmarks(emptyBookmarks);
-          } else {
-            setBookmarks(firebaseData.Bookmarks);
-          }
-
-        }
-      });
-    };
-
-    handleUserData();
-
-    return () => {
-      unsubscribeLessonsListener.current?.();
-      unsubscribeExamsListener.current?.();
-      unsubscribeUserListener.current?.();
-      console.log('Unsubscribed Firebase listeners');
-      setLessonsLoaded(false);
-      setExamsLoaded(false);
-      setUserLoaded(false);
-    };
-  }, [user?.uid]);
-
+  useFirebaseData(user, {
+    setLessonsData,
+    setLessonsLoaded,
+    setExamsData,
+    setExamsLoaded,
+    setQuizCategoriesData,
+    setUserLoaded,
+    setFirebaseLoaded,
+    setUserData: (data) => {
+      // Map your individual setters here
+      setUserOnline(data.UserOnline ?? false);
+      setUserXp(data.UserXp ?? 0);
+      setUserPlan(data.UserPlan ?? 'free');
+      setUserName(data.Username ?? user.displayName);
+      setUserImage(data.UserImage ?? user.photoURL);
+      setGlobTrueAns(data.GlobTrueAns ?? 0);
+      setGlobFalseAns(data.GlobFalseAns ?? 0);
+      setBookmarks(data.Bookmarks ?? { signs: {}, questions: {}, priority: {} });
+    }
+  });
   useEffect(() => {
     if (lessonsLoaded && examsLoaded && userLoaded) {
       setFirebaseLoaded(true);
@@ -223,87 +149,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
   };
   const [isActIndicator, setIsActIndicator] = useState<boolean>(false);
 
-  const colorsList: any = {
-    darkColors: {
-      primary: '#16161e',
-      secondary: '#1a1b26',
-      // secondary: '#1B2631',
 
-      exm: '#282a3a',
-      opacity: {
-        primary: '#00000098',
-      },
-      text: {
-        primary: '#ebebebff',
-        secondary: '#adadadff',
-      },
-      button: {
-        primary: '#dba400',
-        secondary: '#a98003ff',
-        subTab: {
-          prim: '#2b2b2bff',
-          second: '#a98003ff',
-        },
-      },
-      shimmer: {
-        first: ['#6161617c', '#2b2b2bff', '#6161617c'],
-        second: ['#2b2b2bff', '#6161617c', '#2b2b2bff'],
-      },
-      bottomTab: {
-        color: '#dba400',
-        items: {
-          primary: 'black',
-          secondary: 'lightgray',
-        },
-      },
-      subTab: {
-        color: '#2b2b2bff',
-        items: {
-          primary: 'white',
-          secondary: 'gray',
-        },
-      },
-    },
-
-    lightColors: {
-      primary: '#eaeaeaff',
-      secondary: 'white',
-      exm: '#282a3a',
-
-      opacity: {
-        images: '#6e6e6e98',
-      },
-      text: {
-        primary: '#181818ff',
-        secondary: '#494949ff',
-      },
-      button: {
-        primary: '#dba400',
-        secondary: '#a98003ff',
-        subTab: {
-          primary: '#dba400',
-          secondary: '#a98003ff',
-        },
-      },
-      shimmer: {
-        colors: ['#eaeaeaff', 'white', '#eaeaeaff'],
-      },
-      bottomTab: {
-        color: '#dba400',
-        items: {
-          primary: 'black',
-          secondary: 'black',
-        },
-      },
-      subTab: {
-        color: 'white',
-        items: {
-          primary: 'black',
-          secondary: 'gray',
-        },
-      },
-    },
-  };
 
   const languagesList = {
     arabic: {
@@ -397,36 +243,10 @@ const DataProvider = ({ children }: DataProviderProps) => {
     },
   };
 
-  useEffect(() => {
-    setColors(
-      currentTheme === THEME_DARK
-        ? colorsList.darkColors
-        : colorsList.lightColors,
-    );
-  }, [currentTheme]);
-
-  // const [userXp, setUserXp] = useAsyncStorageState<number>('UserXp', 0);
-  // const [userOnline, setUserOnline] = useAsyncStorageState<boolean>('UserOnline', false);
-  // const [language, setLanguage] = useAsyncStorageState<string>('Language', 'english');
-  // const [globTrueAns, setGlobTrueAns] = useAsyncStorageState<number>('GlobTrueAns', 0);
-  // const [globFalseAns, setGlobFalseAns] = useAsyncStorageState<number>('GlobFalseAns', 0);
-  // const [isGradient, setIsGradient] = useAsyncStorageState<boolean>('Gradient', false);
-  // const [userName, setUserName] = useAsyncStorageState<string>('UserName', '');
-  // const [userImage, setUserImage] = useAsyncStorageState<string | null>('UserImage', null);
-  // const [vibrate, setVibrate] = useAsyncStorageState<boolean>('Vibrate', true);
-  // const [sound, setSound] = useAsyncStorageState<boolean>('Sound', true);
-  // const [speed, setSpeed] = useAsyncStorageState<number>('Speed', 0);
-  // const [userPlan, setUserPlan] = useAsyncStorageState<string>('userPlan', '');
-
   type Language = 'arabic' | 'english';
   type LanguageTexts = typeof languagesList.arabic; // Infers all text properties
 
-  // Then fix:
   const texts: LanguageTexts = languagesList[language as Language];
-
-  const [colors, setColors] = useState<typeof colorsList.darkColors>(
-    colorsList.darkColors,
-  );
 
   interface BookmarkItem {
     id?: string;
@@ -585,61 +405,15 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
   const prevDataRef = useRef<Record<string, any> | null>(null);
 
-  // useEffect(() => {
-  //   // console.log('Firebase sync check:', {
-  //   //   firebaseLoaded,
-  //   //   hasUid: !!user?.uid,
-  //   //   dataAsync,
-  //   //   bookmarksChanged: JSON.stringify(bookmarks)
-  //   // });
-  //   if (!user?.uid || dataAsync) return;
-  //   const dataToUpdate = {
-  //     UserName: userName,
-  //     userImage: userImage,
-  //     UserOnline: userOnline,
-  //     UserXp: userXp,
-  //     Speed: speed,
-  //     Language: language,
-  //     GlobTrueAns: globTrueAns,
-  //     GlobFalseAns: globFalseAns,
-  //     Gradient: isGradient,
-  //     Vibrate: vibrate,
-  //     Sound: sound,
-  //     userPlan: userPlan,
-  //     CurrentTheme: currentTheme,
-  //     QuestionsItemsIndex: questionsItemsIndex,
-  //   };
-
-  //   // FIXED: Only update if data actually changed
-  //   if (JSON.stringify(prevDataRef.current) !== JSON.stringify(dataToUpdate)) {
-  //     prevDataRef.current = dataToUpdate;
-
-  //     setDataAsync(true);
-  //     update(ref(database, `users/${user.uid}`), dataToUpdate)
-  //       .then(() => {
-  //         const now = new Date().toISOString();
-  //         console.log(`[${now}] Data updated successfully`);
-  //       })
-  //       .catch(error => console.error('Failed to update data:', error))
-  //       .finally(() => setDataAsync(false));
-  //   }
-  // }, [user?.uid, dataAsync,
-  //   questionsItemsIndex, currentTheme, userName, userImage, userXp, userOnline, speed, language,
-  //   globTrueAns, globFalseAns, isGradient, vibrate, sound,
-  //   dataLevelIndex, userPlan
-  // ]);
-
-  // FIXED Logout
-
   const dataToUpdate = useMemo(
     () => ({
       UserName: userName,
-      userImage: userImage,
+      UserImage: userImage,
       UserOnline: userOnline,
       UserXp: userXp,
       GlobTrueAns: globTrueAns,
       GlobFalseAns: globFalseAns,
-      userPlan: userPlan,
+      UserPlan: userPlan,
     }),
     [
       userName,
@@ -693,10 +467,19 @@ const DataProvider = ({ children }: DataProviderProps) => {
     if (user) {
       try {
         setIsLogout(false);
-        unsubscribeLessonsListener.current?.();
-        unsubscribeExamsListener.current?.();
-        // unsubscribeUsersListener.current?.();
-        unsubscribeUserListener.current?.();
+
+
+
+        setUserName('');
+        setUserImage(null);
+        setUserXp(0);
+        setBookmarks({ signs: {}, questions: {}, priority: {} });
+        setUserPlan('free')
+
+        setLessonsLoaded(false);
+        setExamsLoaded(false);
+        setUserLoaded(false);
+
         await logout();
         await AsyncStorage.multiRemove(keysToRemove);
         navigation.navigate('Login');
@@ -719,6 +502,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
   const contextValue = useMemo(
     () => ({
+      user, initializing, signIn, logout,
       bookmarkLoading,
       setBookmarkLoading,
       globalQuestionsLength,
@@ -731,9 +515,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
       setExamsLoaded,
       // setUsersLoaded,
       setUserLoaded,
-      unsubscribeExamsListener,
-      // unsubscribeUsersListener,
-      unsubscribeUserListener,
+
       userPlan,
       setUserPlan,
       quizCategoriesData,
@@ -787,19 +569,14 @@ const DataProvider = ({ children }: DataProviderProps) => {
       setIsActIndicator,
       language,
       setLanguage,
-      colors,
-      setColors,
       currentTheme,
       setCurrentTheme,
-      THEME_DARK,
-      THEME_LIGHT,
       isRewardAdd,
       setIsRewardAdd,
       vibrate,
       setVibrate,
       sound,
       setSound,
-      colorsList,
       isGradient,
       setIsGradient,
       languagesList,
@@ -818,15 +595,16 @@ const DataProvider = ({ children }: DataProviderProps) => {
       setSignsItemsIndex,
       signsItemsIndex,
       priorityItemsIndex, setPriorityItemsIndex,
-      imgBase
+      imgBase,
+      userVip,
     }),
     [
+      user, initializing, signIn, logout,
       questionsItemsIndex,
       signsItemsIndex,
       priorityItemsIndex,
       lessonsData,
       examsData,
-      colors,
       currentTheme,
       userName,
       userImage,
@@ -840,6 +618,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
       bookmarks,
       firebaseLoaded,
       userPlan,
+      userVip,
       globTrueAns,
       globFalseAns,
       bookmarkLoading,

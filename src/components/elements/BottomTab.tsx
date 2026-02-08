@@ -21,15 +21,16 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../types.ts';
 import { useSize } from '../../hooks/useSize.ts';
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
+import { useColors } from '../../hooks/useColors.ts';
 
 export default function BottomTab({ state, navigation }: MaterialTopTabBarProps) {
 
     const { screen } = useSize()
 
     const {
-        colors,
         isGradient, texts, language
     } = useContext(DataContext);
+    const colors = useColors();
     const route = useRoute();
 
     // const profileCondition = route.name === 'Profile'

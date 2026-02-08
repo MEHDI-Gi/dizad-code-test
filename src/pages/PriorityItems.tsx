@@ -32,16 +32,18 @@ import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/
 import Orientation from 'react-native-orientation-locker';
 import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useColors } from '../hooks/useColors.ts';
 export default function PriorityItems({ route }: any) {
     const navigation = useNavigation<any>();
     const { user, logout, initializing } = useGoogleSignIn();
     const { lessons, screen, fullScreen } = useSize();
+    const colors = useColors();
     const {
         signsData,
         lessonsQuestIndices,
         lessonPercentage,
         lessonsCurrentLevelIndex,
-        colors,
+
         signsDataLength,
         setDataLevelIndex,
         answerStats,
@@ -117,7 +119,6 @@ export default function PriorityItems({ route }: any) {
                 zIndex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-
             }}>
                 <View style={{
                     position: 'absolute',
@@ -134,7 +135,7 @@ export default function PriorityItems({ route }: any) {
                     android_ripple={{
                         color: colors.secondary, borderless: true, foreground: true
                     }}
-                    style={{
+                    style={[{
                         position: 'absolute',
                         alignItems: "center",
                         justifyContent: "center",
@@ -143,7 +144,7 @@ export default function PriorityItems({ route }: any) {
                         height: 30,
                         overflow: 'hidden',
                         marginHorizontal: 15,
-                    }}
+                    }]}
                     onPress={() => {
                         setFullImage(false)
                         navigation.navigate('MainTabs', {
@@ -179,7 +180,7 @@ export default function PriorityItems({ route }: any) {
                     gap: 10,
                     marginBottom: 40,
                 }}>
-                    {priorityItemsList?.map((item: any, index: any) => {
+                    {priorityItemsList?.map((item: any, index: number) => {
                         if (PRIORITY_CONTENT) {
                             return (
                                 <Pressable
@@ -209,7 +210,8 @@ export default function PriorityItems({ route }: any) {
                                             overflow: 'hidden',
                                             opacity: 1,
                                             elevation: 5,
-                                        },
+
+                                        }
                                     ]}
                                 >
                                     <View style={{

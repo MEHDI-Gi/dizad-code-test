@@ -14,19 +14,19 @@ GoogleSignin.configure({
 const auth = getAuth();
 
 export function useGoogleSignIn() {
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<any>(null);
   const [initializing, setInitializing] = useState(true);
   const [authInProgress, setAuthInProgress] = useState(false);
 
-  // Listen to Firebase auth state changes
+  // ✅ FIXED: Empty deps + proper logic
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
-      if (initializing) setInitializing(false);
+      setInitializing(false);  // Always set false after FIRST fire
     });
 
-    return unsubscribe; // unsubscribe on unmount
-  }, [initializing]);
+    return unsubscribe;
+  }, []);  // ✅ Empty deps!
 
   const signIn = async () => {
     if (authInProgress) {

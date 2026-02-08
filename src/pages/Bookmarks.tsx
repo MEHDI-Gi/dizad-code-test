@@ -16,6 +16,7 @@ const SubTab = createMaterialTopTabNavigator();
 
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
+import { useColors } from '../hooks/useColors.ts';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 const title = "المحفوظات"
@@ -94,13 +95,14 @@ function BookmarkedSigns({ bookmarksSizes, bookmarks, lessonsData, colors }: any
                 showsVerticalScrollIndicator={false}
                 style={{
                     flex: 1, width: '95%',
-                    paddingVertical: 50,
 
                 }}
                 contentContainerStyle={{
                     alignItems: 'center',
                     justifyContent: "center",
                     alignContent: "center",
+                    paddingTop: 50,
+                    paddingBottom: 120,
                 }}>
                 <View style={{
                     flexDirection: 'row',
@@ -216,11 +218,14 @@ function BookmarkedQuestions({ bookmarks, lessonsData, colors }: any) {
                 contentContainerStyle={{
                     rowGap: 10,
                     alignItems: 'center',
+                    justifyContent: 'flex-start',
+                    paddingTop: 50,
+                    paddingBottom: 120,
                 }}
                 style={{
                     flex: 1,
                     width: '100%',
-                    paddingVertical: 50,
+
                 }}>
                 {bookmarkedQuestions.map((item: any) => (
                     <Pressable
@@ -308,27 +313,32 @@ function BookmarkedPriority({ bookmarksSizes, bookmarks, lessonsData, colors }: 
             alignItems: 'center',
             justifyContent: 'flex-start',
             backgroundColor: colors.primary,
+
         }}>
 
             <ScrollView
                 horizontal={false}
                 showsVerticalScrollIndicator={false}
                 style={{
-                    flex: 1, width: '95%',
-                    paddingVertical: 50,
+                    flex: 1,
+                    width: '95%',
+
 
                 }}
                 contentContainerStyle={{
                     alignItems: 'center',
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     alignContent: "center",
+                    paddingTop: 50,
+                    paddingBottom: 120,
                 }}>
                 <View style={{
                     flexDirection: 'row',
                     flexWrap: 'wrap',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: 10
+                    gap: 10,
+
                 }}>
                     {priorityContent?.map((item, index) => {
                         return (
@@ -412,12 +422,11 @@ export default function Bookmarks() {
 
     const { lessons, screen, bookmarksSizes } = useSize();
     const {
-        colors,
         lessonsData,
 
         bookmarks,
     } = useContext(DataContext);
-
+    const colors = useColors();
     return (
         <SubTab.Navigator
             tabBar={(props) => <BookmarksTab {...props} />}

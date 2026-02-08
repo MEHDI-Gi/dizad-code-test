@@ -33,6 +33,7 @@ import { ColorSpace } from 'react-native-reanimated';
 import { BlurView } from '@react-native-community/blur';
 import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 import { firebase } from '@react-native-firebase/auth';
+import { useColors } from '../hooks/useColors';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 
@@ -41,7 +42,7 @@ export default function ItemsModal(props: any) {
     const { lessons, screen } = useSize();
 
     const {
-        colors,
+
         sound, playSound,
         isGradient,
         signsItemsIndex,
@@ -51,7 +52,7 @@ export default function ItemsModal(props: any) {
         bookmarkLoading
 
     } = useContext(DataContext);
-
+    const colors = useColors();
     const handleBookmark = useCallback((category: string, item: any) => {
         toggleBookmark(category, item);
     }, [toggleBookmark]);
