@@ -55,8 +55,8 @@ const SignsItems = () => {
     toggleBookmark,
     isBookmarked,
     bookmarkLoading,
-    imgBase
-
+    imgBase,
+    incrementView
   } = useContext(DataContext);
 
   const [openSignsModal, setOpenSignsModal] = useState<boolean>(false)
@@ -126,6 +126,25 @@ const SignsItems = () => {
   }, [toggleBookmark]);
 
   const ad = useAd();
+
+  interface ViewToken {
+    item: any;
+    isViewable: boolean;
+  }
+  // 2. Use it in your callback
+  const handleViewableItemsChanged = useCallback(({ viewableItems }: { viewableItems: ViewToken[] }) => {
+    viewableItems.forEach((viewToken) => {
+      if (viewToken.isViewable && viewToken.item) {
+        incrementView('signs', viewToken.item);
+      }
+    });
+  }, [incrementView]);
+
+  // 3. Define the config (Required to be a ref in RN to avoid crashes)
+  const viewabilityConfig = useRef({
+    itemVisiblePercentThreshold: 50,
+    minimumViewTime: 100,           // Must stay visible for 0.5s
+  }).current;
 
   if (!signsItemsList) {
     return (
@@ -339,6 +358,8 @@ const SignsItems = () => {
               const index = Math.round(scrollX / ITEM_WIDTH);
               setCurrentScrollIndex(index + 1);  // ✅ Tracks swipe
             }}
+            onViewableItemsChanged={handleViewableItemsChanged}
+            viewabilityConfig={viewabilityConfig}
             horizontal
             // keyExtractor={(item) => item.id.toString()}
             snapToInterval={ITEM_WIDTH}

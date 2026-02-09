@@ -42,12 +42,14 @@ import FreeBadge from '../components/elements/FreeBadge.tsx';
 import { useColors } from '../hooks/useColors.ts';
 import { useTheme } from '../hooks/useTheme.ts';
 import { useVip } from '../hooks/useVip.ts';
+import { useUserAccuracy } from '../hooks/useUserAccuracy.ts';
 const Profile = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const colors = useColors();
   const { userVip } = useVip();
   const { currentTheme, setCurrentTheme, THEME_DARK, THEME_LIGHT, } = useTheme()
+  const { userAccuracy } = useUserAccuracy();
   const {
     user, initializing, signIn, logout,
     dataLevelIndex,
@@ -78,8 +80,6 @@ const Profile = () => {
     setLoadingOptions,
     loadScreen,
     setLoadScreen,
-    setUserXp,
-    userXp,
     memberSince,
     leaderBoardIcon,
     setLeaderBoardIcon,
@@ -318,7 +318,6 @@ const Profile = () => {
   const toggleVibrate = () => setVibrate((prev: boolean) => !prev);
 
   function resetStorage() {
-    setUserXp(0);
     setGlobTrueAns(0);
     setGlobFalseAns(0);
     updateQuestIndex('ct1', 1);
@@ -612,7 +611,7 @@ const Profile = () => {
                   fontWeight: '600',
                 }}
               >
-                {userXp} XP
+                {userAccuracy} XP
               </Text>
 
             </View>

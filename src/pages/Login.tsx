@@ -32,7 +32,7 @@ export default function Login({ navigation }: LoginProps) {
     userImage, setUserImage, sound, playSound, setLoadScreen,
     isGradient, isAccountDeleted, setIsAccountDeleted, texts,
     setUserOnline,
-    userXp, userPlan,
+    userAccuracy, userPlan,
     handleLogout,
     isLogout, setIsLogout, firebaseData,
     user, initializing, signIn, logout,
@@ -151,10 +151,10 @@ export default function Login({ navigation }: LoginProps) {
   }, [user, initializing]); // Only depend on these two
 
 
-  if (user && (!firebaseLoaded || initializing)) {
+  if (user || initializing) {
     return (
       <View style={[{ flex: 1, justifyContent: 'center', alignItems: 'center' }, { backgroundColor: colors.primary }]}>
-        <ActivityIndicator size="large" color={colors.text.primary} />
+        <ActivityIndicator size="large" color={'#ff00c3'} />
       </View>
     );
   }

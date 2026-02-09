@@ -46,6 +46,8 @@ import { TestIds, useInterstitialAd } from 'react-native-google-mobile-ads';
 import { useAd } from '../hooks/useAd.ts';
 import { useColors } from '../hooks/useColors.ts';
 import { useVip } from '../hooks/useVip.ts';
+import { useUserAccuracy } from '../hooks/useUserAccuracy.ts';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Home({ route }: any) {
@@ -55,9 +57,9 @@ export default function Home({ route }: any) {
   const { screen, lessons } = useSize();
   const { user, initializing } = useGoogleSignIn();
   const { userVip } = useVip();
+  const { userAccuracy } = useUserAccuracy();
   const colors = useColors();
   const {
-    userXp,
     setHeartsCard,
     quizData,
     userName,
@@ -101,6 +103,10 @@ export default function Home({ route }: any) {
   const signsCover = `${imageBase}/cover/sgn.png`;
 
   // `${imageBase}/cover/${item.cover}.png`
+
+  const [intPart, decPart] = userAccuracy.split('.');
+
+
   let totalSgn = 0;
 
   (lessonsData?.content?.signs?.content || []).forEach(
@@ -196,7 +202,7 @@ export default function Home({ route }: any) {
 
 
   const StatisticsList = [
-    { label: 'xp', resault: `${userXp}`, icon: 'check', iconColor: '#555555' },
+    { resault: `${userAccuracy}`, icon: 'check', iconColor: '#555555' },
     { label: texts.wrong, resault: `59`, icon: 'clear', iconColor: '#c94141' },
     { label: texts.correct, resault: `23`, icon: 'check', iconColor: 'green' },
   ];
@@ -204,7 +210,7 @@ export default function Home({ route }: any) {
   if (!firebaseLoaded) {
     return (
       <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
-        <ActivityIndicator size={30} color={'#fbff00'} />
+        <ActivityIndicator size={30} color={'#1eff00'} />
       </View>
     )
   }
@@ -263,15 +269,17 @@ export default function Home({ route }: any) {
             style={{
               backgroundColor: 'transparent',
               alignItems: 'center',
-              justifyContent: 'center',
-              height: 40,
+              justifyContent: 'flex-start',
               flexDirection: 'row',
+              height: 50,
               columnGap: 10,
+              flex: 1,
+
             }}
           >
             <TouchableOpacity
               style={{
-                borderRadius: 8,
+                borderRadius: 5,
                 overflow: 'hidden',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -284,8 +292,8 @@ export default function Home({ route }: any) {
               {userImage ? (
                 <Image
                   style={{
-                    width: 35,
-                    height: 35,
+                    width: 45,
+                    height: 45,
                   }}
                   source={{ uri: userImage }}
                 />
@@ -303,7 +311,10 @@ export default function Home({ route }: any) {
                 flexDirection: 'column',
                 backgroundColor: 'transparent',
                 alignItems: 'flex-start',
-                justifyContent: 'center',
+                justifyContent: 'space-evenly',
+                flex: 1,
+                height: 50,
+
               }}
             >
               <View
@@ -328,19 +339,35 @@ export default function Home({ route }: any) {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  flex: 1,
-                }}
-              >
-                <Text
-                  style={[
-                    {
+                  backgroundColor: colors.secondary,
+                  paddingHorizontal: 5,
+                  paddingVertical: 1,
+                  borderRadius: 5,
+                  overflow: 'hidden'
+                }}>
+                {userAccuracy &&
+                  <Text
+                    style={[{
                       color: colors.text.primary,
-                      fontSize: 12,
-                    },
-                  ]}
-                >
-                  {userXp ?? userXp} %
-                </Text>
+                      fontSize: 15,
+                      textAlign: 'center',
+                      fontFamily: 'Cairo'
+                    }]}>
+                    {intPart}
+                    <Text
+                      style={[{
+                        color: colors.text.secondary,
+
+                      }]}>
+                      .{`${decPart} `}
+                    </Text>
+                  </Text>
+                }
+                <FontAwesome5
+                  name='percentage'
+                  size={12}
+                  color={colors.text.secondary}
+                />
               </View>
             </View>
             {/* <Pressable
@@ -353,25 +380,21 @@ export default function Home({ route }: any) {
             </Pressable> */}
           </View>
           {!userVip ?
-            (
-              <FreeBadge backColor={colors.secondary} elevation={0} height={28} width={40} />
-            )
+            (<FreeBadge backColor={'transparent'} elevation={0} height={28} width={40} />)
             : userVip ?
-              (
-                <VipBadge
-                  width={40}
-                  height={28}
-                  title={false}
-                  iconSize={15}
-                  iconColor={'#dba400'}
-                  radius={8}
-                  backColor={colors.secondary}
-                  titleColor={colors.text.primary}
-                  elevation={0}
-                  textSize={12}
-                  icon={true}
-                />
-              ) : null}
+              (<VipBadge
+                width={40}
+                height={28}
+                title={false}
+                iconSize={15}
+                iconColor={'#dba400'}
+                radius={8}
+                backColor={'transparent'}
+                titleColor={colors.text.primary}
+                elevation={0}
+                textSize={12}
+                icon={true}
+              />) : null}
         </View>
       </View>
       <ScrollView
@@ -390,9 +413,8 @@ export default function Home({ route }: any) {
           width: '100%',
         }}
       >
-        {/* <Statistics /> */}
-
         <View
+          key={'S'}
           style={{
             alignItems: 'center',
             justifyContent: 'space-evenly',

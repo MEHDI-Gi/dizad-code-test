@@ -27,6 +27,7 @@ export default function Signs() {
     const { lessons, screen } = useSize();
     const colors = useColors();
     const {
+        setTotalSigns,
         lessonsData,
         setSignsItemsIndex,
         sound, playSound, isGradient,
@@ -65,13 +66,7 @@ export default function Signs() {
         }
     };
 
-    if (initializing || !lessonsData) {
-        return (
-            <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
-                <ActivityIndicator size={30} />
-            </View>
-        )
-    }
+
 
     return (
         <View style={{

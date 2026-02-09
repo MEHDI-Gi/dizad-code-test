@@ -50,6 +50,7 @@ export default function Questions() {
         setQuestionsItemsIndex,
         questionsItemsIndex,
         bookmarkLoading,
+        incrementView
     } = useContext(DataContext);
 
     const handleBookmark = useCallback((category: string, item: any) => {
@@ -106,6 +107,27 @@ export default function Questions() {
             console.error('Error fetching all AsyncStorage data:', error);
         }
     };
+    interface ViewToken {
+        item: any;
+        isViewable: boolean;
+    }
+    // 2. Use it in your callback
+    const handleViewableItemsChanged = useCallback(({ viewableItems }: { viewableItems: ViewToken[] }) => {
+        viewableItems.forEach((viewToken) => {
+            if (viewToken.isViewable && viewToken.item) {
+                incrementView('questions', viewToken.item);
+            }
+        });
+    }, [incrementView]);
+
+    // 3. Define the config (Required to be a ref in RN to avoid crashes)
+    const viewabilityConfig = useRef({
+        itemVisiblePercentThreshold: 50,
+        minimumViewTime: 100,           // Must stay visible for 0.5s
+    }).current;
+
+    // 2. Memoize the config (Crucial for RN FlatList)
+
 
     const itemsSideColors = [
         '#4a2b14ff',  // Saddle Brown
@@ -121,14 +143,6 @@ export default function Questions() {
 
 
     const ad = useAd();
-
-    if (initializing || !QUESTIONS_CONTENT) {
-        return (
-            <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
-                <ActivityIndicator size={30} />
-            </View>
-        )
-    }
 
     return (
         <View style={{
@@ -278,6 +292,8 @@ export default function Questions() {
                             setCurrentScrollIndex(index + 1);
                             // setQuestionsItemsIndex(index);
                         }}
+                        onViewableItemsChanged={handleViewableItemsChanged}
+                        viewabilityConfig={viewabilityConfig}
                         horizontal
                         snapToInterval={ITEM_WIDTH}
                         decelerationRate="fast"

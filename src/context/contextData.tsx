@@ -19,6 +19,8 @@ import {
   onValue,
   update,
   firebase,
+  increment,
+  serverTimestamp,
 } from '@react-native-firebase/database';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { useVip } from '../hooks/useVip';
@@ -31,14 +33,16 @@ interface DataProviderProps {
 }
 
 const DataProvider = ({ children }: DataProviderProps) => {
+
   const { user, initializing, signIn, logout } = useGoogleSignIn();
 
-  const [userXp, setUserXp] = useState<number>(0);
   const [userOnline, setUserOnline] = useState<boolean>(false);
   const [globTrueAns, setGlobTrueAns] = useState<number>(0);
   const [globFalseAns, setGlobFalseAns] = useState<number>(0);
   const [userName, setUserName] = useState<string>('');
   const [userImage, setUserImage] = useState<string | null>(null);
+  const [userAccuracy, setUserAccuracy] = useAsyncStorageState<number>('UserAccuracy', 0);
+
   const [userPlan, setUserPlan] = useAsyncStorageState<string>('UserPlan', 'free');
 
   const [language, setLanguage] = useAsyncStorageState<string>(
@@ -61,7 +65,33 @@ const DataProvider = ({ children }: DataProviderProps) => {
     'dark',
   );
 
-  // 2. Derive colors automatically based on the theme
+  // --- 1. TYPE DEFINITIONS ---
+  // Define what a tracked item looks like now (with viewCount)
+  interface AccuracyItem {
+    id: string;
+    viewCount: number;
+    timestamp: number | object; // Accepts number (local) or object (serverTimestamp)
+  }
+
+  type CategoryAccuracyProgress = Record<string, AccuracyItem>;
+  type AccuracyProgState = {
+    signs: CategoryAccuracyProgress;
+    questions: CategoryAccuracyProgress;
+    priority: CategoryAccuracyProgress;
+  };
+
+  // --- INSIDE YOUR COMPONENT OR HOOK ---
+
+  // 2. STATE INITIALIZATION
+  const [accuracyProgress, setAccuracyProgress] = useState<AccuracyProgState>({
+    signs: {},
+    questions: {},
+    priority: {},
+  });
+
+  // 3. THE VIEW INCREMENT FUNCTION
+  // 1. Add this ref inside your component/provider to track current session views
+  // Only change if user or DB changes
 
 
   type CategoryBookmarks = Record<string, BookmarkItem>;
@@ -117,9 +147,9 @@ const DataProvider = ({ children }: DataProviderProps) => {
       } else {
         setUserImage(data.UserImage ?? user?.photoURL ?? null);
       }
-
+      setAccuracyProgress(data.AccuracyProgress ?? { signs: {}, questions: {}, priority: {} })
       setUserOnline(data.UserOnline ?? false);
-      setUserXp(data.UserXp ?? 0);
+      setUserAccuracy(data.UserAccuracy ?? 0);
       setUserPlan(data.UserPlan ?? 'free');
       setGlobTrueAns(data.GlobTrueAns ?? 0);
       setGlobFalseAns(data.GlobFalseAns ?? 0);
@@ -143,7 +173,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
   const [isPicAdd, setIsPicAdd] = useState<boolean>(false);
 
-  console.log('your global data');
   const [loading, setLoading] = useState<boolean>(true);
   const [isAccountDeleted, setIsAccountDeleted] = React.useState<
     boolean | null
@@ -260,6 +289,41 @@ const DataProvider = ({ children }: DataProviderProps) => {
   type LanguageTexts = typeof languagesList.arabic; // Infers all text properties
 
   const texts: LanguageTexts = languagesList[language as Language];
+
+
+  const sessionViewed = useRef<Set<string>>(new Set());
+
+  const incrementView = useCallback((category: keyof AccuracyProgState, item: any) => {
+    if (!user?.uid || !item?.id) return;
+
+    const itemId = String(item.id);
+    const sessionKey = `${category}-${itemId}`;
+
+    if (sessionViewed.current.has(sessionKey)) return;
+    sessionViewed.current.add(sessionKey);
+
+    setAccuracyProgress((prev) => {
+      const categoryData = prev[category] || {};
+      return {
+        ...prev,
+        [category]: {
+          ...categoryData,
+          [itemId]: {
+            id: itemId,
+          },
+        },
+      };
+    });
+
+    const itemPath = `users/${user.uid}/AccuracyProgress/${category}/${itemId}`;
+    const itemRef = ref(database, itemPath);
+
+    update(itemRef, {
+      id: itemId,
+    }).catch((err) => {
+      sessionViewed.current.delete(sessionKey);
+    });
+  }, [user?.uid, database]);
 
   interface BookmarkItem {
     id?: string;
@@ -420,12 +484,12 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
   const dataToUpdate = useMemo(
     () => ({
-      UserXp: userXp,
+      UserAccuracy: userAccuracy,
       GlobTrueAns: globTrueAns,
       GlobFalseAns: globFalseAns,
     }),
     [
-      userXp,
+      userAccuracy,
       globTrueAns,
       globFalseAns,
     ],
@@ -450,8 +514,9 @@ const DataProvider = ({ children }: DataProviderProps) => {
     'UserImage',
     'UserName',
     'QuestionsItemIndex',
+    'AccuracyProgress',
     'UserOnline',
-    'UserXp',
+    'UserAccuracy',
     'userPlan',
     'Speed',
     'Language',
@@ -477,10 +542,9 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
         setUserName('');
         setUserImage(null);
-        setUserXp(0);
+        setUserAccuracy(0);
         setBookmarks({ signs: {}, questions: {}, priority: {} });
         setUserPlan('free')
-
         setLessonsLoaded(false);
         setExamsLoaded(false);
         setUserLoaded(false);
@@ -520,7 +584,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
       setExamsLoaded,
       // setUsersLoaded,
       setUserLoaded,
-
       userPlan,
       setUserPlan,
       quizCategoriesData,
@@ -528,8 +591,10 @@ const DataProvider = ({ children }: DataProviderProps) => {
       setLeaderBoardIcon,
       speed,
       setSpeed,
-      userXp,
-      setUserXp,
+      userAccuracy,
+      setUserAccuracy,
+      accuracyProgress,
+      setAccuracyProgress,
       userOnline,
       setUserOnline,
       vipCard,
@@ -601,8 +666,11 @@ const DataProvider = ({ children }: DataProviderProps) => {
       signsItemsIndex,
       priorityItemsIndex, setPriorityItemsIndex,
       imgBase,
+      incrementView,
     }),
     [
+      incrementView,
+      accuracyProgress,
       user, initializing, signIn, logout,
       questionsItemsIndex,
       signsItemsIndex,
@@ -615,7 +683,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
       vibrate,
       sound,
       language,
-      userXp,
+      userAccuracy,
       freeCard,
       vipCard,
       vipPlansCard,

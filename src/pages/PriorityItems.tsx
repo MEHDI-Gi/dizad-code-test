@@ -57,11 +57,11 @@ export default function PriorityItems({ route }: any) {
         toggleBookmark,
         isBookmarked,
         bookmarkLoading,
-        imgBase
+        imgBase,
+        incrementView
     } = useContext(DataContext);
 
 
-    const statusHeight = StatusBar.currentHeight;
     const ad = useAd();
     const PRIORITY_CONTENT = lessonsData?.content?.priority?.content || [];
 
@@ -100,6 +100,25 @@ export default function PriorityItems({ route }: any) {
     }, [toggleBookmark]);
 
     const ITEM_WIDTH = screen.width * 1
+
+    interface ViewToken {
+        item: any;
+        isViewable: boolean;
+    }
+    // 2. Use it in your callback
+    const handleViewableItemsChanged = useCallback(({ viewableItems }: { viewableItems: ViewToken[] }) => {
+        viewableItems.forEach((viewToken) => {
+            if (viewToken.isViewable && viewToken.item) {
+                incrementView('priority', viewToken.item);
+            }
+        });
+    }, [incrementView]);
+
+    // 3. Define the config (Required to be a ref in RN to avoid crashes)
+    const viewabilityConfig = useRef({
+        itemVisiblePercentThreshold: 50,
+        minimumViewTime: 100,           // Must stay visible for 0.5s
+    }).current;
 
     return (
         <View
@@ -348,6 +367,8 @@ export default function PriorityItems({ route }: any) {
                             setCurrentScrollIndex(index + 1);
                             setHiddenLabel(true)
                         }}
+                        onViewableItemsChanged={handleViewableItemsChanged}
+                        viewabilityConfig={viewabilityConfig}
                         horizontal
                         snapToInterval={ITEM_WIDTH}
                         decelerationRate="fast"

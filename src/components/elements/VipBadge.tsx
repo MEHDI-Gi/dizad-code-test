@@ -12,10 +12,10 @@ import { useColors } from '../../hooks/useColors';
 
 export default function VipBadge(props: any) {
     const {
-        userXp,
+        userAccuracy,
         setHeartsCard,
         quizData,
-         vipCard, setVipCard
+        vipCard, setVipCard
     } = useContext(DataContext);
     const colors = useColors();
 
