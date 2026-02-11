@@ -50,7 +50,7 @@ import { useUserAccuracy } from '../hooks/useUserAccuracy.ts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
-export default function Home({ route }: any) {
+export default function Home() {
   type RootStackParamList = {
     MainTabs: NavigatorScreenParams<any>;
   };
@@ -88,24 +88,18 @@ export default function Home({ route }: any) {
     dataLength,
     speed,
     setStatisticsCard,
-    firebaseLoaded
+    firebaseLoaded,
+    imgBase
   } = useContext(DataContext);
 
   const navigation = useNavigation<any>();
 
-  const QUESTIONS_CURRENT_LABEL =
-    lessonsData?.content?.questions?.content[questionsItemsIndex]?.label;
-  const imageBase =
-    'https://cdn.jsdelivr.net/gh/MEHDI-Gi/dizad_road_test_assets@main/assets';
-  const questCover = `${imageBase}/cover/qst.png`;
-  const examsCover = `${imageBase}/cover/exm.png`;
-  const priorityCover = `${imageBase}/cover/prio.png`;
-  const signsCover = `${imageBase}/cover/sgn.png`;
+  const questCover = `${imgBase}/cover/qst.png`;
+  const examsCover = `${imgBase}/cover/exm.png`;
+  const priorityCover = `${imgBase}/cover/prio.png`;
+  const signsCover = `${imgBase}/cover/sgn.png`;
 
-  // `${imageBase}/cover/${item.cover}.png`
-
-  const [intPart, decPart] = userAccuracy.split('.');
-
+  const [intPart, decPart] = userAccuracy.split('.') ?? null;
 
   let totalSgn = 0;
 
@@ -159,11 +153,8 @@ export default function Home({ route }: any) {
     },
   ];
 
-  const ad = useAd();
-
   const contentItemsPress = (item: any) => {
     switch (item.cond) {
-
       case 'Sgn':
         navigation.navigate('MainTabs', {
           screen: 'Lessons',
@@ -207,7 +198,7 @@ export default function Home({ route }: any) {
     { label: texts.correct, resault: `23`, icon: 'check', iconColor: 'green' },
   ];
 
-  if (!firebaseLoaded) {
+  if (user && !firebaseLoaded) {
     return (
       <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
         <ActivityIndicator size={30} color={'#1eff00'} />
@@ -216,148 +207,120 @@ export default function Home({ route }: any) {
   }
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          width: screen.width,
-          flex: 1,
-          backgroundColor: colors.primary,
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        },
-      ]}
-    >
-      <View
-        style={[
-          {
-            zIndex: 9,
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            top: 0,
-          },
-        ]}
-      >
+    <View style={[styles.container, {
+      width: screen.width,
+      flex: 1,
+      backgroundColor: colors.primary,
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },]}>
+      <View style={[{
+        zIndex: 9,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        top: 0,
+      },]}>
         <View
           style={{
             position: 'absolute',
-            bottom: 0, // <- ADD THIS
-            left: 0, // <- ADD THIS
+            bottom: 0,
+            left: 0,
             right: 0,
             top: 0,
             backgroundColor: colors.primary,
             opacity: 0.9,
           }}
         />
-        <View
-          style={[
-            {
-              paddingHorizontal: 0,
-              flexDirection: 'row',
-              width: '90%',
-              height: 70,
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              elevation: 3,
-              overflow: 'hidden',
-            },
-          ]}
-        >
-          <View
-            style={{
-              backgroundColor: 'transparent',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              flexDirection: 'row',
-              height: 50,
-              columnGap: 10,
-              flex: 1,
-
-            }}
-          >
+        <View style={[{
+          paddingHorizontal: 0,
+          flexDirection: 'row',
+          width: '90%',
+          height: 70,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          elevation: 3,
+          overflow: 'hidden',
+        },]}>
+          <View style={{
+            backgroundColor: 'transparent',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            flexDirection: 'row',
+            height: 50,
+            columnGap: 10,
+            flex: 1,
+          }}>
             <TouchableOpacity
               style={{
                 borderRadius: 5,
                 overflow: 'hidden',
                 justifyContent: 'center',
                 alignItems: 'center',
+                backgroundColor: colors.secondary,
+                width: 40,
+                height: 40,
               }}
               onPress={() => {
                 if (sound) playSound('settingsButton');
                 navigation.navigate('Profile');
-              }}
-            >
+              }}>
               {userImage ? (
                 <Image
                   style={{
-                    width: 45,
-                    height: 45,
+                    width: "100%",
+                    height: "100%",
                   }}
+                  resizeMode='cover'
                   source={{ uri: userImage }}
                 />
               ) : (
                 <MaterialIcons
                   name="person"
-                  size={35}
+                  size={30}
                   color={colors.text.primary}
                 />
               )}
             </TouchableOpacity>
 
-            <View
-              style={{
-                flexDirection: 'column',
-                backgroundColor: 'transparent',
-                alignItems: 'flex-start',
-                justifyContent: 'space-evenly',
-                flex: 1,
-                height: 50,
-
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: '500',
-                    color: colors.text.primary,
-                  }}
-                >
+            <View style={{
+              flexDirection: 'column',
+              backgroundColor: 'transparent',
+              alignItems: 'flex-start',
+              justifyContent: 'space-evenly',
+              flex: 1,
+            }}>
+              <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                <Text style={{
+                  fontSize: 16,
+                  fontWeight: '500',
+                  color: colors.text.primary,
+                }}>
                   {userName ?? userName}
                 </Text>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: colors.secondary,
-                  paddingHorizontal: 5,
-                  paddingVertical: 1,
-                  borderRadius: 5,
-                  overflow: 'hidden'
-                }}>
+              <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflow: 'hidden'
+              }}>
                 {userAccuracy &&
-                  <Text
-                    style={[{
-                      color: colors.text.primary,
-                      fontSize: 15,
-                      textAlign: 'center',
-                      fontFamily: 'Cairo'
-                    }]}>
+                  <Text style={[{
+                    color: colors.text.primary,
+                    fontSize: 15,
+                    textAlign: 'center',
+                    fontFamily: 'Cairo'
+                  }]}>
                     {intPart}
                     <Text
                       style={[{
                         color: colors.text.secondary,
-
                       }]}>
                       .{`${decPart} `}
                     </Text>
@@ -380,21 +343,26 @@ export default function Home({ route }: any) {
             </Pressable> */}
           </View>
           {!userVip ?
-            (<FreeBadge backColor={'transparent'} elevation={0} height={28} width={40} />)
-            : userVip ?
-              (<VipBadge
-                width={40}
-                height={28}
-                title={false}
-                iconSize={15}
-                iconColor={'#dba400'}
-                radius={8}
-                backColor={'transparent'}
-                titleColor={colors.text.primary}
-                elevation={0}
-                textSize={12}
-                icon={true}
-              />) : null}
+            (<FreeBadge
+              backColor={colors.secondary}
+              elevation={0}
+              height={28}
+              width={40}
+            />)
+            :
+            (<VipBadge
+              width={40}
+              height={28}
+              title={false}
+              iconSize={15}
+              iconColor={'#dba400'}
+              radius={8}
+              backColor={colors.secondary}
+              titleColor={colors.text.primary}
+              elevation={0}
+              textSize={12}
+              icon={true}
+            />)}
         </View>
       </View>
       <ScrollView
@@ -411,8 +379,7 @@ export default function Home({ route }: any) {
         style={{
           flex: 1,
           width: '100%',
-        }}
-      >
+        }}>
         <View
           key={'S'}
           style={{

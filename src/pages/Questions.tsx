@@ -50,7 +50,8 @@ export default function Questions() {
         setQuestionsItemsIndex,
         questionsItemsIndex,
         bookmarkLoading,
-        incrementView
+        incrementView,
+        imgBase
     } = useContext(DataContext);
 
     const handleBookmark = useCallback((category: string, item: any) => {
@@ -78,8 +79,6 @@ export default function Questions() {
         answers: string[];
         cover: string;
     }
-    const imageBase = 'https://cdn.jsdelivr.net/gh/MEHDI-Gi/dizad_road_test_assets@main/assets';
-    const folder = lessonsData?.content?.questions?.content?.[selectedQuestion]?.folder;
 
     const questionsList = useMemo(() =>
         QUESTIONS_CONTENT.map((item: any, index: any): QuestionItem | null => {
@@ -89,7 +88,7 @@ export default function Questions() {
                 label: item.label ?? 'undefined',
                 warn: Array.isArray(item.warn) ? item.warn : [],  // ✅ Always array
                 answers: Array.isArray(item.answers) ? item.answers : [],
-                cover: item.cover && imageBase ? `${imageBase}/cover/${item.cover}.png` :
+                cover: item.cover && imgBase ? `${imgBase}/cover/${item.cover}.png` :
                     '',
             };
         }).filter(Boolean) as QuestionItem[],
@@ -184,7 +183,7 @@ export default function Questions() {
                         }}
                         style={[
                             {
-                                width: "95%",
+                                width: "92%",
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 flexDirection: 'row-reverse',
@@ -192,7 +191,6 @@ export default function Questions() {
                                 overflow: 'hidden',
                                 backgroundColor: colors.secondary,
                                 elevation: 5,
-                                minHeight: 70,
                             },
                         ]}
                     >

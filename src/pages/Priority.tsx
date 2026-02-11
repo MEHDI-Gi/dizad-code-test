@@ -39,14 +39,14 @@ export default function Priority() {
     } = useContext(DataContext);
 
     const itemsSideColors = [
-        '#4a2b14ff',  
-        '#36344aff',  
-        '#4f6031ff',  
-        '#756230ff', 
-        '#6e1c2dff', 
+        '#4a2b14ff',
+        '#36344aff',
+        '#4f6031ff',
+        '#756230ff',
+        '#6e1c2dff',
         '#2F4F4F',
     ]
-    
+
     const sideColors = (index: number) =>
         itemsSideColors[index % itemsSideColors.length] ?? 'white';
 
@@ -83,7 +83,7 @@ export default function Priority() {
         }
     };
 
-    if (initializing || !PRIORITY_CONTENT) {
+    if (!PRIORITY_CONTENT) {
         return (
             <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
                 <ActivityIndicator size={30} color={sideColors(6)} />
@@ -172,15 +172,6 @@ export default function Priority() {
                                             overflow: 'hidden',
                                         }]}>
                                         {item?.img ?
-
-                                            // <Image
-                                            //     style={{
-                                            //         width: '100%',
-                                            //         height: '100%',
-
-                                            //     }}
-                                            //     source={{ uri: item?.img }}
-                                            // />
                                             <FastImage
                                                 style={{
                                                     width: '100%',
@@ -190,7 +181,6 @@ export default function Priority() {
                                                 resizeMode={FastImage.resizeMode.cover}
                                             />
                                             :
-
                                             <ShimmerPlaceHolder
                                                 style={{ width: "100%", height: "100%", }}
                                                 shimmerColors={[colors.secondary, '#6161617c', colors.secondary]}
@@ -211,11 +201,9 @@ export default function Priority() {
                                         }]}>
 
                                         <Text style={{
-
                                             fontFamily: "Cairo-Bold", color: colors.text.primary, fontSize: 16,
                                         }}>
                                             {item.label}
-                                            {/* {Object.keys(SignsContentInfo[index + 1].label)} */}
                                         </Text>
                                     </View>
                                     <View
@@ -227,10 +215,9 @@ export default function Priority() {
                                             bottom: 8,
                                             backgroundColor: colors.opacity.primary,
                                             paddingHorizontal: 8,
-                                            borderRadius: 5,
+                                            borderRadius: 7,
                                             paddingVertical: 3,
                                         }]}>
-
                                         <Text style={{
                                             fontFamily: "Cairo-Bold",
 

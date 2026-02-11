@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useAsyncStorageState } from "./useAsyncStorageState";
 import { useTheme } from "./useTheme";
 export const colorsList: any = {
     darkColors: {
@@ -47,9 +45,8 @@ export const colorsList: any = {
         primary: '#eaeaeaff',
         secondary: 'white',
         exm: '#282a3a',
-
         opacity: {
-            images: '#6e6e6e98',
+            primary: '#ffffffcc',
         },
         text: {
             primary: '#181818ff',

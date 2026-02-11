@@ -104,19 +104,14 @@ export default function Signs() {
                                         borderless: false
                                     }}
                                     onPress={() => LessonsContentPress(item)}
-                                    style={[
-                                        {
-                                            width: lessons.category.width,
-                                            height: lessons.category.height,
-                                            borderRadius: 8,
-                                            flexDirection: 'column',
-                                            backgroundColor: colors.secondary,
-                                            overflow: 'hidden',
-                                            elevation: 5,
-                                        },
-
-                                    ]}
-                                >
+                                    style={[{
+                                        width: lessons.category.width,
+                                        borderRadius: 8,
+                                        flexDirection: 'column',
+                                        backgroundColor: colors.secondary,
+                                        overflow: 'hidden',
+                                        elevation: 5,
+                                    },]}>
 
                                     <View
                                         style={[{
@@ -137,17 +132,14 @@ export default function Signs() {
                                                 borderRadius: 5,
                                             }]}>
                                             {item?.img ?
-
                                                 <Image
                                                     style={{
                                                         width: '70%',
                                                         height: '70%',
-
                                                     }}
                                                     source={{ uri: item?.img }}
                                                 />
                                                 :
-
                                                 <ShimmerPlaceHolder
                                                     style={{ width: "100%", height: "100%", }}
                                                     shimmerColors={[colors.secondary, '#6161617c', colors.secondary]}
@@ -162,23 +154,17 @@ export default function Signs() {
                                             justifyContent: 'center',
                                             backgroundColor: 'transparent',
                                             width: '100%',
-                                            paddingLeft: 5,
+                                            paddingBottom: 10,
                                             paddingHorizontal: 10,
                                         }]}>
-                                        {/* <Text style={{ fontFamily: "Cairo_700Bold", color: colors.priText, fontSize: 16, }}>
-                      {texts.level} {index + 1}
-                    </Text> */}
                                         <Text style={{ fontFamily: "Cairo-Bold", color: colors.text.primary, fontSize: 16, }}>
                                             {item.label}
-                                            {/* {Object.keys(SignsContentInfo[index + 1].label)} */}
                                         </Text>
                                         <Text style={{
                                             fontFamily: "Cairo",
-
                                             color: colors.text.secondary,
                                             fontSize: 12,
                                             flexDirection: 'row',
-
                                         }}>
                                             {totalSigns} إشــــارة
                                         </Text>
