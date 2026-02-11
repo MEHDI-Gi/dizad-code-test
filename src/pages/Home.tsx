@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import {
   Text,
   View,
@@ -15,35 +15,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import Statistics from './home/Statistics.tsx';
 import { useGoogleSignIn } from '../context/auth.ts';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  Easing,
-  withSpring,
-} from 'react-native-reanimated';
 import VipBadge from '../components/elements/VipBadge.tsx';
-import HeartBadge from '../components/elements/FreeBadge.tsx';
 
 import {
-  CompositeNavigationProp,
-  NavigatorScreenParams,
   useNavigation,
-  useNavigationState,
-  useRoute,
 } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../types.ts';
 import FreeBadge from '../components/elements/FreeBadge.tsx';
 import { useSize } from '../hooks/useSize.ts';
-import { BlurView } from '@react-native-community/blur';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
-import FreeCard from '../components/FreeCard.tsx';
-import { MaterialTopTabNavigationProp } from '@react-navigation/material-top-tabs';
-import { useAutoInterstitial } from '../hooks/useAutoInterstitial.ts';
-import { TestIds, useInterstitialAd } from 'react-native-google-mobile-ads';
-import { useAd } from '../hooks/useAd.ts';
 import { useColors } from '../hooks/useColors.ts';
 import { useVip } from '../hooks/useVip.ts';
 import { useUserAccuracy } from '../hooks/useUserAccuracy.ts';
@@ -51,43 +31,19 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Home() {
-  type RootStackParamList = {
-    MainTabs: NavigatorScreenParams<any>;
-  };
-  const { screen, lessons } = useSize();
-  const { user, initializing } = useGoogleSignIn();
+  const { screen } = useSize();
+  const { user } = useGoogleSignIn();
   const { userVip } = useVip();
   const { userAccuracy } = useUserAccuracy();
   const colors = useColors();
+
   const {
-    setHeartsCard,
-    quizData,
     userName,
     userImage,
-    helpPoint,
-    livesHeart,
-    isRewardAdd,
-    setIsRewardAdd,
     sound,
     playSound,
-    isGradient,
-    texts,
-    currentTheme,
-    setLoadScreen,
-    userPlan,
-    userOnline,
-    setUserOnline,
     lessonsData,
-    examsData,
-    questionsItemsIndex,
     examData,
-    freeCard,
-    vipCard,
-    globTrueAns,
-    globFalseAns,
-    dataLength,
-    speed,
-    setStatisticsCard,
     firebaseLoaded,
     imgBase
   } = useContext(DataContext);
@@ -99,7 +55,8 @@ export default function Home() {
   const priorityCover = `${imgBase}/cover/prio.png`;
   const signsCover = `${imgBase}/cover/sgn.png`;
 
-  const [intPart, decPart] = userAccuracy.split('.') ?? null;
+  const splitUserAccu = String(userAccuracy || 0);
+  const [intPart, decPart = '0'] = splitUserAccu.split('.');
 
   let totalSgn = 0;
 
@@ -189,13 +146,6 @@ export default function Home() {
     { label: '', img: examsCover ?? null, sub: '' },
     { label: '', img: questCover ?? null, sub: '' },
     { label: '', img: questCover ?? null, sub: '' },
-  ];
-
-
-  const StatisticsList = [
-    { resault: `${userAccuracy}`, icon: 'check', iconColor: '#555555' },
-    { label: texts.wrong, resault: `59`, icon: 'clear', iconColor: '#c94141' },
-    { label: texts.correct, resault: `23`, icon: 'check', iconColor: 'green' },
   ];
 
   if (user && !firebaseLoaded) {
@@ -301,7 +251,7 @@ export default function Home() {
                   fontWeight: '500',
                   color: colors.text.primary,
                 }}>
-                  {userName ?? userName}
+                  {userName}
                 </Text>
               </View>
               <View style={{
@@ -333,14 +283,6 @@ export default function Home() {
                 />
               </View>
             </View>
-            {/* <Pressable
-              android_ripple={{ borderless: false, color: colors.secondary, foreground: true }}>
-              <MaterialCommunityIcons
-                name='chart-box'
-                color={colors.text.primary}
-                size={40}
-              />
-            </Pressable> */}
           </View>
           {!userVip ?
             (<FreeBadge
@@ -454,7 +396,6 @@ export default function Home() {
                 alignItems: "center",
                 width: '100%',
 
-
               }}>
                 <View style={{
                   width: '100%',
@@ -516,17 +457,7 @@ export default function Home() {
             </View>
           </Pressable>
           {contentItems.map((item: any, index: number) => {
-            // if (!QUESTIONS_CURRENT_LABEL) return (
-            //     <ShimmerPlaceHolder
-            //         duration={1500}
-            //         style={{
-            //             width: index === 0 || index === 3 ? '100%' : '48%',
 
-            //             height: 100,
-            //         }}
-            //         shimmerColors={[colors.secondary, '#6161617c', colors.secondary]}
-            //     />
-            // )
             if (index === 0) return null;
             return (
               <Pressable
@@ -591,7 +522,6 @@ export default function Home() {
                     }}
                   >
                     {item?.label}
-                    {/* {Object.keys(SignsContentInfo[index + 1].label)} */}
                   </Text>
                   <Text
                     style={{
