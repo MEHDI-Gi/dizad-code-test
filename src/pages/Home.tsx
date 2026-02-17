@@ -52,7 +52,8 @@ export default function Home() {
 
   const questCover = `${imgBase}/cover/qst.png`;
   const examsCover = `${imgBase}/cover/exm.png`;
-  const priorityCover = `${imgBase}/cover/prio.png`;
+  // const priorityCover = `${imgBase}/cover/prio.png`;
+  const priorityCover = `${imgBase}/priority/L1/0.jpg`;
   const signsCover = `${imgBase}/cover/sgn.png`;
 
   const splitUserAccu = String(userAccuracy || 0);
@@ -82,7 +83,7 @@ export default function Home() {
   const contentItems = [
     {
       cond: 'Exm',
-      label: 'إمتحان',
+      label: 'إمتحان (Quiz)',
       img: examsCover ?? null,
       sub: '',
       length: totalExm,
@@ -95,18 +96,18 @@ export default function Home() {
       length: totalSgn,
     },
     {
-      cond: 'Pri',
-      label: 'أولوية',
-      img: priorityCover ?? null,
-      sub: '',
-      length: totalPri,
-    },
-    {
       cond: 'Qst',
       label: 'أسئلة',
       img: questCover ?? null,
       sub: '',
       length: totalQst,
+    },
+    {
+      cond: 'Pri',
+      label: 'أولوية',
+      img: priorityCover ?? null,
+      sub: '',
+      length: totalPri,
     },
   ];
 
@@ -148,13 +149,6 @@ export default function Home() {
     { label: '', img: questCover ?? null, sub: '' },
   ];
 
-  if (user && !firebaseLoaded) {
-    return (
-      <View style={[{ flex: 1, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
-        <ActivityIndicator size={30} color={'#1eff00'} />
-      </View>
-    )
-  }
 
   return (
     <View style={[styles.container, {
@@ -184,9 +178,10 @@ export default function Home() {
           }}
         />
         <View style={[{
-          paddingHorizontal: 0,
+          paddingHorizontal: 20,
           flexDirection: 'row',
-          width: '90%',
+          width: '100%',
+
           height: 70,
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -209,8 +204,8 @@ export default function Home() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: colors.secondary,
-                width: 40,
-                height: 40,
+                width: 38,
+                height: 38,
               }}
               onPress={() => {
                 if (sound) playSound('settingsButton');
@@ -225,13 +220,14 @@ export default function Home() {
                   resizeMode='cover'
                   source={{ uri: userImage }}
                 />
-              ) : (
-                <MaterialIcons
-                  name="person"
-                  size={30}
+              ) :
+                <MaterialCommunityIcons
+                  name='account'
+                  size={35}
                   color={colors.text.primary}
                 />
-              )}
+
+              }
             </TouchableOpacity>
 
             <View style={{
@@ -246,39 +242,58 @@ export default function Home() {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-                <Text style={{
-                  fontSize: 16,
-                  fontWeight: '500',
-                  color: colors.text.primary,
-                }}>
-                  {userName}
-                </Text>
+                {!firebaseLoaded ?
+                  <ShimmerPlaceHolder
+                    style={{ width: 60, height: 15 }}
+                    shimmerColors={[
+                      colors.secondary,
+                      '#6161617c',
+                      colors.secondary,
+                    ]}
+                  /> :
+                  userName ? <Text style={{
+                    fontSize: 16,
+                    fontWeight: '500',
+                    color: colors.text.primary,
+                  }}>
+                    {userName}
+                  </Text> :
+                    <Text style={{
+                      fontSize: 16,
+                      fontWeight: '500',
+                      color: colors.text.primary,
+                    }}>
+                      user
+                    </Text>
+                }
               </View>
               <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                columnGap: 3
               }}>
-                {userAccuracy &&
+                {userAccuracy ?
                   <Text style={[{
                     color: colors.text.primary,
-                    fontSize: 15,
+                    fontSize: 13,
                     textAlign: 'center',
-                    fontFamily: 'Cairo'
                   }]}>
-                    {intPart}
-                    <Text
-                      style={[{
-                        color: colors.text.secondary,
-                      }]}>
-                      .{`${decPart} `}
-                    </Text>
+                    {userAccuracy}
+                  </Text>
+                  :
+                  <Text style={[{
+                    color: colors.text.primary,
+                    fontSize: 13,
+                    textAlign: 'center',
+                  }]}>
+                    0
                   </Text>
                 }
                 <FontAwesome5
                   name='percentage'
-                  size={12}
+                  size={13}
                   color={colors.text.secondary}
                 />
               </View>
@@ -293,15 +308,15 @@ export default function Home() {
             />)
             :
             (<VipBadge
-              width={40}
+              width={45}
               height={28}
               title={false}
               iconSize={15}
               iconColor={'#dba400'}
-              radius={8}
+              radius={5}
               backColor={colors.secondary}
               titleColor={colors.text.primary}
-              elevation={0}
+              elevation={3}
               textSize={12}
               icon={true}
             />)}
@@ -323,7 +338,6 @@ export default function Home() {
           width: '100%',
         }}>
         <View
-          key={'S'}
           style={{
             alignItems: 'center',
             justifyContent: 'space-evenly',
@@ -335,130 +349,252 @@ export default function Home() {
             gap: 10,
           }}
         >
-          <Pressable
-            android_ripple={{
-              borderless: false,
-              color: colors.secondary,
-              foreground: true,
-            }}
-            onPress={() => navigation.navigate('MainTabs', { screen: 'Exams' })}
-            style={[
-              {
-                alignItems: 'center',
-                backgroundColor: colors.secondary,
-                elevation: 3, width: '90%',
-                height: screen.width * 0.25,
-
-                borderRadius: 8,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                overflow: 'hidden',
-              },
-            ]}
-          >
-
-            <View
-              style={[
-                {
-                  alignItems: 'flex-end',
-                  justifyContent: 'center',
-                  backgroundColor: 'transparent',
-                  width: '100%',
+          {!firebaseLoaded ?
+            <View style={{
+              alignItems: 'center',
+              width: '90%',
+              height: screen.width * 0.25,
+              borderRadius: 8,
+              flexDirection: 'row-reverse',
+              justifyContent: 'flex-start',
+              overflow: 'hidden',
+              gap: 15
+            }}>
+              <ShimmerPlaceHolder
+                style={{
+                  position: 'absolute',
+                  width: "100%",
                   height: '100%',
-                  paddingHorizontal: 10,
-                  paddingVertical: 10,
-                  flex: 1,
-                },
-              ]}
-            >
-              <Text
-                style={{
-                  fontFamily: 'Cairo-Bold',
-                  color: colors.text.primary,
-                  fontSize: 16,
+                  borderRadius: 8,
                 }}
-              >
-                {contentItems[0]?.label}
-              </Text>
-              <Text
+                shimmerColors={[
+                  colors.secondary,
+                  '#6161617c',
+                  colors.secondary,
+                ]}
+              />
+              <View
                 style={{
-                  fontFamily: 'Cairo',
-
-                  color: colors.text.secondary,
-                  fontSize: 14,
+                  width: screen.width * 0.22,
+                  height: screen.width * 0.22,
+                  marginRight: 10,
+                  borderRadius: 8,
+                  backgroundColor: colors.primary,
                 }}
-              >
-                {contentItems[0]?.length} {contentItems[0]?.sub}
-              </Text>
+              />
               <View style={{
-                flexDirection: "row",
-                justifyContent: 'center',
-                alignItems: "center",
-                width: '100%',
-
+                width: "100%",
+                height: screen.width * 0.22,
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                justifyContent: "space-evenly"
               }}>
-                <View style={{
-                  width: '100%',
-                  height: 10,
-                  backgroundColor: colors.text.secondary,
-                  borderRadius: 10,
-                  flexDirection: "row-reverse",
-                  justifyContent: 'flex-start',
-                  alignItems: "center",
-                  overflow: 'hidden'
-                }}>
-                  <View style={{
-                    width: '5%',
-                    height: '100%',
-                    backgroundColor: 'green',
-                    borderRadius: 10,
-                    borderTopEndRadius: 0,
-                    borderBottomRightRadius: 0,
-
-                  }} />
-
-                </View>
+                <View
+                  style={{
+                    backgroundColor: colors.primary,
+                    width: "50%",
+                    height: 30,
+                  }}
+                />
+                <View
+                  style={{
+                    backgroundColor: colors.primary,
+                    width: "30%",
+                    height: 20,
+                  }}
+                />
+                <View
+                  style={{
+                    backgroundColor: colors.primary,
+                    width: "60%",
+                    height: 10,
+                  }}
+                />
               </View>
-
             </View>
-            <View
+            :
+            <Pressable
+              android_ripple={{
+                borderless: false,
+                color: colors.secondary,
+                foreground: true,
+              }}
+              onPress={() => navigation.navigate('MainTabs', { screen: 'Exams' })}
               style={[
                 {
                   alignItems: 'center',
+                  backgroundColor: colors.secondary,
+                  elevation: 3, width: '90%',
+                  height: screen.width * 0.25,
+
+                  borderRadius: 8,
+                  flexDirection: 'row',
                   justifyContent: 'center',
-                  height: '100%',
-                  width: screen.width * 0.25,
                   overflow: 'hidden',
-                  padding: 0,
-                  borderRadius: 0,
                 },
               ]}
             >
-              {contentItems[0]?.img ? (
-                <Image
-                  style={{
-                    width: '85%',
-                    height: '85%',
-                    borderRadius: 8,
-                    resizeMode: 'cover',
-                  }}
-                  source={{ uri: contentItems[0]?.img }}
-                />
-              ) : (
-                <ShimmerPlaceHolder
-                  style={{ width: '100%', height: '100%' }}
-                  shimmerColors={[
-                    colors.secondary,
-                    '#6161617c',
-                    colors.secondary,
-                  ]}
-                />
-              )}
-            </View>
-          </Pressable>
-          {contentItems.map((item: any, index: number) => {
 
+              <View
+                style={[
+                  {
+                    alignItems: 'flex-end',
+                    justifyContent: 'center',
+                    backgroundColor: 'transparent',
+                    width: '100%',
+                    height: '100%',
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                    flex: 1,
+                  },
+                ]}
+              >
+                <Text
+                  style={{
+                    fontFamily: 'Cairo-Bold',
+                    color: colors.text.primary,
+                    fontSize: 16,
+                  }}
+                >
+                  {contentItems[0]?.label}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Cairo',
+
+                    color: colors.text.secondary,
+                    fontSize: 14,
+                  }}
+                >
+                  {contentItems[0]?.length} {contentItems[0]?.sub}
+                </Text>
+                <View style={{
+                  flexDirection: "row",
+                  justifyContent: 'center',
+                  alignItems: "center",
+                  width: '100%',
+
+                }}>
+                  <View style={{
+                    width: '100%',
+                    height: 10,
+                    backgroundColor: colors.text.secondary,
+                    borderRadius: 10,
+                    flexDirection: "row-reverse",
+                    justifyContent: 'flex-start',
+                    alignItems: "center",
+                    overflow: 'hidden'
+                  }}>
+                    <View style={{
+                      width: '5%',
+                      height: '100%',
+                      backgroundColor: 'green',
+                      borderRadius: 10,
+                      borderTopEndRadius: 0,
+                      borderBottomRightRadius: 0,
+
+                    }} />
+
+                  </View>
+                </View>
+
+              </View>
+              <View
+                style={[
+                  {
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100%',
+                    width: screen.width * 0.25,
+                    overflow: 'hidden',
+                    padding: 0,
+                    borderRadius: 0,
+                  },
+                ]}
+              >
+                {contentItems[0]?.img ? (
+                  <Image
+                    style={{
+                      width: '85%',
+                      height: '85%',
+                      borderRadius: 8,
+                      resizeMode: 'cover',
+                    }}
+                    source={{ uri: contentItems[0]?.img }}
+                  />
+                ) : (
+                  <ShimmerPlaceHolder
+                    style={{ width: '100%', height: '100%' }}
+                    shimmerColors={[
+                      colors.secondary,
+                      '#6161617c',
+                      colors.secondary,
+                    ]}
+                  />
+                )}
+              </View>
+            </Pressable>}
+          {contentItems.map((item: any, index: number) => {
             if (index === 0) return null;
+            if (!firebaseLoaded) {
+              return (
+                <View style={{
+                  alignItems: 'center',
+                  backgroundColor: 'transparent',
+                  width: '90%',
+                  height: screen.width * 0.25,
+                  borderRadius: 8,
+                  flexDirection: 'row-reverse',
+                  justifyContent: 'flex-start',
+                  overflow: 'hidden',
+                  padding: 10,
+                  gap: 15
+                }}>
+                  <ShimmerPlaceHolder
+                    key={`shimmer-${index}`}
+                    style={{
+                      width: screen.width * 0.22,
+                      height: screen.width * 0.22,
+                      borderRadius: 8,
+                    }}
+                    shimmerColors={[
+                      colors.secondary,
+                      '#6161617c',
+                      colors.secondary,
+                    ]}
+                  />
+                  <View style={{
+                    width: "100%",
+                    height: screen.width * 0.22,
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
+                    justifyContent: "space-evenly"
+                  }}>
+                    <ShimmerPlaceHolder
+                      style={{
+                        width: "50%",
+                        height: 30,
+                      }}
+                      shimmerColors={[
+                        colors.secondary,
+                        '#6161617c',
+                        colors.secondary,
+                      ]}
+                    />
+                    <ShimmerPlaceHolder
+                      style={{
+                        width: "30%",
+                        height: 20,
+                      }}
+                      shimmerColors={[
+                        colors.secondary,
+                        '#6161617c',
+                        colors.secondary,
+                      ]}
+                    />
+                  </View>
+                </View>)
+            }
             return (
               <Pressable
                 android_ripple={{
@@ -538,8 +674,6 @@ export default function Home() {
                       flexDirection: "row",
                       justifyContent: 'center',
                       alignItems: "center",
-
-
                     }}>
                       <View style={{
                         width: '90%',
@@ -651,6 +785,23 @@ export default function Home() {
           }}
         >
           {extSources.map((item: any, index: number) => {
+            if (!firebaseLoaded) {
+              return (
+                <ShimmerPlaceHolder
+                  key={`shimmer-${index}`}
+                  style={{
+                    width: '100%',
+                    height: screen.width * 0.25,
+                    borderRadius: 8,
+                  }}
+                  shimmerColors={[
+                    colors.secondary,
+                    '#6161617c',
+                    colors.secondary,
+                  ]}
+                />)
+            }
+            if (!lessonsData) return;
             return (
               <Pressable
                 android_ripple={{

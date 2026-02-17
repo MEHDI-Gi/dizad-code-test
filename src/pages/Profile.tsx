@@ -801,8 +801,6 @@ const Profile = () => {
             press={() => {
               if (user) {
                 handleLogout(navigation);
-              } else {
-                logoutFun();
               }
             }}
           />

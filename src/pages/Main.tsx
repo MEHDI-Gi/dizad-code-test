@@ -45,7 +45,7 @@ export default function Main() {
         vipPlansCard,
         statisticsCard,
         snackOptions,
-
+        user
     } = useContext(DataContext);
 
     const [adLoaded, setAdLoaded] = useState<boolean>(false);
@@ -65,6 +65,7 @@ export default function Main() {
     }, []);
 
     if (splash) return <SplashScreen />;
+
 
     return (
         <View style={[styles.container, {

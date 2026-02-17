@@ -1,5 +1,5 @@
 // navigation/TopTabs.tsx
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import Home from '../pages/Home';
@@ -7,7 +7,10 @@ import BottomTab from '../components/elements/BottomTab';
 import Bookmarks from './Bookmarks';
 import Exams from './Exams';
 import Lessons from './Lessons';
-import { NavigatorScreenParams } from '@react-navigation/native';
+import { NavigatorScreenParams, useNavigation } from '@react-navigation/native';
+import { DataContext } from '../context/contextData';
+import { useColors } from '../hooks/useColors';
+import { ActivityIndicator, View } from 'react-native';
 
 
 
@@ -15,6 +18,33 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 const Tab = createMaterialTopTabNavigator<any>();
 
 export function MainTabs() {
+    const navigation = useNavigation<any>();
+    const colors = useColors();
+
+    const {
+        freeCard,
+        vipCard,
+        vipPlansCard,
+        statisticsCard,
+        snackOptions,
+        handleLogout,
+        user
+    } = useContext(DataContext);
+
+    useEffect(() => {
+        if (!user) {
+            handleLogout(navigation)
+        }
+    }, []);
+
+    if (!user) {
+        return (
+            <View style={[{ flex: 1, zIndex: 9, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
+                <ActivityIndicator size={30} color={'#1eff00'} />
+            </View>
+        )
+    }
+
     return (
         <Tab.Navigator
             tabBar={(props) => <BottomTab {...props} />}

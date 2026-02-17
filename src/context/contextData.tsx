@@ -7,7 +7,6 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
-import { AppState, Vibration, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAsyncStorageState } from '../hooks/useAsyncStorageState';
 import Sound from 'react-native-sound';
@@ -65,12 +64,10 @@ const DataProvider = ({ children }: DataProviderProps) => {
     'dark',
   );
 
-  // --- 1. TYPE DEFINITIONS ---
-  // Define what a tracked item looks like now (with viewCount)
   interface AccuracyItem {
     id: string;
     viewCount: number;
-    timestamp: number | object; // Accepts number (local) or object (serverTimestamp)
+    timestamp: number | object;
   }
 
   type CategoryAccuracyProgress = Record<string, AccuracyItem>;
@@ -80,19 +77,11 @@ const DataProvider = ({ children }: DataProviderProps) => {
     priority: CategoryAccuracyProgress;
   };
 
-  // --- INSIDE YOUR COMPONENT OR HOOK ---
-
-  // 2. STATE INITIALIZATION
   const [accuracyProgress, setAccuracyProgress] = useState<AccuracyProgState>({
     signs: {},
     questions: {},
     priority: {},
   });
-
-  // 3. THE VIEW INCREMENT FUNCTION
-  // 1. Add this ref inside your component/provider to track current session views
-  // Only change if user or DB changes
-
 
   type CategoryBookmarks = Record<string, BookmarkItem>;
   type BookmarksState = {
@@ -119,9 +108,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
   // const [usersLoaded, setUsersLoaded] = useState<boolean>(false);
   const [userLoaded, setUserLoaded] = useState<boolean>(false);
 
-  const [globalQuestionsLength, setGobalQuestionsLength] = useState<
-    number | null
-  >(null);
 
   useFirebaseData(user, {
     setLessonsData,
@@ -574,7 +560,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
       user, initializing, signIn, logout,
       bookmarkLoading,
       setBookmarkLoading,
-      globalQuestionsLength,
       dataAsync,
       isLogout,
       setIsLogout,

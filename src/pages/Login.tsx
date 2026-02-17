@@ -1,23 +1,14 @@
-import { TouchableWithoutFeedback, Alert, Keyboard, ActivityIndicator, Text, Image, TouchableOpacity, StyleSheet, View, Pressable } from 'react-native';
-import { TextInput, Button, IconButton, MD3Colors, Icon, Snackbar as SnackBarPaper, } from 'react-native-paper';
-import Snackbar from 'react-native-snackbar';
-import { launchImageLibrary, Asset } from 'react-native-image-picker';
-import RNFS from 'react-native-fs';
-
+import { TouchableWithoutFeedback, FlatList, Alert, Keyboard, ActivityIndicator, Text, Image, TouchableOpacity, StyleSheet, View, Pressable, ScrollView, ListRenderItemInfo } from 'react-native';
 import { DataContext } from '../context/contextData';
-import React, { useRef, useState, useContext, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useRef, useState, useContext, useEffect, useCallback } from 'react';
 
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import LinearGradient from 'react-native-linear-gradient';
-import { useGoogleSignIn } from '../context/auth.ts';
-import { ref, set, update } from '@react-native-firebase/database';
-import { database } from '../context/firebaseConfig.js';
 import { useColors } from '../hooks/useColors.ts';
+import { useSize } from '../hooks/useSize.ts';
+import CopyrightsFooter from '../components/CopyrightsFooter.tsx';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 type LoginProps = {
   navigation: any;
@@ -26,119 +17,34 @@ export default function Login({ navigation }: LoginProps) {
 
   const colors = useColors();
   const {
-    currentTheme,
-    userName, setUserName,
-    isPicAdd, setIsPicAdd, language,
-    userImage, setUserImage, sound, playSound, setLoadScreen,
-    isGradient, isAccountDeleted, setIsAccountDeleted, texts,
-    setUserOnline,
-    userAccuracy, userPlan,
-    handleLogout,
-    isLogout, setIsLogout, firebaseData,
-    user, initializing, signIn, logout,
-    firebaseLoaded
+    user, initializing, signIn,
+    imgBase,
   } = useContext(DataContext);
+  const { screen } = useSize();
+
+
   const [isAuthProcessing, setIsAuthProcessing] = useState(false);
-  const [isInpFocused, setIsInpFocused] = useState(false);
-
-  const loginInputRef = useRef<any>(null);
-
-
-  const allowedUserName = /^(?=.{3,15}$)(?!.* {3})[A-Za-zأ-ي0-9]+( [A-Za-zأ-ي0-9]+){0,2}$/;
-  const [isValidUserName, setIsValidUserName] = useState(true);
-
-  const [inputUserName, setInputUserName] = useState('')
 
   const title = 'رخصتي';
   const sub = 'تعليم قوانين المرور الجزائرية'
 
-  const handleChange = (text: string) => {
-    setInputUserName(text);
-    console.log()
-    if (text.length === 0) {
-      setIsValidUserName(true);
-    } else if (text.length > 3) {
-      setIsValidUserName(allowedUserName.test(text));
-    } else {
-      setIsValidUserName(false);
-    }
-  };
-
-  const [isPickErr, setIsPickErr] = useState(false)
-
-  const pickImage = async () => {
-    const result = await launchImageLibrary({
-      mediaType: 'photo',
-      includeBase64: false,
-      quality: 1,
-      selectionLimit: 1,
-    });
-
-    if (result.didCancel) {
-      setIsPickErr(true);
-      return;
-    }
-
-    const asset: Asset | undefined = result.assets && result.assets[0];
-    if (!asset || !asset.uri) {
-      setIsPickErr(true);
-      return;
-    }
-
-    const uri = asset.uri;
-    setUserImage(uri);
-    AsyncStorage.setItem('guestUserName', uri).catch(console.error);
-
-    saveImage(uri);
-    setIsPicAdd(true);
-  };
-
-
-  const saveImage = async (uri: string) => {
-    try {
-      const filename =
-        uri.split('/').pop() || `img_${Date.now().toString()}.jpg`;
-
-      const destPath = `${RNFS.DocumentDirectoryPath}/${filename}`;
-
-      await RNFS.copyFile(uri, destPath);
-
-      console.log('Image saved successfully!', `Saved at: ${destPath}`);
-    } catch (error) {
-      console.error('Error saving image:', error);
-    }
-  };
-
-
-  function loginTrue() {
-    if (inputUserName.length > 3 && isValidUserName) {
-      setUserName(inputUserName)
-      AsyncStorage.setItem('guestUserName', inputUserName).catch(console.error);
-      navigation.navigate('MainTabs')
-      console.log(`your user name is ${userName}`)
-      if (sound) playSound('welcomeIntro')
-
-    } else {
-      loginInputRef?.current?.focus()
-    }
-  };
-
+  const questCover = `${imgBase}/cover/qst.png`;
+  const examsCover = `${imgBase}/cover/exm.png`;
+  const priorityCover = `${imgBase}/priority/L1/0.jpg`;
+  const signsCover = `${imgBase}/cover/sgn.png`;
 
   const handleGoogleSignIn = async () => {
     setIsAuthProcessing(true);
     try {
       await signIn();
-      // We don't wait for navigation here. 
-      // Once this finishes, 'user' will update, causing the UI to change.
     } catch (error) {
       console.error("Sign In Failed", error);
     } finally {
-      setIsAuthProcessing(false); // ✅ ALWAYS stop the button spinner
+      setIsAuthProcessing(false);
     }
   };
 
   useEffect(() => {
-    // We only act if initializing is finished
     if (initializing) return;
 
     if (user) {
@@ -150,6 +56,82 @@ export default function Login({ navigation }: LoginProps) {
     }
   }, [user, initializing]); // Only depend on these two
 
+
+  const contentItems = [
+    {
+      cond: 'Exm',
+      label: 'إمتحان',
+      img: examsCover ?? null,
+      sub: '',
+      icon: 'graduation-cap', set: 'Entypo'
+    },
+    {
+      cond: 'Sgn',
+      label: 'إشارات',
+      img: signsCover ?? null,
+      sub: '',
+      icon: 'trail-sign', set: 'Ionicons'
+
+    },
+    {
+      cond: 'Qst',
+      label: 'أسئلة',
+      img: questCover ?? null,
+      sub: '',
+      icon: 'card-text', set: 'MaterialCommunityIcons'
+
+    },
+    {
+      cond: 'Pri',
+      label: 'أولوية',
+      img: priorityCover ?? null,
+      sub: '',
+      icon: 'road-variant', set: 'MaterialCommunityIcons'
+
+    }
+  ];
+
+  const flatListRef = useRef<FlatList>(null);
+  const dataWithClones = [
+    contentItems[contentItems.length - 1],
+    ...contentItems,
+    contentItems[0]
+  ];
+  const [visualIndex, setVisualIndex] = useState(1);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextIndex = visualIndex + 1;
+
+      flatListRef.current?.scrollToIndex({
+        index: nextIndex,
+        animated: true,
+      });
+
+      setVisualIndex(nextIndex);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [visualIndex]);
+
+  const handleMomentumEnd = (event: any) => {
+    const offset = event.nativeEvent.contentOffset.x;
+    const index = Math.round(offset / screen.width);
+
+    // If we scrolled forward into the "Clone of First" at the very end
+    if (index === dataWithClones.length - 1) {
+      // Jump to the REAL first item (Index 1) INSTANTLY
+      flatListRef.current?.scrollToIndex({ index: 1, animated: false });
+      setVisualIndex(1);
+    }
+    // If user swiped backward into the "Clone of Last" at the start
+    else if (index === 0) {
+      flatListRef.current?.scrollToIndex({ index: contentItems.length, animated: false });
+      setVisualIndex(contentItems.length);
+    } else {
+      setVisualIndex(index);
+    }
+  };
 
   if (user || initializing) {
     return (
@@ -163,189 +145,138 @@ export default function Login({ navigation }: LoginProps) {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={[styles.container, { backgroundColor: colors.primary }]}>
         <View style={{
-          position: 'absolute',
-          top: 0,
-          flexDirection: 'column',
-          width: "85%",
-          height: 100,
+          width: "100%",
+          flex: 0.3,
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: 'transparent',
           zIndex: 1,
-          rowGap: 8,
+          borderBottomStartRadius: 50,
+          overflow: 'hidden'
         }}>
-          <Text style={{
-            fontFamily: 'Cairo-Bold',
-            color: colors.button.primary,
-            fontSize: 20,
-
-          }}>{title}</Text>
+          <FlatList
+            ref={flatListRef}
+            data={dataWithClones}
+            horizontal
+            pagingEnabled
+            initialScrollIndex={1} // Start at the real first item
+            onMomentumScrollEnd={handleMomentumEnd}
+            getItemLayout={(_, index) => ({
+              length: screen.width,
+              offset: screen.width * index,
+              index,
+            })}
+            onScrollToIndexFailed={() => { }} // Prevents the crash in your screenshot
+            renderItem={({ item }) => (
+              <View style={{ width: screen.width }}>
+                <Image source={{ uri: item?.img }} style={{ width: '100%', height: "100%" }}
+                  resizeMode="cover" />
+              </View>
+            )}
+          />
         </View>
-        <View style={styles.main}>
+        <View style={{
+          backgroundColor: colors.primary,
+          flex: 1,
+          width: "100%",
+          justifyContent: 'center',
+          alignItems: "center",
+          position: 'relative',
+          paddingHorizontal: 40,
+          paddingVertical: 20,
+          zIndex: 1,
+        }}>
+          <View style={{
+            flexDirection: 'column',
+            width: "100%",
+
+            flex: 0.3,
+            justifyContent: "flex-start",
+            alignItems: "flex-end",
+            backgroundColor: 'transparent',
+            zIndex: 1,
+            rowGap: 10,
+          }}>
+            <Text style={{
+              fontFamily: 'Cairo-Bold',
+              color: colors.button.primary,
+              fontSize: 25,
+            }}>{title}</Text>
+            <Text style={{
+              fontFamily: 'Cairo-Medium',
+              color: colors.text.secondary,
+              fontSize: 20,
+            }}>{sub}</Text>
+          </View>
+          <View style={{
+            flexDirection: 'column',
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "flex-end",
+            backgroundColor: 'transparent',
+            zIndex: 1,
+            rowGap: 10,
+          }}>
+            {contentItems.map((item, index) => (
+              <View style={[{
+                flexDirection: 'row',
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: 'transparent',
+                zIndex: 1,
+                columnGap: 10,
+                opacity: 0.5,
+              }, index === visualIndex - 1 && {
+                opacity: 1,
+                paddingRight: 8,
+              }]}>
+                <Text key={index} style={{
+                  fontFamily: 'Cairo-Medium',
+                  color: colors.text.primary,
+                  fontSize: 16,
+                }}>{item.label}</Text>
+                {
+                  item.set === 'MaterialCommunityIcons' ?
+                    <MaterialCommunityIcons
+                      name={item.icon}
+                      size={20}
+                      color={colors.text.primary}
+                    /> : item.set === 'Ionicons' ?
+                      <Ionicons
+                        name={item.icon}
+                        size={20}
+                        color={colors.text.primary}
+                      /> :
+                      <Entypo
+                        name={item.icon}
+                        size={20}
+                        color={colors.text.primary}
+                      />
+                }
+              </View>
+            ))}
+          </View>
           <View style={{
             width: '100%',
+            flex: 1,
+            backgroundColor: 'transparent',
+            flexDirection: "column",
             alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 10,
-            padding: 15
+            justifyContent: 'flex-end',
+            zIndex: 1,
+            gap: 15
           }}>
-            <View
-              style={{
-                width: "100%",
-                height: 50,
-                justifyContent: "center",
-                alignItems: "center"
-              }}>
-              {!isPicAdd ?
-                <Pressable
-                  disabled={user}
-
-                  android_ripple={{ foreground: true, color: colors.primary }}
-                  style={[styles.userPicAdd, {
-                    width: 45,
-                    height: 45,
-                  }]}
-                  onPress={pickImage}>
-                  <AntDesign
-                    name="plus"
-                    color={"black"}
-                    size={30} />
-                </Pressable> :
-
-                <TouchableOpacity onPress={pickImage}>
-                  {userImage && <Image style={[styles.userProfilePic, { zIndex: 9999, }]} source={{ uri: userImage }} />}
-                </TouchableOpacity>
-              }
-            </View>
-            <View style={styles.textInpArea}>
-              {!true &&
-                <View style={{
-                  zIndex: 99999,
-                  position: 'absolute',
-                  right: 8,
-                  top: -1,
-                  paddingVertical: 5,
-                  paddingHorizontal: 8,
-                  borderRadius: 10,
-                  borderEndEndRadius: 0,
-                  backgroundColor: 'lightgray',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <Text style={{ color: 'black', fontSize: 11, }}>you cant use this user name</Text>
-                </View>}
-              {!isValidUserName &&
-                <View style={{
-                  zIndex: 99999,
-                  position: 'absolute',
-                  right: 0,
-                  margin: 10,
-                  width: 40,
-                  height: 40,
-                  backgroundColor: 'transparent',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <MaterialCommunityIcons
-                    name='alert-box-outline'
-                    color={'#9f7070'}
-                    size={20}
-                  />
-                </View>}
-              <TextInput
-                ref={loginInputRef}
-                label={inputUserName ? "" : 'username'}
-                maxLength={15}
-                textColor={isInpFocused ? "lightgray" : "black"}
-                value={inputUserName}
-                onChangeText={handleChange}
-                mode="outlined"
-                outlineColor={isInpFocused ? "black" : "transparent"}
-                activeOutlineColor={isValidUserName ? "gray" : '#9f7070'}
-                style={[styles.userInput, { backgroundColor: isInpFocused ? colors.primary : "lightgray" }]}
-                onFocus={() => { setIsInpFocused(true) }}
-                onBlur={() => { setIsInpFocused(false) }}
-              />
-            </View>
-            <View style={styles.loginBtnArea}>
-              <Pressable
-                disabled={user}
-                android_ripple={{ foreground: true, color: colors.primary, borderless: false }}
-                style={[{
-                  borderRadius: 5,
-                  width: '95%',
-                  height: 38,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  overflow: 'hidden',
-                  backgroundColor: isValidUserName || user ? "#dba400" : "#dba40085",
-                }]}
-                onPress={() => {
-                  if (!user) { loginTrue() }
-                  else { navigation.navigate("Lessons") }
-                }}>
-                {isGradient && <LinearGradient
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    opacity: 0.5
-                  }}
-                  colors={[colors.primary, "#dba400"]}
-                />}
-                <MaterialIcons
-                  name="arrow-forward-ios"
-                  color={"black"}
-                  size={15}
-                />
-              </Pressable>
-            </View>
-          </View>
-
-          <View style={{
-            height: 25,
-            zIndex: 99,
-            backgroundColor: "transparent",
-            width: "85%",
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: "center",
-          }}>
-            <View style={{
-              backgroundColor: 'lightgray',
-              height: 0.5,
-              opacity: 0.4,
-              flex: 1,
-            }}>
-            </View>
-            <Text style={{
-              color: 'lightgray',
-              paddingHorizontal: 15,
-            }}>or continue with</Text>
-            <View style={{
-              backgroundColor: 'lightgray',
-              height: 0.5,
-              opacity: 0.4,
-              flex: 1,
-            }}>
-            </View>
-          </View>
-          <View style={styles.googleLoginArea}>
             <Pressable
               disabled={isAuthProcessing}
               style={[{
                 backgroundColor: colors.secondary,
                 flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'space-evenly',
                 borderRadius: 8,
                 overflow: 'hidden',
                 height: 50,
-                width: '85%'
+                width: '90%'
               }, { opacity: isAuthProcessing ? 0.7 : 1 }]}
               android_ripple={{ foreground: true, color: colors.primary, borderless: false }}
               onPress={handleGoogleSignIn}
@@ -359,13 +290,13 @@ export default function Login({ navigation }: LoginProps) {
                 <Image
                   source={require('../assets/icons/google.png')}
                   style={{
-                    width: 22,
-                    height: 22,
+                    width: 25,
+                    height: 25,
                   }}
                 />
 
               </View>
-              <View style={{
+              {/* <View style={{
                 height: "100%",
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -374,14 +305,18 @@ export default function Login({ navigation }: LoginProps) {
                 {isAuthProcessing ? (
                   <ActivityIndicator color="blue" /> // Or your theme color
                 ) : (
-                  <Text style={{ fontSize: 15, fontWeight: '600', color: '#ffffff' }}>
-                    Continue with Google
+                  <Text style={{ fontSize: 18, fontWeight: '600', color: '#ffffff' }}>
+                  Continue with Google
                   </Text>
-                )}
-              </View>
+                  )}
+                  </View> */}
             </Pressable>
+            <Text style={{ fontSize: 15, fontWeight: '600', color: '#8b8b8b' }}>
+              Continue with Google
+            </Text>
           </View>
         </View>
+        <CopyrightsFooter />
       </View>
     </TouchableWithoutFeedback>
   )

@@ -37,7 +37,7 @@ export const useUserAccuracy = () => {
         const calculatedAccuracy = globalItems > 0
             ? (globalViewedItems / globalItems) * 100
             : 0;
-        const finalValue = calculatedAccuracy.toFixed(2);
+        const finalValue = calculatedAccuracy.toFixed(1);
 
         if (userAccuracy !== finalValue) {
             setUserAccuracy(finalValue);

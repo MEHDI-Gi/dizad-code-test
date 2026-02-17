@@ -194,26 +194,6 @@ export default function Questions() {
                             },
                         ]}
                     >
-                        {/* <View
-                            style={[{
-                                paddingHorizontal: 10,
-                                paddingVertical: 10,
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                overflow: 'hidden',
-                                borderRadius: 10,
-                                zIndex: 1,
-                                // backgroundColor: sideColors(index),
-                            },]}
-                        >
-                            <Text style={{
-                                color: sideColors(index),
-                                fontSize: 18,
-                            }}>
-                                {index + 1}
-                            </Text>
-                        </View> */}
                         <View
                             style={[
                                 {
@@ -364,7 +344,6 @@ export default function Questions() {
                                             />
                                         ) : null}
 
-                                        {/* LABEL OVERLAY */}
                                         {item?.label && (
                                             <View style={{
                                                 position: 'absolute',
@@ -378,12 +357,12 @@ export default function Questions() {
                                             }}>
                                                 <View style={{
                                                     position: 'absolute',
-                                                    bottom: 0,                 // <- ADD THIS  
-                                                    left: 0,                   // <- ADD THIS
+                                                    bottom: 0,
+                                                    left: 0,
                                                     right: 0,
                                                     top: 0,
                                                     backgroundColor: colors.opacity.primary,
-                                                    opacity: 1
+                                                    opacity: 0.5
                                                 }} />
                                                 <Text style={{
                                                     fontFamily: 'Cairo',
@@ -402,12 +381,12 @@ export default function Questions() {
                                     <ScrollView
                                         style={{
                                             width: '100%',
-                                            paddingHorizontal: 15,
                                             flex: 1,
                                         }}
                                         contentContainerStyle={{
+                                            paddingHorizontal: 15,
+                                            paddingBottom: 70,
                                             gap: 4,
-                                            paddingVertical: 0,  // Add top/bottom padding
                                             justifyContent: 'flex-start',
                                             alignItems: 'center',
                                         }}
