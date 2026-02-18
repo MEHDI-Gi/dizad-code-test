@@ -9,6 +9,7 @@ import { useColors } from '../hooks/useColors.ts';
 import { useSize } from '../hooks/useSize.ts';
 import CopyrightsFooter from '../components/CopyrightsFooter.tsx';
 import Entypo from 'react-native-vector-icons/Entypo';
+import LinearGradient from 'react-native-linear-gradient';
 
 type LoginProps = {
   navigation: any;
@@ -145,15 +146,15 @@ export default function Login({ navigation }: LoginProps) {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={[styles.container, { backgroundColor: colors.primary }]}>
         <View style={{
-          width: "100%",
-          flex: 0.3,
+          width: screen.width,
+          height: screen.width * 0.7,
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: 'transparent',
           zIndex: 1,
-          borderBottomStartRadius: 50,
           overflow: 'hidden'
         }}>
+
           <FlatList
             ref={flatListRef}
             data={dataWithClones}
@@ -175,6 +176,47 @@ export default function Login({ navigation }: LoginProps) {
             )}
           />
         </View>
+
+        <View style={{
+          flexDirection: 'column',
+          width: "100%",
+          zIndex: 10,
+          padding: 20,
+          justifyContent: "flex-end",
+          alignItems: "flex-end",
+          backgroundColor: colors.primary,
+          rowGap: 10,
+          borderBottomStartRadius: 50,
+          overflow: 'hidden'
+        }}>
+          <LinearGradient
+            colors={['#00ffff', colors.primary]}
+            start={{ x: 2, y: 0 }}
+            end={{ x: 0, y: 3 }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: 1,
+              opacity: 0.2
+            }}
+          />
+          <Text style={{
+            fontFamily: 'Cairo-Bold',
+            color: colors.button.primary,
+            fontSize: 25,
+            zIndex: 3,
+
+          }}>{title}</Text>
+          <Text style={{
+            fontFamily: 'Cairo-Medium',
+            color: colors.text.primary,
+            fontSize: 20,
+            zIndex: 3,
+          }}>{sub}</Text>
+        </View>
         <View style={{
           backgroundColor: colors.primary,
           flex: 1,
@@ -186,28 +228,7 @@ export default function Login({ navigation }: LoginProps) {
           paddingVertical: 20,
           zIndex: 1,
         }}>
-          <View style={{
-            flexDirection: 'column',
-            width: "100%",
 
-            flex: 0.3,
-            justifyContent: "flex-start",
-            alignItems: "flex-end",
-            backgroundColor: 'transparent',
-            zIndex: 1,
-            rowGap: 10,
-          }}>
-            <Text style={{
-              fontFamily: 'Cairo-Bold',
-              color: colors.button.primary,
-              fontSize: 25,
-            }}>{title}</Text>
-            <Text style={{
-              fontFamily: 'Cairo-Medium',
-              color: colors.text.secondary,
-              fontSize: 20,
-            }}>{sub}</Text>
-          </View>
           <View style={{
             flexDirection: 'column',
             width: "100%",
@@ -231,9 +252,9 @@ export default function Login({ navigation }: LoginProps) {
                 paddingRight: 8,
               }]}>
                 <Text key={index} style={{
-                  fontFamily: 'Cairo-Medium',
+                  fontFamily: 'Cairo-Bold',
                   color: colors.text.primary,
-                  fontSize: 16,
+                  fontSize: 18,
                 }}>{item.label}</Text>
                 {
                   item.set === 'MaterialCommunityIcons' ?
@@ -287,29 +308,16 @@ export default function Login({ navigation }: LoginProps) {
                 alignItems: 'center',
                 justifyContent: 'center'
               }}>
-                <Image
-                  source={require('../assets/icons/google.png')}
-                  style={{
-                    width: 25,
-                    height: 25,
-                  }}
-                />
-
+                {!isAuthProcessing ?
+                  <Image
+                    source={require('../assets/icons/google.png')}
+                    style={{
+                      width: 25,
+                      height: 25,
+                    }}
+                  /> :
+                  <ActivityIndicator color="#ffffff" />}
               </View>
-              {/* <View style={{
-                height: "100%",
-                alignItems: 'center',
-                justifyContent: 'center',
-                paddingRight: 15
-              }}>
-                {isAuthProcessing ? (
-                  <ActivityIndicator color="blue" /> // Or your theme color
-                ) : (
-                  <Text style={{ fontSize: 18, fontWeight: '600', color: '#ffffff' }}>
-                  Continue with Google
-                  </Text>
-                  )}
-                  </View> */}
             </Pressable>
             <Text style={{ fontSize: 15, fontWeight: '600', color: '#8b8b8b' }}>
               Continue with Google
