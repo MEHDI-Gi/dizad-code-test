@@ -19,7 +19,6 @@ const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 import { useSize } from '../hooks/useSize.ts';
 import { useGoogleSignIn } from '../context/auth';
 import BottomTab from '../components/elements/BottomTab.tsx';
-import FastImage from '@d11/react-native-fast-image';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useColors } from '../hooks/useColors.ts';
 import { useVip } from '../hooks/useVip.ts';
@@ -186,13 +185,13 @@ export default function Priority() {
                                             overflow: 'hidden',
                                         }]}>
                                         {item?.img ?
-                                            <FastImage
+                                            <Image
                                                 style={{
                                                     width: '100%',
                                                     height: '100%',
                                                 }}
-                                                source={{ uri: item?.img, priority: FastImage.priority.normal }}
-                                                resizeMode={FastImage.resizeMode.cover}
+                                                source={{ uri: item?.img }}
+                                                resizeMode={"cover"}
                                             />
                                             :
                                             <ShimmerPlaceHolder

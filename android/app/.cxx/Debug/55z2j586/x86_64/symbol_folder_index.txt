@@ -1,0 +1,1 @@
+/home/mehdi/Desktop/dizad-code-test/android/app/build/intermediates/cxx/Debug/55z2j586/obj/x86_64

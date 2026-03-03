@@ -26,7 +26,6 @@ import {
     useNavigationState,
     useRoute,
 } from '@react-navigation/native';
-import FastImage from '@d11/react-native-fast-image';
 import { rotationHandlerName } from 'react-native-gesture-handler/lib/typescript/handlers/RotationGestureHandler';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import Orientation from 'react-native-orientation-locker';
