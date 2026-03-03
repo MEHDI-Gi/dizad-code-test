@@ -21,7 +21,7 @@ export default function Login({ navigation }: LoginProps) {
     user, initializing, signIn,
     imgBase,
   } = useContext(DataContext);
-  const { screen } = useSize();
+  const { screen, isMEDscreen } = useSize();
 
 
   const [isAuthProcessing, setIsAuthProcessing] = useState(false);
@@ -134,6 +134,8 @@ export default function Login({ navigation }: LoginProps) {
     }
   };
 
+  const iconsSizes = isMEDscreen ? 15 : 20;
+
   if (user || initializing) {
     return (
       <View style={[{ flex: 1, justifyContent: 'center', alignItems: 'center' }, { backgroundColor: colors.primary }]}>
@@ -147,14 +149,13 @@ export default function Login({ navigation }: LoginProps) {
       <View style={[styles.container, { backgroundColor: colors.primary }]}>
         <View style={{
           width: screen.width,
-          height: screen.width * 0.7,
+          height: screen.width * 0.5,
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: 'transparent',
           zIndex: 1,
           overflow: 'hidden'
         }}>
-
           <FlatList
             ref={flatListRef}
             data={dataWithClones}
@@ -181,7 +182,8 @@ export default function Login({ navigation }: LoginProps) {
           flexDirection: 'column',
           width: "100%",
           zIndex: 10,
-          padding: 20,
+          paddingHorizontal: 20,
+          paddingVertical: isMEDscreen ? 10 : 20,
           justifyContent: "flex-end",
           alignItems: "flex-end",
           backgroundColor: colors.primary,
@@ -206,14 +208,14 @@ export default function Login({ navigation }: LoginProps) {
           <Text style={{
             fontFamily: 'Cairo-Bold',
             color: colors.button.primary,
-            fontSize: 25,
+            fontSize: isMEDscreen ? 20 : 25,
             zIndex: 3,
 
           }}>{title}</Text>
           <Text style={{
             fontFamily: 'Cairo-Medium',
             color: colors.text.primary,
-            fontSize: 20,
+            fontSize: isMEDscreen ? 15 : 20,
             zIndex: 3,
           }}>{sub}</Text>
         </View>
@@ -254,23 +256,23 @@ export default function Login({ navigation }: LoginProps) {
                 <Text key={index} style={{
                   fontFamily: 'Cairo-Bold',
                   color: colors.text.primary,
-                  fontSize: 18,
+                  fontSize: isMEDscreen ? 15 : 18,
                 }}>{item.label}</Text>
                 {
                   item.set === 'MaterialCommunityIcons' ?
                     <MaterialCommunityIcons
                       name={item.icon}
-                      size={20}
+                      size={iconsSizes}
                       color={colors.text.primary}
                     /> : item.set === 'Ionicons' ?
                       <Ionicons
                         name={item.icon}
-                        size={20}
+                        size={iconsSizes}
                         color={colors.text.primary}
                       /> :
                       <Entypo
                         name={item.icon}
-                        size={20}
+                        size={iconsSizes}
                         color={colors.text.primary}
                       />
                 }
@@ -297,8 +299,12 @@ export default function Login({ navigation }: LoginProps) {
                 borderRadius: 8,
                 overflow: 'hidden',
                 height: 50,
-                width: '90%'
-              }, { opacity: isAuthProcessing ? 0.7 : 1 }]}
+                width: '100%'
+              }, { opacity: isAuthProcessing ? 0.7 : 1 },
+              isMEDscreen && {
+                width: "100%",
+                height: 45,
+              }]}
               android_ripple={{ foreground: true, color: colors.primary, borderless: false }}
               onPress={handleGoogleSignIn}
             >
@@ -311,15 +317,23 @@ export default function Login({ navigation }: LoginProps) {
                 {!isAuthProcessing ?
                   <Image
                     source={require('../assets/icons/google.png')}
-                    style={{
+                    style={[{
                       width: 25,
                       height: 25,
-                    }}
+                    }, isMEDscreen && {
+                      width: 20,
+                      height: 20,
+                    }]}
                   /> :
                   <ActivityIndicator color="#ffffff" />}
               </View>
             </Pressable>
-            <Text style={{ fontSize: 15, fontWeight: '600', color: '#8b8b8b' }}>
+            <Text style={[{
+              fontSize: 15, fontWeight: '600', color: '#8b8b8b'
+            }, isMEDscreen && {
+              fontSize: 12,
+            }
+            ]}>
               Continue with Google
             </Text>
           </View>

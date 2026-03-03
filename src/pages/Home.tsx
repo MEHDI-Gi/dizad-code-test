@@ -31,7 +31,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Home() {
-  const { screen } = useSize();
+  const { screen, isMEDscreen } = useSize();
   const { user } = useGoogleSignIn();
   const { userVip } = useVip();
   const { userAccuracy } = useUserAccuracy();
@@ -136,7 +136,6 @@ export default function Home() {
         break;
     }
   };
-
   const extSources = [
     {
       label:
@@ -178,11 +177,11 @@ export default function Home() {
           }}
         />
         <View style={[{
-          paddingHorizontal: 20,
+          paddingHorizontal: isMEDscreen ? 15 : 20,
           flexDirection: 'row',
           width: '100%',
 
-          height: 70,
+          height: isMEDscreen ? 60 : 70,
           justifyContent: 'space-between',
           alignItems: 'center',
           elevation: 3,
@@ -193,7 +192,7 @@ export default function Home() {
             alignItems: 'center',
             justifyContent: 'flex-start',
             flexDirection: 'row',
-            height: 50,
+            height: isMEDscreen ? 40 : 50,
             columnGap: 10,
             flex: 1,
           }}>
@@ -204,8 +203,8 @@ export default function Home() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: colors.secondary,
-                width: 38,
-                height: 38,
+                width: isMEDscreen ? 32 : 38,
+                height: isMEDscreen ? 32 : 38,
               }}
               onPress={() => {
                 if (sound) playSound('settingsButton');
@@ -223,7 +222,7 @@ export default function Home() {
               ) :
                 <MaterialCommunityIcons
                   name='account'
-                  size={35}
+                  size={isMEDscreen ? 25 : 35}
                   color={colors.text.primary}
                 />
 
@@ -234,7 +233,7 @@ export default function Home() {
               flexDirection: 'column',
               backgroundColor: 'transparent',
               alignItems: 'flex-start',
-              justifyContent: 'space-evenly',
+              justifyContent: 'space-between',
               flex: 1,
             }}>
               <View style={{
@@ -252,14 +251,14 @@ export default function Home() {
                     ]}
                   /> :
                   userName ? <Text style={{
-                    fontSize: 16,
+                    fontSize: isMEDscreen ? 13 : 16,
                     fontWeight: '500',
                     color: colors.text.primary,
                   }}>
                     {userName}
                   </Text> :
                     <Text style={{
-                      fontSize: 16,
+                      fontSize: isMEDscreen ? 13 : 16,
                       fontWeight: '500',
                       color: colors.text.primary,
                     }}>
@@ -277,7 +276,7 @@ export default function Home() {
                 {userAccuracy ?
                   <Text style={[{
                     color: colors.text.primary,
-                    fontSize: 13,
+                    fontSize: isMEDscreen ? 10 : 13,
                     textAlign: 'center',
                   }]}>
                     {userAccuracy}
@@ -293,7 +292,7 @@ export default function Home() {
                 }
                 <FontAwesome5
                   name='percentage'
-                  size={13}
+                  size={isMEDscreen ? 10 : 13}
                   color={colors.text.secondary}
                 />
               </View>
@@ -302,16 +301,16 @@ export default function Home() {
           {!userVip ?
             (<FreeBadge
               backColor={colors.secondary}
-              elevation={0}
-              height={28}
-              width={40}
+              elevation={3}
+              height={isMEDscreen ? 25 : 28}
+              width={isMEDscreen ? 40 : 45}
             />)
             :
             (<VipBadge
-              width={45}
-              height={28}
+              width={isMEDscreen ? 40 : 45}
+              height={isMEDscreen ? 25 : 28}
               title={false}
-              iconSize={15}
+              iconSize={isMEDscreen ? 12 : 15}
               iconColor={'#dba400'}
               radius={5}
               backColor={colors.secondary}
@@ -425,8 +424,7 @@ export default function Home() {
                   alignItems: 'center',
                   backgroundColor: colors.secondary,
                   elevation: 3, width: '90%',
-                  height: screen.width * 0.25,
-
+                  height: isMEDscreen ? screen.width * 0.22 : screen.width * 0.25,
                   borderRadius: 8,
                   flexDirection: 'row',
                   justifyContent: 'center',
@@ -453,7 +451,7 @@ export default function Home() {
                   style={{
                     fontFamily: 'Cairo-Bold',
                     color: colors.text.primary,
-                    fontSize: 16,
+                    fontSize: isMEDscreen ? 13 : 16,
                   }}
                 >
                   {contentItems[0]?.label}
@@ -463,7 +461,7 @@ export default function Home() {
                     fontFamily: 'Cairo',
 
                     color: colors.text.secondary,
-                    fontSize: 14,
+                    fontSize: isMEDscreen ? 12 : 14,
                   }}
                 >
                   {contentItems[0]?.length} {contentItems[0]?.sub}
@@ -476,8 +474,8 @@ export default function Home() {
 
                 }}>
                   <View style={{
-                    width: '100%',
-                    height: 10,
+                    width: '90%',
+                    height: isMEDscreen ? 5 : 8,
                     backgroundColor: colors.text.secondary,
                     borderRadius: 10,
                     flexDirection: "row-reverse",
@@ -505,7 +503,7 @@ export default function Home() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     height: '100%',
-                    width: screen.width * 0.25,
+                    width: isMEDscreen ? screen.width * 0.22 : screen.width * 0.25,
                     overflow: 'hidden',
                     padding: 0,
                     borderRadius: 0,
@@ -609,7 +607,7 @@ export default function Home() {
                     alignItems: 'center',
                     backgroundColor: 'transparent',
                     width: '90%',
-                    height: screen.width * 0.25,
+                    height: isMEDscreen ? screen.width * 0.22 : screen.width * 0.25,
 
                     borderRadius: 8,
                     flexDirection: 'row',
@@ -633,7 +631,7 @@ export default function Home() {
                   <SimpleLineIcons
                     name="arrow-left"
                     color={colors.text.secondary}
-                    size={10}
+                    size={isMEDscreen ? 8 : 10}
                   />
                 </View>
                 <View
@@ -654,7 +652,7 @@ export default function Home() {
                     style={{
                       fontFamily: 'Cairo-Bold',
                       color: colors.text.primary,
-                      fontSize: 16,
+                      fontSize: isMEDscreen ? 13 : 16,
                     }}
                   >
                     {item?.label}
@@ -664,40 +662,11 @@ export default function Home() {
                       fontFamily: 'Cairo',
 
                       color: colors.text.secondary,
-                      fontSize: 14,
+                      fontSize: isMEDscreen ? 12 : 14,
                     }}
                   >
                     {item?.length} {item?.sub}
                   </Text>
-                  {item.cond === 'Exm' &&
-                    <View style={{
-                      flexDirection: "row",
-                      justifyContent: 'center',
-                      alignItems: "center",
-                    }}>
-                      <View style={{
-                        width: '90%',
-                        height: 10,
-                        backgroundColor: colors.text.secondary,
-                        borderRadius: 10,
-                        flexDirection: "row-reverse",
-                        justifyContent: 'flex-start',
-                        alignItems: "center",
-                        overflow: 'hidden'
-                      }}>
-                        <View style={{
-                          width: '50%',
-                          height: '100%',
-                          backgroundColor: 'green',
-                          borderRadius: 10,
-                          borderTopEndRadius: 0,
-                          borderBottomRightRadius: 0,
-
-                        }} />
-
-                      </View>
-                    </View>
-                  }
                 </View>
                 <View
                   style={[
@@ -705,7 +674,7 @@ export default function Home() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       height: '100%',
-                      width: screen.width * 0.25,
+                      width: isMEDscreen ? screen.width * 0.22 : screen.width * 0.25,
                       overflow: 'hidden',
                       padding: 0,
                       borderRadius: 0,
@@ -757,7 +726,7 @@ export default function Home() {
             <MaterialCommunityIcons
               name="arrow-top-left"
               color={colors.text.secondary}
-              size={18}
+              size={isMEDscreen ? 14 : 18}
             />
           </View>
 
@@ -765,7 +734,7 @@ export default function Home() {
             style={{
               fontFamily: 'Cairo',
               color: colors.text.secondary,
-              fontSize: 16,
+              fontSize: isMEDscreen ? 13 : 16,
               textAlign: 'center',
             }}
           >
@@ -801,7 +770,6 @@ export default function Home() {
                   ]}
                 />)
             }
-            if (!lessonsData) return;
             return (
               <Pressable
                 android_ripple={{
@@ -820,11 +788,11 @@ export default function Home() {
                     alignItems: 'center',
                     backgroundColor: colors.secondary,
                     width: '100%',
-                    height: screen.width * 0.25,
+                    height: isMEDscreen ? screen.width * 0.22 : screen.width * 0.25,
                     borderRadius: 8,
                     flexDirection: 'row-reverse',
                     justifyContent: 'space-evenly',
-                    paddingHorizontal: 20,
+                    paddingHorizontal: isMEDscreen ? 15 : 20,
                     paddingVertical: 10,
                     overflow: 'hidden',
                     elevation: 5,
@@ -834,7 +802,7 @@ export default function Home() {
               >
                 <Image
                   style={{
-                    width: '35%',
+                    width: isMEDscreen ? screen.width * 0.20 : screen.width * 0.35,
                     height: '100%',
                     borderRadius: 10,
                     resizeMode: 'cover',

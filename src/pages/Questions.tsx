@@ -28,22 +28,9 @@ export default function Questions() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const { user, logout, initializing } = useGoogleSignIn();
-    const { lessons, screen } = useSize();
+    const { lessons, screen, isMEDscreen } = useSize();
     const colors = useColors();
     const {
-        signsData,
-        setSignsItemsIndex,
-        signsItemsIndex,
-        lessonPercentage,
-        lessonsCurrentLevelIndex,
-        signsDataLength,
-        setDataLevelIndex,
-        answerStats,
-        levelsRank, setLevelsRank,
-        quizCategoriesData,
-        userPlan,
-        sound, playSound, isGradient, texts, language,
-        isRewardAdd, setIsRewardAdd,
         lessonsData,
         toggleBookmark,
         isBookmarked,
@@ -212,7 +199,7 @@ export default function Questions() {
                                 fontFamily: "Cairo",
                                 textAlign: 'right',
                                 color: colors.text.primary,
-                                fontSize: 18,
+                                fontSize: isMEDscreen ? 15 : 18,
                             }}>
                                 {item.label}
                             </Text>
@@ -347,27 +334,35 @@ export default function Questions() {
                                         {item?.label && (
                                             <View style={{
                                                 position: 'absolute',
-                                                bottom: 8,
-                                                width: '95%',
+                                                bottom: 0,
+                                                width: '100%',
                                                 padding: 10,
                                                 borderRadius: 18,
+                                                borderBottomLeftRadius: 0,
+                                                borderBottomRightRadius: 0,
                                                 overflow: 'hidden',
-                                                backgroundColor: colors.opacity.primary,
+                                                backgroundColor: colors.primary,
 
                                             }}>
-                                                <View style={{
-                                                    position: 'absolute',
-                                                    bottom: 0,
-                                                    left: 0,
-                                                    right: 0,
-                                                    top: 0,
-                                                    backgroundColor: colors.opacity.primary,
-                                                    opacity: 0.5
-                                                }} />
+                                                <LinearGradient
+                                                    colors={['#00ffff', colors.primary]}
+                                                    start={{ x: 2, y: 0 }}
+                                                    end={{ x: 0, y: 3 }}
+                                                    style={{
+                                                        position: 'absolute',
+                                                        top: 0,
+                                                        left: 0,
+                                                        right: 0,
+                                                        bottom: 0,
+                                                        zIndex: 1,
+                                                        opacity: 0.2
+                                                    }}
+                                                />
+
                                                 <Text style={{
                                                     fontFamily: 'Cairo',
                                                     color: colors.text.primary,
-                                                    fontSize: 18,
+                                                    fontSize: isMEDscreen ? 15 : 18,
                                                     textAlign: 'center'
                                                 }}>
                                                     {item.label}
@@ -385,6 +380,7 @@ export default function Questions() {
                                         }}
                                         contentContainerStyle={{
                                             paddingHorizontal: 15,
+                                            paddingTop: 20,
                                             paddingBottom: 70,
                                             gap: 4,
                                             justifyContent: 'flex-start',
@@ -399,7 +395,7 @@ export default function Questions() {
                                                 style={{
                                                     fontFamily: 'Cairo-Bold',
                                                     color: colors.text.secondary,
-                                                    fontSize: 18,
+                                                    fontSize: isMEDscreen ? 15 : 18,
                                                     textAlign: 'right',
                                                     alignSelf: 'flex-end',
                                                     padding: 5,
@@ -455,8 +451,8 @@ export default function Questions() {
                                                 borderRadius: 8,
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
-                                                width: 40,
-                                                height: 40,
+                                                width: isMEDscreen ? 35 : 40,
+                                                height: isMEDscreen ? 35 : 40,
                                                 backgroundColor: colors.secondary
                                             }}
                                             onPress={() => handleBookmark('questions', {
@@ -468,7 +464,7 @@ export default function Questions() {
                                                 ? (
                                                     <ActivityIndicator size={'small'} color={colors.text.primary} />
                                                 ) : (
-                                                    <MaterialCommunityIcons size={25} color={colors.text.primary} name={
+                                                    <MaterialCommunityIcons size={isMEDscreen ? 22 : 25} color={colors.text.primary} name={
                                                         !isBookmarked('questions', { id: item.id ?? `questions-${index}` }) ?
                                                             'bookmark-outline' : 'bookmark'} />)}
                                         </Pressable>

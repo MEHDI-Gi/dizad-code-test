@@ -1,12 +1,21 @@
-// hooks/useResponsiveImage.ts
-import { Dimensions } from 'react-native';
-import { StatusBar } from 'react-native';
+import { useContext, useEffect } from 'react';
+import { DataContext } from '../context/contextData';
 
 export const useSize = () => {
 
-    const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-    const { width: fullScreenWidth, height: fullScreenHeight } = Dimensions.get('screen');
+    const {
+        screenWidth, screenHeight,
+        fullScreenWidth, fullScreenHeight,
+        MEDscreen, setMEDscreen } = useContext(DataContext);
+
+    useEffect(() => {
+        if (fullScreenWidth <= 1080 && fullScreenHeight <= 2280) {
+            setMEDscreen(true);
+        }
+    }, [fullScreenWidth, fullScreenHeight]);
+    const Medium = MEDscreen;
     return {
+        isMEDscreen: Medium,
         screen: {
             width: screenWidth,
             height: screenHeight

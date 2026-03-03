@@ -27,7 +27,7 @@ import { useColors } from '../../hooks/useColors.ts';
 
 export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarProps) {
 
-    const { screen } = useSize()
+    const { screen, isMEDscreen } = useSize()
 
     const {
         isGradient, texts, language
@@ -71,7 +71,7 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
             <View style={{
                 elevation: 4,
                 width: '90%',
-                height: 30,
+                height: isMEDscreen ? 27 : 30,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -116,17 +116,17 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
                                 {config.set === 'MaterialCommunityIcons' ?
                                     <MaterialCommunityIcons
                                         name={config.icon}
-                                        size={20}
+                                        size={isMEDscreen ? 15 : 20}
                                         color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                     /> : config.set === 'Ionicons' ?
                                         <Ionicons
                                             name={config.icon}
-                                            size={20}
+                                            size={isMEDscreen ? 15 : 20}
                                             color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                         /> :
                                         <Entypo
                                             name={config.icon}
-                                            size={20}
+                                            size={isMEDscreen ? 15 : 20}
                                             color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                         />
                                 }
@@ -140,7 +140,7 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
                                 <Text style={{
                                     color: colors.subTab.items.primary,
                                     fontFamily: 'Cairo-Bold',
-                                    fontSize: 15,
+                                    fontSize: isMEDscreen ? 11 : 15
                                 }}>{config.label}</Text>
                             </View>}
                         </Pressable >

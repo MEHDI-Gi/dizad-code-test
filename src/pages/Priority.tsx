@@ -28,7 +28,7 @@ export default function Priority() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const { user, logout, initializing } = useGoogleSignIn();
-    const { lessons, screen } = useSize();
+    const { lessons, screen, isMEDscreen } = useSize();
     const { userVip } = useVip();
 
     const colors = useColors();
@@ -113,7 +113,7 @@ export default function Priority() {
                     alignItems: 'flex-start',
                     justifyContent: 'space-evenly',
                     paddingVertical: 60,
-                    rowGap: 15,
+                    rowGap: isMEDscreen ? 10 : 15,
                 }}>
                     {priorityContent?.map((item: any, index: any) => {
                         const total = Object.keys(lessonsData?.content?.priority?.content?.[index]?.items || {}).length;
@@ -131,7 +131,7 @@ export default function Priority() {
                                     style={[
                                         {
                                             width: '90%',
-                                            height: lessons.category.height * 0.5,
+                                            height: isMEDscreen ? lessons.category.height * 0.4 : lessons.category.height * 0.5,
                                             borderRadius: 8,
                                             flexDirection: 'column',
                                             backgroundColor: colors.secondary,
@@ -155,10 +155,24 @@ export default function Priority() {
                                             alignItems: 'center',
                                             justifyContent: 'center'
                                         }}>
+                                            {/* <LinearGradient
+                                                colors={['#00ffff', colors.primary]}
+                                                start={{ x: 2, y: 0 }}
+                                                end={{ x: 0, y: 3 }}
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    right: 0,
+                                                    bottom: 0,
+                                                    zIndex: 5,
+                                                    opacity: 0.2
+                                                }}
+                                            /> */}
                                             <Ionicons
                                                 name='diamond-sharp'
                                                 color={colors.button.primary}
-                                                size={30}
+                                                size={isMEDscreen ? 25 : 30}
                                             />
                                         </View>}
                                     <View

@@ -19,7 +19,7 @@ import { useColors } from '../../hooks/useColors.ts';
 
 export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBarProps) {
 
-    const { screen } = useSize()
+    const { screen, isMEDscreen } = useSize()
 
     const {
         isGradient, texts, language
@@ -43,7 +43,7 @@ export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBar
     return (
         <View style={{
             position: 'absolute',
-            left: 0,                   // <- ADD THIS
+            left: 0,
             right: 0,
             top: 0,
             zIndex: 1,
@@ -53,8 +53,8 @@ export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBar
         }}>
             <View style={{
                 position: 'absolute',
-                bottom: 0,                 // <- ADD THIS  
-                left: 0,                   // <- ADD THIS
+                bottom: 0,
+                left: 0,
                 right: 0,
                 top: 0,
                 backgroundColor: colors.primary,
@@ -62,7 +62,7 @@ export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBar
             }} />
             <View style={{
                 width: '90%',
-                height: 30,
+                height: isMEDscreen ? 27 : 30,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -110,12 +110,12 @@ export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBar
                                 {config.set === 'MaterialCommunityIcons' ?
                                     <MaterialCommunityIcons
                                         name={config.icon}
-                                        size={20}
+                                        size={isMEDscreen ? 15 : 20}
                                         color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                     /> :
                                     <Entypo
                                         name={config.icon}
-                                        size={20}
+                                        size={isMEDscreen ? 15 : 20}
                                         color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                     />
                                 }
@@ -130,7 +130,8 @@ export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBar
 
                                 <Text style={{
                                     color: colors.subTab.items.primary,
-                                    fontFamily: 'Cairo',
+                                    fontFamily: 'Cairo-Bold',
+                                    fontSize: isMEDscreen ? 11 : 15
                                 }}>{config.label}</Text>
                             </View>}
                         </Pressable>

@@ -44,7 +44,7 @@ const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 const SignsItems = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { lessons, screen } = useSize();
+  const { lessons, screen, isMEDscreen } = useSize();
   const colors = useColors();
   const {
 
@@ -188,8 +188,13 @@ const SignsItems = () => {
           backgroundColor: colors.primary,
           opacity: 0.9
         }} />
-        <Text style={{ fontFamily: "Cairo", color: colors.text.primary, fontSize: 16, }}>
-          {title}</Text>
+        <Text style={{
+          fontFamily: "Cairo-Bold",
+          color: colors.text.primary,
+          fontSize: isMEDscreen ? 13 : 16,
+        }}>
+          {title}
+        </Text>
         <Pressable
           android_ripple={{
             color: colors.secondary, borderless: true, foreground: true
@@ -208,11 +213,9 @@ const SignsItems = () => {
             navigation.navigate('MainTabs', { screen: 'Lessons' })
             if (sound) playSound('settingsButton')
           }}>
-          <MaterialIcons name='close' color={colors.text.secondary} size={25} />
+          <MaterialIcons name='close' color={colors.text.secondary} size={isMEDscreen ? 18 : 25} />
         </Pressable>
       </View>
-
-
       < ScrollView
         horizontal={false}
         showsVerticalScrollIndicator={false}
@@ -220,7 +223,7 @@ const SignsItems = () => {
           flex: 1, width: '100%',
         }}
         contentContainerStyle={{
-          paddingTop: 50,
+          paddingTop: isMEDscreen ? 45 : 50,
           paddingBottom: 20,
           alignItems: 'center',
           justifyContent: "center",
@@ -231,7 +234,8 @@ const SignsItems = () => {
           flexDirection: 'row',
           flexWrap: 'wrap',
           alignItems: 'flex-start',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
+          paddingHorizontal: 10,
           paddingVertical: 10,
           gap: 10,
           marginBottom: 40,
@@ -257,8 +261,8 @@ const SignsItems = () => {
                   }}
                   style={[
                     {
-                      width: lessons.items.width,
-                      height: lessons.items.width,
+                      width: isMEDscreen ? screenWidth * 0.25 - 13 : screen.width * 0.33 - 13,
+                      height: isMEDscreen ? screenWidth * 0.25 - 13 : screen.width * 0.33 - 13,
                       borderRadius: 8,
                       flexDirection: 'column',
                       backgroundColor: colors.secondary,
@@ -417,8 +421,8 @@ const SignsItems = () => {
                   <View style={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                    width: lessons.items.rowSwipe.width,
-                    height: lessons.items.rowSwipe.width,
+                    width: isMEDscreen ? screen.width * 0.7 : screen.width * 0.9,
+                    height: isMEDscreen ? screen.width * 0.7 : screen.width * 0.9,
                     overflow: 'hidden',
                     borderRadius: 5,
 
@@ -461,7 +465,7 @@ const SignsItems = () => {
                           textAlign: 'center',
                           fontFamily: 'Cairo-Bold',
                           color: colors.text.primary,
-                          fontSize: 18,
+                          fontSize: isMEDscreen ? 15 : 18,
 
                         }}>
                           {item.label}
@@ -480,7 +484,7 @@ const SignsItems = () => {
                             textAlign: 'center',
                             fontFamily: 'Cairo',
                             color: colors.text.secondary,
-                            fontSize: 18,
+                            fontSize: isMEDscreen ? 15 : 18,
 
                           }}>
                           {item.description}
@@ -530,8 +534,8 @@ const SignsItems = () => {
                         borderRadius: 8,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        width: 40,
-                        height: 40,
+                        width: isMEDscreen ? 35 : 40,
+                        height: isMEDscreen ? 35 : 40,
                         backgroundColor: colors.secondary
                       }}
                       onPress={() => handleBookmark('signs', {
@@ -543,7 +547,7 @@ const SignsItems = () => {
                           <ActivityIndicator size={'small'} color={colors.text.primary} />
                         ) :
                         (
-                          <MaterialCommunityIcons size={25} color={colors.text.primary} name={
+                          <MaterialCommunityIcons size={isMEDscreen ? 22 : 25} color={colors.text.primary} name={
                             !isBookmarked('signs', { id: item.id ?? `signs-${signsItemsIndex}-${index}` }) ?
                               'bookmark-outline' : 'bookmark'} />
                         )

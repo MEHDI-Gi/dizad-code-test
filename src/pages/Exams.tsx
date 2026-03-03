@@ -39,7 +39,7 @@ export default function Exams() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const { lessons, screen } = useSize();
+  const { lessons, screen, isMEDscreen } = useSize();
   const colors = useColors();
   const {
     signsData,
@@ -82,16 +82,16 @@ export default function Exams() {
     >
       <Text
         style={{
-          fontFamily: 'Cairo',
+          fontWeight: '600',
           color: colors.text.primary,
-          fontSize: 20,
+          fontSize: isMEDscreen ? 15 : 20,
         }}
       >
         Coming Soon
       </Text>
 
       <MaterialIcons
-        name="construction" size={20} color={colors.button.primary} />
+        name="construction" size={isMEDscreen ? 15 : 20} color={colors.button.primary} />
     </View>
   );
 }

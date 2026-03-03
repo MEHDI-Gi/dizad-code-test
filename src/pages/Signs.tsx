@@ -24,7 +24,7 @@ export default function Signs() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const { user, logout, initializing } = useGoogleSignIn();
-    const { lessons, screen } = useSize();
+    const { lessons, screen, isMEDscreen } = useSize();
     const colors = useColors();
     const {
         setTotalSigns,
@@ -85,12 +85,13 @@ export default function Signs() {
                     alignContent: "center",
                 }}>
                 <View style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    alignItems: 'flex-start',
-                    justifyContent: 'space-evenly',
-                    paddingVertical: 60,
-                    rowGap: 15,
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                    width: screen.width,
+                    paddingTop: 50,
+                    paddingBottom: 60,
+                    rowGap: 10,
                 }}>
                     {SignsContent?.map((item: any, index: any) => {
                         const totalSigns = Object.keys(lessonsData?.content?.signs?.content?.[index]?.items || {}).length;
@@ -105,20 +106,23 @@ export default function Signs() {
                                     }}
                                     onPress={() => LessonsContentPress(item)}
                                     style={[{
-                                        width: lessons.category.width,
+                                        width: "90%",
+                                        height: screen.width * 0.23,
                                         borderRadius: 8,
-                                        flexDirection: 'column',
+                                        flexDirection: 'row-reverse',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
                                         backgroundColor: colors.secondary,
                                         overflow: 'hidden',
                                         elevation: 5,
+                                        columnGap: 8,
                                     },]}>
-
                                     <View
                                         style={[{
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            width: lessons.category.width,
-                                            height: lessons.category.width,
+                                            width: isMEDscreen ? screen.width * 0.23 : screen.width * 0.43,
+                                            height: isMEDscreen ? screen.width * 0.23 : screen.width * 0.43,
                                             overflow: 'hidden',
                                         }]}>
                                         <View
@@ -153,17 +157,20 @@ export default function Signs() {
                                             alignItems: 'flex-end',
                                             justifyContent: 'center',
                                             backgroundColor: 'transparent',
-                                            width: '100%',
-                                            paddingBottom: 10,
-                                            paddingHorizontal: 10,
+                                            flex: 1,
+                                            height: "100%",
+                                            rowGap: 5,
                                         }]}>
-                                        <Text style={{ fontFamily: "Cairo-Bold", color: colors.text.primary, fontSize: 16, }}>
+                                        <Text style={{
+                                            fontFamily: "Cairo-Bold",
+                                            color: colors.text.primary, fontSize: isMEDscreen ? 13 : 16,
+                                        }}>
                                             {item.label}
                                         </Text>
                                         <Text style={{
                                             fontFamily: "Cairo",
                                             color: colors.text.secondary,
-                                            fontSize: 12,
+                                            fontSize: isMEDscreen ? 11 : 12,
                                             flexDirection: 'row',
                                         }}>
                                             {totalSigns} إشــــارة

@@ -24,6 +24,7 @@ import {
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { useVip } from '../hooks/useVip';
 import { useFirebaseData } from '../hooks/useFirebaseData';
+import { Dimensions } from 'react-native';
 
 const DataContext = createContext<any>(null);
 
@@ -555,8 +556,16 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
   const imgBase = "https://cdn.jsdelivr.net/gh/MEHDI-Gi/dizad_road_test_assets@main/assets"
 
+  const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+  const { width: fullScreenWidth, height: fullScreenHeight } = Dimensions.get('screen');
+
+  const [MEDscreen, setMEDscreen] = useState<boolean>(false);
+
   const contextValue = useMemo(
     () => ({
+      screenWidth, screenHeight,
+      fullScreenWidth, fullScreenHeight,
+      MEDscreen, setMEDscreen,
       user, initializing, signIn, logout,
       bookmarkLoading,
       setBookmarkLoading,
@@ -654,6 +663,9 @@ const DataProvider = ({ children }: DataProviderProps) => {
       incrementView,
     }),
     [
+      screenWidth, screenHeight,
+      fullScreenWidth, fullScreenHeight,
+      MEDscreen,
       incrementView,
       accuracyProgress,
       user, initializing, signIn, logout,

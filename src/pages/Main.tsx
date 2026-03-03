@@ -45,7 +45,8 @@ export default function Main() {
         vipPlansCard,
         statisticsCard,
         snackOptions,
-        user
+        user,
+        userVip
     } = useContext(DataContext);
 
     const [adLoaded, setAdLoaded] = useState<boolean>(false);
@@ -76,7 +77,6 @@ export default function Main() {
             {freeCard && <FreeCard />}
             {vipCard && <VipCard />}
             {vipPlansCard && <VipPlansCard />}
-            {statisticsCard && <StatisticsCard />}
             <NavigationContainer>
                 <Stack.Navigator
                     screenOptions={{
@@ -106,7 +106,7 @@ export default function Main() {
                 icon={snackOptions.icon}
                 bottom={adLoaded ? '15%' : '10%'}
             /> */}
-            {false && <AdFooter adLoaded={adLoaded} setAdLoaded={setAdLoaded} />}
+            {userVip && <AdFooter adLoaded={adLoaded} setAdLoaded={setAdLoaded} />}
 
         </View>
     );
