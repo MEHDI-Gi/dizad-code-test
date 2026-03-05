@@ -30,7 +30,7 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
     const { screen,
         widthScale,
         heightScale,
-        sizesScale,
+        sizeScale,
     } = useSize()
 
     const {
@@ -104,7 +104,7 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
                                 justifyContent: 'space-evenly',
                                 flex: config.label ? 1.5 : 1,
                                 height: '100%',
-                                borderRadius: config.label ? sizesScale(8) : sizesScale(50),
+                                borderRadius: config.label ? sizeScale(8) : sizeScale(50),
                                 backgroundColor: isFocused ? colors.secondary : "transparent",
                                 overflow: 'hidden',
                             },]}
@@ -120,17 +120,17 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
                                 {config.set === 'MaterialCommunityIcons' ?
                                     <MaterialCommunityIcons
                                         name={config.icon}
-                                        size={sizesScale(20)}
+                                        size={sizeScale(20)}
                                         color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                     /> : config.set === 'Ionicons' ?
                                         <Ionicons
                                             name={config.icon}
-                                            size={sizesScale(20)}
+                                            size={sizeScale(20)}
                                             color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                         /> :
                                         <Entypo
                                             name={config.icon}
-                                            size={sizesScale(20)}
+                                            size={sizeScale(20)}
                                             color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                         />
                                 }
@@ -144,7 +144,7 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
                                 <Text style={{
                                     color: colors.subTab.items.primary,
                                     fontFamily: 'Cairo-Bold',
-                                    fontSize: sizesScale(15)
+                                    fontSize: sizeScale(15)
                                 }}>{config.label}</Text>
                             </View>}
                         </Pressable >

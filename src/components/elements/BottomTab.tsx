@@ -28,7 +28,7 @@ export default function BottomTab({ state, navigation }: MaterialTopTabBarProps)
     const { screen,
         widthScale,
         heightScale,
-        sizesScale,
+        sizeScale,
     } = useSize()
 
     const {
@@ -120,7 +120,7 @@ export default function BottomTab({ state, navigation }: MaterialTopTabBarProps)
                 justifyContent: 'center',
                 zIndex: 999999,
                 overflow: 'hidden',
-                padding: sizesScale(5),
+                padding: sizeScale(5),
 
             }}>
                 {state.routes.map((route, index) => {
@@ -145,7 +145,7 @@ export default function BottomTab({ state, navigation }: MaterialTopTabBarProps)
                                 justifyContent: 'space-evenly',
                                 flex: isFocused ? 1.5 : 1,
                                 height: '100%',
-                                borderRadius: isFocused ? sizesScale(8) : sizesScale(50),
+                                borderRadius: isFocused ? sizeScale(8) : sizeScale(50),
                                 backgroundColor: isFocused ? colors.bottomTab.color : "transparent",
                                 overflow: 'hidden',
                             },]}
@@ -161,12 +161,12 @@ export default function BottomTab({ state, navigation }: MaterialTopTabBarProps)
                                 {config.set === 'MaterialCommunityIcons' ?
                                     <MaterialCommunityIcons
                                         name={config.icon}
-                                        size={sizesScale(20)}
+                                        size={sizeScale(20)}
                                         color={isFocused ? colors.bottomTab.items.primary : colors.bottomTab.items.secondary}
                                     /> :
                                     <Entypo
                                         name={config.icon}
-                                        size={sizesScale(20)}
+                                        size={sizeScale(20)}
                                         color={isFocused ? colors.bottomTab.items.primary : colors.bottomTab.items.secondary}
                                     />
                                 }
@@ -182,7 +182,7 @@ export default function BottomTab({ state, navigation }: MaterialTopTabBarProps)
                                     {
                                         color: colors.bottomTab.items.primary,
                                         fontFamily: 'Cairo-Bold',
-                                        fontSize: sizesScale(15),
+                                        fontSize: sizeScale(15),
                                     }}>{config.label}</Text>
                             </View>}
                         </Pressable >

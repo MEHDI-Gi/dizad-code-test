@@ -27,7 +27,7 @@ export default function Signs() {
     const { lessons, screen,
         widthScale,
         heightScale,
-        sizesScale,
+        sizeScale,
     } = useSize();
     const colors = useColors();
     const {
@@ -112,7 +112,7 @@ export default function Signs() {
                                     style={[{
                                         width: "90%",
                                         height: heightScale(screen.width * 0.23),
-                                        borderRadius: sizesScale(8),
+                                        borderRadius: sizeScale(8),
                                         flexDirection: 'row-reverse',
                                         alignItems: 'center',
                                         justifyContent: 'space-between',
@@ -137,7 +137,7 @@ export default function Signs() {
                                                 width: '90%',
                                                 height: '90%',
                                                 overflow: 'hidden',
-                                                borderRadius: sizesScale(5),
+                                                borderRadius: sizeScale(5),
                                             }]}>
                                             {item?.img ?
                                                 <Image
@@ -167,14 +167,14 @@ export default function Signs() {
                                         }]}>
                                         <Text style={{
                                             fontFamily: "Cairo-Bold",
-                                            color: colors.text.primary, fontSize: sizesScale(16),
+                                            color: colors.text.primary, fontSize: sizeScale(16),
                                         }}>
                                             {item.label}
                                         </Text>
                                         <Text style={{
                                             fontFamily: "Cairo",
                                             color: colors.text.secondary,
-                                            fontSize: sizesScale(12),
+                                            fontSize: sizeScale(12),
                                             flexDirection: 'row',
                                         }}>
                                             {totalSigns} إشــــارة
@@ -190,8 +190,8 @@ export default function Signs() {
                                     width: '45%',
                                     height: heightScale(180),
                                     overflow: "hidden",
-                                    borderRadius: sizesScale(10),
-                                    marginVertical: sizesScale(7),
+                                    borderRadius: sizeScale(10),
+                                    marginVertical: sizeScale(7),
 
                                 }}>
                                     <ShimmerPlaceHolder

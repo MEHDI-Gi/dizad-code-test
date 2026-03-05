@@ -24,7 +24,7 @@ export default function Login({ navigation }: LoginProps) {
   const { screen,
     widthScale,
     heightScale,
-    sizesScale,
+    sizeScale,
   } = useSize();
 
 
@@ -186,13 +186,13 @@ export default function Login({ navigation }: LoginProps) {
           flexDirection: 'column',
           width: "100%",
           zIndex: 10,
-          paddingHorizontal: sizesScale(20),
-          paddingVertical: sizesScale(20),
+          paddingHorizontal: sizeScale(20),
+          paddingVertical: sizeScale(20),
           justifyContent: "flex-end",
           alignItems: "flex-end",
           backgroundColor: colors.primary,
-          rowGap: sizesScale(10),
-          borderBottomStartRadius: sizesScale(50),
+          rowGap: sizeScale(10),
+          borderBottomStartRadius: sizeScale(50),
           overflow: 'hidden'
         }}>
           <LinearGradient
@@ -212,14 +212,14 @@ export default function Login({ navigation }: LoginProps) {
           <Text style={{
             fontFamily: 'Cairo-Bold',
             color: colors.button.primary,
-            fontSize: sizesScale(25),
+            fontSize: sizeScale(25),
             zIndex: 3,
 
           }}>{title}</Text>
           <Text style={{
             fontFamily: 'Cairo-Medium',
             color: colors.text.primary,
-            fontSize: sizesScale(20),
+            fontSize: sizeScale(20),
             zIndex: 3,
           }}>{sub}</Text>
         </View>
@@ -230,8 +230,8 @@ export default function Login({ navigation }: LoginProps) {
           justifyContent: 'center',
           alignItems: "center",
           position: 'relative',
-          paddingHorizontal: sizesScale(40),
-          paddingVertical: sizesScale(20),
+          paddingHorizontal: sizeScale(40),
+          paddingVertical: sizeScale(20),
           zIndex: 1,
         }}>
 
@@ -260,7 +260,7 @@ export default function Login({ navigation }: LoginProps) {
                 <Text key={index} style={{
                   fontFamily: 'Cairo-Bold',
                   color: colors.text.primary,
-                  fontSize: sizesScale(18),
+                  fontSize: sizeScale(18),
                 }}>{item.label}</Text>
                 {
                   item.set === 'MaterialCommunityIcons' ?
@@ -327,7 +327,7 @@ export default function Login({ navigation }: LoginProps) {
               </View>
             </Pressable>
             <Text style={[{
-              fontSize: sizesScale(15), fontWeight: '600', color: '#8b8b8b'
+              fontSize: sizeScale(15), fontWeight: '600', color: '#8b8b8b'
             }
             ]}>
               Continue with Google

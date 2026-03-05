@@ -18,11 +18,11 @@ export const useSize = () => {
      */
     const widthScale = (size: number) => (fullScreenWidth / guidelineBaseWidth) * size;
     const heightScale = (size: number) => (fullScreenHeight / guidelineBaseHeight) * size;
-    const sizesScale = (size: number, factor = 0.5) => size + (widthScale(size) - size) * factor;
+    const sizeScale = (size: number, factor = 0.5) => size + (widthScale(size) - size) * factor;
     return {
         widthScale,
         heightScale,
-        sizesScale,
+        sizeScale,
         screen: {
             width: screenWidth,
             height: screenHeight

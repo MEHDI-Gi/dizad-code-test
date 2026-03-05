@@ -29,7 +29,7 @@ export default function Priority() {
     const { lessons, screen,
         widthScale,
         heightScale,
-        sizesScale,
+        sizeScale,
     } = useSize();
     const { userVip } = useVip();
 
@@ -114,8 +114,8 @@ export default function Priority() {
                     flexWrap: 'wrap',
                     alignItems: 'flex-start',
                     justifyContent: 'space-evenly',
-                    paddingVertical: sizesScale(60),
-                    rowGap: sizesScale(15),
+                    paddingVertical: sizeScale(60),
+                    rowGap: sizeScale(15),
                 }}>
                     {priorityContent?.map((item: any, index: any) => {
                         const total = Object.keys(lessonsData?.content?.priority?.content?.[index]?.items || {}).length;
@@ -134,7 +134,7 @@ export default function Priority() {
                                         {
                                             width: '90%',
                                             height: heightScale(lessons.category.height * 0.5),
-                                            borderRadius: sizesScale(8),
+                                            borderRadius: sizeScale(8),
                                             flexDirection: 'column',
                                             backgroundColor: colors.secondary,
                                             overflow: 'hidden',
@@ -174,7 +174,7 @@ export default function Priority() {
                                             <Ionicons
                                                 name='diamond-sharp'
                                                 color={colors.button.primary}
-                                                size={sizesScale(30)}
+                                                size={sizeScale(30)}
                                             />
                                         </View>}
                                     <View
@@ -208,16 +208,16 @@ export default function Priority() {
                                             alignItems: "flex-end",
                                             justifyContent: "center",
                                             position: "absolute",
-                                            right: sizesScale(8),
-                                            top: sizesScale(8),
+                                            right: sizeScale(8),
+                                            top: sizeScale(8),
                                             backgroundColor: colors.primary,
-                                            paddingHorizontal: sizesScale(8),
-                                            borderRadius: sizesScale(5),
-                                            paddingVertical: sizesScale(3),
+                                            paddingHorizontal: sizeScale(8),
+                                            borderRadius: sizeScale(5),
+                                            paddingVertical: sizeScale(3),
                                         }]}>
 
                                         <Text style={{
-                                            fontFamily: "Cairo-Bold", color: colors.text.primary, fontSize: sizesScale(16),
+                                            fontFamily: "Cairo-Bold", color: colors.text.primary, fontSize: sizeScale(16),
                                         }}>
                                             {item.label}
                                         </Text>
@@ -227,18 +227,18 @@ export default function Priority() {
                                             alignItems: "flex-end",
                                             justifyContent: "center",
                                             position: "absolute",
-                                            left: sizesScale(8),
-                                            bottom: sizesScale(8),
+                                            left: sizeScale(8),
+                                            bottom: sizeScale(8),
                                             backgroundColor: colors.opacity.primary,
-                                            paddingHorizontal: sizesScale(8),
-                                            borderRadius: sizesScale(7),
-                                            paddingVertical: sizesScale(3),
+                                            paddingHorizontal: sizeScale(8),
+                                            borderRadius: sizeScale(7),
+                                            paddingVertical: sizeScale(3),
                                         }]}>
                                         <Text style={{
                                             fontFamily: "Cairo-Bold",
 
                                             color: colors.text.secondary,
-                                            fontSize: sizesScale(12),
+                                            fontSize: sizeScale(12),
                                             flexDirection: 'row',
 
                                         }}>
@@ -253,14 +253,14 @@ export default function Priority() {
                                 <View key={index} style={{
 
                                     width: '45%',
-                                    height: sizesScale(180),
+                                    height: sizeScale(180),
                                     overflow: "hidden",
-                                    borderRadius: sizesScale(10),
-                                    marginVertical: sizesScale(7),
+                                    borderRadius: sizeScale(10),
+                                    marginVertical: sizeScale(7),
 
                                 }}>
                                     <ShimmerPlaceHolder
-                                        style={{ width: "100%", height: sizesScale(180), }}
+                                        style={{ width: "100%", height: sizeScale(180), }}
                                         shimmerColors={[colors.secondary, '#6161617c', colors.secondary]}
                                     />
                                 </View>

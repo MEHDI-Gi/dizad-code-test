@@ -34,7 +34,7 @@ export default function Home() {
   const { screen,
     widthScale,
     heightScale,
-    sizesScale,
+    sizeScale,
   } = useSize();
   const { user } = useGoogleSignIn();
   const { userVip } = useVip();
@@ -181,7 +181,7 @@ export default function Home() {
           }}
         />
         <View style={[{
-          paddingHorizontal: sizesScale(20),
+          paddingHorizontal: sizeScale(20),
           flexDirection: 'row',
           width: '100%',
 
@@ -255,14 +255,14 @@ export default function Home() {
                     ]}
                   /> :
                   userName ? <Text style={{
-                    fontSize: sizesScale(16),
+                    fontSize: sizeScale(16),
                     fontWeight: '500',
                     color: colors.text.primary,
                   }}>
                     {userName}
                   </Text> :
                     <Text style={{
-                      fontSize: sizesScale(16),
+                      fontSize: sizeScale(16),
                       fontWeight: '500',
                       color: colors.text.primary,
                     }}>
@@ -280,7 +280,7 @@ export default function Home() {
                 {userAccuracy ?
                   <Text style={[{
                     color: colors.text.primary,
-                    fontSize: sizesScale(13),
+                    fontSize: sizeScale(13),
                     textAlign: 'center',
                   }]}>
                     {userAccuracy}
@@ -288,7 +288,7 @@ export default function Home() {
                   :
                   <Text style={[{
                     color: colors.text.primary,
-                    fontSize: sizesScale(13),
+                    fontSize: sizeScale(13),
                     textAlign: 'center',
                   }]}>
                     0
@@ -296,7 +296,7 @@ export default function Home() {
                 }
                 <FontAwesome5
                   name='percentage'
-                  size={sizesScale(13)}
+                  size={sizeScale(13)}
                   color={colors.text.secondary}
                 />
               </View>
@@ -314,13 +314,13 @@ export default function Home() {
               width={widthScale(45)}
               height={heightScale(28)}
               title={false}
-              iconSize={sizesScale(15)}
+              iconSize={sizeScale(15)}
               iconColor={'#dba400'}
-              radius={5}
+              radius={sizeScale(5)}
               backColor={colors.secondary}
               titleColor={colors.text.primary}
               elevation={3}
-              textSize={12}
+              textSize={sizeScale(12)}
               icon={true}
             />)}
         </View>
@@ -332,9 +332,9 @@ export default function Home() {
         contentContainerStyle={{
           alignItems: 'center',
           justifyContent: 'flex-start',
-          paddingTop: sizesScale(70),
-          paddingBottom: sizesScale(70),
-          rowGap: sizesScale(10),
+          paddingTop: sizeScale(80),
+          paddingBottom: sizeScale(70),
+          rowGap: sizeScale(10),
         }}
         style={{
           flex: 1,
@@ -349,7 +349,7 @@ export default function Home() {
             width: '100%',
             flex: 1,
             flexWrap: 'wrap',
-            gap: sizesScale(10),
+            gap: sizeScale(10),
           }}
         >
           {!firebaseLoaded ?
@@ -361,14 +361,14 @@ export default function Home() {
               flexDirection: 'row-reverse',
               justifyContent: 'flex-start',
               overflow: 'hidden',
-              gap: sizesScale(15)
+              gap: sizeScale(15)
             }}>
               <ShimmerPlaceHolder
                 style={{
                   position: 'absolute',
                   width: "100%",
                   height: '100%',
-                  borderRadius: sizesScale(8),
+                  borderRadius: sizeScale(8),
                 }}
                 shimmerColors={[
                   colors.secondary,
@@ -380,8 +380,8 @@ export default function Home() {
                 style={{
                   width: widthScale(screen.width * 0.22),
                   height: heightScale(screen.width * 0.22),
-                  marginRight: sizesScale(10),
-                  borderRadius: sizesScale(8),
+                  marginRight: sizeScale(10),
+                  borderRadius: sizeScale(8),
                   backgroundColor: colors.primary,
                 }}
               />
@@ -429,7 +429,7 @@ export default function Home() {
                   backgroundColor: colors.secondary,
                   elevation: 3, width: '90%',
                   height: heightScale(screen.width * 0.25),
-                  borderRadius: sizesScale(8),
+                  borderRadius: sizeScale(8),
                   flexDirection: 'row',
                   justifyContent: 'center',
                   overflow: 'hidden',
@@ -445,8 +445,8 @@ export default function Home() {
                     backgroundColor: 'transparent',
                     width: '100%',
                     height: '100%',
-                    paddingHorizontal: sizesScale(10),
-                    paddingVertical: sizesScale(10),
+                    paddingHorizontal: sizeScale(10),
+                    paddingVertical: sizeScale(10),
                     flex: 1,
                   },
                 ]}
@@ -455,7 +455,7 @@ export default function Home() {
                   style={{
                     fontFamily: 'Cairo-Bold',
                     color: colors.text.primary,
-                    fontSize: sizesScale(16),
+                    fontSize: sizeScale(16),
                   }}
                 >
                   {contentItems[0]?.label}
@@ -465,7 +465,7 @@ export default function Home() {
                     fontFamily: 'Cairo',
 
                     color: colors.text.secondary,
-                    fontSize: sizesScale(14),
+                    fontSize: sizeScale(14),
                   }}
                 >
                   {contentItems[0]?.length} {contentItems[0]?.sub}
@@ -481,7 +481,7 @@ export default function Home() {
                     width: '90%',
                     height: heightScale(8),
                     backgroundColor: colors.text.secondary,
-                    borderRadius: sizesScale(10),
+                    borderRadius: sizeScale(10),
                     flexDirection: "row-reverse",
                     justifyContent: 'flex-start',
                     alignItems: "center",
@@ -491,7 +491,7 @@ export default function Home() {
                       width: '5%',
                       height: '100%',
                       backgroundColor: 'green',
-                      borderRadius: sizesScale(10),
+                      borderRadius: sizeScale(10),
                       borderTopEndRadius: 0,
                       borderBottomRightRadius: 0,
 
@@ -519,7 +519,7 @@ export default function Home() {
                     style={{
                       width: '85%',
                       height: '85%',
-                      borderRadius: sizesScale(8),
+                      borderRadius: sizeScale(8),
                       resizeMode: 'cover',
                     }}
                     source={{ uri: contentItems[0]?.img }}
@@ -545,19 +545,19 @@ export default function Home() {
                   backgroundColor: 'transparent',
                   width: '90%',
                   height: heightScale(screen.width * 0.25),
-                  borderRadius: sizesScale(8),
+                  borderRadius: sizeScale(8),
                   flexDirection: 'row-reverse',
                   justifyContent: 'flex-start',
                   overflow: 'hidden',
-                  padding: sizesScale(10),
-                  gap: sizesScale(15)
+                  padding: sizeScale(10),
+                  gap: sizeScale(15)
                 }}>
                   <ShimmerPlaceHolder
                     key={`shimmer-${index}`}
                     style={{
                       width: widthScale(screen.width * 0.22),
                       height: heightScale(screen.width * 0.22),
-                      borderRadius: sizesScale(8),
+                      borderRadius: sizeScale(8),
                     }}
                     shimmerColors={[
                       colors.secondary,
@@ -613,7 +613,7 @@ export default function Home() {
                     width: '90%',
                     height: heightScale(screen.width * 0.25),
 
-                    borderRadius: sizesScale(8),
+                    borderRadius: sizeScale(8),
                     flexDirection: 'row',
                     justifyContent: 'center',
                     overflow: 'hidden',
@@ -629,13 +629,13 @@ export default function Home() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     zIndex: 2,
-                    padding: sizesScale(15),
+                    padding: sizeScale(15),
                   }}
                 >
                   <SimpleLineIcons
                     name="arrow-left"
                     color={colors.text.secondary}
-                    size={sizesScale(10)}
+                    size={sizeScale(10)}
                   />
                 </View>
                 <View
@@ -646,8 +646,8 @@ export default function Home() {
                       backgroundColor: 'transparent',
                       width: '100%',
                       height: '100%',
-                      paddingHorizontal: sizesScale(10),
-                      paddingVertical: sizesScale(10),
+                      paddingHorizontal: sizeScale(10),
+                      paddingVertical: sizeScale(10),
                       flex: 1,
                     },
                   ]}
@@ -656,7 +656,7 @@ export default function Home() {
                     style={{
                       fontFamily: 'Cairo-Bold',
                       color: colors.text.primary,
-                      fontSize: sizesScale(16),
+                      fontSize: sizeScale(16),
                     }}
                   >
                     {item?.label}
@@ -666,7 +666,7 @@ export default function Home() {
                       fontFamily: 'Cairo',
 
                       color: colors.text.secondary,
-                      fontSize: sizesScale(14),
+                      fontSize: sizeScale(14),
                     }}
                   >
                     {item?.length} {item?.sub}
@@ -690,7 +690,7 @@ export default function Home() {
                       style={{
                         width: '85%',
                         height: '85%',
-                        borderRadius: sizesScale(10),
+                        borderRadius: sizeScale(10),
                         resizeMode: 'cover',
                       }}
                       source={{ uri: item?.img }}
@@ -717,7 +717,7 @@ export default function Home() {
             alignItems: 'center',
             justifyContent: 'flex-end',
             flexDirection: 'row',
-            columnGap: sizesScale(5),
+            columnGap: sizeScale(5),
           }}
         >
           <View
@@ -730,7 +730,7 @@ export default function Home() {
             <MaterialCommunityIcons
               name="arrow-top-left"
               color={colors.text.secondary}
-              size={sizesScale(18)}
+              size={sizeScale(18)}
             />
           </View>
 
@@ -738,7 +738,7 @@ export default function Home() {
             style={{
               fontFamily: 'Cairo',
               color: colors.text.secondary,
-              fontSize: sizesScale(16),
+              fontSize: sizeScale(16),
               textAlign: 'center',
             }}
           >
@@ -754,7 +754,7 @@ export default function Home() {
             width: '90%',
             flex: 1,
             flexWrap: 'wrap',
-            gap: sizesScale(7),
+            gap: sizeScale(7),
           }}
         >
           {extSources.map((item: any, index: number) => {
@@ -765,7 +765,7 @@ export default function Home() {
                   style={{
                     width: '100%',
                     height: heightScale(screen.width * 0.25),
-                    borderRadius: sizesScale(8),
+                    borderRadius: sizeScale(8),
                   }}
                   shimmerColors={[
                     colors.secondary,
@@ -793,14 +793,14 @@ export default function Home() {
                     backgroundColor: colors.secondary,
                     width: '100%',
                     height: heightScale(screen.width * 0.25),
-                    borderRadius: sizesScale(8),
+                    borderRadius: sizeScale(8),
                     flexDirection: 'row-reverse',
                     justifyContent: 'space-evenly',
-                    paddingHorizontal: sizesScale(20),
-                    paddingVertical: sizesScale(10),
+                    paddingHorizontal: sizeScale(20),
+                    paddingVertical: sizeScale(10),
                     overflow: 'hidden',
                     elevation: 5,
-                    columnGap: sizesScale(10),
+                    columnGap: sizeScale(10),
                   },
                 ]}
               >
@@ -808,19 +808,18 @@ export default function Home() {
                   style={{
                     width: widthScale(screen.width * 0.35),
                     height: '100%',
-                    borderRadius: sizesScale(10),
+                    borderRadius: sizeScale(10),
                     resizeMode: 'cover',
                   }}
                   source={{ uri: item?.img }}
                 />
-
                 <View
                   style={{
                     flexDirection: 'column',
                     alignItems: 'flex-end',
                     justifyContent: 'center',
                     flex: 1,
-                    rowGap: sizesScale(5),
+                    rowGap: sizeScale(5),
                     zIndex: 2,
                   }}
                 >
@@ -828,7 +827,7 @@ export default function Home() {
                     style={{
                       fontFamily: 'Cairo',
                       color: colors.text.primary,
-                      fontSize: sizesScale(14),
+                      fontSize: sizeScale(14),
                       textAlign: 'right',
                     }}
                   >

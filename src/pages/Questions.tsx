@@ -31,7 +31,7 @@ export default function Questions() {
     const { lessons, screen,
         widthScale,
         heightScale,
-        sizesScale,
+        sizeScale,
     } = useSize();
     const colors = useColors();
     const {
@@ -178,7 +178,7 @@ export default function Questions() {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 flexDirection: 'row-reverse',
-                                borderRadius: sizesScale(8),
+                                borderRadius: sizeScale(8),
                                 overflow: 'hidden',
                                 backgroundColor: colors.secondary,
                                 elevation: 5,
@@ -195,15 +195,15 @@ export default function Questions() {
                                     alignItems: 'center',
                                     overflow: 'hidden',
                                     zIndex: 1,
-                                    paddingHorizontal: sizesScale(15),
-                                    paddingVertical: sizesScale(15),
+                                    paddingHorizontal: sizeScale(15),
+                                    paddingVertical: sizeScale(15),
                                 },]}
                         >
                             <Text style={{
                                 fontFamily: "Cairo",
                                 textAlign: 'right',
                                 color: colors.text.primary,
-                                fontSize: sizesScale(18),
+                                fontSize: sizeScale(18),
                             }}>
                                 {item.label}
                             </Text>
@@ -218,7 +218,7 @@ export default function Questions() {
                             width: '90%',
                             height: heightScale(70),
                             overflow: "hidden",
-                            borderRadius: sizesScale(10),
+                            borderRadius: sizeScale(10),
                             alignItems: 'center',
                             justifyContent: 'center',
                             flexDirection: 'row',
@@ -298,7 +298,7 @@ export default function Questions() {
                                             backgroundColor: colors.secondary,
                                             width: widthScale(30),
                                             height: heightScale(30),
-                                            borderRadius: sizesScale(8),
+                                            borderRadius: sizeScale(8),
                                             top: heightScale(8),
                                             right: widthScale(8),
                                             position: 'absolute',
@@ -340,8 +340,8 @@ export default function Questions() {
                                                 position: 'absolute',
                                                 bottom: 0,
                                                 width: '100%',
-                                                padding: sizesScale(10),
-                                                borderRadius: sizesScale(18),
+                                                padding: sizeScale(10),
+                                                borderRadius: sizeScale(18),
                                                 borderBottomLeftRadius: 0,
                                                 borderBottomRightRadius: 0,
                                                 overflow: 'hidden',
@@ -366,7 +366,7 @@ export default function Questions() {
                                                 <Text style={{
                                                     fontFamily: 'Cairo',
                                                     color: colors.text.primary,
-                                                    fontSize: sizesScale(18),
+                                                    fontSize: sizeScale(18),
                                                     textAlign: 'center'
                                                 }}>
                                                     {item.label}
@@ -383,10 +383,10 @@ export default function Questions() {
                                             flex: 1,
                                         }}
                                         contentContainerStyle={{
-                                            paddingHorizontal: sizesScale(15),
-                                            paddingTop: sizesScale(20),
-                                            paddingBottom: sizesScale(70),
-                                            gap: sizesScale(4),
+                                            paddingHorizontal: sizeScale(15),
+                                            paddingTop: sizeScale(20),
+                                            paddingBottom: sizeScale(70),
+                                            gap: sizeScale(4),
                                             justifyContent: 'flex-start',
                                             alignItems: 'center',
                                         }}
@@ -399,10 +399,10 @@ export default function Questions() {
                                                 style={{
                                                     fontFamily: 'Cairo-Bold',
                                                     color: colors.text.secondary,
-                                                    fontSize: sizesScale(18),
+                                                    fontSize: sizeScale(18),
                                                     textAlign: 'right',
                                                     alignSelf: 'flex-end',
-                                                    padding: sizesScale(5),
+                                                    padding: sizeScale(5),
                                                     backgroundColor: colors.primary,
 
                                                 }}>
@@ -416,10 +416,10 @@ export default function Questions() {
                                                 style={{
                                                     fontFamily: 'Cairo',
                                                     color: 'orange',
-                                                    fontSize: sizesScale(16),
+                                                    fontSize: sizeScale(16),
                                                     textAlign: 'right',
                                                     alignSelf: 'flex-end',
-                                                    padding: sizesScale(5),
+                                                    padding: sizeScale(5),
                                                     backgroundColor: colors.primary,
                                                 }}>
                                                 {item}
@@ -435,8 +435,8 @@ export default function Questions() {
                                         flexDirection: 'row',
                                         width: "100%",
                                         height: heightScale(70),
-                                        paddingHorizontal: sizesScale(10),
-                                        columnGap: sizesScale(10),
+                                        paddingHorizontal: sizeScale(10),
+                                        columnGap: sizeScale(10),
                                     }}>
                                         <View style={{
                                             position: 'absolute',
@@ -468,7 +468,7 @@ export default function Questions() {
                                                 ? (
                                                     <ActivityIndicator size={'small'} color={colors.text.primary} />
                                                 ) : (
-                                                    <MaterialCommunityIcons size={sizesScale(25)} color={colors.text.primary} name={
+                                                    <MaterialCommunityIcons size={sizeScale(25)} color={colors.text.primary} name={
                                                         !isBookmarked('questions', { id: item.id ?? `questions-${index}` }) ?
                                                             'bookmark-outline' : 'bookmark'} />)}
                                         </Pressable>

@@ -22,8 +22,8 @@ export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBar
     const { screen,
         widthScale,
         heightScale,
-        sizesScale,
-     } = useSize()
+        sizeScale,
+    } = useSize()
 
     const {
         isGradient, texts, language
@@ -114,12 +114,12 @@ export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBar
                                 {config.set === 'MaterialCommunityIcons' ?
                                     <MaterialCommunityIcons
                                         name={config.icon}
-                                        size={sizesScale(20)}
+                                        size={sizeScale(20)}
                                         color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                     /> :
                                     <Entypo
                                         name={config.icon}
-                                        size={sizesScale(20)}
+                                        size={sizeScale(20)}
                                         color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                     />
                                 }
@@ -135,7 +135,7 @@ export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBar
                                 <Text style={{
                                     color: colors.subTab.items.primary,
                                     fontFamily: 'Cairo-Bold',
-                                    fontSize: sizesScale(15)
+                                    fontSize: sizeScale(15)
                                 }}>{config.label}</Text>
                             </View>}
                         </Pressable>
