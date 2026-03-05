@@ -33,7 +33,7 @@ export default function VipCard() {
     const { userPlan, setUserPlan } = useVip()
 
     const {
-        vipPlansCard, setVipPlansCard,
+        upgradeCard, setUpgradeCard,
         heartsCard, setHeartsCard,
         setHelpPoint,
         dataLevelIndex, setDataLevelIndex,

@@ -37,7 +37,7 @@ import { useColors } from '../hooks/useColors';
 
 export default function FreeCard() {
     const {
-        vipPlansCard, setVipPlansCard,
+        upgradeCard, setUpgradeCard,
         heartsCard, setHeartsCard,
         setHelpPoint,
         dataLevelIndex, setDataLevelIndex,
@@ -135,7 +135,7 @@ export default function FreeCard() {
                             justifyContent: "center"
                         }}>
 
-                            <Text style={{ color: "white", fontWeight: '800' }}>FREE member</Text>
+                            <Text style={{ color: colors.text.secondary, fontWeight: '800' }}>FREE member</Text>
 
 
                         </View>
@@ -165,7 +165,7 @@ export default function FreeCard() {
                             >
                                 <MaterialCommunityIcons
                                     name='close'
-                                    color={'lightgray'}
+                                    color={colors.text.secondary}
                                     size={25}
                                 />
                             </Pressable>
@@ -218,7 +218,7 @@ export default function FreeCard() {
                                     }}>
                                         <FontAwesome6
                                             name={index < 3 ? "check" : "xmark"}
-                                            color="#ffffffff"
+                                            color={colors.text.secondary}
                                             size={16}
                                         />
                                     </View>
@@ -226,7 +226,7 @@ export default function FreeCard() {
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                     }}>
-                                        <Text style={{ color: "white", fontWeight: '600' }}>{item.label}</Text>
+                                        <Text style={{ color: colors.text.secondary, fontWeight: '600' }}>{item.label}</Text>
                                     </View>
                                 </View>
                             )
@@ -251,10 +251,10 @@ export default function FreeCard() {
                             }}
                             onPress={() => {
                                 setFreeCard(false)
-                                setVipPlansCard(true)
+                                setUpgradeCard(true)
                             }}
                         >
-                            <Text style={{ color: 'black', fontWeight: '900' }}>UPGRADE</Text>
+                            <Text style={{ color: 'black', fontWeight: '900' }}>CONTACT US</Text>
 
                         </Pressable>
                     </View>

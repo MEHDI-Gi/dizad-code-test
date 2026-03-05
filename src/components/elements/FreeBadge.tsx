@@ -14,7 +14,7 @@ import { useColors } from '../../hooks/useColors';
 
 export default function FreeBadge(props: any) {
     const {
-        setFreeCard
+        setUpgradeCard
     } = useContext(DataContext);
     const colors = useColors();
     return (
@@ -31,7 +31,7 @@ export default function FreeBadge(props: any) {
                 justifyContent: "space-evenly",
                 elevation: props.elevation
             }}
-            onPress={() => setFreeCard(true)}>
+            onPress={() => setUpgradeCard(true)}>
             <Text style={{ color: colors.text.primary, fontSize: 12, fontWeight: 'bold', marginHorizontal: 3, }}>
                 Free
             </Text>

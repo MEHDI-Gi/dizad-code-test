@@ -15,7 +15,7 @@ import Sound from './profile/Sound.tsx';
 import Language from './profile/Language.tsx';
 import Report from './profile/Report.tsx';
 import SnackBar from '../components/elements/SnackBar.tsx';
-import VipPlansCard from '../components/VipPlansCard.tsx';
+import UpgradeCard from '../components/UpgradeCard.tsx';
 
 
 import Home from './Home.tsx';
@@ -42,7 +42,7 @@ export default function Main() {
     const {
         freeCard,
         vipCard,
-        vipPlansCard,
+        upgradeCard,
         statisticsCard,
         snackOptions,
         user,
@@ -76,7 +76,7 @@ export default function Main() {
 
             {freeCard && <FreeCard />}
             {vipCard && <VipCard />}
-            {vipPlansCard && <VipPlansCard />}
+            {upgradeCard && <UpgradeCard />}
             <NavigationContainer>
                 <Stack.Navigator
                     screenOptions={{

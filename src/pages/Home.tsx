@@ -37,7 +37,7 @@ export default function Home() {
     sizeScale,
   } = useSize();
   const { user } = useGoogleSignIn();
-  const { userVip } = useVip();
+  const { userVip, setUserPlan } = useVip();
   const { userAccuracy } = useUserAccuracy();
   const colors = useColors();
 
@@ -302,6 +302,20 @@ export default function Home() {
               </View>
             </View>
           </View>
+          <TouchableOpacity
+            style={{
+              borderRadius: 5,
+              overflow: 'hidden',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: colors.secondary,
+              marginRight: 10,
+              width: widthScale(38),
+              height: heightScale(25),
+            }}
+            onPress={() => {
+              setUserPlan('free')
+            }} />
           {!userVip ?
             (<FreeBadge
               backColor={colors.secondary}
@@ -323,6 +337,7 @@ export default function Home() {
               textSize={sizeScale(12)}
               icon={true}
             />)}
+
         </View>
       </View>
       <ScrollView

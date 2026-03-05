@@ -463,7 +463,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const [vipCard, setVipCard] = useState<boolean>(false);
   const [freeCard, setFreeCard] = useState<boolean>(false);
   const [statisticsCard, setStatisticsCard] = useState<boolean>(false);
-  const [vipPlansCard, setVipPlansCard] = useState<boolean>(false);
+  const [upgradeCard, setUpgradeCard] = useState<boolean>(false);
 
   const [dataAsync, setDataAsync] = useState<boolean>(false);
 
@@ -595,8 +595,8 @@ const DataProvider = ({ children }: DataProviderProps) => {
       setFreeCard,
       statisticsCard,
       setStatisticsCard,
-      vipPlansCard,
-      setVipPlansCard,
+      upgradeCard,
+      setUpgradeCard,
       snackbarState,
       setSnackbarState,
       playSound: playSoundMemo,
@@ -680,7 +680,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
       userAccuracy,
       freeCard,
       vipCard,
-      vipPlansCard,
+      upgradeCard,
       bookmarks,
       firebaseLoaded,
       userPlan,

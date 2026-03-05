@@ -8,7 +8,8 @@ import {
     ActivityIndicator,
     Pressable,
     Vibration,
-    Modal
+    Modal,
+    Linking
 } from 'react-native';
 import React, { useRef, useState, useContext, useEffect } from 'react';
 import {
@@ -35,79 +36,79 @@ import { useColors } from '../hooks/useColors';
 import { useVip } from '../hooks/useVip';
 import { auth, database } from '../context/firebaseConfig';
 import { ref, update } from '@react-native-firebase/database';
+import { useSize } from '../hooks/useSize';
 const rewardedAd = RewardedAd.createForAdRequest(TestIds.REWARDED);
 
-export default function VipPlansCard() {
+export default function UpgradeCard() {
     const { userPlan, setUserPlan } = useVip()
     const {
-        heartsCard, setHeartsCard, setVipCard,
-        vipPlansCard, setVipPlansCard,
-        setHelpPoint,
-        helpPoint,
-        quizData,
-        answersRef,
-        globTrueAns, setGlobTrueAns,
-        globFalseAns,
-        setGlobFalseAns,
+        upgradeCard, setUpgradeCard,
     } = useContext(DataContext);
     const colors = useColors();
+    const { screen,
+        widthScale,
+        heightScale,
+        sizeScale,
+    } = useSize();
 
 
+    // const [activePlan, setActivePlan] = useState(null);
 
-    const [activePlan, setActivePlan] = useState(null);
+    // const handleSubscribe = async () => {
+    //     // No parentheses after auth!
+    //     const currentUser = auth.currentUser;
 
-    const handleSubscribe = async () => {
-        // No parentheses after auth!
-        const currentUser = auth.currentUser;
+    //     if (!activePlan || !currentUser) {
+    //         console.log("Cannot subscribe: No plan selected or user not found");
+    //         return;
+    //     }
 
-        if (!activePlan || !currentUser) {
-            console.log("Cannot subscribe: No plan selected or user not found");
-            return;
-        }
+    //     try {
+    //         // 1. Write to Firebase (The Master Truth)
+    //         // Note: Using your 'database' export from config
+    //         await update(ref(database, `users/${currentUser.uid}`), {
+    //             UserPlan: activePlan
+    //         });
 
-        try {
-            // 1. Write to Firebase (The Master Truth)
-            // Note: Using your 'database' export from config
-            await update(ref(database, `users/${currentUser.uid}`), {
-                UserPlan: activePlan
-            });
+    //         // 2. Update local state
+    //         setUserPlan(activePlan);
 
-            // 2. Update local state
-            setUserPlan(activePlan);
+    //         // 3. Close the card
+    //         setVipCard(true);
+    //         setUpgradeCard(false);
 
-            // 3. Close the card
-            setVipCard(true);
-            setVipPlansCard(false);
+    //         console.log("✅ Firebase updated with plan:", activePlan);
+    //     } catch (error) {
+    //         console.error("❌ Firebase update failed:", error);
+    //     }
+    // };
 
-            console.log("✅ Firebase updated with plan:", activePlan);
-        } catch (error) {
-            console.error("❌ Firebase update failed:", error);
-        }
-    };
+    // const plansListPress = (item: { label: any; price?: string; planType: any; }) => {
+    //     setActivePlan(item.label === item.planType ? null : item.planType);
 
-    const plansListPress = (item: { label: any; price?: string; planType: any; }) => {
-        setActivePlan(item.label === item.planType ? null : item.planType);
-
-        // Toggle or switch
-    };
-    const plansList = [
-        { label: 'Monthly plan', price: '0.99$', planType: 'monthly', period: 'month' },
-        { label: 'Yearly plan', price: '10.00$', planType: 'yearly', period: 'year' },
-        { label: 'Lifetime plan', price: '20.00$', planType: 'lifetime', period: 'lifetime' }
-    ]
+    //     // Toggle or switch
+    // };
+    // const plansList = [
+    //     { label: 'Lifetime Purchase plan', price: '500 da', period: 'lifetime' }
+    // ]
 
     const vipItems = [
         { label: 'Unlimited Hearts' },
-        { label: 'Unlock all Theams' },
-        { label: 'Get Daily Help Points' },
-        { label: 'Unlock all Quiz Categories' },
+        { label: 'Unlock Tests' },
+        { label: 'Infinite Bookmarks' },
+        { label: 'Unlock Priority' },
+        { label: 'No Ads' },
+        { label: 'Unlimited Hearts' },
+        { label: 'Unlock Tests' },
+        { label: 'Infinite Bookmarks' },
+        { label: 'Unlock Priority' },
         { label: 'No Ads' },
     ]
 
     return (
         <Modal
-            visible={vipPlansCard}
-            onRequestClose={() => setVipPlansCard(false)}
+            visible={upgradeCard}
+            onRequestClose={() => setUpgradeCard(false)}
             transparent
             animationType="slide"
         >
@@ -120,20 +121,13 @@ export default function VipPlansCard() {
                 alignContent: 'center',
                 alignItems: 'center',
             }} >
-                <Pressable style={
-                    {
+                <Pressable
+                    style={{
                         width: "100%", height: "100%",
                         backgroundColor: '#0000002f',
+                    }}
+                    onPress={() => { setUpgradeCard(false) }} />
 
-                    }
-                }
-                    onPress={() => {
-                        setVipPlansCard(false)
-                    }
-
-                    }>
-
-                </Pressable>
                 <View style={[{
                     backgroundColor: colors.secondary,
                     position: 'absolute',
@@ -141,11 +135,12 @@ export default function VipPlansCard() {
                     zIndex: 99999,
                     borderTopEndRadius: 10,
                     borderTopStartRadius: 10,
-                    width: '100%', height: '60%',
+                    width: '100%', height: '70%',
                     alignContent: 'center',
-                    justifyContent: 'space-between',
-                    elevation: 5
+                    justifyContent: 'flex-start',
+                    elevation: 5,
                 }]}>
+
                     <View style={{
                         width: '100%',
                         height: 50,
@@ -192,7 +187,7 @@ export default function VipPlansCard() {
                             <Pressable
                                 android_ripple={{ color: colors.primary, borderless: false }}
                                 onPress={() => {
-                                    setVipPlansCard(false)
+                                    setUpgradeCard(false)
 
                                 }}
                                 style={{
@@ -210,12 +205,35 @@ export default function VipPlansCard() {
                             </Pressable>
                         </View>
                     </View>
-
                     <View style={{
                         width: '100%',
-                        flex: 1,
+                        padding: sizeScale(10),
                         alignItems: 'center',
                         justifyContent: 'center'
+                    }}>
+                        <Image
+                            source={require('../assets/tele-qr.jpg')}
+                            style={{
+                                backgroundColor: colors.primary,
+                                marginVertical: 5,
+                                width: widthScale(screen.width * 0.45),
+                                height: heightScale(screen.width * 0.45),
+                                paddingHorizontal: 10,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                borderRadius: 8,
+                            }}
+                        />
+                    </View>
+                    <View style={{
+                        width: '100%',
+                        paddingHorizontal: sizeScale(20),
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                        gap: sizeScale(6),
+                        flexDirection: 'row',
+                        flexWrap: 'wrap'
                     }}>
                         {vipItems.map((item, index) => {
                             return (
@@ -223,13 +241,14 @@ export default function VipPlansCard() {
                                     key={index}
                                     style={{
                                         flexDirection: 'row',
-                                        width: '90%',
                                         alignItems: 'center',
                                         justifyContent: "flex-start",
                                         borderColor: 'gray',
                                         borderWidth: 0,
-                                        height: 30,
+                                        height: heightScale(30),
                                         borderRadius: 8,
+                                        backgroundColor: colors.primary,
+
                                     }}>
                                     <View style={{
                                         alignItems: 'center',
@@ -246,6 +265,7 @@ export default function VipPlansCard() {
                                     <View style={{
                                         alignItems: 'center',
                                         justifyContent: 'center',
+                                        paddingHorizontal: 5
                                     }}>
                                         <Text style={{ color: "white", fontWeight: '600' }}>{item.label}</Text>
                                     </View>
@@ -254,87 +274,43 @@ export default function VipPlansCard() {
                         })}
 
                     </View>
+
+
                     <View style={{
                         width: '100%',
-                        flex: 1,
+                        height: 90,
                         alignItems: 'center',
                         justifyContent: 'center'
-                    }}>
-                        {plansList.map((item, index) => {
-                            return (
-                                <Pressable
-                                    key={index}
-                                    android_ripple={{ color: colors.secondary, borderless: false }}
-                                    onPress={() => plansListPress(item)}
-                                    style={{
-                                        backgroundColor: colors.primary,
-                                        borderColor: activePlan === item.planType ? 'orange' : 'transparent',
-                                        borderWidth: 1,
-                                        marginVertical: 5,
-                                        width: '90%',
-                                        height: 50,
-                                        paddingHorizontal: 10,
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        borderRadius: 8,
-                                    }}
-                                >
-                                    {activePlan === item.planType &&
-                                        <MaterialCommunityIcons
-                                            name="check-circle"
-                                            color={colors.primary}
-                                            size={16}
-                                            style={{
-                                                backgroundColor: 'orange',
-                                                borderRadius: 50,
-                                                position: "absolute",
-                                                right: -5,
-                                                top: -5
-                                            }}
-                                        />}
-                                    <View style={{
-                                        height: 30,
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}>
-                                        <Text style={{ fontWeight: '700', color: colors.text.primary }}>{item.label}</Text>
-                                    </View>
-                                    <View style={{
-                                        height: 30,
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}>
-                                        <Text style={{ fontWeight: '700', color: colors.text.primary }}>{item.price}</Text>
-                                        <Text style={{ fontWeight: '600', color: colors.text.primary }}> / </Text>
-                                        <Text style={{ fontWeight: '600', color: colors.text.primary }}>{item.period}</Text>
-                                    </View>
-                                </Pressable>
-                            )
-                        })}
-                    </View>
+                    }} />
+                    
                     <View style={{
                         width: '100%',
-                        paddingBottom: 15,
+                        paddingBottom: sizeScale(30),
+                        position: 'absolute',
+                        bottom: 0,
                         alignItems: 'center',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        rowGap: sizeScale(20),
                     }}>
+                        <Text style={{ fontWeight: '500', color: colors.text.primary }}>Get Lifetime VIP</Text>
                         <Pressable
-                            android_ripple={{ color: colors.secondary, borderless: false }}
-                            onPress={handleSubscribe}
-                            disabled={!activePlan}
+                            android_ripple={{ color: colors.secondary, borderless: false, foreground: true }}
+                            onPress={() => { Linking.openURL('https://t.me/+lXpXxnihJOo4NDJk') }}
                             style={[{
                                 backgroundColor: 'orange',
-                                width: '90%',
-                                height: 45,
+                                width: '85%',
+                                flexDirection: "row",
+                                height: 40,
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 borderRadius: 8,
-                            }, !activePlan && { opacity: 0.7 }]}
+                            }]}
                         >
-                            <Text style={{ fontWeight: '700' }}>Subscribe</Text>
+                            <Text style={{ fontSize: sizeScale(17), fontWeight: 'bold', color: 'black' }}>700 da</Text>
+                            <Text style={{ fontSize: sizeScale(16), fontWeight: 'bold', color: 'black' }}> | </Text>
+                            <Text style={{ fontSize: sizeScale(16), fontWeight: 'bold', color: 'black' }}>Lifetime</Text>
+
+                            {/* <Text style={{ fontWeight: 'bold', color: 'black' }}>CONTACT US</Text> */}
                         </Pressable>
                     </View>
                 </View>

@@ -595,7 +595,7 @@ const Profile = () => {
                     icon={false}
                   />) : null}
             </View>
-
+            
             <View
               style={{
                 flexDirection: 'row',
@@ -611,7 +611,7 @@ const Profile = () => {
                   fontWeight: '600',
                 }}
               >
-                {userAccuracy} XP
+                id: {user.uid}
               </Text>
 
             </View>
