@@ -31,7 +31,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Home() {
-  const { screen, isMEDscreen } = useSize();
+  const { screen,
+    widthScale,
+    heightScale,
+    sizesScale,
+  } = useSize();
   const { user } = useGoogleSignIn();
   const { userVip } = useVip();
   const { userAccuracy } = useUserAccuracy();
@@ -177,11 +181,11 @@ export default function Home() {
           }}
         />
         <View style={[{
-          paddingHorizontal: isMEDscreen ? 15 : 20,
+          paddingHorizontal: sizesScale(20),
           flexDirection: 'row',
           width: '100%',
 
-          height: isMEDscreen ? 60 : 70,
+          height: heightScale(70),
           justifyContent: 'space-between',
           alignItems: 'center',
           elevation: 3,
@@ -192,7 +196,7 @@ export default function Home() {
             alignItems: 'center',
             justifyContent: 'flex-start',
             flexDirection: 'row',
-            height: isMEDscreen ? 40 : 50,
+            height: heightScale(50),
             columnGap: 10,
             flex: 1,
           }}>
@@ -203,8 +207,8 @@ export default function Home() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: colors.secondary,
-                width: isMEDscreen ? 32 : 38,
-                height: isMEDscreen ? 32 : 38,
+                width: widthScale(38),
+                height: heightScale(38),
               }}
               onPress={() => {
                 if (sound) playSound('settingsButton');
@@ -222,7 +226,7 @@ export default function Home() {
               ) :
                 <MaterialCommunityIcons
                   name='account'
-                  size={isMEDscreen ? 25 : 35}
+                  size={35}
                   color={colors.text.primary}
                 />
 
@@ -243,7 +247,7 @@ export default function Home() {
               }}>
                 {!firebaseLoaded ?
                   <ShimmerPlaceHolder
-                    style={{ width: 60, height: 15 }}
+                    style={{ width: widthScale(60), height: heightScale(15) }}
                     shimmerColors={[
                       colors.secondary,
                       '#6161617c',
@@ -251,14 +255,14 @@ export default function Home() {
                     ]}
                   /> :
                   userName ? <Text style={{
-                    fontSize: isMEDscreen ? 13 : 16,
+                    fontSize: sizesScale(16),
                     fontWeight: '500',
                     color: colors.text.primary,
                   }}>
                     {userName}
                   </Text> :
                     <Text style={{
-                      fontSize: isMEDscreen ? 13 : 16,
+                      fontSize: sizesScale(16),
                       fontWeight: '500',
                       color: colors.text.primary,
                     }}>
@@ -276,7 +280,7 @@ export default function Home() {
                 {userAccuracy ?
                   <Text style={[{
                     color: colors.text.primary,
-                    fontSize: isMEDscreen ? 10 : 13,
+                    fontSize: sizesScale(13),
                     textAlign: 'center',
                   }]}>
                     {userAccuracy}
@@ -284,7 +288,7 @@ export default function Home() {
                   :
                   <Text style={[{
                     color: colors.text.primary,
-                    fontSize: 13,
+                    fontSize: sizesScale(13),
                     textAlign: 'center',
                   }]}>
                     0
@@ -292,7 +296,7 @@ export default function Home() {
                 }
                 <FontAwesome5
                   name='percentage'
-                  size={isMEDscreen ? 10 : 13}
+                  size={sizesScale(13)}
                   color={colors.text.secondary}
                 />
               </View>
@@ -302,15 +306,15 @@ export default function Home() {
             (<FreeBadge
               backColor={colors.secondary}
               elevation={3}
-              height={isMEDscreen ? 25 : 28}
-              width={isMEDscreen ? 40 : 45}
+              height={heightScale(28)}
+              width={widthScale(45)}
             />)
             :
             (<VipBadge
-              width={isMEDscreen ? 40 : 45}
-              height={isMEDscreen ? 25 : 28}
+              width={widthScale(45)}
+              height={heightScale(28)}
               title={false}
-              iconSize={isMEDscreen ? 12 : 15}
+              iconSize={sizesScale(15)}
               iconColor={'#dba400'}
               radius={5}
               backColor={colors.secondary}
@@ -328,9 +332,9 @@ export default function Home() {
         contentContainerStyle={{
           alignItems: 'center',
           justifyContent: 'flex-start',
-          paddingTop: 70,
-          paddingBottom: 70,
-          rowGap: 10,
+          paddingTop: sizesScale(70),
+          paddingBottom: sizesScale(70),
+          rowGap: sizesScale(10),
         }}
         style={{
           flex: 1,
@@ -345,26 +349,26 @@ export default function Home() {
             width: '100%',
             flex: 1,
             flexWrap: 'wrap',
-            gap: 10,
+            gap: sizesScale(10),
           }}
         >
           {!firebaseLoaded ?
             <View style={{
               alignItems: 'center',
               width: '90%',
-              height: screen.width * 0.25,
+              height: heightScale(screen.width * 0.25),
               borderRadius: 8,
               flexDirection: 'row-reverse',
               justifyContent: 'flex-start',
               overflow: 'hidden',
-              gap: 15
+              gap: sizesScale(15)
             }}>
               <ShimmerPlaceHolder
                 style={{
                   position: 'absolute',
                   width: "100%",
                   height: '100%',
-                  borderRadius: 8,
+                  borderRadius: sizesScale(8),
                 }}
                 shimmerColors={[
                   colors.secondary,
@@ -374,16 +378,16 @@ export default function Home() {
               />
               <View
                 style={{
-                  width: screen.width * 0.22,
-                  height: screen.width * 0.22,
-                  marginRight: 10,
-                  borderRadius: 8,
+                  width: widthScale(screen.width * 0.22),
+                  height: heightScale(screen.width * 0.22),
+                  marginRight: sizesScale(10),
+                  borderRadius: sizesScale(8),
                   backgroundColor: colors.primary,
                 }}
               />
               <View style={{
                 width: "100%",
-                height: screen.width * 0.22,
+                height: heightScale(screen.width * 0.22),
                 flexDirection: 'column',
                 alignItems: 'flex-end',
                 justifyContent: "space-evenly"
@@ -392,21 +396,21 @@ export default function Home() {
                   style={{
                     backgroundColor: colors.primary,
                     width: "50%",
-                    height: 30,
+                    height: heightScale(30),
                   }}
                 />
                 <View
                   style={{
                     backgroundColor: colors.primary,
                     width: "30%",
-                    height: 20,
+                    height: heightScale(20),
                   }}
                 />
                 <View
                   style={{
                     backgroundColor: colors.primary,
                     width: "60%",
-                    height: 10,
+                    height: heightScale(10),
                   }}
                 />
               </View>
@@ -424,8 +428,8 @@ export default function Home() {
                   alignItems: 'center',
                   backgroundColor: colors.secondary,
                   elevation: 3, width: '90%',
-                  height: isMEDscreen ? screen.width * 0.22 : screen.width * 0.25,
-                  borderRadius: 8,
+                  height: heightScale(screen.width * 0.25),
+                  borderRadius: sizesScale(8),
                   flexDirection: 'row',
                   justifyContent: 'center',
                   overflow: 'hidden',
@@ -441,8 +445,8 @@ export default function Home() {
                     backgroundColor: 'transparent',
                     width: '100%',
                     height: '100%',
-                    paddingHorizontal: 10,
-                    paddingVertical: 10,
+                    paddingHorizontal: sizesScale(10),
+                    paddingVertical: sizesScale(10),
                     flex: 1,
                   },
                 ]}
@@ -451,7 +455,7 @@ export default function Home() {
                   style={{
                     fontFamily: 'Cairo-Bold',
                     color: colors.text.primary,
-                    fontSize: isMEDscreen ? 13 : 16,
+                    fontSize: sizesScale(16),
                   }}
                 >
                   {contentItems[0]?.label}
@@ -461,7 +465,7 @@ export default function Home() {
                     fontFamily: 'Cairo',
 
                     color: colors.text.secondary,
-                    fontSize: isMEDscreen ? 12 : 14,
+                    fontSize: sizesScale(14),
                   }}
                 >
                   {contentItems[0]?.length} {contentItems[0]?.sub}
@@ -475,9 +479,9 @@ export default function Home() {
                 }}>
                   <View style={{
                     width: '90%',
-                    height: isMEDscreen ? 5 : 8,
+                    height: heightScale(8),
                     backgroundColor: colors.text.secondary,
-                    borderRadius: 10,
+                    borderRadius: sizesScale(10),
                     flexDirection: "row-reverse",
                     justifyContent: 'flex-start',
                     alignItems: "center",
@@ -487,7 +491,7 @@ export default function Home() {
                       width: '5%',
                       height: '100%',
                       backgroundColor: 'green',
-                      borderRadius: 10,
+                      borderRadius: sizesScale(10),
                       borderTopEndRadius: 0,
                       borderBottomRightRadius: 0,
 
@@ -503,7 +507,7 @@ export default function Home() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     height: '100%',
-                    width: isMEDscreen ? screen.width * 0.22 : screen.width * 0.25,
+                    width: widthScale(screen.width * 0.25),
                     overflow: 'hidden',
                     padding: 0,
                     borderRadius: 0,
@@ -515,7 +519,7 @@ export default function Home() {
                     style={{
                       width: '85%',
                       height: '85%',
-                      borderRadius: 8,
+                      borderRadius: sizesScale(8),
                       resizeMode: 'cover',
                     }}
                     source={{ uri: contentItems[0]?.img }}
@@ -540,20 +544,20 @@ export default function Home() {
                   alignItems: 'center',
                   backgroundColor: 'transparent',
                   width: '90%',
-                  height: screen.width * 0.25,
-                  borderRadius: 8,
+                  height: heightScale(screen.width * 0.25),
+                  borderRadius: sizesScale(8),
                   flexDirection: 'row-reverse',
                   justifyContent: 'flex-start',
                   overflow: 'hidden',
-                  padding: 10,
-                  gap: 15
+                  padding: sizesScale(10),
+                  gap: sizesScale(15)
                 }}>
                   <ShimmerPlaceHolder
                     key={`shimmer-${index}`}
                     style={{
-                      width: screen.width * 0.22,
-                      height: screen.width * 0.22,
-                      borderRadius: 8,
+                      width: widthScale(screen.width * 0.22),
+                      height: heightScale(screen.width * 0.22),
+                      borderRadius: sizesScale(8),
                     }}
                     shimmerColors={[
                       colors.secondary,
@@ -563,7 +567,7 @@ export default function Home() {
                   />
                   <View style={{
                     width: "100%",
-                    height: screen.width * 0.22,
+                    height: heightScale(screen.width * 0.22),
                     flexDirection: 'column',
                     alignItems: 'flex-end',
                     justifyContent: "space-evenly"
@@ -571,7 +575,7 @@ export default function Home() {
                     <ShimmerPlaceHolder
                       style={{
                         width: "50%",
-                        height: 30,
+                        height: heightScale(30),
                       }}
                       shimmerColors={[
                         colors.secondary,
@@ -582,7 +586,7 @@ export default function Home() {
                     <ShimmerPlaceHolder
                       style={{
                         width: "30%",
-                        height: 20,
+                        height: heightScale(20),
                       }}
                       shimmerColors={[
                         colors.secondary,
@@ -607,9 +611,9 @@ export default function Home() {
                     alignItems: 'center',
                     backgroundColor: 'transparent',
                     width: '90%',
-                    height: isMEDscreen ? screen.width * 0.22 : screen.width * 0.25,
+                    height: heightScale(screen.width * 0.25),
 
-                    borderRadius: 8,
+                    borderRadius: sizesScale(8),
                     flexDirection: 'row',
                     justifyContent: 'center',
                     overflow: 'hidden',
@@ -625,13 +629,13 @@ export default function Home() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     zIndex: 2,
-                    padding: 15,
+                    padding: sizesScale(15),
                   }}
                 >
                   <SimpleLineIcons
                     name="arrow-left"
                     color={colors.text.secondary}
-                    size={isMEDscreen ? 8 : 10}
+                    size={sizesScale(10)}
                   />
                 </View>
                 <View
@@ -642,8 +646,8 @@ export default function Home() {
                       backgroundColor: 'transparent',
                       width: '100%',
                       height: '100%',
-                      paddingHorizontal: 10,
-                      paddingVertical: 10,
+                      paddingHorizontal: sizesScale(10),
+                      paddingVertical: sizesScale(10),
                       flex: 1,
                     },
                   ]}
@@ -652,7 +656,7 @@ export default function Home() {
                     style={{
                       fontFamily: 'Cairo-Bold',
                       color: colors.text.primary,
-                      fontSize: isMEDscreen ? 13 : 16,
+                      fontSize: sizesScale(16),
                     }}
                   >
                     {item?.label}
@@ -662,7 +666,7 @@ export default function Home() {
                       fontFamily: 'Cairo',
 
                       color: colors.text.secondary,
-                      fontSize: isMEDscreen ? 12 : 14,
+                      fontSize: sizesScale(14),
                     }}
                   >
                     {item?.length} {item?.sub}
@@ -674,7 +678,7 @@ export default function Home() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       height: '100%',
-                      width: isMEDscreen ? screen.width * 0.22 : screen.width * 0.25,
+                      width: widthScale(screen.width * 0.25),
                       overflow: 'hidden',
                       padding: 0,
                       borderRadius: 0,
@@ -686,7 +690,7 @@ export default function Home() {
                       style={{
                         width: '85%',
                         height: '85%',
-                        borderRadius: 10,
+                        borderRadius: sizesScale(10),
                         resizeMode: 'cover',
                       }}
                       source={{ uri: item?.img }}
@@ -713,7 +717,7 @@ export default function Home() {
             alignItems: 'center',
             justifyContent: 'flex-end',
             flexDirection: 'row',
-            columnGap: 5,
+            columnGap: sizesScale(5),
           }}
         >
           <View
@@ -726,7 +730,7 @@ export default function Home() {
             <MaterialCommunityIcons
               name="arrow-top-left"
               color={colors.text.secondary}
-              size={isMEDscreen ? 14 : 18}
+              size={sizesScale(18)}
             />
           </View>
 
@@ -734,7 +738,7 @@ export default function Home() {
             style={{
               fontFamily: 'Cairo',
               color: colors.text.secondary,
-              fontSize: isMEDscreen ? 13 : 16,
+              fontSize: sizesScale(16),
               textAlign: 'center',
             }}
           >
@@ -750,7 +754,7 @@ export default function Home() {
             width: '90%',
             flex: 1,
             flexWrap: 'wrap',
-            gap: 7,
+            gap: sizesScale(7),
           }}
         >
           {extSources.map((item: any, index: number) => {
@@ -760,8 +764,8 @@ export default function Home() {
                   key={`shimmer-${index}`}
                   style={{
                     width: '100%',
-                    height: screen.width * 0.25,
-                    borderRadius: 8,
+                    height: heightScale(screen.width * 0.25),
+                    borderRadius: sizesScale(8),
                   }}
                   shimmerColors={[
                     colors.secondary,
@@ -788,23 +792,23 @@ export default function Home() {
                     alignItems: 'center',
                     backgroundColor: colors.secondary,
                     width: '100%',
-                    height: isMEDscreen ? screen.width * 0.22 : screen.width * 0.25,
-                    borderRadius: 8,
+                    height: heightScale(screen.width * 0.25),
+                    borderRadius: sizesScale(8),
                     flexDirection: 'row-reverse',
                     justifyContent: 'space-evenly',
-                    paddingHorizontal: isMEDscreen ? 15 : 20,
-                    paddingVertical: 10,
+                    paddingHorizontal: sizesScale(20),
+                    paddingVertical: sizesScale(10),
                     overflow: 'hidden',
                     elevation: 5,
-                    columnGap: 10,
+                    columnGap: sizesScale(10),
                   },
                 ]}
               >
                 <Image
                   style={{
-                    width: isMEDscreen ? screen.width * 0.20 : screen.width * 0.35,
+                    width: widthScale(screen.width * 0.35),
                     height: '100%',
-                    borderRadius: 10,
+                    borderRadius: sizesScale(10),
                     resizeMode: 'cover',
                   }}
                   source={{ uri: item?.img }}
@@ -816,7 +820,7 @@ export default function Home() {
                     alignItems: 'flex-end',
                     justifyContent: 'center',
                     flex: 1,
-                    rowGap: 5,
+                    rowGap: sizesScale(5),
                     zIndex: 2,
                   }}
                 >
@@ -824,7 +828,7 @@ export default function Home() {
                     style={{
                       fontFamily: 'Cairo',
                       color: colors.text.primary,
-                      fontSize: 14,
+                      fontSize: sizesScale(14),
                       textAlign: 'right',
                     }}
                   >
@@ -846,153 +850,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     position: 'relative',
-  },
-  header: {},
-  profilePicArea: {},
-  profilePicImg: {},
-  xpArea: {
-    flexDirection: 'row',
-    width: 50,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  mainContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    overflow: 'hidden',
-  },
-  statisticsAreaContainer: {
-    width: '100%',
-    paddingVertical: 10,
-    paddingBottom: 10,
-    paddingTop: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  statisticsTitleArea: {
-    paddingHorizontal: 15,
-    marginBottom: 0,
-    backgroundColor: 'transparent',
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  statisticsTitle: {
-    lineHeight: 35,
-    fontFamily: 'Cairo_600SemiBold',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  statisticsArea: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    marginTop: 5,
-    height: 100,
-    borderRadius: 10,
-  },
-  statisticsItems: {
-    backgroundColor: 'transparent',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    borderRadius: 8,
-    width: 80,
-    height: '100%',
-    marginHorizontal: 3,
-    alignItems: 'center',
-    paddingVertical: 10,
-  },
-  statisticsItemsTitle: {
-    fontSize: 12,
-    fontFamily: 'Cairo_600SemiBold',
-    textAlign: 'center',
-  },
-  mainArea: {
-    flex: 1,
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
-    position: 'relative',
-    paddingHorizontal: 10,
-  },
-  levelListItems: {
-    flexDirection: 'row-reverse',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '93%',
-    borderRadius: 20,
-    margin: 7,
-    padding: 10,
-  },
-  startBtnView: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    height: 80,
-    width: '100%',
-    alignContent: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  startBtn: {
-    textAlign: 'center',
-    borderRadius: 9,
-    width: 120,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 5,
-  },
-  startBtnText: {
-    fontFamily: 'Cairo_700Bold',
-    textAlign: 'center',
-  },
-  startButtonArea: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  startButton: {
-    backgroundColor: '#22799c',
-    textAlign: 'center',
-    borderRadius: 8,
-    width: '93%',
-    height: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 15,
-  },
-  startButtonTitle: {
-    fontFamily: 'Cairo_700Bold',
-    color: 'black',
-    fontSize: 18,
-    textAlign: 'center',
-    lineHeight: 45,
-  },
-  section: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    margin: 5,
-    backgroundColor: 'gray',
-    width: 300,
-    height: 60,
-    borderRadius: 0,
-    paddingHorizontal: 10,
-    elevation: 3,
-  },
-  statistics: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    margin: 5,
-    width: 60,
-    height: 60,
-    borderRadius: 0,
   },
 });

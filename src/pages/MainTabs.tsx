@@ -22,11 +22,6 @@ export function MainTabs() {
     const colors = useColors();
 
     const {
-        freeCard,
-        vipCard,
-        vipPlansCard,
-        statisticsCard,
-        snackOptions,
         handleLogout,
         user
     } = useContext(DataContext);

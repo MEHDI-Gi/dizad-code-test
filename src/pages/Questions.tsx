@@ -28,7 +28,11 @@ export default function Questions() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const { user, logout, initializing } = useGoogleSignIn();
-    const { lessons, screen, isMEDscreen } = useSize();
+    const { lessons, screen,
+        widthScale,
+        heightScale,
+        sizesScale,
+    } = useSize();
     const colors = useColors();
     const {
         lessonsData,
@@ -174,7 +178,7 @@ export default function Questions() {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 flexDirection: 'row-reverse',
-                                borderRadius: 8,
+                                borderRadius: sizesScale(8),
                                 overflow: 'hidden',
                                 backgroundColor: colors.secondary,
                                 elevation: 5,
@@ -191,15 +195,15 @@ export default function Questions() {
                                     alignItems: 'center',
                                     overflow: 'hidden',
                                     zIndex: 1,
-                                    paddingHorizontal: 15,
-                                    paddingVertical: 15,
+                                    paddingHorizontal: sizesScale(15),
+                                    paddingVertical: sizesScale(15),
                                 },]}
                         >
                             <Text style={{
                                 fontFamily: "Cairo",
                                 textAlign: 'right',
                                 color: colors.text.primary,
-                                fontSize: isMEDscreen ? 15 : 18,
+                                fontSize: sizesScale(18),
                             }}>
                                 {item.label}
                             </Text>
@@ -212,9 +216,9 @@ export default function Questions() {
                     < View
                         style={{
                             width: '90%',
-                            height: 70,
+                            height: heightScale(70),
                             overflow: "hidden",
-                            borderRadius: 10,
+                            borderRadius: sizesScale(10),
                             alignItems: 'center',
                             justifyContent: 'center',
                             flexDirection: 'row',
@@ -242,7 +246,7 @@ export default function Questions() {
                         position: "static",
                         top: 0,
                         backgroundColor: colors.primary,
-                        width: "100%", height: 4, flexDirection: 'row',
+                        width: "100%", height: heightScale(4), flexDirection: 'row',
                         zIndex: 9
                     }}>
                         <View style={{ height: "100%", backgroundColor: 'orange', width: `${progress}%`, }}></View>
@@ -292,11 +296,11 @@ export default function Questions() {
                                         style={{
                                             zIndex: 1,
                                             backgroundColor: colors.secondary,
-                                            width: 30,
-                                            height: 30,
-                                            borderRadius: 8,
-                                            top: 8,
-                                            right: 8,
+                                            width: widthScale(30),
+                                            height: heightScale(30),
+                                            borderRadius: sizesScale(8),
+                                            top: heightScale(8),
+                                            right: widthScale(8),
                                             position: 'absolute',
                                             alignItems: 'center',
                                             justifyContent: 'center',
@@ -315,7 +319,7 @@ export default function Questions() {
                                     </Pressable>
                                     <View style={{
                                         width: '100%',
-                                        height: screenWidth * 0.5,
+                                        height: heightScale(screenWidth * 0.5),
                                         position: 'relative',
                                         overflow: 'hidden',
                                         alignItems: 'center'
@@ -336,8 +340,8 @@ export default function Questions() {
                                                 position: 'absolute',
                                                 bottom: 0,
                                                 width: '100%',
-                                                padding: 10,
-                                                borderRadius: 18,
+                                                padding: sizesScale(10),
+                                                borderRadius: sizesScale(18),
                                                 borderBottomLeftRadius: 0,
                                                 borderBottomRightRadius: 0,
                                                 overflow: 'hidden',
@@ -362,7 +366,7 @@ export default function Questions() {
                                                 <Text style={{
                                                     fontFamily: 'Cairo',
                                                     color: colors.text.primary,
-                                                    fontSize: isMEDscreen ? 15 : 18,
+                                                    fontSize: sizesScale(18),
                                                     textAlign: 'center'
                                                 }}>
                                                     {item.label}
@@ -379,10 +383,10 @@ export default function Questions() {
                                             flex: 1,
                                         }}
                                         contentContainerStyle={{
-                                            paddingHorizontal: 15,
-                                            paddingTop: 20,
-                                            paddingBottom: 70,
-                                            gap: 4,
+                                            paddingHorizontal: sizesScale(15),
+                                            paddingTop: sizesScale(20),
+                                            paddingBottom: sizesScale(70),
+                                            gap: sizesScale(4),
                                             justifyContent: 'flex-start',
                                             alignItems: 'center',
                                         }}
@@ -395,10 +399,10 @@ export default function Questions() {
                                                 style={{
                                                     fontFamily: 'Cairo-Bold',
                                                     color: colors.text.secondary,
-                                                    fontSize: isMEDscreen ? 15 : 18,
+                                                    fontSize: sizesScale(18),
                                                     textAlign: 'right',
                                                     alignSelf: 'flex-end',
-                                                    padding: 5,
+                                                    padding: sizesScale(5),
                                                     backgroundColor: colors.primary,
 
                                                 }}>
@@ -412,10 +416,10 @@ export default function Questions() {
                                                 style={{
                                                     fontFamily: 'Cairo',
                                                     color: 'orange',
-                                                    fontSize: 16,
+                                                    fontSize: sizesScale(16),
                                                     textAlign: 'right',
                                                     alignSelf: 'flex-end',
-                                                    padding: 5,
+                                                    padding: sizesScale(5),
                                                     backgroundColor: colors.primary,
                                                 }}>
                                                 {item}
@@ -430,9 +434,9 @@ export default function Questions() {
                                         justifyContent: 'flex-end',
                                         flexDirection: 'row',
                                         width: "100%",
-                                        height: 70,
-                                        paddingHorizontal: 10,
-                                        columnGap: 10,
+                                        height: heightScale(70),
+                                        paddingHorizontal: sizesScale(10),
+                                        columnGap: sizesScale(10),
                                     }}>
                                         <View style={{
                                             position: 'absolute',
@@ -451,8 +455,8 @@ export default function Questions() {
                                                 borderRadius: 8,
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
-                                                width: isMEDscreen ? 35 : 40,
-                                                height: isMEDscreen ? 35 : 40,
+                                                width: widthScale(40),
+                                                height: heightScale(40),
                                                 backgroundColor: colors.secondary
                                             }}
                                             onPress={() => handleBookmark('questions', {
@@ -464,7 +468,7 @@ export default function Questions() {
                                                 ? (
                                                     <ActivityIndicator size={'small'} color={colors.text.primary} />
                                                 ) : (
-                                                    <MaterialCommunityIcons size={isMEDscreen ? 22 : 25} color={colors.text.primary} name={
+                                                    <MaterialCommunityIcons size={sizesScale(25)} color={colors.text.primary} name={
                                                         !isBookmarked('questions', { id: item.id ?? `questions-${index}` }) ?
                                                             'bookmark-outline' : 'bookmark'} />)}
                                         </Pressable>

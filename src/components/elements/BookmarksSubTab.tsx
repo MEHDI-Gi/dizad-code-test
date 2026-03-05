@@ -19,7 +19,11 @@ import { useColors } from '../../hooks/useColors.ts';
 
 export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBarProps) {
 
-    const { screen, isMEDscreen } = useSize()
+    const { screen,
+        widthScale,
+        heightScale,
+        sizesScale,
+     } = useSize()
 
     const {
         isGradient, texts, language
@@ -62,7 +66,7 @@ export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBar
             }} />
             <View style={{
                 width: '90%',
-                height: isMEDscreen ? 27 : 30,
+                height: heightScale(30),
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -110,12 +114,12 @@ export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBar
                                 {config.set === 'MaterialCommunityIcons' ?
                                     <MaterialCommunityIcons
                                         name={config.icon}
-                                        size={isMEDscreen ? 15 : 20}
+                                        size={sizesScale(20)}
                                         color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                     /> :
                                     <Entypo
                                         name={config.icon}
-                                        size={isMEDscreen ? 15 : 20}
+                                        size={sizesScale(20)}
                                         color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                     />
                                 }
@@ -131,7 +135,7 @@ export default function BookmarksSubTab({ state, navigation }: MaterialTopTabBar
                                 <Text style={{
                                     color: colors.subTab.items.primary,
                                     fontFamily: 'Cairo-Bold',
-                                    fontSize: isMEDscreen ? 11 : 15
+                                    fontSize: sizesScale(15)
                                 }}>{config.label}</Text>
                             </View>}
                         </Pressable>

@@ -559,13 +559,11 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
   const { width: fullScreenWidth, height: fullScreenHeight } = Dimensions.get('screen');
 
-  const [MEDscreen, setMEDscreen] = useState<boolean>(false);
 
   const contextValue = useMemo(
     () => ({
       screenWidth, screenHeight,
       fullScreenWidth, fullScreenHeight,
-      MEDscreen, setMEDscreen,
       user, initializing, signIn, logout,
       bookmarkLoading,
       setBookmarkLoading,
@@ -665,7 +663,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
     [
       screenWidth, screenHeight,
       fullScreenWidth, fullScreenHeight,
-      MEDscreen,
       incrementView,
       accuracyProgress,
       user, initializing, signIn, logout,

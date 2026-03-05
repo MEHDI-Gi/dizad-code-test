@@ -17,7 +17,6 @@ const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 import { useSize } from '../hooks/useSize.ts';
 import { useGoogleSignIn } from '../context/auth';
-import BottomTab from '../components/elements/BottomTab.tsx';
 
 import {
     CompositeNavigationProp,

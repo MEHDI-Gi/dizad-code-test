@@ -21,7 +21,11 @@ export default function Login({ navigation }: LoginProps) {
     user, initializing, signIn,
     imgBase,
   } = useContext(DataContext);
-  const { screen, isMEDscreen } = useSize();
+  const { screen,
+    widthScale,
+    heightScale,
+    sizesScale,
+  } = useSize();
 
 
   const [isAuthProcessing, setIsAuthProcessing] = useState(false);
@@ -134,7 +138,7 @@ export default function Login({ navigation }: LoginProps) {
     }
   };
 
-  const iconsSizes = isMEDscreen ? 15 : 20;
+  const iconsSizes = widthScale(20);
 
   if (user || initializing) {
     return (
@@ -182,13 +186,13 @@ export default function Login({ navigation }: LoginProps) {
           flexDirection: 'column',
           width: "100%",
           zIndex: 10,
-          paddingHorizontal: 20,
-          paddingVertical: isMEDscreen ? 10 : 20,
+          paddingHorizontal: sizesScale(20),
+          paddingVertical: sizesScale(20),
           justifyContent: "flex-end",
           alignItems: "flex-end",
           backgroundColor: colors.primary,
-          rowGap: 10,
-          borderBottomStartRadius: 50,
+          rowGap: sizesScale(10),
+          borderBottomStartRadius: sizesScale(50),
           overflow: 'hidden'
         }}>
           <LinearGradient
@@ -208,14 +212,14 @@ export default function Login({ navigation }: LoginProps) {
           <Text style={{
             fontFamily: 'Cairo-Bold',
             color: colors.button.primary,
-            fontSize: isMEDscreen ? 20 : 25,
+            fontSize: sizesScale(25),
             zIndex: 3,
 
           }}>{title}</Text>
           <Text style={{
             fontFamily: 'Cairo-Medium',
             color: colors.text.primary,
-            fontSize: isMEDscreen ? 15 : 20,
+            fontSize: sizesScale(20),
             zIndex: 3,
           }}>{sub}</Text>
         </View>
@@ -226,8 +230,8 @@ export default function Login({ navigation }: LoginProps) {
           justifyContent: 'center',
           alignItems: "center",
           position: 'relative',
-          paddingHorizontal: 40,
-          paddingVertical: 20,
+          paddingHorizontal: sizesScale(40),
+          paddingVertical: sizesScale(20),
           zIndex: 1,
         }}>
 
@@ -256,7 +260,7 @@ export default function Login({ navigation }: LoginProps) {
                 <Text key={index} style={{
                   fontFamily: 'Cairo-Bold',
                   color: colors.text.primary,
-                  fontSize: isMEDscreen ? 15 : 18,
+                  fontSize: sizesScale(18),
                 }}>{item.label}</Text>
                 {
                   item.set === 'MaterialCommunityIcons' ?
@@ -298,18 +302,15 @@ export default function Login({ navigation }: LoginProps) {
                 justifyContent: 'space-evenly',
                 borderRadius: 8,
                 overflow: 'hidden',
-                height: 50,
+                height: heightScale(50),
                 width: '100%'
               }, { opacity: isAuthProcessing ? 0.7 : 1 },
-              isMEDscreen && {
-                width: "100%",
-                height: 45,
-              }]}
+              ]}
               android_ripple={{ foreground: true, color: colors.primary, borderless: false }}
               onPress={handleGoogleSignIn}
             >
               <View style={{
-                width: 40,
+                width: widthScale(40),
                 height: "100%",
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -318,20 +319,15 @@ export default function Login({ navigation }: LoginProps) {
                   <Image
                     source={require('../assets/icons/google.png')}
                     style={[{
-                      width: 25,
-                      height: 25,
-                    }, isMEDscreen && {
-                      width: 20,
-                      height: 20,
+                      width: widthScale(25),
+                      height: heightScale(25),
                     }]}
                   /> :
                   <ActivityIndicator color="#ffffff" />}
               </View>
             </Pressable>
             <Text style={[{
-              fontSize: 15, fontWeight: '600', color: '#8b8b8b'
-            }, isMEDscreen && {
-              fontSize: 12,
+              fontSize: sizesScale(15), fontWeight: '600', color: '#8b8b8b'
             }
             ]}>
               Continue with Google
@@ -350,141 +346,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: "center",
     zIndex: 1,
-  },
-  logoArea: {
-
-    flexDirection: 'row',
-    width: "85%",
-    height: 100,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: 'transparent',
-    zIndex: 1,
-  },
-  logo: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  main: {
-    flex: 1,
-    width: "85%",
-    justifyContent: 'center',
-    alignItems: "center",
-    position: 'relative',
-    zIndex: 1,
-  },
-  loginInfo: {
-
-  },
-  userPicAdd: {
-
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: "lightgray",
-    borderRadius: 8,
-  },
-  userProfilePic: {
-    borderRadius: 8,
-    width: 50,
-    height: 50,
-  },
-  textInpArea: {
-    position: 'relative',
-    width: '100%',
-    height: 70,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 15,
-    zIndex: 1,
-  },
-  userInput: {
-    width: "95%",
-    height: 40,
-    fontSize: 15,
-    fontWeight: "bold",
-    borderRadius: 8,
-    textAlign: "center",
-    justifyContent: "center",
-    fontFamily: "Cairo_400Regular",
-  },
-  loginBtnArea: {
-    width: '100%',
-    height: 65,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 0,
-    zIndex: 1,
-  },
-  loginBtn: {
-    borderRadius: 5,
-    width: '95%',
-    height: 35,
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden'
-
-  },
-  googleLoginArea: {
-    width: '100%',
-    height: 70,
-    backgroundColor: 'transparent',
-    flexDirection: "row",
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 0,
-    zIndex: 1,
-  },
-  googleBtn: {
-    borderWidth: 2,
-    shadowColor: 'black',
-    shadowOffset: { width: 0.5, height: 1 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 0,
-  },
-  googleIcon: {
-    backgroundColor: 'white',
-    color: "#1e30a6",
-    borderRadius: 50,
-    padding: 5,
-  },
-  gustLoginArea: {
-    position: "absolute",
-    bottom: '15%',
-    width: '100%',
-    height: 70,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 0,
-    zIndex: 1,
-  },
-  gustBtn: {
-    borderWidth: 2,
-    shadowColor: 'black',
-    shadowOffset: { width: 0.5, height: 1 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 0,
-  },
-  footer: {
-    width: "100%",
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1,
-  },
-  backEffect: {
-    backgroundColor: "white",
-    width: "100%",
-    height: "90%",
-    borderRadius: 20,
-    position: "absolute",
-    bottom: -20,
-    zIndex: 0
   },
 
 });

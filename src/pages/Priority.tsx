@@ -1,6 +1,5 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Pressable, Image, StatusBar, ActivityIndicator, DrawerLayoutAndroid, Dimensions, Modal } from 'react-native';
-import { TextInput, Button, IconButton, MD3Colors, Icon, Appbar } from 'react-native-paper';
 import { DataContext } from '../context/contextData.tsx';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -27,7 +26,11 @@ export default function Priority() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const { user, logout, initializing } = useGoogleSignIn();
-    const { lessons, screen, isMEDscreen } = useSize();
+    const { lessons, screen,
+        widthScale,
+        heightScale,
+        sizesScale,
+    } = useSize();
     const { userVip } = useVip();
 
     const colors = useColors();
@@ -111,8 +114,8 @@ export default function Priority() {
                     flexWrap: 'wrap',
                     alignItems: 'flex-start',
                     justifyContent: 'space-evenly',
-                    paddingVertical: 60,
-                    rowGap: isMEDscreen ? 10 : 15,
+                    paddingVertical: sizesScale(60),
+                    rowGap: sizesScale(15),
                 }}>
                     {priorityContent?.map((item: any, index: any) => {
                         const total = Object.keys(lessonsData?.content?.priority?.content?.[index]?.items || {}).length;
@@ -130,8 +133,8 @@ export default function Priority() {
                                     style={[
                                         {
                                             width: '90%',
-                                            height: isMEDscreen ? lessons.category.height * 0.4 : lessons.category.height * 0.5,
-                                            borderRadius: 8,
+                                            height: heightScale(lessons.category.height * 0.5),
+                                            borderRadius: sizesScale(8),
                                             flexDirection: 'column',
                                             backgroundColor: colors.secondary,
                                             overflow: 'hidden',
@@ -171,7 +174,7 @@ export default function Priority() {
                                             <Ionicons
                                                 name='diamond-sharp'
                                                 color={colors.button.primary}
-                                                size={isMEDscreen ? 25 : 30}
+                                                size={sizesScale(30)}
                                             />
                                         </View>}
                                     <View
@@ -205,16 +208,16 @@ export default function Priority() {
                                             alignItems: "flex-end",
                                             justifyContent: "center",
                                             position: "absolute",
-                                            right: 8,
-                                            top: 8,
+                                            right: sizesScale(8),
+                                            top: sizesScale(8),
                                             backgroundColor: colors.primary,
-                                            paddingHorizontal: 8,
-                                            borderRadius: 5,
-                                            paddingVertical: 3,
+                                            paddingHorizontal: sizesScale(8),
+                                            borderRadius: sizesScale(5),
+                                            paddingVertical: sizesScale(3),
                                         }]}>
 
                                         <Text style={{
-                                            fontFamily: "Cairo-Bold", color: colors.text.primary, fontSize: 16,
+                                            fontFamily: "Cairo-Bold", color: colors.text.primary, fontSize: sizesScale(16),
                                         }}>
                                             {item.label}
                                         </Text>
@@ -224,18 +227,18 @@ export default function Priority() {
                                             alignItems: "flex-end",
                                             justifyContent: "center",
                                             position: "absolute",
-                                            left: 8,
-                                            bottom: 8,
+                                            left: sizesScale(8),
+                                            bottom: sizesScale(8),
                                             backgroundColor: colors.opacity.primary,
-                                            paddingHorizontal: 8,
-                                            borderRadius: 7,
-                                            paddingVertical: 3,
+                                            paddingHorizontal: sizesScale(8),
+                                            borderRadius: sizesScale(7),
+                                            paddingVertical: sizesScale(3),
                                         }]}>
                                         <Text style={{
                                             fontFamily: "Cairo-Bold",
 
                                             color: colors.text.secondary,
-                                            fontSize: 12,
+                                            fontSize: sizesScale(12),
                                             flexDirection: 'row',
 
                                         }}>
@@ -250,14 +253,14 @@ export default function Priority() {
                                 <View key={index} style={{
 
                                     width: '45%',
-                                    height: 180,
+                                    height: sizesScale(180),
                                     overflow: "hidden",
-                                    borderRadius: 10,
-                                    marginVertical: 7,
+                                    borderRadius: sizesScale(10),
+                                    marginVertical: sizesScale(7),
 
                                 }}>
                                     <ShimmerPlaceHolder
-                                        style={{ width: "100%", height: 180, }}
+                                        style={{ width: "100%", height: sizesScale(180), }}
                                         shimmerColors={[colors.secondary, '#6161617c', colors.secondary]}
                                     />
                                 </View>
@@ -279,151 +282,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
         position: 'relative',
-    },
-    xpArea: {
-        flexDirection: "row",
-        width: 50,
-        height: 50,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    mainContainer: {
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: 'flex-start',
-        overflow: 'hidden',
-    },
-    statisticsAreaContainer: {
-        width: "100%",
-        paddingVertical: 10,
-        paddingBottom: 10,
-        paddingTop: 2,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    statisticsTitleArea: {
-        paddingHorizontal: 15,
-        marginBottom: 0,
-        backgroundColor: "transparent",
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "flex-end",
-        alignItems: "center"
-    },
-    statisticsTitle: {
-        lineHeight: 35,
-        fontFamily: "Cairo_600SemiBold",
-        fontSize: 16,
-        textAlign: "center"
-
-    },
-    statisticsArea: {
-        flexDirection: "row",
-        justifyContent: 'center',
-        alignItems: "center",
-        width: "100%",
-        marginTop: 5,
-        height: 100,
-        borderRadius: 10
-    },
-    statisticsItems: {
-        backgroundColor: "transparent",
-        flexDirection: "column",
-        justifyContent: 'space-between',
-        borderRadius: 8,
-        width: 80,
-        height: '100%',
-        marginHorizontal: 3,
-        alignItems: "center",
-        paddingVertical: 10,
-    },
-    statisticsItemsTitle: {
-        fontSize: 12,
-        fontFamily: "Cairo_600SemiBold",
-        textAlign: "center"
-    },
-    mainArea: {
-        flex: 1,
-        width: '100%',
-        flexDirection: 'column',
-        justifyContent: "center",
-        backgroundColor: "transparent",
-        position: 'relative',
-        paddingHorizontal: 10,
-    },
-    levelListItems: {
-        flexDirection: 'row-reverse',
-        justifyContent: "space-between",
-        alignItems: 'center',
-        width: '93%',
-        borderRadius: 20,
-        margin: 7,
-        padding: 10,
-    },
-    startBtnView: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        height: 80,
-        width: '100%',
-        alignContent: "center",
-        alignItems: "center",
-        justifyContent: "center",
-
-    },
-    startBtn: {
-        textAlign: "center",
-        borderRadius: 9,
-        width: 120,
-        height: 50,
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 5,
-    },
-    startBtnText: {
-        fontFamily: "Cairo_700Bold",
-        textAlign: 'center',
-    },
-    startButtonArea: {
-        width: "100%", alignItems: "center", justifyContent: "center",
-    },
-    startButton: {
-        backgroundColor: "#22799c",
-        textAlign: "center",
-        borderRadius: 8,
-        width: "93%",
-        height: 45,
-        alignItems: "center",
-        justifyContent: "center",
-        marginBottom: 15
-    },
-    startButtonTitle: {
-        fontFamily: "Cairo_700Bold",
-        color: "black",
-        fontSize: 18,
-        textAlign: 'center',
-        lineHeight: 45,
-    },
-    section: {
-        flexDirection: "row",
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        margin: 5,
-        backgroundColor: "gray",
-        width: 300,
-        height: 60,
-        borderRadius: 0,
-        paddingHorizontal: 10,
-        elevation: 3,
-    },
-    statistics: {
-        flexDirection: "column",
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        margin: 5,
-        width: 60,
-        height: 60,
-        borderRadius: 0,
     },
 
 });

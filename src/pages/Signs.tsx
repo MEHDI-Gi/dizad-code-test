@@ -24,7 +24,11 @@ export default function Signs() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     const { user, logout, initializing } = useGoogleSignIn();
-    const { lessons, screen, isMEDscreen } = useSize();
+    const { lessons, screen,
+        widthScale,
+        heightScale,
+        sizesScale,
+    } = useSize();
     const colors = useColors();
     const {
         setTotalSigns,
@@ -107,8 +111,8 @@ export default function Signs() {
                                     onPress={() => LessonsContentPress(item)}
                                     style={[{
                                         width: "90%",
-                                        height: screen.width * 0.23,
-                                        borderRadius: 8,
+                                        height: heightScale(screen.width * 0.23),
+                                        borderRadius: sizesScale(8),
                                         flexDirection: 'row-reverse',
                                         alignItems: 'center',
                                         justifyContent: 'space-between',
@@ -121,8 +125,8 @@ export default function Signs() {
                                         style={[{
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            width: isMEDscreen ? screen.width * 0.23 : screen.width * 0.43,
-                                            height: isMEDscreen ? screen.width * 0.23 : screen.width * 0.43,
+                                            width: widthScale(screen.width * 0.23),
+                                            height: heightScale(screen.width * 0.23),
                                             overflow: 'hidden',
                                         }]}>
                                         <View
@@ -133,7 +137,7 @@ export default function Signs() {
                                                 width: '90%',
                                                 height: '90%',
                                                 overflow: 'hidden',
-                                                borderRadius: 5,
+                                                borderRadius: sizesScale(5),
                                             }]}>
                                             {item?.img ?
                                                 <Image
@@ -163,14 +167,14 @@ export default function Signs() {
                                         }]}>
                                         <Text style={{
                                             fontFamily: "Cairo-Bold",
-                                            color: colors.text.primary, fontSize: isMEDscreen ? 13 : 16,
+                                            color: colors.text.primary, fontSize: sizesScale(16),
                                         }}>
                                             {item.label}
                                         </Text>
                                         <Text style={{
                                             fontFamily: "Cairo",
                                             color: colors.text.secondary,
-                                            fontSize: isMEDscreen ? 11 : 12,
+                                            fontSize: sizesScale(12),
                                             flexDirection: 'row',
                                         }}>
                                             {totalSigns} إشــــارة
@@ -184,14 +188,14 @@ export default function Signs() {
                                 <View key={index} style={{
 
                                     width: '45%',
-                                    height: 180,
+                                    height: heightScale(180),
                                     overflow: "hidden",
-                                    borderRadius: 10,
-                                    marginVertical: 7,
+                                    borderRadius: sizesScale(10),
+                                    marginVertical: sizesScale(7),
 
                                 }}>
                                     <ShimmerPlaceHolder
-                                        style={{ width: "100%", height: 180, }}
+                                        style={{ width: "100%", height: heightScale(180), }}
                                         shimmerColors={[colors.secondary, '#6161617c', colors.secondary]}
                                     />
                                 </View>

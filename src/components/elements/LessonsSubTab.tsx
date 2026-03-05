@@ -27,7 +27,11 @@ import { useColors } from '../../hooks/useColors.ts';
 
 export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarProps) {
 
-    const { screen, isMEDscreen } = useSize()
+    const { screen,
+        widthScale,
+        heightScale,
+        sizesScale,
+    } = useSize()
 
     const {
         isGradient, texts, language
@@ -55,7 +59,7 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
             right: 0,
             top: 0,
             zIndex: 1,
-            height: 50,
+            height: heightScale(50),
             alignItems: 'center',
             justifyContent: 'center',
         }}>
@@ -71,7 +75,7 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
             <View style={{
                 elevation: 4,
                 width: '90%',
-                height: isMEDscreen ? 27 : 30,
+                height: heightScale(30),
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -100,7 +104,7 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
                                 justifyContent: 'space-evenly',
                                 flex: config.label ? 1.5 : 1,
                                 height: '100%',
-                                borderRadius: config.label ? 8 : 50,
+                                borderRadius: config.label ? sizesScale(8) : sizesScale(50),
                                 backgroundColor: isFocused ? colors.secondary : "transparent",
                                 overflow: 'hidden',
                             },]}
@@ -116,17 +120,17 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
                                 {config.set === 'MaterialCommunityIcons' ?
                                     <MaterialCommunityIcons
                                         name={config.icon}
-                                        size={isMEDscreen ? 15 : 20}
+                                        size={sizesScale(20)}
                                         color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                     /> : config.set === 'Ionicons' ?
                                         <Ionicons
                                             name={config.icon}
-                                            size={isMEDscreen ? 15 : 20}
+                                            size={sizesScale(20)}
                                             color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                         /> :
                                         <Entypo
                                             name={config.icon}
-                                            size={isMEDscreen ? 15 : 20}
+                                            size={sizesScale(20)}
                                             color={isFocused ? colors.subTab.items.primary : colors.subTab.items.secondary}
                                         />
                                 }
@@ -140,7 +144,7 @@ export default function LessonsSubTabs({ state, navigation }: MaterialTopTabBarP
                                 <Text style={{
                                     color: colors.subTab.items.primary,
                                     fontFamily: 'Cairo-Bold',
-                                    fontSize: isMEDscreen ? 11 : 15
+                                    fontSize: sizesScale(15)
                                 }}>{config.label}</Text>
                             </View>}
                         </Pressable >

@@ -25,7 +25,11 @@ import { useColors } from '../../hooks/useColors.ts';
 
 export default function BottomTab({ state, navigation }: MaterialTopTabBarProps) {
 
-    const { screen, isMEDscreen } = useSize()
+    const { screen,
+        widthScale,
+        heightScale,
+        sizesScale,
+    } = useSize()
 
     const {
         isGradient, texts, language
@@ -93,7 +97,7 @@ export default function BottomTab({ state, navigation }: MaterialTopTabBarProps)
             bottom: 0,
             left: 0,
             right: 0,
-            height: isMEDscreen ? 45 : 50,
+            height: heightScale(50),
             elevation: 2,
             alignItems: 'center',
             justifyContent: 'center',
@@ -110,13 +114,13 @@ export default function BottomTab({ state, navigation }: MaterialTopTabBarProps)
             <View style={{
                 elevation: 4,
                 width: '90%',
-                height: isMEDscreen ? 35 : 40,
+                height: heightScale(40),
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
                 zIndex: 999999,
                 overflow: 'hidden',
-                padding: 5,
+                padding: sizesScale(5),
 
             }}>
                 {state.routes.map((route, index) => {
@@ -141,7 +145,7 @@ export default function BottomTab({ state, navigation }: MaterialTopTabBarProps)
                                 justifyContent: 'space-evenly',
                                 flex: isFocused ? 1.5 : 1,
                                 height: '100%',
-                                borderRadius: isFocused ? 8 : 50,
+                                borderRadius: isFocused ? sizesScale(8) : sizesScale(50),
                                 backgroundColor: isFocused ? colors.bottomTab.color : "transparent",
                                 overflow: 'hidden',
                             },]}
@@ -157,12 +161,12 @@ export default function BottomTab({ state, navigation }: MaterialTopTabBarProps)
                                 {config.set === 'MaterialCommunityIcons' ?
                                     <MaterialCommunityIcons
                                         name={config.icon}
-                                        size={isMEDscreen ? 17 : 20}
+                                        size={sizesScale(20)}
                                         color={isFocused ? colors.bottomTab.items.primary : colors.bottomTab.items.secondary}
                                     /> :
                                     <Entypo
                                         name={config.icon}
-                                        size={isMEDscreen ? 17 : 20}
+                                        size={sizesScale(20)}
                                         color={isFocused ? colors.bottomTab.items.primary : colors.bottomTab.items.secondary}
                                     />
                                 }
@@ -178,7 +182,7 @@ export default function BottomTab({ state, navigation }: MaterialTopTabBarProps)
                                     {
                                         color: colors.bottomTab.items.primary,
                                         fontFamily: 'Cairo-Bold',
-                                        fontSize: isMEDscreen ? 12 : 15,
+                                        fontSize: sizesScale(15),
                                     }}>{config.label}</Text>
                             </View>}
                         </Pressable >

@@ -1,21 +1,28 @@
 import { useContext, useEffect } from 'react';
+import { PixelRatio } from 'react-native';
 import { DataContext } from '../context/contextData';
 
 export const useSize = () => {
 
     const {
         screenWidth, screenHeight,
-        fullScreenWidth, fullScreenHeight,
-        MEDscreen, setMEDscreen } = useContext(DataContext);
+        fullScreenWidth, fullScreenHeight } = useContext(DataContext);
 
-    useEffect(() => {
-        if (fullScreenWidth <= 1080 && fullScreenHeight <= 2280) {
-            setMEDscreen(true);
-        }
-    }, [fullScreenWidth, fullScreenHeight]);
-    const Medium = MEDscreen;
+    const guidelineBaseWidth = 390;
+    const guidelineBaseHeight = 844;
+
+    /**
+     * For Widths: use scale()
+     * For Heights: use verticalScale()
+     * For Font Sizes & Margins: use moderateScale()
+     */
+    const widthScale = (size: number) => (fullScreenWidth / guidelineBaseWidth) * size;
+    const heightScale = (size: number) => (fullScreenHeight / guidelineBaseHeight) * size;
+    const sizesScale = (size: number, factor = 0.5) => size + (widthScale(size) - size) * factor;
     return {
-        isMEDscreen: Medium,
+        widthScale,
+        heightScale,
+        sizesScale,
         screen: {
             width: screenWidth,
             height: screenHeight
