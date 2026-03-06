@@ -21,6 +21,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ItemsModal from '../components/ItemsModal.tsx';
 import { useAd } from '../hooks/useAd.ts';
 import { useColors } from '../hooks/useColors.ts';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useVip } from '../hooks/useVip.ts';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -42,8 +44,11 @@ export default function Questions() {
         questionsItemsIndex,
         bookmarkLoading,
         incrementView,
-        imgBase
+        imgBase,
+        setUpgradeWarn
     } = useContext(DataContext);
+    const { userVip } = useVip();
+
 
     const handleBookmark = useCallback((category: string, item: any) => {
         toggleBookmark(category, item);
@@ -163,13 +168,17 @@ export default function Questions() {
                             borderless: false
                         }}
                         onPress={() => {
-                            setSelectedQuestion(index);
-                            setQuestionsModal(true);
-                            const timer = setTimeout(() => {
-                                ad.isLoaded && ad.show()
-                            }, 2000);
-                            // setQuestionsItemsIndex(index);  
-                            return () => clearTimeout(timer);
+                            if (!userVip && index > 9) {
+                                setUpgradeWarn(true)
+                            } else {
+                                setSelectedQuestion(index);
+                                setQuestionsModal(true);
+                            }
+                            // const timer = setTimeout(() => {
+                            //     ad.isLoaded && ad.show()
+                            // }, 2000);
+                            // // setQuestionsItemsIndex(index);  
+                            // return () => clearTimeout(timer);
 
                         }}
                         style={[
@@ -185,6 +194,25 @@ export default function Questions() {
                             },
                         ]}
                     >
+                        {!userVip && index > 9 ?
+                            <View style={{
+                                backgroundColor: colors.opacity.primary,
+                                position: "absolute",
+                                top: 0,
+                                bottom: 0,
+                                right: 0,
+                                left: 0,
+                                zIndex: 9,
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <Ionicons
+                                    name='diamond-sharp'
+                                    color={colors.button.primary}
+                                    size={sizeScale(30)}
+                                />
+                            </View> : null
+                        }
                         <View
                             style={[
                                 {

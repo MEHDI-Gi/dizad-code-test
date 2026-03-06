@@ -43,6 +43,7 @@ import { useColors } from '../hooks/useColors.ts';
 import { useTheme } from '../hooks/useTheme.ts';
 import { useVip } from '../hooks/useVip.ts';
 import { useUserAccuracy } from '../hooks/useUserAccuracy.ts';
+import { set } from '@react-native-firebase/database';
 const Profile = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -73,7 +74,7 @@ const Profile = () => {
     isGradient,
     language,
     texts,
-
+    setUserPlan,
     snackInfo,
     setSnackOptions,
     loadingOptions,
@@ -595,7 +596,7 @@ const Profile = () => {
                     icon={false}
                   />) : null}
             </View>
-            
+
             <View
               style={{
                 flexDirection: 'row',
@@ -779,6 +780,47 @@ const Profile = () => {
               sound={item.condition === 'sound'}
             />
           ))}
+          <Pressable
+            android_ripple={{
+              color: colors.primary,
+              borderless: false,
+              foreground: true,
+            }}
+            style={{
+              alignItems: 'center',
+              width: '100%',
+              borderBottomColor: colors.secondary,
+              overflow: 'hidden',
+              justifyContent: 'space-between',
+              flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
+            }}
+            onPress={() => { (userVip) ? setUserPlan('free') : setUserPlan('lifetime') }}
+          >
+            <View
+              style={[
+                {
+                  alignItems: 'center',
+                  flex: 1,
+                  height: 47,
+                  flexDirection: 'row',
+                  justifyContent:
+                    language === 'english' ? 'flex-start' : 'flex-end',
+                },
+              ]}
+            >
+              <Text
+                style={{
+                  color: 'grey',
+                  fontSize: 15,
+                  fontFamily: 'Cairo_600SemiBold',
+                }}
+              >
+                VIP
+              </Text>
+            </View>
+
+          </Pressable>
+
           {DangerSettingsList.map((item, index) => (
             <SettingsCard
               key={item.id}

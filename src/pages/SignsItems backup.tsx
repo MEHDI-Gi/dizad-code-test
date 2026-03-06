@@ -36,7 +36,11 @@ const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 const SignsItems = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { lessons, screen } = useSize();
+  const { lessons, screen,
+    widthScale,
+    heightScale,
+    sizeScale,
+  } = useSize();
   const colors = useColors();
   const {
 

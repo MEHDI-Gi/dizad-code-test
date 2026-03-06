@@ -464,6 +464,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const [freeCard, setFreeCard] = useState<boolean>(false);
   const [statisticsCard, setStatisticsCard] = useState<boolean>(false);
   const [upgradeCard, setUpgradeCard] = useState<boolean>(false);
+  const [upgradeWarn, setUpgradeWarn] = useState<boolean>(false);
 
   const [dataAsync, setDataAsync] = useState<boolean>(false);
 
@@ -556,14 +557,9 @@ const DataProvider = ({ children }: DataProviderProps) => {
 
   const imgBase = "https://cdn.jsdelivr.net/gh/MEHDI-Gi/dizad_road_test_assets@main/assets"
 
-  const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-  const { width: fullScreenWidth, height: fullScreenHeight } = Dimensions.get('screen');
-
-
   const contextValue = useMemo(
     () => ({
-      screenWidth, screenHeight,
-      fullScreenWidth, fullScreenHeight,
+      upgradeWarn, setUpgradeWarn,
       user, initializing, signIn, logout,
       bookmarkLoading,
       setBookmarkLoading,
@@ -661,8 +657,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
       incrementView,
     }),
     [
-      screenWidth, screenHeight,
-      fullScreenWidth, fullScreenHeight,
       incrementView,
       accuracyProgress,
       user, initializing, signIn, logout,
@@ -681,6 +675,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
       freeCard,
       vipCard,
       upgradeCard,
+      upgradeWarn,
       bookmarks,
       firebaseLoaded,
       userPlan,

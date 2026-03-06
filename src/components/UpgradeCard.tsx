@@ -1,43 +1,18 @@
 import {
-    BackHandler,
     Text,
     View,
-    StyleSheet,
     Image,
-    StatusBar,
-    ActivityIndicator,
     Pressable,
-    Vibration,
     Modal,
     Linking
 } from 'react-native';
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import {
-    RewardedAd,
-    RewardedAdEventType,
-    TestIds,
-    AdEventType,
-} from 'react-native-google-mobile-ads';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import { DataContext } from '../context/contextData';
-
-import Animated, {
-    useSharedValue,
-    withTiming,
-    useAnimatedStyle,
-    Easing,
-    withSpring
-} from 'react-native-reanimated';
 import { useColors } from '../hooks/useColors';
 import { useVip } from '../hooks/useVip';
-import { auth, database } from '../context/firebaseConfig';
-import { ref, update } from '@react-native-firebase/database';
 import { useSize } from '../hooks/useSize';
-const rewardedAd = RewardedAd.createForAdRequest(TestIds.REWARDED);
 
 export default function UpgradeCard() {
     const { userPlan, setUserPlan } = useVip()
@@ -98,11 +73,6 @@ export default function UpgradeCard() {
         { label: 'Infinite Bookmarks' },
         { label: 'Unlock Priority' },
         { label: 'No Ads' },
-        { label: 'Unlimited Hearts' },
-        { label: 'Unlock Tests' },
-        { label: 'Infinite Bookmarks' },
-        { label: 'Unlock Priority' },
-        { label: 'No Ads' },
     ]
 
     return (
@@ -119,23 +89,25 @@ export default function UpgradeCard() {
                 position: 'absolute',
                 zIndex: 9999999,
                 alignContent: 'center',
+                justifyContent: 'flex-end',
                 alignItems: 'center',
             }} >
                 <Pressable
                     style={{
+                        position: 'absolute',
+                        zIndex: 0,
                         width: "100%", height: "100%",
                         backgroundColor: '#0000002f',
                     }}
                     onPress={() => { setUpgradeCard(false) }} />
 
                 <View style={[{
+
                     backgroundColor: colors.secondary,
-                    position: 'absolute',
-                    bottom: 0,
-                    zIndex: 99999,
-                    borderTopEndRadius: 10,
-                    borderTopStartRadius: 10,
-                    width: '100%', height: '70%',
+                    zIndex: 9,
+                    // borderTopEndRadius: sizeScale(20),
+                    // borderTopStartRadius: sizeScale(20),
+                    width: '100%',
                     alignContent: 'center',
                     justifyContent: 'flex-start',
                     elevation: 5,
@@ -143,27 +115,45 @@ export default function UpgradeCard() {
 
                     <View style={{
                         width: '100%',
-                        height: 50,
+                        height: heightScale(50),
                         alignItems: 'center',
                         justifyContent: "space-between",
                         flexDirection: 'row'
                     }}>
                         <View style={{
-                            width: 50,
-                            flexDirection: 'row',
-                            paddingHorizontal: 10,
-                            height: 50,
+                            height: '100%',
+                            paddingHorizontal: sizeScale(15),
+                            columnGap: 5,
                             alignItems: 'center',
-                            justifyContent: 'flex-start'
+                            justifyContent: 'center',
+                            flexDirection: 'row'
                         }}>
-                            <Ionicons
-                                size={15}
-                                name='diamond-sharp'
-                                color={'#30e3cbff'}
-                            />
+                            <View style={{
+                                width: widthScale(10),
+                                height: heightScale(10),
+                                borderRadius: 50,
+                                backgroundColor: 'green',
+                            }} />
+                            <View style={{
+                                width: widthScale(10),
+                                height: heightScale(10),
+                                borderRadius: 50,
+                                backgroundColor: 'orange',
+                            }} />
+                            <View style={{
+                                width: widthScale(10),
+                                height: heightScale(10),
+                                borderRadius: 50,
+                                backgroundColor: 'red',
+                            }} />
                         </View>
                         <View style={{
-                            height: 50,
+                            position: 'absolute',
+                            top: 0,
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            height: '100%',
                             flex: 1,
                             flexDirection: 'row',
                             alignItems: 'center',
@@ -171,128 +161,134 @@ export default function UpgradeCard() {
                         }}>
 
                             <Text style={{
-                                color: 'lightgray',
-                                fontSize: 16
-                            }}>Upgrade to Premium</Text>
+                                color: colors.text.secondary,
+                                fontSize: sizeScale(16),
+                                fontWeight: 'bold'
+                            }}>UPGRADE to Premium</Text>
 
                         </View>
                         <View style={{
-                            width: 50,
-                            height: 50,
+                            width: widthScale(50),
+                            height: '100%',
                             alignItems: 'center',
                             justifyContent: 'flex-end',
                             flexDirection: 'row'
                         }}>
 
                             <Pressable
-                                android_ripple={{ color: colors.primary, borderless: false }}
+                                android_ripple={{ color: colors.primary, borderless: false, foreground: true }}
                                 onPress={() => {
                                     setUpgradeCard(false)
-
                                 }}
                                 style={{
-                                    width: 50,
-                                    height: 50,
+                                    width: widthScale(50),
+                                    height: heightScale(50),
                                     alignItems: 'center',
                                     justifyContent: 'center'
                                 }}
                             >
                                 <MaterialCommunityIcons
                                     name='close'
-                                    color={'lightgray'}
-                                    size={20}
+                                    color={colors.text.secondary}
+                                    size={sizeScale(20)}
                                 />
                             </Pressable>
                         </View>
                     </View>
                     <View style={{
                         width: '100%',
-                        padding: sizeScale(10),
+                        height: heightScale(screen.width * 0.60),
+
                         alignItems: 'center',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
                     }}>
                         <Image
                             source={require('../assets/tele-qr.jpg')}
+                            resizeMode='cover'
                             style={{
                                 backgroundColor: colors.primary,
-                                marginVertical: 5,
-                                width: widthScale(screen.width * 0.45),
-                                height: heightScale(screen.width * 0.45),
-                                paddingHorizontal: 10,
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                borderRadius: 8,
+                                height: heightScale(screen.width * 0.50),
+                                width: widthScale(screen.width * 0.50),
+                                borderRadius: 15,
                             }}
                         />
                     </View>
                     <View style={{
                         width: '100%',
-                        paddingHorizontal: sizeScale(20),
+                        paddingVertical: sizeScale(10),
                         alignItems: 'center',
-                        justifyContent: 'flex-start',
-                        gap: sizeScale(6),
-                        flexDirection: 'row',
-                        flexWrap: 'wrap'
+                        justifyContent: 'center',
                     }}>
-                        {vipItems.map((item, index) => {
-                            return (
-                                <View
-                                    key={index}
-                                    style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        justifyContent: "flex-start",
-                                        borderColor: 'gray',
-                                        borderWidth: 0,
-                                        height: heightScale(30),
-                                        borderRadius: 8,
-                                        backgroundColor: colors.primary,
-
-                                    }}>
-                                    <View style={{
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        width: 40,
-                                        height: 40
-                                    }}>
-                                        <MaterialCommunityIcons
-                                            name="check-circle"
-                                            color="orange"
-                                            size={16}
-                                        />
+                        <View style={{
+                            width: '100%',
+                            paddingHorizontal: sizeScale(20),
+                            alignItems: 'center',
+                            justifyContent: 'flex-start',
+                            gap: sizeScale(6),
+                            flexDirection: 'row',
+                            flexWrap: 'wrap'
+                        }}>
+                            {vipItems.map((item, index) => {
+                                return (
+                                    <View
+                                        key={index}
+                                        style={{
+                                        
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: "flex-start",
+                                            borderColor: 'gray',
+                                            borderWidth: 0,
+                                            height: heightScale(30),
+                                            borderRadius: 8,
+                                            backgroundColor: colors.primary,
+                                            elevation: 2
+                                        }}>
+                                        <View style={{
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            width: widthScale(40),
+                                            height: heightScale(40)
+                                        }}>
+                                            <MaterialCommunityIcons
+                                                name="check-circle"
+                                                color="orange"
+                                                size={sizeScale(16)}
+                                            />
+                                        </View>
+                                        <View style={{
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            paddingRight: sizeScale(10)
+                                        }}>
+                                            <Text style={{ color: colors.text.primary, fontWeight: '600', fontSize: sizeScale(14) }}>{item.label}</Text>
+                                        </View>
                                     </View>
-                                    <View style={{
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        paddingHorizontal: 5
-                                    }}>
-                                        <Text style={{ color: "white", fontWeight: '600' }}>{item.label}</Text>
-                                    </View>
-                                </View>
-                            )
-                        })}
-
+                                )
+                            })}
+                        </View>
                     </View>
 
 
                     <View style={{
                         width: '100%',
-                        height: 90,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }} />
-                    
-                    <View style={{
-                        width: '100%',
-                        paddingBottom: sizeScale(30),
-                        position: 'absolute',
-                        bottom: 0,
                         alignItems: 'center',
                         justifyContent: 'center',
+                        paddingVertical: sizeScale(20),
                         rowGap: sizeScale(20),
                     }}>
-                        <Text style={{ fontWeight: '500', color: colors.text.primary }}>Get Lifetime VIP</Text>
+                        <View style={{
+                            width: '100%',
+                            alignItems: 'flex-end',
+                            justifyContent: 'center',
+                            flexDirection: 'row',
+                            columnGap: sizeScale(10),
+                        }}>
+
+                            <Text style={{ fontWeight: '500', color: colors.text.secondary }}>Get Lifetime VIP :</Text>
+                            <Text style={{ fontSize: sizeScale(17), fontWeight: 'bold', color: colors.text.primary }}>
+                                700 da</Text>
+                        </View>
                         <Pressable
                             android_ripple={{ color: colors.secondary, borderless: false, foreground: true }}
                             onPress={() => { Linking.openURL('https://t.me/+lXpXxnihJOo4NDJk') }}
@@ -300,16 +296,14 @@ export default function UpgradeCard() {
                                 backgroundColor: 'orange',
                                 width: '85%',
                                 flexDirection: "row",
-                                height: 40,
+                                height: heightScale(40),
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 borderRadius: 8,
                             }]}
                         >
-                            <Text style={{ fontSize: sizeScale(17), fontWeight: 'bold', color: 'black' }}>700 da</Text>
-                            <Text style={{ fontSize: sizeScale(16), fontWeight: 'bold', color: 'black' }}> | </Text>
-                            <Text style={{ fontSize: sizeScale(16), fontWeight: 'bold', color: 'black' }}>Lifetime</Text>
-
+                            <Text style={{ fontSize: sizeScale(17), fontWeight: 'bold', color: 'black' }}>
+                                UPGRADE</Text>
                             {/* <Text style={{ fontWeight: 'bold', color: 'black' }}>CONTACT US</Text> */}
                         </Pressable>
                     </View>

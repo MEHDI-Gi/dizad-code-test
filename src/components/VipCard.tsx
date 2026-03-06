@@ -25,6 +25,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { DataContext } from '../context/contextData';
 import { useColors } from '../hooks/useColors';
 import { useVip } from '../hooks/useVip';
+import { useSize } from '../hooks/useSize';
 
 
 
@@ -44,6 +45,11 @@ export default function VipCard() {
         livesHeart, setLivesHeart, livesHeartEnd,
         vipCard, setVipCard,
     } = useContext(DataContext);
+    const { lessons, screen,
+        widthScale,
+        heightScale,
+        sizeScale,
+    } = useSize();
     const colors = useColors();
     const vipItems = [
         { label: 'Unlimited Hearts' },
@@ -78,7 +84,6 @@ export default function VipCard() {
                     }}
                     onPress={() => {
                         setVipCard(false)
-
                     }} />
                 <View style={[{
                     width: '95%',
@@ -92,27 +97,45 @@ export default function VipCard() {
                 }]}>
                     <View style={{
                         width: '100%',
-                        height: 50,
+                        height: 40,
                         alignItems: 'center',
                         justifyContent: "space-between",
                         flexDirection: 'row'
                     }}>
                         <View style={{
-                            width: 50,
-                            flexDirection: 'row',
-                            height: 50,
+                            height: '100%',
+                            paddingHorizontal: 15,
+                            columnGap: 5,
                             alignItems: 'center',
-                            justifyContent: 'center'
+                            justifyContent: 'center',
+                            flexDirection: 'row'
                         }}>
-                            <Ionicons
-                                size={15}
-                                name='diamond-sharp'
-                                color={'#dba400'}
-                            />
+                            <View style={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 50,
+                                backgroundColor: 'green',
+                            }} />
+                            <View style={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 50,
+                                backgroundColor: 'orange',
+                            }} />
+                            <View style={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 50,
+                                backgroundColor: 'red',
+                            }} />
                         </View>
                         <View style={{
-                            height: 50,
-                            flex: 1,
+                            position: 'absolute',
+                            top: 0,
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            height: '100%',
                             flexDirection: 'row',
                             alignItems: 'center',
                             justifyContent: "center"
@@ -124,14 +147,14 @@ export default function VipCard() {
                         </View>
                         <View style={{
                             width: 50,
-                            height: 50,
+                            height: '100%',
                             alignItems: 'center',
                             justifyContent: 'center',
                             flexDirection: 'row'
                         }}>
 
                             <Pressable
-                                android_ripple={{ color: colors.primary, borderless: false }}
+                                android_ripple={{ color: colors.primary, borderless: false, foreground: true }}
                                 onPress={() => {
                                     setVipCard(false)
                                 }}
@@ -152,49 +175,58 @@ export default function VipCard() {
                     </View>
                     <View style={{
                         width: '100%',
+                        paddingVertical: sizeScale(10),
                         alignItems: 'center',
-                        justifyContent: "flex-start",
-                        flexDirection: 'column',
-                        overflow: 'hidden'
+                        justifyContent: 'center',
                     }}>
-                        {vipItems.map((item, index) => {
-                            return (
-                                <View
-                                    key={index}
-                                    style={{
-                                        flexDirection: 'row',
-                                        width: '85%',
-                                        alignItems: 'center',
-                                        justifyContent: "flex-start",
-                                        borderColor: 'gray',
-                                        borderWidth: 0,
-                                        height: 35,
-                                        borderRadius: 8,
-                                        marginVertical: 2,
-                                    }}>
+                        <View style={{
+                            width: '100%',
+                            paddingHorizontal: sizeScale(20),
+                            paddingVertical: sizeScale(10),
+                            alignItems: 'center',
+                            justifyContent: 'flex-start',
+                            gap: sizeScale(6),
+                            flexDirection: 'row',
+                            flexWrap: 'wrap'
+                        }}>
+                            {vipItems.map((item, index) => {
+                                return (
+                                    <View
+                                        key={index}
+                                        style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: "flex-start",
+                                            borderColor: 'gray',
+                                            borderWidth: 0,
+                                            height: heightScale(30),
+                                            borderRadius: 8,
+                                            backgroundColor: colors.primary,
 
-                                    <View style={{
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        width: 40,
-                                        height: 40
-                                    }}>
-                                        <MaterialCommunityIcons
-                                            name="check"
-                                            color="#ffffffff"
-                                            size={16}
-
-                                        />
+                                        }}>
+                                        <View style={{
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            width: widthScale(40),
+                                            height: heightScale(40)
+                                        }}>
+                                            <MaterialCommunityIcons
+                                                name="check-circle"
+                                                color="orange"
+                                                size={sizeScale(16)}
+                                            />
+                                        </View>
+                                        <View style={{
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            paddingRight: sizeScale(10)
+                                        }}>
+                                            <Text style={{ color: colors.text.primary, fontWeight: '600', fontSize: sizeScale(14) }}>{item.label}</Text>
+                                        </View>
                                     </View>
-                                    <View style={{
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}>
-                                        <Text style={{ color: "white", fontWeight: '600' }}>{item.label}</Text>
-                                    </View>
-                                </View>
-                            )
-                        })}
+                                )
+                            })}
+                        </View>
                     </View>
                     <View style={{
                         height: 50,

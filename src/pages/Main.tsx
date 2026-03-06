@@ -25,7 +25,6 @@ import VipCard from '../components/VipCard.tsx';
 import StatisticsCard from '../components/StatisticsCard.tsx';
 import FreeCard from '../components/FreeCard.tsx';
 import SignsItems from './SignsItems.tsx';
-import TestsScreen from './TestsScreen.tsx';
 import Signs from './Signs.tsx';
 import Tests from './Exams.tsx';
 import Questions from './Questions.tsx';
@@ -37,6 +36,8 @@ import { usePeriodicAd } from '../hooks/usePeriodicAd.ts';
 import PriorityItems from './PriorityItems.tsx';
 import Offline from './Offline.tsx';
 import { useColors } from '../hooks/useColors.ts';
+import UpgradeWarn from '../components/UpgradeWarn.tsx';
+import { useVip } from '../hooks/useVip.ts';
 export default function Main() {
     const colors = useColors();
     const {
@@ -46,8 +47,9 @@ export default function Main() {
         statisticsCard,
         snackOptions,
         user,
-        userVip
+        upgradeWarn
     } = useContext(DataContext);
+    const { userVip } = useVip();
 
     const [adLoaded, setAdLoaded] = useState<boolean>(false);
     useEffect(() => {
@@ -77,6 +79,7 @@ export default function Main() {
             {freeCard && <FreeCard />}
             {vipCard && <VipCard />}
             {upgradeCard && <UpgradeCard />}
+            {upgradeWarn && <UpgradeWarn />}
             <NavigationContainer>
                 <Stack.Navigator
                     screenOptions={{
@@ -92,7 +95,6 @@ export default function Main() {
                     <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
                     <Stack.Screen name="SignsItems" component={SignsItems} options={{ headerShown: false }} />
                     <Stack.Screen name="PriorityItems" component={PriorityItems} options={{ headerShown: false }} />
-                    <Stack.Screen name="TestsScreen" component={TestsScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Report" component={Report} options={{ headerShown: false }} />
                     <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
                     <Stack.Screen name="Vibrate" component={Vibrate} options={{ headerShown: false }} />
@@ -106,7 +108,7 @@ export default function Main() {
                 icon={snackOptions.icon}
                 bottom={adLoaded ? '15%' : '10%'}
             /> */}
-            {userVip && <AdFooter adLoaded={adLoaded} setAdLoaded={setAdLoaded} />}
+            {!userVip && <AdFooter adLoaded={adLoaded} setAdLoaded={setAdLoaded} />}
 
         </View>
     );

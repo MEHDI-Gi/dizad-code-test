@@ -1,21 +1,15 @@
 import { useContext, useEffect } from 'react';
-import { PixelRatio } from 'react-native';
+import { Dimensions, PixelRatio } from 'react-native';
 import { DataContext } from '../context/contextData';
 
 export const useSize = () => {
 
-    const {
-        screenWidth, screenHeight,
-        fullScreenWidth, fullScreenHeight } = useContext(DataContext);
-
+    const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+    const { width: fullScreenWidth, height: fullScreenHeight } = Dimensions.get('screen');
     const guidelineBaseWidth = 390;
     const guidelineBaseHeight = 844;
 
-    /**
-     * For Widths: use scale()
-     * For Heights: use verticalScale()
-     * For Font Sizes & Margins: use moderateScale()
-     */
+
     const widthScale = (size: number) => (fullScreenWidth / guidelineBaseWidth) * size;
     const heightScale = (size: number) => (fullScreenHeight / guidelineBaseHeight) * size;
     const sizeScale = (size: number, factor = 0.5) => size + (widthScale(size) - size) * factor;

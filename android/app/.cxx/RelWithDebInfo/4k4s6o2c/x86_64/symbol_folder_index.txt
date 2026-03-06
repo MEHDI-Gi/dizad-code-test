@@ -1,0 +1,1 @@
+/home/mehdi/Desktop/dizad-code-test/android/app/build/intermediates/cxx/RelWithDebInfo/4k4s6o2c/obj/x86_64

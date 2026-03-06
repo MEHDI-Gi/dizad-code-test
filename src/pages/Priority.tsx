@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useRef, useState, useContext, useEffect, use } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Pressable, Image, StatusBar, ActivityIndicator, DrawerLayoutAndroid, Dimensions, Modal } from 'react-native';
 import { DataContext } from '../context/contextData.tsx';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -35,6 +35,7 @@ export default function Priority() {
 
     const colors = useColors();
     const {
+        upgradeWarn, setUpgradeWarn,
         sound, playSound,
         lessonsData, setPriorityItemsIndex,
         imgBase
@@ -73,13 +74,35 @@ export default function Priority() {
         const match = item.condition.match(/category (\d+)/);
         if (match) {
             const categoryNumber = parseInt(match[1], 10);
-            const timer = setTimeout(() => {
-                ad.isLoaded && ad.show()
-            }, 500);
+            // const timer = setTimeout(() => {
+            //     ad.isLoaded && ad.show()
+            // }, 500);
             setPriorityItemsIndex(categoryNumber);
             navigation.navigate('PriorityItems')
             if (sound) {
                 playSound('levelsButton')
+            }
+            // return () => clearTimeout(timer);
+        }
+    };
+
+    const [adsLoading, setAdsLoading] = useState(false);
+
+    const watchAd = (item: any) => {
+        setAdsLoading(true)
+        const match = item.condition.match(/category (\d+)/);
+        if (match) {
+            const categoryNumber = parseInt(match[1], 10);
+            const timer = setTimeout(() => {
+                ad.isLoaded && ad.show()
+            }, 500);
+            if (ad.isLoaded) {
+                setAdsLoading(false)
+                setPriorityItemsIndex(categoryNumber);
+                navigation.navigate('PriorityItems')
+                if (sound) {
+                    playSound('levelsButton')
+                }
             }
             return () => clearTimeout(timer);
         }
@@ -122,7 +145,7 @@ export default function Priority() {
                         if (PRIORITY_CONTENT) {
                             return (
                                 <Pressable
-                                    disabled={!userVip && index > 3}
+
                                     key={index}
                                     android_ripple={{
                                         foreground: true,
@@ -145,38 +168,7 @@ export default function Priority() {
 
                                     ]}
                                 >
-                                    {!userVip && index > 3 &&
-                                        <View style={{
-                                            backgroundColor: colors.opacity.primary,
-                                            position: "absolute",
-                                            top: 0,
-                                            bottom: 0,
-                                            right: 0,
-                                            left: 0,
-                                            zIndex: 9,
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
-                                        }}>
-                                            {/* <LinearGradient
-                                                colors={['#00ffff', colors.primary]}
-                                                start={{ x: 2, y: 0 }}
-                                                end={{ x: 0, y: 3 }}
-                                                style={{
-                                                    position: 'absolute',
-                                                    top: 0,
-                                                    left: 0,
-                                                    right: 0,
-                                                    bottom: 0,
-                                                    zIndex: 5,
-                                                    opacity: 0.2
-                                                }}
-                                            /> */}
-                                            <Ionicons
-                                                name='diamond-sharp'
-                                                color={colors.button.primary}
-                                                size={sizeScale(30)}
-                                            />
-                                        </View>}
+                                   
                                     <View
                                         style={[{
                                             position: "absolute",

@@ -31,17 +31,20 @@ import Orientation from 'react-native-orientation-locker';
 import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useColors } from '../hooks/useColors.ts';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useVip } from '../hooks/useVip.ts';
 export default function PriorityItems({ route }: any) {
     const navigation = useNavigation<any>();
     const { user, logout, initializing } = useGoogleSignIn();
-    const { lessons, screen, fullScreen } = useSize();
+    const { lessons, screen, fullScreen, widthScale,
+        heightScale,
+        sizeScale, } = useSize();
     const colors = useColors();
     const {
         signsData,
         lessonsQuestIndices,
         lessonPercentage,
         lessonsCurrentLevelIndex,
-
         signsDataLength,
         setDataLevelIndex,
         answerStats,
@@ -56,8 +59,11 @@ export default function PriorityItems({ route }: any) {
         isBookmarked,
         bookmarkLoading,
         imgBase,
-        incrementView
+        incrementView,
+        upgradeWarn, setUpgradeWarn,
+
     } = useContext(DataContext);
+    const { userVip } = useVip();
 
 
     const ad = useAd();
@@ -199,6 +205,7 @@ export default function PriorityItems({ route }: any) {
                 }}>
                     {priorityItemsList?.map((item: any, index: number) => {
                         if (PRIORITY_CONTENT) {
+
                             return (
                                 <Pressable
                                     key={item.id}
@@ -207,14 +214,19 @@ export default function PriorityItems({ route }: any) {
                                         color: colors.primary,
                                         borderless: false
                                     }}
+
                                     onPress={() => {
-                                        setCurrentScrollIndex(index + 1)
-                                        setSelectedPriority(index);   // remember which Sx was tapped
-                                        setPriorityModal(true);
-                                        const timer = setTimeout(() => {
-                                            ad.isLoaded && ad.show()
-                                        }, 2000);
-                                        return () => clearTimeout(timer);
+                                        if (!userVip && index > 9) {
+                                            setUpgradeWarn(true)
+                                        } else {
+                                            setCurrentScrollIndex(index + 1)
+                                            setSelectedPriority(index);   // remember which Sx was tapped
+                                            setPriorityModal(true);
+                                            // const timer = setTimeout(() => {
+                                            //     ad.isLoaded && ad.show()
+                                            // }, 2000);
+                                            // return () => clearTimeout(timer);
+                                        }
                                     }}
                                     style={[
                                         {
@@ -231,6 +243,26 @@ export default function PriorityItems({ route }: any) {
                                         }
                                     ]}
                                 >
+                                    {
+                                        !userVip && index > 9 &&
+                                        <View style={{
+                                            backgroundColor: colors.opacity.primary,
+                                            position: "absolute",
+                                            top: 0,
+                                            bottom: 0,
+                                            right: 0,
+                                            left: 0,
+                                            zIndex: 9,
+                                            alignItems: 'center',
+                                            justifyContent: 'center'
+                                        }}>
+                                            <Ionicons
+                                                name='diamond-sharp'
+                                                color={colors.button.primary}
+                                                size={sizeScale(30)}
+                                            />
+                                        </View>
+                                    }
                                     <View style={{
                                         position: 'absolute',
                                         backgroundColor: colors.opacity.primary,

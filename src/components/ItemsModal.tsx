@@ -39,7 +39,11 @@ const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function ItemsModal(props: any) {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const { lessons, screen } = useSize();
+    const { lessons, screen,
+        widthScale,
+        heightScale,
+        sizeScale,
+    } = useSize();
 
     const {
 

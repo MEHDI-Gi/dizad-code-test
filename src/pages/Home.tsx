@@ -185,7 +185,7 @@ export default function Home() {
           flexDirection: 'row',
           width: '100%',
 
-          height: heightScale(70),
+          height: heightScale(60),
           justifyContent: 'space-between',
           alignItems: 'center',
           elevation: 3,
@@ -302,20 +302,7 @@ export default function Home() {
               </View>
             </View>
           </View>
-          <TouchableOpacity
-            style={{
-              borderRadius: 5,
-              overflow: 'hidden',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: colors.secondary,
-              marginRight: 10,
-              width: widthScale(38),
-              height: heightScale(25),
-            }}
-            onPress={() => {
-              setUserPlan('free')
-            }} />
+
           {!userVip ?
             (<FreeBadge
               backColor={colors.secondary}

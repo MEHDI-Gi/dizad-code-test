@@ -1,14 +1,6 @@
 import React, { useRef, useState, useContext, useEffect, useMemo, useCallback } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Pressable, Image, StatusBar, ActivityIndicator, DrawerLayoutAndroid, Dimensions } from 'react-native';
-import { TextInput, Button, IconButton, MD3Colors, Icon, Appbar } from 'react-native-paper';
 import { DataContext } from '../context/contextData.tsx';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
-
 import { useSize } from '../hooks/useSize.ts';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import BookmarksTab from '../components/elements/BookmarksSubTab.tsx';
@@ -20,7 +12,11 @@ import { useColors } from '../hooks/useColors.ts';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 const title = "المحفوظات"
-const { lessons, screen } = useSize();
+const { lessons, screen,
+    widthScale,
+    heightScale,
+    sizeScale,
+} = useSize();
 
 
 
@@ -101,8 +97,8 @@ function BookmarkedSigns({ bookmarksSizes, bookmarks, lessonsData, colors }: any
                     alignItems: 'center',
                     justifyContent: "center",
                     alignContent: "center",
-                    paddingTop: 50,
-                    paddingBottom: 120,
+                    paddingTop: sizeScale(50),
+                    paddingBottom: sizeScale(120),
                 }}>
                 <View style={{
                     flexDirection: 'row',
@@ -121,7 +117,7 @@ function BookmarkedSigns({ bookmarksSizes, bookmarks, lessonsData, colors }: any
                                         width: bookmarksSizes.signs.width,
                                         height: bookmarksSizes.signs.height,
                                         borderRadius: 8,
-                                        margin: 5,
+                                        margin: sizeScale(5),
                                         flexDirection: 'column',
                                         backgroundColor: colors.secondary,
                                         overflow: 'hidden',
@@ -145,17 +141,15 @@ function BookmarkedSigns({ bookmarksSizes, bookmarks, lessonsData, colors }: any
                                     }]}>
 
                                     {item?.img ?
-
                                         <Image
+                                            resizeMode='contain'
                                             style={{
                                                 width: '80%',
                                                 height: '80%',
-
                                             }}
                                             source={{ uri: item?.img }}
                                         />
                                         :
-
                                         <ShimmerPlaceHolder
                                             style={{ width: "100%", height: "100%", }}
                                             shimmerColors={[colors.secondary, '#6161617c', colors.secondary]}
@@ -216,11 +210,11 @@ function BookmarkedQuestions({ bookmarks, lessonsData, colors }: any) {
         }}>
             <ScrollView
                 contentContainerStyle={{
-                    rowGap: 10,
+                    rowGap: sizeScale(10),
                     alignItems: 'center',
                     justifyContent: 'flex-start',
-                    paddingTop: 50,
-                    paddingBottom: 120,
+                    paddingTop: sizeScale(50),
+                    paddingBottom: sizeScale(120),
                 }}
                 style={{
                     flex: 1,
@@ -232,19 +226,19 @@ function BookmarkedQuestions({ bookmarks, lessonsData, colors }: any) {
                         key={item.id}
                         style={{
                             backgroundColor: colors.secondary,
-                            padding: 15,
+                            padding: sizeScale(15),
                             width: '90%',
                             flexDirection: 'row-reverse',
                             alignItems: 'center',
                             justifyContent: 'flex-start',
-                            borderRadius: 8,
+                            borderRadius: sizeScale(8),
                             elevation: 3,
                         }}
                     >
                         <Text style={{
                             fontFamily: "Cairo",
                             color: colors.text.primary,
-                            fontSize: 18,
+                            fontSize: sizeScale(18),
                             textAlign: 'right',
                         }}>
                             {item.label}
@@ -329,15 +323,15 @@ function BookmarkedPriority({ bookmarksSizes, bookmarks, lessonsData, colors }: 
                     alignItems: 'center',
                     justifyContent: "flex-start",
                     alignContent: "center",
-                    paddingTop: 50,
-                    paddingBottom: 120,
+                    paddingTop: sizeScale(50),
+                    paddingBottom: sizeScale(120),
                 }}>
                 <View style={{
                     flexDirection: 'row',
                     flexWrap: 'wrap',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: 10,
+                    gap: sizeScale(10),
 
                 }}>
                     {priorityContent?.map((item, index) => {
@@ -353,9 +347,9 @@ function BookmarkedPriority({ bookmarksSizes, bookmarks, lessonsData, colors }: 
                                 }}
                                 style={[
                                     {
-                                        width: screen.width * 0.93,
-                                        height: screen.width * 0.28,
-                                        borderRadius: 8,
+                                        width: widthScale(screen.width * 0.93),
+                                        height: heightScale(screen.width * 0.28),
+                                        borderRadius: sizeScale(8),
                                         flexDirection: 'column',
                                         backgroundColor: colors.secondary,
                                         alignSelf: 'flex-start',
@@ -368,18 +362,18 @@ function BookmarkedPriority({ bookmarksSizes, bookmarks, lessonsData, colors }: 
                                 <View style={{
                                     position: 'absolute',
                                     backgroundColor: colors.opacity.primary,
-                                    width: 27,
-                                    height: 27,
+                                    width: widthScale(27),
+                                    height: heightScale(27),
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    borderRadius: 5,
-                                    top: 5,
-                                    left: 5,
+                                    borderRadius: sizeScale(5),
+                                    top: sizeScale(5),
+                                    left: sizeScale(5),
                                     zIndex: 99
                                 }}>
                                     <Text style={{
                                         color: colors.text.primary,
-                                        fontSize: 13,
+                                        fontSize: sizeScale(13),
                                         fontWeight: '600'
                                     }}>
                                         {index + 1}

@@ -2,10 +2,6 @@ import React, { useRef, useState, useContext, useEffect } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Pressable, Image, StatusBar, ActivityIndicator, DrawerLayoutAndroid, Dimensions } from 'react-native';
 import { DataContext } from '../context/contextData.tsx';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import LinearGradient from 'react-native-linear-gradient';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types.ts';
@@ -58,15 +54,15 @@ export default function Signs() {
         const match = item.condition.match(/category (\d+)/);
         if (match) {
             const categoryNumber = parseInt(match[1], 10);
-            const timer = setTimeout(() => {
-                ad.isLoaded && ad.show()
-            }, 500);
+            // const timer = setTimeout(() => {
+            //     ad.isLoaded && ad.show()
+            // }, 500);
             setSignsItemsIndex(categoryNumber);
             navigation.navigate('SignsItems');
             if (sound) {
                 playSound('levelsButton')
             }
-            return () => clearTimeout(timer);
+            // return () => clearTimeout(timer);
         }
     };
 
@@ -93,9 +89,8 @@ export default function Signs() {
                     alignItems: 'center',
                     justifyContent: 'flex-start',
                     width: screen.width,
-                    paddingTop: 50,
-                    paddingBottom: 60,
-                    rowGap: 10,
+                    paddingVertical: sizeScale(60),
+                    rowGap: sizeScale(10),
                 }}>
                     {SignsContent?.map((item: any, index: any) => {
                         const totalSigns = Object.keys(lessonsData?.content?.signs?.content?.[index]?.items || {}).length;
@@ -119,7 +114,7 @@ export default function Signs() {
                                         backgroundColor: colors.secondary,
                                         overflow: 'hidden',
                                         elevation: 5,
-                                        columnGap: 8,
+                                        columnGap: sizeScale(8),
                                     },]}>
                                     <View
                                         style={[{
@@ -163,7 +158,7 @@ export default function Signs() {
                                             backgroundColor: 'transparent',
                                             flex: 1,
                                             height: "100%",
-                                            rowGap: 5,
+                                            rowGap: sizeScale(5),
                                         }]}>
                                         <Text style={{
                                             fontFamily: "Cairo-Bold",
