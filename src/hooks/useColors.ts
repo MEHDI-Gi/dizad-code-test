@@ -3,9 +3,16 @@ export const colorsList: any = {
     darkColors: {
         primary: '#16161e',
         secondary: '#1a1b26',
-        // secondary: '#1B2631',
-
         exm: '#282a3a',
+        static: {
+            primary: '#16161e',
+            secondary: '#1a1b26',
+            third: '#dba400',
+            text: {
+                primary: '#ebebebff',
+                secondary: '#adadadff',
+            },
+        },
         opacity: {
             primary: '#00000098',
         },
@@ -45,6 +52,15 @@ export const colorsList: any = {
         primary: '#eaeaeaff',
         secondary: 'white',
         exm: '#282a3a',
+        static: {
+            primary: '#16161e',
+            secondary: '#1a1b26',
+            third: '#dba400',
+            text: {
+                primary: '#ebebebff',
+                secondary: '#adadadff',
+            },
+        },
         opacity: {
             primary: '#ffffffcc',
         },

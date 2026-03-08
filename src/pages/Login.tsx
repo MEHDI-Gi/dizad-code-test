@@ -150,7 +150,7 @@ export default function Login({ navigation }: LoginProps) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={[styles.container, { backgroundColor: colors.primary }]}>
+      <View style={[styles.container, { backgroundColor: colors.static.primary }]}>
         <View style={{
           width: screen.width,
           height: screen.width * 0.5,
@@ -190,13 +190,13 @@ export default function Login({ navigation }: LoginProps) {
           paddingVertical: sizeScale(20),
           justifyContent: "flex-end",
           alignItems: "flex-end",
-          backgroundColor: colors.primary,
+          backgroundColor: colors.static.primary,
           rowGap: sizeScale(10),
           borderBottomStartRadius: sizeScale(50),
           overflow: 'hidden'
         }}>
           <LinearGradient
-            colors={['#00ffff', colors.primary]}
+            colors={['#00ffff', colors.static.primary]}
             start={{ x: 2, y: 0 }}
             end={{ x: 0, y: 3 }}
             style={{
@@ -211,20 +211,20 @@ export default function Login({ navigation }: LoginProps) {
           />
           <Text style={{
             fontFamily: 'Cairo-Bold',
-            color: colors.button.primary,
+            color: colors.static.third,
             fontSize: sizeScale(25),
             zIndex: 3,
 
           }}>{title}</Text>
           <Text style={{
             fontFamily: 'Cairo-Medium',
-            color: colors.text.primary,
+            color: colors.static.text.primary,
             fontSize: sizeScale(20),
             zIndex: 3,
           }}>{sub}</Text>
         </View>
         <View style={{
-          backgroundColor: colors.primary,
+          backgroundColor: colors.static.primary,
           flex: 1,
           width: "100%",
           justifyContent: 'center',
@@ -259,7 +259,7 @@ export default function Login({ navigation }: LoginProps) {
               }]}>
                 <Text key={index} style={{
                   fontFamily: 'Cairo-Bold',
-                  color: colors.text.primary,
+                  color: colors.static.text.primary,
                   fontSize: sizeScale(18),
                 }}>{item.label}</Text>
                 {
@@ -267,17 +267,17 @@ export default function Login({ navigation }: LoginProps) {
                     <MaterialCommunityIcons
                       name={item.icon}
                       size={iconsSizes}
-                      color={colors.text.primary}
+                      color={colors.static.text.primary}
                     /> : item.set === 'Ionicons' ?
                       <Ionicons
                         name={item.icon}
                         size={iconsSizes}
-                        color={colors.text.primary}
+                        color={colors.static.text.primary}
                       /> :
                       <Entypo
                         name={item.icon}
                         size={iconsSizes}
-                        color={colors.text.primary}
+                        color={colors.static.text.primary}
                       />
                 }
               </View>
@@ -296,38 +296,31 @@ export default function Login({ navigation }: LoginProps) {
             <Pressable
               disabled={isAuthProcessing}
               style={[{
-                backgroundColor: colors.secondary,
+                backgroundColor: colors.static.secondary,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-evenly',
                 borderRadius: 8,
                 overflow: 'hidden',
-                height: heightScale(50),
+                height: heightScale(45),
                 width: '100%'
               }, { opacity: isAuthProcessing ? 0.7 : 1 },
               ]}
-              android_ripple={{ foreground: true, color: colors.primary, borderless: false }}
+              android_ripple={{ foreground: true, color: colors.static.primary, borderless: false }}
               onPress={handleGoogleSignIn}
             >
-              <View style={{
-                width: widthScale(40),
-                height: "100%",
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                {!isAuthProcessing ?
-                  <Image
-                    source={require('../assets/icons/google.png')}
-                    style={[{
-                      width: widthScale(25),
-                      height: heightScale(25),
-                    }]}
-                  /> :
-                  <ActivityIndicator color="#ffffff" />}
-              </View>
+              {!isAuthProcessing ?
+                <Image
+                  source={require('../assets/icons/google.png')}
+                  style={[{
+                    width: widthScale(22),
+                    height: heightScale(22),
+                  }]}
+                /> :
+                <ActivityIndicator color="#ffffff" />}
             </Pressable>
             <Text style={[{
-              fontSize: sizeScale(15), fontWeight: '600', color: '#8b8b8b'
+              fontSize: sizeScale(15), fontWeight: '600', color: colors.static.text.secondary
             }
             ]}>
               Continue with Google

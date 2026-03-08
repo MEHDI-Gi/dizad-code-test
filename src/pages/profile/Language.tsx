@@ -8,7 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Statistics from '../home/Statistics';
+import Statistics from '../../components/Statistics';
 import LinearGradient from 'react-native-linear-gradient';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../types';
@@ -35,11 +35,11 @@ export default function Language() {
 
     type LanguageKey = keyof typeof languageMap; // 'arabic' | 'english'
 
-interface LanguageItem {
-  label: string;
-  condition: LanguageKey;
-  icon: string;
-}
+    interface LanguageItem {
+        label: string;
+        condition: LanguageKey;
+        icon: string;
+    }
 
     const languageList: LanguageItem[] = [
         { label: texts.langAr, condition: 'arabic', icon: 'abjad-arabic', },

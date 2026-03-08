@@ -1,7 +1,7 @@
 import React, { useRef, useState, useContext, useEffect, useCallback } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Pressable, Image, StatusBar, ActivityIndicator, DrawerLayoutAndroid, Dimensions, Modal, FlatList, ListRenderItemInfo } from 'react-native';
 import { TextInput, Button, IconButton, MD3Colors, Icon, Appbar } from 'react-native-paper';
-import { DataContext } from '../context/contextData.tsx';
+import { DataContext } from '../../context/contextData.tsx';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,14 +9,14 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import LinearGradient from 'react-native-linear-gradient';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../types.ts';
+import { RootStackParamList } from '../../../types.ts';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
-import { useAutoInterstitial } from '../hooks/useAutoInterstitial.ts';
-import { useAd } from '../hooks/useAd.ts';
+import { useAutoInterstitial } from '../../hooks/useAutoInterstitial.ts';
+import { useAd } from '../../hooks/useAd.ts';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
-import { useSize } from '../hooks/useSize.ts';
-import { useGoogleSignIn } from '../context/auth';
+import { useSize } from '../../hooks/useSize.ts';
+import { useGoogleSignIn } from '../../context/auth.ts';
 
 import {
     CompositeNavigationProp,
@@ -30,9 +30,9 @@ import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/
 import Orientation from 'react-native-orientation-locker';
 import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useColors } from '../hooks/useColors.ts';
+import { useColors } from '../../hooks/useColors.ts';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useVip } from '../hooks/useVip.ts';
+import { useVip } from '../../hooks/useVip.ts';
 export default function PriorityItems({ route }: any) {
     const navigation = useNavigation<any>();
     const { user, logout, initializing } = useGoogleSignIn();

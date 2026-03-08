@@ -12,7 +12,7 @@ export default function SplashScreen() {
     const slog = 'تعليم قوانين المرور الجزائرية'
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.primary }]} >
+        <View style={[styles.container, { backgroundColor: colors.static.primary }]} >
             <View style={{
                 flexDirection: 'column',
                 width: "80%",
@@ -25,7 +25,7 @@ export default function SplashScreen() {
             }}>
                 <Text style={{
                     fontFamily: 'Cairo-ExtraBold',
-                    color: colors.button.primary,
+                    color: colors.static.third,
                     fontSize: 35,
                 }}>{title}</Text>
                 {/* <Text style={{

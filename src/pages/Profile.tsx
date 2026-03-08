@@ -28,7 +28,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Switch from '../components/elements/Switch.tsx';
-import Statistics from './home/Statistics';
+import Statistics from '../components/Statistics.tsx';
 import LinearGradient from 'react-native-linear-gradient';
 import SnackBar from '../components/elements/SnackBar';
 // import Sound from 'react-native-sound';

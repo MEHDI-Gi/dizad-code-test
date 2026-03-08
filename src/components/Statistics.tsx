@@ -19,7 +19,7 @@ import {
   Icon,
   Appbar,
 } from 'react-native-paper';
-import { DataContext } from '../../context/contextData';
+import { DataContext } from '../context/contextData';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
@@ -128,7 +128,7 @@ export default function Statistics() {
             foreground: true,
             borderless: false,
           }}
-          onPress={() => {}}
+          onPress={() => { }}
           style={[
             {
               flexDirection: 'column',

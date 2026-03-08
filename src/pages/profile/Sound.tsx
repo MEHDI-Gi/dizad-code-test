@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Statistics from '../home/Statistics';
+import Statistics from '../../components/Statistics';
 import LinearGradient from 'react-native-linear-gradient';
 import SnackBar from '../../components/elements/SnackBar';
 import Switch from '../../components/elements/Switch';

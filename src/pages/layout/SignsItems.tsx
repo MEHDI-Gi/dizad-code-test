@@ -15,16 +15,16 @@ import {
   ListRenderItemInfo,
   Modal,
 } from 'react-native';
-import { DataContext } from '../context/contextData';
+import { DataContext } from '../../context/contextData';
 import { TextInput, Button, IconButton, MD3Colors, Icon, Appbar, RadioButton, ProgressBar, Snackbar, Surface, Dialog, Portal, PaperProvider } from 'react-native-paper';
 import React, { useRef, useState, useContext, useEffect, useMemo, useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 
-import type { RootStackParamList } from '../../types';
+import type { RootStackParamList } from '../../../types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useSize } from '../hooks/useSize';
+import { useSize } from '../../hooks/useSize';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -33,11 +33,11 @@ import { ColorSpace } from 'react-native-reanimated';
 import { BlurView } from '@react-native-community/blur';
 import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 import { firebase } from '@react-native-firebase/auth';
-import ItemsModal from '../components/ItemsModal';
+import ItemsModal from '../../components/ItemsModal';
 
-import { useAd } from '../hooks/useAd';
-import { useColors } from '../hooks/useColors';
-import { useVip } from '../hooks/useVip';
+import { useAd } from '../../hooks/useAd';
+import { useColors } from '../../hooks/useColors';
+import { useVip } from '../../hooks/useVip';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);

@@ -207,8 +207,8 @@ export default function Home() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: colors.secondary,
-                width: widthScale(38),
-                height: heightScale(38),
+                width: widthScale(35),
+                height: heightScale(35),
               }}
               onPress={() => {
                 if (sound) playSound('settingsButton');

@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary, Asset, ImageLibraryOptions } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Statistics from '../home/Statistics';
+import Statistics from '../../components/Statistics';
 import SnackBar from '../../components/elements/SnackBar';
 import Switch from '../../components/elements/Switch';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -241,7 +241,7 @@ export default function Report() {
                                 fontFamily: language === 'english' ? 'Ubuntu_500Medium' : 'Cairo_500Medium',
                                 writingDirection: language === 'english' ? 'ltr' : 'rtl',
                                 textAlign: language === 'english' ? 'left' : 'right'
-                            }} 
+                            }}
                             placeholderTextColor={colors.secText}
                             placeholder={texts.reportPlh}
                         />
