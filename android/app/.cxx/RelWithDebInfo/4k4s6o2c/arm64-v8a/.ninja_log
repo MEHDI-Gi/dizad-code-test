@@ -113,3 +113,5 @@
 104621	109888	1772771225467338032	rnworklets_autolinked_build/CMakeFiles/react_codegen_rnworklets.dir/react/renderer/components/rnworklets/rnworkletsJSI-generated.cpp.o	211d57c78eddc9c2
 104627	110033	1772771225614339428	rnworklets_autolinked_build/CMakeFiles/react_codegen_rnworklets.dir/rnworklets-generated.cpp.o	a70e9b04b5b6e53d
 110033	110106	1772771225705340293	/home/mehdi/Desktop/dizad-code-test/android/app/build/intermediates/cxx/RelWithDebInfo/4k4s6o2c/obj/arm64-v8a/libappmodules.so	8342c6fcff4ababa
+0	6	0	/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/RelWithDebInfo/4k4s6o2c/arm64-v8a/CMakeFiles/cmake.verify_globs	7b40bed5c0a4b6eb
+0	15	0	clean	5f0cfc536e6c82ff

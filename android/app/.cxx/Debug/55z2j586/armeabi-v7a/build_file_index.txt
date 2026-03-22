@@ -5,7 +5,6 @@
 /home/mehdi/Desktop/dizad-code-test/node_modules/react-native-google-mobile-ads/android/build/generated/source/codegen/jni/CMakeLists.txt
 /home/mehdi/Desktop/dizad-code-test/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/CMakeLists.txt
 /home/mehdi/Desktop/dizad-code-test/node_modules/react-native-pager-view/android/build/generated/source/codegen/jni/CMakeLists.txt
-/home/mehdi/Desktop/dizad-code-test/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/CMakeLists.txt
 /home/mehdi/Desktop/dizad-code-test/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt
 /home/mehdi/Desktop/dizad-code-test/node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt
 /home/mehdi/Desktop/dizad-code-test/node_modules/react-native-sound/android/build/generated/source/codegen/jni/CMakeLists.txt

@@ -187,31 +187,6 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/CMakeFiles/cmake.verify_globs")
 endif()
 
-# react_codegen_SRCS at /home/mehdi/Desktop/dizad-code-test/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/CMakeLists.txt:9 (file)
-file(GLOB NEW_GLOB LIST_DIRECTORIES true "/home/mehdi/Desktop/dizad-code-test/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/*.cpp")
-set(OLD_GLOB
-  "/home/mehdi/Desktop/dizad-code-test/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/rnreanimated-generated.cpp"
-  )
-if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
-  message("-- GLOB mismatch!")
-  file(TOUCH_NOCREATE "/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/CMakeFiles/cmake.verify_globs")
-endif()
-
-# react_codegen_SRCS at /home/mehdi/Desktop/dizad-code-test/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/CMakeLists.txt:9 (file)
-file(GLOB NEW_GLOB LIST_DIRECTORIES true "/home/mehdi/Desktop/dizad-code-test/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/react/renderer/components/rnreanimated/*.cpp")
-set(OLD_GLOB
-  "/home/mehdi/Desktop/dizad-code-test/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/react/renderer/components/rnreanimated/ComponentDescriptors.cpp"
-  "/home/mehdi/Desktop/dizad-code-test/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/react/renderer/components/rnreanimated/EventEmitters.cpp"
-  "/home/mehdi/Desktop/dizad-code-test/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/react/renderer/components/rnreanimated/Props.cpp"
-  "/home/mehdi/Desktop/dizad-code-test/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/react/renderer/components/rnreanimated/ShadowNodes.cpp"
-  "/home/mehdi/Desktop/dizad-code-test/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/react/renderer/components/rnreanimated/States.cpp"
-  "/home/mehdi/Desktop/dizad-code-test/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/react/renderer/components/rnreanimated/rnreanimatedJSI-generated.cpp"
-  )
-if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
-  message("-- GLOB mismatch!")
-  file(TOUCH_NOCREATE "/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/CMakeFiles/cmake.verify_globs")
-endif()
-
 # LIB_CUSTOM_SRCS at /home/mehdi/Desktop/dizad-code-test/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt:12 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "/home/mehdi/Desktop/dizad-code-test/node_modules/react-native-safe-area-context/android/src/main/jni/*.cpp")
 set(OLD_GLOB
