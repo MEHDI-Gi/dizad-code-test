@@ -5,12 +5,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Animated, {
-    useSharedValue,
-    withTiming,
-    useAnimatedStyle,
-    Easing, runOnJS
-} from 'react-native-reanimated';
 import { View } from 'react-native';
 import { useColors } from '../../hooks/useColors';
 
@@ -20,36 +14,35 @@ export default function SnackBar(props: { bottom: any; icon: any; label: any; },
         snackbarState, setSnackbarState, language
     } = useContext(DataContext);
     const colors = useColors();
-    const SnackBarTransition = useSharedValue(0);
 
-    useEffect(() => {
-        if (snackbarState) {
-            SnackBarTransition.value = 1
-            const timer = setTimeout(() => {
-                SnackBarTransition.value = withTiming(0, config, () => {
-                    runOnJS(setSnackbarState)(false);
-                });
-            }, 4000);
+    // useEffect(() => {
+    //     if (snackbarState) {
+    //         SnackBarTransition.value = 1
+    //         const timer = setTimeout(() => {
+    //             SnackBarTransition.value = withTiming(0, config, () => {
+    //                 runOnJS(setSnackbarState)(false);
+    //             });
+    //         }, 4000);
 
-            return () => clearTimeout(timer);
+    //         return () => clearTimeout(timer);
 
-        } else {
-        }
-    }, [snackbarState])
+    //     } else {
+    //     }
+    // }, [snackbarState])
 
 
-    const config = {
-        duration: 500,
-        easing: Easing.out(Easing.exp),
-    };
-    const snackbarAimated = useAnimatedStyle(() => {
-        return {
-            opacity: withTiming(SnackBarTransition.value, config)
-        }
-    });
+    // const config = {
+    //     duration: 500,
+    //     easing: Easing.out(Easing.exp),
+    // };
+    // const snackbarAimated = useAnimatedStyle(() => {
+    //     return {
+    //         opacity: withTiming(SnackBarTransition.value, config)
+    //     }
+    // });
     if (!snackbarState) return null;
     return (
-        <Animated.View
+        <View
             needsOffscreenAlphaCompositing={true}
             style={[{
                 position: 'absolute',
@@ -68,7 +61,7 @@ export default function SnackBar(props: { bottom: any; icon: any; label: any; },
                 borderRadius: 6,
                 elevation: 3,
                 paddingHorizontal: 5,
-            }, snackbarAimated]}
+            }]}
         >
             <View style={{
                 height: '100%',
@@ -89,7 +82,7 @@ export default function SnackBar(props: { bottom: any; icon: any; label: any; },
                 fontSize: 13,
             }}>{props.label}</Text>
 
-        </Animated.View>
+        </View>
     );
 
 }

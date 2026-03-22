@@ -3,13 +3,6 @@ import { Text, View, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView
 import { TextInput, Button, IconButton, MD3Colors, Avatar, Icon, Appbar, } from 'react-native-paper';
 import { DataContext } from '../../context/contextData';
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, {
-    useSharedValue,
-    withTiming,
-    useAnimatedStyle,
-    Easing,
-    withSpring
-} from 'react-native-reanimated';
 import { useColors } from '../../hooks/useColors';
 
 export default function FreeBadge(props: any) {

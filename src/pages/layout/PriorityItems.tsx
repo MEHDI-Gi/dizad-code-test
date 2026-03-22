@@ -28,7 +28,6 @@ import {
 import { rotationHandlerName } from 'react-native-gesture-handler/lib/typescript/handlers/RotationGestureHandler';
 import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import Orientation from 'react-native-orientation-locker';
-import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useColors } from '../../hooks/useColors.ts';
 import Ionicons from 'react-native-vector-icons/Ionicons';

@@ -24,13 +24,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { DataContext } from '../context/contextData';
 
-import Animated, {
-    useSharedValue,
-    withTiming,
-    useAnimatedStyle,
-    Easing,
-    withSpring
-} from 'react-native-reanimated';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { useColors } from '../hooks/useColors';
 

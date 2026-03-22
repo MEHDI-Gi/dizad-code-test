@@ -29,11 +29,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
-import { ColorSpace } from 'react-native-reanimated';
 import { BlurView } from '@react-native-community/blur';
 import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 import { firebase } from '@react-native-firebase/auth';
-import ItemsModal from '../../components/ItemsModal';
 
 import { useAd } from '../../hooks/useAd';
 import { useColors } from '../../hooks/useColors';

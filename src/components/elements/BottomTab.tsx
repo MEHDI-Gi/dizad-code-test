@@ -10,13 +10,6 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-import Animated, {
-    useSharedValue,
-    withTiming,
-    useAnimatedStyle,
-    Easing,
-    withSpring
-} from 'react-native-reanimated';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../types.ts';
 import { useSize } from '../../hooks/useSize.ts';
