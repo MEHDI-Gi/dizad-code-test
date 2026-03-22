@@ -13,11 +13,12 @@ import { DataContext } from '../context/contextData';
 import { useColors } from '../hooks/useColors';
 import { useVip } from '../hooks/useVip';
 import { useSize } from '../hooks/useSize';
+import Dots from './elements/Dots';
 
 export default function UpgradeCard() {
     const { userPlan, setUserPlan } = useVip()
     const {
-        upgradeCard, setUpgradeCard,
+        upgradeCard, setUpgradeCard, setUpgradeTutu
     } = useContext(DataContext);
     const colors = useColors();
     const { screen,
@@ -120,33 +121,7 @@ export default function UpgradeCard() {
                         justifyContent: "space-between",
                         flexDirection: 'row'
                     }}>
-                        <View style={{
-                            height: '100%',
-                            paddingHorizontal: sizeScale(15),
-                            columnGap: 5,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            flexDirection: 'row'
-                        }}>
-                            <View style={{
-                                width: widthScale(10),
-                                height: heightScale(10),
-                                borderRadius: 50,
-                                backgroundColor: 'green',
-                            }} />
-                            <View style={{
-                                width: widthScale(10),
-                                height: heightScale(10),
-                                borderRadius: 50,
-                                backgroundColor: 'orange',
-                            }} />
-                            <View style={{
-                                width: widthScale(10),
-                                height: heightScale(10),
-                                borderRadius: 50,
-                                backgroundColor: 'red',
-                            }} />
-                        </View>
+                        <Dots />
                         <View style={{
                             position: 'absolute',
                             top: 0,
@@ -197,10 +172,9 @@ export default function UpgradeCard() {
                     </View>
                     <View style={{
                         width: '100%',
-                        height: heightScale(screen.width * 0.60),
-
+                        rowGap: sizeScale(15),
                         alignItems: 'center',
-                        justifyContent: 'center',
+                        justifyContent: 'flex-start',
                     }}>
                         <Image
                             source={require('../assets/tele-qr.jpg')}
@@ -212,6 +186,51 @@ export default function UpgradeCard() {
                                 borderRadius: 15,
                             }}
                         />
+                        <Pressable
+                            android_ripple={{ color: colors.text.secondary, borderless: false, foreground: true }}
+                            onPress={() => {
+                                //npm install @react-native-clipboard/clipboard
+                            }}
+                            style={{
+                                backgroundColor: colors.primary,
+                                zIndex: 9,
+                                borderRadius: sizeScale(12),
+                                paddingVertical: sizeScale(8),
+                                paddingHorizontal: sizeScale(8),
+                                columnGap: sizeScale(15),
+                                flexDirection: 'row',
+                                alignContent: 'center',
+                                justifyContent: 'space-between',
+                                overflow: 'hidden'
+                            }}>
+                            <View style={{
+                                alignContent: 'center',
+                                justifyContent: 'center',
+                            }}>
+
+                                <Text style={{
+                                    color: colors.text.secondary,
+                                    fontSize: sizeScale(14),
+                                    fontWeight: 'bold'
+                                }}>https://t.me/+lXpXxnihJOo4NDJk</Text>
+                            </View>
+                            <View style={{
+                                backgroundColor: colors.secondary,
+                                zIndex: 9,
+                                borderRadius: sizeScale(10),
+                                paddingVertical: sizeScale(8),
+                                paddingHorizontal: sizeScale(8),
+                                alignContent: 'center',
+                                justifyContent: 'center',
+                            }}>
+
+                                <MaterialCommunityIcons
+                                    name='content-copy'
+                                    color={colors.text.primary}
+                                    size={sizeScale(20)}
+                                />
+                            </View>
+                        </Pressable>
                     </View>
                     <View style={{
                         width: '100%',
@@ -233,7 +252,7 @@ export default function UpgradeCard() {
                                     <View
                                         key={index}
                                         style={{
-                                        
+
                                             flexDirection: 'row',
                                             alignItems: 'center',
                                             justifyContent: "flex-start",
@@ -274,7 +293,7 @@ export default function UpgradeCard() {
                         width: '100%',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        paddingVertical: sizeScale(20),
+                        paddingTop: sizeScale(20),
                         rowGap: sizeScale(20),
                     }}>
                         <View style={{
@@ -285,7 +304,7 @@ export default function UpgradeCard() {
                             columnGap: sizeScale(10),
                         }}>
 
-                            <Text style={{ fontWeight: '500', color: colors.text.secondary }}>Get Lifetime VIP :</Text>
+                            <Text style={{ fontWeight: '500', color: colors.text.secondary }}>Get Lifetime VIP for Only :</Text>
                             <Text style={{ fontSize: sizeScale(17), fontWeight: 'bold', color: colors.text.primary }}>
                                 700 da</Text>
                         </View>
@@ -306,7 +325,26 @@ export default function UpgradeCard() {
                                 UPGRADE</Text>
                             {/* <Text style={{ fontWeight: 'bold', color: 'black' }}>CONTACT US</Text> */}
                         </Pressable>
+
                     </View>
+                    <Pressable
+                        android_ripple={{ color: colors.secondary, borderless: false, foreground: true }}
+                        onPress={() => {
+                            setUpgradeTutu(true)
+
+                        }}
+                        style={[{
+                            paddingVertical: sizeScale(12),
+                            flexDirection: "row",
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: 8,
+                        }]}
+                    >
+                        <Text style={{ fontSize: sizeScale(13), fontWeight: 'bold', color: colors.text.secondary }}>
+                            How to UPGRADE ?</Text>
+                        {/* <Text style={{ fontWeight: 'bold', color: 'black' }}>CONTACT US</Text> */}
+                    </Pressable>
                 </View>
 
             </View>

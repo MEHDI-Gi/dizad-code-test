@@ -26,6 +26,7 @@ import { DataContext } from '../context/contextData';
 import { useColors } from '../hooks/useColors';
 import { useVip } from '../hooks/useVip';
 import { useSize } from '../hooks/useSize';
+import Dots from './elements/Dots';
 
 
 
@@ -86,7 +87,7 @@ export default function VipCard() {
                         setVipCard(false)
                     }} />
                 <View style={[{
-                    width: '95%',
+                    width: '90%',
                     backgroundColor: colors.secondary,
                     zIndex: 99999,
                     borderRadius: 10,
@@ -102,33 +103,7 @@ export default function VipCard() {
                         justifyContent: "space-between",
                         flexDirection: 'row'
                     }}>
-                        <View style={{
-                            height: '100%',
-                            paddingHorizontal: 15,
-                            columnGap: 5,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            flexDirection: 'row'
-                        }}>
-                            <View style={{
-                                width: 10,
-                                height: 10,
-                                borderRadius: 50,
-                                backgroundColor: 'green',
-                            }} />
-                            <View style={{
-                                width: 10,
-                                height: 10,
-                                borderRadius: 50,
-                                backgroundColor: 'orange',
-                            }} />
-                            <View style={{
-                                width: 10,
-                                height: 10,
-                                borderRadius: 50,
-                                backgroundColor: 'red',
-                            }} />
-                        </View>
+                      <Dots />
                         <View style={{
                             position: 'absolute',
                             top: 0,
@@ -140,10 +115,7 @@ export default function VipCard() {
                             alignItems: 'center',
                             justifyContent: "center"
                         }}>
-
                             <Text style={{ color: "white", fontWeight: '800' }}>VIP member</Text>
-
-
                         </View>
                         <View style={{
                             width: 50,

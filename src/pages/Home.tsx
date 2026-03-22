@@ -747,7 +747,112 @@ export default function Home() {
             مصادر خارجية
           </Text>
         </View>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            paddingTop: sizeScale(0),
+            paddingBottom: sizeScale(10),
+            rowGap: sizeScale(10),
+          }}
+          style={{
+            flex: 1,
+            width: '95%',
+          }}>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
+              flexDirection: 'row',
+              width: '90%',
+              flex: 1,
+              gap: sizeScale(7),
+            }}
+          >
+            {extSources.map((item: any, index: number) => {
+              if (!firebaseLoaded) {
+                return (
+                  <ShimmerPlaceHolder
+                    key={`shimmer-${index}`}
+                    style={{
+                      width: '100%',
+                      height: heightScale(screen.width * 0.25),
+                      borderRadius: sizeScale(8),
+                    }}
+                    shimmerColors={[
+                      colors.secondary,
+                      '#6161617c',
+                      colors.secondary,
+                    ]}
+                  />)
+              }
+              return (
+                <Pressable
+                  android_ripple={{
+                    borderless: false,
+                    color: colors.primary,
+                    foreground: true,
+                  }}
+                  onPress={() => {
+                    Linking.openURL(
+                      'https://www.youtube.com/playlist?list=PLIuGUVzSi-K4754yPL6zul8QbGiK9xYNR',
+                    );
+                  }}
+                  key={`key-${index}`}
+                  style={[
+                    {
+                      alignItems: 'center',
+                      backgroundColor: colors.secondary,
+                      width: heightScale(screen.width * 0.25),
+                      height: heightScale(screen.width * 0.25),
+                      padding: sizeScale(10),
+                      borderRadius: sizeScale(8),
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      overflow: 'hidden',
+                      elevation: 5,
+                      columnGap: sizeScale(0),
+                    },
+                  ]}
+                >
+                  <Image
+                    style={{
+                      width: widthScale(screen.width * 0.15),
+                      height: widthScale(screen.width * 0.15),
+                      borderRadius: sizeScale(50),
+                      resizeMode: 'cover',
+                    }}
+                    source={{ uri: item?.img }}
+                  />
+                  <View
+                    style={{
+                      flexDirection: 'column',
+                      alignItems: 'flex-end',
+                      justifyContent: 'center',
+                      flex: 1,
+                      zIndex: 2,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: 'Cairo',
+                        color: colors.text.primary,
+                        fontSize: sizeScale(14),
+                        textAlign: 'right',
+                      }}
+                    >
+                      title
+                    </Text>
+                  </View>
+                </Pressable>
+              );
+            })}
+          </View>
 
+        </ScrollView>
         <View
           style={{
             alignItems: 'center',

@@ -37,6 +37,7 @@ import Offline from './Offline.tsx';
 import { useColors } from '../hooks/useColors.ts';
 import UpgradeWarn from '../components/UpgradeWarn.tsx';
 import { useVip } from '../hooks/useVip.ts';
+import TutuUpgrade from '../components/TutuUpgrade.tsx';
 export default function Main() {
     const colors = useColors();
     const {
@@ -46,7 +47,8 @@ export default function Main() {
         statisticsCard,
         snackOptions,
         user,
-        upgradeWarn
+        upgradeWarn,
+        upgradeTutu
     } = useContext(DataContext);
     const { userVip } = useVip();
 
@@ -78,6 +80,7 @@ export default function Main() {
             {freeCard && <FreeCard />}
             {vipCard && <VipCard />}
             {upgradeCard && <UpgradeCard />}
+            {upgradeTutu && <TutuUpgrade />}
             {upgradeWarn && <UpgradeWarn />}
             <NavigationContainer>
                 <Stack.Navigator

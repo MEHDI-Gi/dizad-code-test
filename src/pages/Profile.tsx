@@ -44,7 +44,14 @@ import { useTheme } from '../hooks/useTheme.ts';
 import { useVip } from '../hooks/useVip.ts';
 import { useUserAccuracy } from '../hooks/useUserAccuracy.ts';
 import { set } from '@react-native-firebase/database';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { useSize } from '../hooks/useSize.ts';
 const Profile = () => {
+  const { screen,
+    widthScale,
+    heightScale,
+    sizeScale,
+  } = useSize();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const colors = useColors();
@@ -101,7 +108,7 @@ const Profile = () => {
     setApparence,
     setColors,
     colorsList,
-
+    setUpgradeTutu
   } = useContext(DataContext);
 
   const [initTheme, setInitTheme] = useState<boolean>(false);
@@ -117,6 +124,16 @@ const Profile = () => {
       direction: language === 'english' ? 'row-reverse' : 'row',
     };
     const RightContent = () => {
+      if (props.id) {
+        return (
+          <MaterialCommunityIcons
+            name={'content-copy'}
+            color={props.color}
+            size={18}
+
+          />
+        );
+      }
       if (props.vibre) {
         return (
           <Switch
@@ -243,7 +260,14 @@ const Profile = () => {
   }
   const settingsList = [
     {
-      id: 0,
+      label: 'ID Number',
+      condition: 'id',
+      icon: 'id-card',
+      //content-copy
+      color: 'gray',
+      iconSet: 'MaterialCommunityIcons',
+    },
+    {
       label: 'Statistics',
       condition: 'statistics',
       icon: 'chart-box',
@@ -251,7 +275,6 @@ const Profile = () => {
       iconSet: 'MaterialCommunityIcons',
     },
     {
-      id: 1,
       label: texts.langEdt,
       condition: 'language',
       icon: 'translate',
@@ -259,7 +282,6 @@ const Profile = () => {
       iconSet: 'MaterialCommunityIcons',
     },
     {
-      id: 2,
       label: texts.soundEdt,
       condition: 'sound',
       icon: sound ? 'volume-source' : 'volume-variant-off',
@@ -267,7 +289,6 @@ const Profile = () => {
       iconSet: 'MaterialCommunityIcons',
     },
     {
-      id: 3,
       label: texts.vibrateEdt,
       condition: 'vibrate',
       icon: vibrate ? 'vibrate' : 'vibrate-off',
@@ -275,7 +296,6 @@ const Profile = () => {
       iconSet: 'MaterialCommunityIcons',
     },
     {
-      id: 4,
       label: 'Dark Mode',
       condition: 'dark',
       icon: 'moon-waning-crescent',
@@ -283,7 +303,6 @@ const Profile = () => {
       iconSet: 'MaterialCommunityIcons',
     },
     {
-      id: 5,
       label: texts.reportEdt,
       condition: 'report',
       icon: 'report',
@@ -291,7 +310,6 @@ const Profile = () => {
       iconSet: 'MaterialIcons',
     },
     {
-      id: 6,
       label: 'Contact Us',
       condition: 'contact',
       icon: 'message',
@@ -301,14 +319,12 @@ const Profile = () => {
   ];
   const DangerSettingsList = [
     {
-      id: 1,
       label: texts.restEdt,
       condition: 'reset data',
       icon: 'refresh',
       color: '#9f707096',
     },
     {
-      id: 2,
       label: texts.deleteEdt,
       condition: 'delete account',
       icon: 'delete',
@@ -379,6 +395,9 @@ const Profile = () => {
   const settingsListPress = (item: any) => {
     if (sound) playSound('settingsButton');
     switch (item.condition) {
+      case 'id':
+
+        break;
       case 'language':
         logAllStoredData();
         break;
@@ -597,24 +616,35 @@ const Profile = () => {
                   />) : null}
             </View>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-              }}
-            >
-              <Text
-                style={{
-                  marginRight: 5,
-                  color: colors.text.secondary,
-                  fontSize: 12,
-                  fontWeight: '600',
-                }}
-              >
-                id: {user.uid}
-              </Text>
-
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'hidden',
+              columnGap: 3
+            }}>
+              {userAccuracy ?
+                <Text style={[{
+                  color: colors.text.primary,
+                  fontSize: sizeScale(13),
+                  textAlign: 'center',
+                }]}>
+                  {userAccuracy}
+                </Text>
+                :
+                <Text style={[{
+                  color: colors.text.primary,
+                  fontSize: sizeScale(13),
+                  textAlign: 'center',
+                }]}>
+                  0
+                </Text>
+              }
+              <FontAwesome5
+                name='percentage'
+                size={sizeScale(13)}
+                color={colors.text.secondary}
+              />
             </View>
           </View>
         </View>
@@ -766,15 +796,15 @@ const Profile = () => {
           {settingsList.map((item, index) => (
             <SettingsCard
               itemIconSet={item.iconSet}
-              key={item.id}
+              key={item.condition}
               index={index}
               objectKey={settingsList}
               label={item.label}
               labelColor={colors.text.primary}
               icon={item.icon}
               color={item.color}
-              itemId={item.id}
               press={() => settingsListPress(item)}
+              id={item.condition === 'id'}
               dark={item.condition === 'dark'}
               vibre={item.condition === 'vibrate'}
               sound={item.condition === 'sound'}
@@ -820,17 +850,55 @@ const Profile = () => {
             </View>
 
           </Pressable>
+          <Pressable
+            android_ripple={{
+              color: colors.primary,
+              borderless: false,
+              foreground: true,
+            }}
+            style={{
+              alignItems: 'center',
+              width: '100%',
+              borderBottomColor: colors.secondary,
+              overflow: 'hidden',
+              justifyContent: 'space-between',
+              flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
+            }}
+            onPress={() => { setUpgradeTutu(true) }}
+          >
+            <View
+              style={[
+                {
+                  alignItems: 'center',
+                  flex: 1,
+                  height: 47,
+                  flexDirection: 'row',
+                  justifyContent:
+                    language === 'english' ? 'flex-start' : 'flex-end',
+                },
+              ]}
+            >
+              <Text
+                style={{
+                  color: 'grey',
+                  fontSize: 15,
+                  fontFamily: 'Cairo_600SemiBold',
+                }}
+              >
+                UPGRADE TUTU
+              </Text>
+            </View>
 
+          </Pressable>
           {DangerSettingsList.map((item, index) => (
             <SettingsCard
-              key={item.id}
+              key={item.condition}
               index={index}
               objectKey={DangerSettingsList}
               label={item.label}
               labelColor={'#9f7070'}
               icon={item.icon}
               color={'#9f707096'}
-              itemId={item.id}
               press={() => dangerSettingsListPress(item)}
             />
           ))}

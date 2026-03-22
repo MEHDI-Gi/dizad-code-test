@@ -464,6 +464,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
   const [freeCard, setFreeCard] = useState<boolean>(false);
   const [statisticsCard, setStatisticsCard] = useState<boolean>(false);
   const [upgradeCard, setUpgradeCard] = useState<boolean>(false);
+  const [upgradeTutu, setUpgradeTutu] = useState<boolean>(false);
   const [upgradeWarn, setUpgradeWarn] = useState<boolean>(false);
 
   const [dataAsync, setDataAsync] = useState<boolean>(false);
@@ -593,6 +594,8 @@ const DataProvider = ({ children }: DataProviderProps) => {
       setStatisticsCard,
       upgradeCard,
       setUpgradeCard,
+      upgradeTutu,
+      setUpgradeTutu,
       snackbarState,
       setSnackbarState,
       playSound: playSoundMemo,
@@ -675,6 +678,7 @@ const DataProvider = ({ children }: DataProviderProps) => {
       freeCard,
       vipCard,
       upgradeCard,
+      upgradeTutu,
       upgradeWarn,
       bookmarks,
       firebaseLoaded,

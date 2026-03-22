@@ -28,6 +28,7 @@ import { useColors } from '../hooks/useColors';
 import { useVip } from '../hooks/useVip';
 import { useSize } from '../hooks/useSize';
 import { useAd } from '../hooks/useAd';
+import Dots from './elements/Dots';
 const rewardedAd = RewardedAd.createForAdRequest(TestIds.REWARDED);
 
 export default function UpgradeWarn() {
@@ -148,33 +149,7 @@ export default function UpgradeWarn() {
                         justifyContent: "space-between",
                         flexDirection: 'row'
                     }}>
-                        <View style={{
-                            height: '100%',
-                            paddingHorizontal: sizeScale(15),
-                            columnGap: 5,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            flexDirection: 'row'
-                        }}>
-                            <View style={{
-                                width: widthScale(10),
-                                height: heightScale(10),
-                                borderRadius: 50,
-                                backgroundColor: 'green',
-                            }} />
-                            <View style={{
-                                width: widthScale(10),
-                                height: heightScale(10),
-                                borderRadius: 50,
-                                backgroundColor: 'orange',
-                            }} />
-                            <View style={{
-                                width: widthScale(10),
-                                height: heightScale(10),
-                                borderRadius: 50,
-                                backgroundColor: 'red',
-                            }} />
-                        </View>
+                        <Dots />
                         <View style={{
                             width: widthScale(50),
                             height: '100%',
