@@ -7,14 +7,32 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { View } from 'react-native';
 import { useColors } from '../../hooks/useColors';
+import { useSize } from '../../hooks/useSize';
 
-export default function SnackBar(props: { bottom: any; icon: any; label: any; },) {
+export default function SnackBar(props: { top: any; bottom: any; icon: any; label: any; },) {
     const {
         setIsAccountDeleted, texts,
         snackbarState, setSnackbarState, language
     } = useContext(DataContext);
     const colors = useColors();
+    const { screen,
+        widthScale,
+        heightScale,
+        sizeScale,
+    } = useSize();
 
+    useEffect(() => {
+        if (snackbarState) {
+
+            const timer = setTimeout(() => {
+                setSnackbarState(false)
+            }, 3000);
+
+            return () => clearTimeout(timer);
+
+        } else {
+        }
+    }, [snackbarState])
     // useEffect(() => {
     //     if (snackbarState) {
     //         SnackBarTransition.value = 1
@@ -40,46 +58,46 @@ export default function SnackBar(props: { bottom: any; icon: any; label: any; },
     //         opacity: withTiming(SnackBarTransition.value, config)
     //     }
     // });
-    if (!snackbarState) return null;
+    if (!snackbarState) return;
     return (
         <View
             needsOffscreenAlphaCompositing={true}
             style={[{
                 position: 'absolute',
-                // top: props.top,
+                top: props.top,
                 // bottom: props.bottom,
                 // right: props.right,
                 // left: props.left,
                 bottom: props.bottom,
-                zIndex: 99999,
-                backgroundColor: 'black',
+                zIndex: 9,
+                backgroundColor: colors.text.primary,
                 flexDirection: language === 'english' ? 'row-reverse' : 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 alignSelf: 'center',
-                height: 30,
-                borderRadius: 6,
+                height: heightScale(35),
+                borderRadius: sizeScale(6),
                 elevation: 3,
-                paddingHorizontal: 5,
+                paddingHorizontal: sizeScale(15),
             }]}
         >
             <View style={{
                 height: '100%',
-                width: 30,
+                width: widthScale(30),
                 alignItems: 'center',
                 justifyContent: 'center',
                 alignSelf: 'center',
             }}>
                 <MaterialCommunityIcons
                     name={props.icon}
-                    size={18}
-                    color={'gray'} />
+                    size={sizeScale(18)}
+                    color={'black'} />
             </View>
             <Text style={{
-                color: 'gray',
-                paddingHorizontal: 5,
+                color: 'black',
+                paddingHorizontal: sizeScale(5),
                 fontFamily: 'Cairo_700Bold',
-                fontSize: 13,
+                fontSize: sizeScale(15),
             }}>{props.label}</Text>
 
         </View>

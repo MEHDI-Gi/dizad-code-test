@@ -15,11 +15,14 @@ import { useColors } from '../hooks/useColors';
 import { useVip } from '../hooks/useVip';
 import { useSize } from '../hooks/useSize';
 import Dots from './elements/Dots';
+import Clipboard from '@react-native-clipboard/clipboard';
+import SnackBar from './elements/SnackBar';
 
 export default function UpgradeCard() {
     const { userPlan, setUserPlan } = useVip()
     const {
         upgradeTutu, setUpgradeTutu,
+        snackbarState, setSnackbarState,
     } = useContext(DataContext);
     const colors = useColors();
     const { screen,
@@ -47,6 +50,12 @@ export default function UpgradeCard() {
         { label: 'Step 5' },
     ]
 
+    const telLink = 'https://t.me/+lXpXxnihJOo4NDJk';
+
+    const copyLink = () => {
+        Clipboard.setString(telLink);
+        setSnackbarState(true);
+    };
     return (
         <Modal
             visible={upgradeTutu}
@@ -212,52 +221,51 @@ export default function UpgradeCard() {
                                                 fontWeight: 'bold'
                                             }}>{itm?.des?.[1]}</Text>
                                         </View>
-                                        {idx === 0 && <Pressable
-                                            android_ripple={{ color: colors.text.secondary, borderless: false, foreground: true }}
-                                            onPress={() => {
-                                            }}
-                                            style={{
-                                                backgroundColor: colors.primary,
-                                                zIndex: 9,
-                                                borderRadius: sizeScale(12),
-                                                paddingVertical: sizeScale(8),
-                                                paddingHorizontal: sizeScale(8),
-                                                width: sizeScale(screen.width * 0.75),
-                                                columnGap: sizeScale(15),
-                                                flexDirection: 'row',
-                                                alignContent: 'center',
-                                                justifyContent: 'space-between',
-                                                overflow: 'hidden'
-                                            }}>
+                                        {idx === 0 &&
+                                            <Pressable
+                                                android_ripple={{ color: colors.text.secondary, borderless: false, foreground: true }}
+                                                onPress={copyLink}
+                                                style={{
+                                                    backgroundColor: colors.primary,
+                                                    zIndex: 9,
+                                                    borderRadius: sizeScale(12),
+                                                    paddingVertical: sizeScale(8),
+                                                    paddingHorizontal: sizeScale(15),
+                                                    columnGap: sizeScale(15),
+                                                    flexDirection: 'row',
+                                                    alignContent: 'center',
+                                                    justifyContent: 'space-between',
+                                                    overflow: 'hidden'
+                                                }}>
+                                                <View style={{
+                                                    alignContent: 'center',
+                                                    justifyContent: 'center',
+                                                }}>
 
-                                            <View style={{
-                                                alignContent: 'center',
-                                                justifyContent: 'center',
-                                            }}>
+                                                    <Text style={{
+                                                        color: colors.text.secondary,
+                                                        fontSize: sizeScale(14),
+                                                        fontWeight: 'bold'
+                                                    }}>{telLink}</Text>
+                                                </View>
+                                                <View style={{
+                                                    backgroundColor: colors.secondary,
+                                                    zIndex: 9,
+                                                    borderRadius: sizeScale(10),
+                                                    paddingVertical: sizeScale(8),
+                                                    paddingHorizontal: sizeScale(8),
+                                                    alignContent: 'center',
+                                                    justifyContent: 'center',
+                                                }}>
 
-                                                <Text style={{
-                                                    color: colors.text.secondary,
-                                                    fontSize: sizeScale(14),
-                                                    fontWeight: 'bold'
-                                                }}>https://t.me/+lXpXxnihJOo4NDJk</Text>
-                                            </View>
-                                            <View style={{
-                                                backgroundColor: colors.secondary,
-                                                zIndex: 9,
-                                                borderRadius: sizeScale(10),
-                                                paddingVertical: sizeScale(8),
-                                                paddingHorizontal: sizeScale(8),
-                                                alignContent: 'center',
-                                                justifyContent: 'center',
-                                            }}>
-
-                                                <MaterialCommunityIcons
-                                                    name='content-copy'
-                                                    color={colors.text.primary}
-                                                    size={sizeScale(20)}
-                                                />
-                                            </View>
-                                        </Pressable>}
+                                                    <MaterialCommunityIcons
+                                                        name='content-copy'
+                                                        color={colors.text.primary}
+                                                        size={sizeScale(20)}
+                                                    />
+                                                </View>
+                                            </Pressable>
+                                        }
                                         <Image
                                             source={itm?.scr}
                                             resizeMode='cover'
@@ -327,6 +335,15 @@ export default function UpgradeCard() {
                 </View>
 
             </View>
+            {snackbarState && (
+                <SnackBar
+                    top={sizeScale(40)}
+                    bottom={null}
+                    icon={'clipboard'}
+                    label={'Link copied to clipboard!'}
+                    key={'Link'}
+                />
+            )}
         </Modal>
     )
 }

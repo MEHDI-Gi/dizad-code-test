@@ -4,7 +4,8 @@ import {
     Image,
     Pressable,
     Modal,
-    Linking
+    Linking,
+    Alert
 } from 'react-native';
 import React, { useRef, useState, useContext, useEffect } from 'react';
 
@@ -14,11 +15,13 @@ import { useColors } from '../hooks/useColors';
 import { useVip } from '../hooks/useVip';
 import { useSize } from '../hooks/useSize';
 import Dots from './elements/Dots';
-
+import Clipboard from '@react-native-clipboard/clipboard';
+import SnackBar from './elements/SnackBar';
 export default function UpgradeCard() {
     const { userPlan, setUserPlan } = useVip()
     const {
-        upgradeCard, setUpgradeCard, setUpgradeTutu
+        upgradeCard, setUpgradeCard, setUpgradeTutu,
+        snackbarState, setSnackbarState,
     } = useContext(DataContext);
     const colors = useColors();
     const { screen,
@@ -26,6 +29,7 @@ export default function UpgradeCard() {
         heightScale,
         sizeScale,
     } = useSize();
+
 
 
     // const [activePlan, setActivePlan] = useState(null);
@@ -75,6 +79,14 @@ export default function UpgradeCard() {
         { label: 'Unlock Priority' },
         { label: 'No Ads' },
     ]
+
+    const telLink = 'https://t.me/+lXpXxnihJOo4NDJk';
+
+    const copyLink = () => {
+        Clipboard.setString(telLink);
+        setSnackbarState(true);
+    };
+
 
     return (
         <Modal
@@ -188,15 +200,13 @@ export default function UpgradeCard() {
                         />
                         <Pressable
                             android_ripple={{ color: colors.text.secondary, borderless: false, foreground: true }}
-                            onPress={() => {
-                                //npm install @react-native-clipboard/clipboard
-                            }}
+                            onPress={copyLink}
                             style={{
                                 backgroundColor: colors.primary,
                                 zIndex: 9,
                                 borderRadius: sizeScale(12),
                                 paddingVertical: sizeScale(8),
-                                paddingHorizontal: sizeScale(8),
+                                paddingHorizontal: sizeScale(15),
                                 columnGap: sizeScale(15),
                                 flexDirection: 'row',
                                 alignContent: 'center',
@@ -212,7 +222,7 @@ export default function UpgradeCard() {
                                     color: colors.text.secondary,
                                     fontSize: sizeScale(14),
                                     fontWeight: 'bold'
-                                }}>https://t.me/+lXpXxnihJOo4NDJk</Text>
+                                }}>{telLink}</Text>
                             </View>
                             <View style={{
                                 backgroundColor: colors.secondary,
@@ -348,6 +358,15 @@ export default function UpgradeCard() {
                 </View>
 
             </View>
+            {snackbarState && (
+                <SnackBar
+                    top={sizeScale(40)}
+                    bottom={null}
+                    icon={'clipboard'}
+                    label={'Link copied to clipboard!'}
+                    key={'Link'}
+                />
+            )}
         </Modal>
     )
 }

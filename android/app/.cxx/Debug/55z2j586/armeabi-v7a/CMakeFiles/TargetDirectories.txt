@@ -4,6 +4,9 @@
 /home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/armeabi-v7a/rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir
 /home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/armeabi-v7a/rnasyncstorage_autolinked_build/CMakeFiles/edit_cache.dir
 /home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/armeabi-v7a/rnasyncstorage_autolinked_build/CMakeFiles/rebuild_cache.dir
+/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/armeabi-v7a/rnclipboard_autolinked_build/CMakeFiles/react_codegen_rnclipboard.dir
+/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/armeabi-v7a/rnclipboard_autolinked_build/CMakeFiles/edit_cache.dir
+/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/armeabi-v7a/rnclipboard_autolinked_build/CMakeFiles/rebuild_cache.dir
 /home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/armeabi-v7a/rnblurview_autolinked_build/CMakeFiles/react_codegen_rnblurview.dir
 /home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/armeabi-v7a/rnblurview_autolinked_build/CMakeFiles/edit_cache.dir
 /home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/armeabi-v7a/rnblurview_autolinked_build/CMakeFiles/rebuild_cache.dir

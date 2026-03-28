@@ -5,6 +5,13 @@
 /home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir/react/renderer/components/rnasyncstorage/States.cpp.o
 /home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir/react/renderer/components/rnasyncstorage/rnasyncstorageJSI-generated.cpp.o
 /home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir/rnasyncstorage-generated.cpp.o
+/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnclipboard_autolinked_build/CMakeFiles/react_codegen_rnclipboard.dir/react/renderer/components/rnclipboard/ComponentDescriptors.cpp.o
+/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnclipboard_autolinked_build/CMakeFiles/react_codegen_rnclipboard.dir/react/renderer/components/rnclipboard/EventEmitters.cpp.o
+/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnclipboard_autolinked_build/CMakeFiles/react_codegen_rnclipboard.dir/react/renderer/components/rnclipboard/Props.cpp.o
+/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnclipboard_autolinked_build/CMakeFiles/react_codegen_rnclipboard.dir/react/renderer/components/rnclipboard/ShadowNodes.cpp.o
+/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnclipboard_autolinked_build/CMakeFiles/react_codegen_rnclipboard.dir/react/renderer/components/rnclipboard/States.cpp.o
+/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnclipboard_autolinked_build/CMakeFiles/react_codegen_rnclipboard.dir/react/renderer/components/rnclipboard/rnclipboardJSI-generated.cpp.o
+/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnclipboard_autolinked_build/CMakeFiles/react_codegen_rnclipboard.dir/rnclipboard-generated.cpp.o
 /home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnblurview_autolinked_build/CMakeFiles/react_codegen_rnblurview.dir/react/renderer/components/rnblurview/ComponentDescriptors.cpp.o
 /home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnblurview_autolinked_build/CMakeFiles/react_codegen_rnblurview.dir/react/renderer/components/rnblurview/EventEmitters.cpp.o
 /home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/x86/rnblurview_autolinked_build/CMakeFiles/react_codegen_rnblurview.dir/react/renderer/components/rnblurview/Props.cpp.o

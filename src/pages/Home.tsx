@@ -18,9 +18,7 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { useGoogleSignIn } from '../context/auth.ts';
 import VipBadge from '../components/elements/VipBadge.tsx';
 
-import {
-  useNavigation,
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import FreeBadge from '../components/elements/FreeBadge.tsx';
 import { useSize } from '../hooks/useSize.ts';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
@@ -31,11 +29,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Home() {
-  const { screen,
-    widthScale,
-    heightScale,
-    sizeScale,
-  } = useSize();
+  const { screen, widthScale, heightScale, sizeScale } = useSize();
   const { user } = useGoogleSignIn();
   const { userVip, setUserPlan } = useVip();
   const { userAccuracy } = useUserAccuracy();
@@ -49,7 +43,7 @@ export default function Home() {
     lessonsData,
     examData,
     firebaseLoaded,
-    imgBase
+    imgBase,
   } = useContext(DataContext);
 
   const navigation = useNavigation<any>();
@@ -150,25 +144,54 @@ export default function Home() {
     { label: '', img: examsCover ?? null, sub: '' },
     { label: '', img: questCover ?? null, sub: '' },
     { label: '', img: questCover ?? null, sub: '' },
+
+  ];
+  const extChannels = [
+    {
+      label:
+        '',
+      img: examsCover,
+      sub: '',
+    },
+    { label: '', img: examsCover ?? null, sub: '' },
+    { label: '', img: questCover ?? null, sub: '' },
+    { label: '', img: questCover ?? null, sub: '' },
+    {
+      label:
+        "",
+      img: examsCover,
+      sub: '',
+    },
+    { label: '', img: examsCover ?? null, sub: '' },
+    { label: '', img: questCover ?? null, sub: '' },
+    { label: '', img: questCover ?? null, sub: '' },
   ];
 
-
   return (
-    <View style={[styles.container, {
-      width: screen.width,
-      flex: 1,
-      backgroundColor: colors.primary,
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },]}>
-      <View style={[{
-        zIndex: 9,
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-        top: 0,
-      },]}>
+    <View
+      style={[
+        styles.container,
+        {
+          width: screen.width,
+          flex: 1,
+          backgroundColor: colors.primary,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        },
+      ]}
+    >
+      <View
+        style={[
+          {
+            zIndex: 9,
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            top: 0,
+          },
+        ]}
+      >
         <View
           style={{
             position: 'absolute',
@@ -180,26 +203,32 @@ export default function Home() {
             opacity: 0.9,
           }}
         />
-        <View style={[{
-          paddingHorizontal: sizeScale(20),
-          flexDirection: 'row',
-          width: '100%',
+        <View
+          style={[
+            {
+              paddingHorizontal: sizeScale(20),
+              flexDirection: 'row',
+              width: '100%',
 
-          height: heightScale(60),
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          elevation: 3,
-          overflow: 'hidden',
-        },]}>
-          <View style={{
-            backgroundColor: 'transparent',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            flexDirection: 'row',
-            height: heightScale(50),
-            columnGap: 10,
-            flex: 1,
-          }}>
+              height: heightScale(60),
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              elevation: 3,
+              overflow: 'hidden',
+            },
+          ]}
+        >
+          <View
+            style={{
+              backgroundColor: 'transparent',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              flexDirection: 'row',
+              height: heightScale(50),
+              columnGap: 10,
+              flex: 1,
+            }}
+          >
             <TouchableOpacity
               style={{
                 borderRadius: 5,
@@ -213,39 +242,43 @@ export default function Home() {
               onPress={() => {
                 if (sound) playSound('settingsButton');
                 navigation.navigate('Profile');
-              }}>
+              }}
+            >
               {userImage ? (
                 <Image
                   style={{
-                    width: "100%",
-                    height: "100%",
+                    width: '100%',
+                    height: '100%',
                   }}
-                  resizeMode='cover'
+                  resizeMode="cover"
                   source={{ uri: userImage }}
                 />
-              ) :
+              ) : (
                 <MaterialCommunityIcons
-                  name='account'
+                  name="account"
                   size={35}
                   color={colors.text.primary}
                 />
-
-              }
+              )}
             </TouchableOpacity>
 
-            <View style={{
-              flexDirection: 'column',
-              backgroundColor: 'transparent',
-              alignItems: 'flex-start',
-              justifyContent: 'space-between',
-              flex: 1,
-            }}>
-              <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-                {!firebaseLoaded ?
+            <View
+              style={{
+                flexDirection: 'column',
+                backgroundColor: 'transparent',
+                alignItems: 'flex-start',
+                justifyContent: 'space-between',
+                flex: 1,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {!firebaseLoaded ? (
                   <ShimmerPlaceHolder
                     style={{ width: widthScale(60), height: heightScale(15) }}
                     shimmerColors={[
@@ -253,49 +286,65 @@ export default function Home() {
                       '#6161617c',
                       colors.secondary,
                     ]}
-                  /> :
-                  userName ? <Text style={{
-                    fontSize: sizeScale(16),
-                    fontWeight: '500',
-                    color: colors.text.primary,
-                  }}>
-                    {userName}
-                  </Text> :
-                    <Text style={{
+                  />
+                ) : userName ? (
+                  <Text
+                    style={{
                       fontSize: sizeScale(16),
                       fontWeight: '500',
                       color: colors.text.primary,
-                    }}>
-                      user
-                    </Text>
-                }
+                    }}
+                  >
+                    {userName}
+                  </Text>
+                ) : (
+                  <Text
+                    style={{
+                      fontSize: sizeScale(16),
+                      fontWeight: '500',
+                      color: colors.text.primary,
+                    }}
+                  >
+                    user
+                  </Text>
+                )}
               </View>
-              <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                overflow: 'hidden',
-                columnGap: 3
-              }}>
-                {userAccuracy ?
-                  <Text style={[{
-                    color: colors.text.primary,
-                    fontSize: sizeScale(13),
-                    textAlign: 'center',
-                  }]}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden',
+                  columnGap: 3,
+                }}
+              >
+                {userAccuracy ? (
+                  <Text
+                    style={[
+                      {
+                        color: colors.text.primary,
+                        fontSize: sizeScale(13),
+                        textAlign: 'center',
+                      },
+                    ]}
+                  >
                     {userAccuracy}
                   </Text>
-                  :
-                  <Text style={[{
-                    color: colors.text.primary,
-                    fontSize: sizeScale(13),
-                    textAlign: 'center',
-                  }]}>
+                ) : (
+                  <Text
+                    style={[
+                      {
+                        color: colors.text.primary,
+                        fontSize: sizeScale(13),
+                        textAlign: 'center',
+                      },
+                    ]}
+                  >
                     0
                   </Text>
-                }
+                )}
                 <FontAwesome5
-                  name='percentage'
+                  name="percentage"
                   size={sizeScale(13)}
                   color={colors.text.secondary}
                 />
@@ -303,15 +352,15 @@ export default function Home() {
             </View>
           </View>
 
-          {!userVip ?
-            (<FreeBadge
+          {!userVip ? (
+            <FreeBadge
               backColor={colors.secondary}
               elevation={3}
               height={heightScale(28)}
               width={widthScale(45)}
-            />)
-            :
-            (<VipBadge
+            />
+          ) : (
+            <VipBadge
               width={widthScale(45)}
               height={heightScale(28)}
               title={false}
@@ -323,8 +372,8 @@ export default function Home() {
               elevation={3}
               textSize={sizeScale(12)}
               icon={true}
-            />)}
-
+            />
+          )}
         </View>
       </View>
       <ScrollView
@@ -341,7 +390,8 @@ export default function Home() {
         style={{
           flex: 1,
           width: '100%',
-        }}>
+        }}
+      >
         <View
           style={{
             alignItems: 'center',
@@ -354,21 +404,23 @@ export default function Home() {
             gap: sizeScale(10),
           }}
         >
-          {!firebaseLoaded ?
-            <View style={{
-              alignItems: 'center',
-              width: '90%',
-              height: heightScale(screen.width * 0.25),
-              borderRadius: 8,
-              flexDirection: 'row-reverse',
-              justifyContent: 'flex-start',
-              overflow: 'hidden',
-              gap: sizeScale(15)
-            }}>
+          {!firebaseLoaded ? (
+            <View
+              style={{
+                alignItems: 'center',
+                width: '90%',
+                height: heightScale(screen.width * 0.25),
+                borderRadius: 8,
+                flexDirection: 'row-reverse',
+                justifyContent: 'flex-start',
+                overflow: 'hidden',
+                gap: sizeScale(15),
+              }}
+            >
               <ShimmerPlaceHolder
                 style={{
                   position: 'absolute',
-                  width: "100%",
+                  width: '100%',
                   height: '100%',
                   borderRadius: sizeScale(8),
                 }}
@@ -387,49 +439,54 @@ export default function Home() {
                   backgroundColor: colors.primary,
                 }}
               />
-              <View style={{
-                width: "100%",
-                height: heightScale(screen.width * 0.22),
-                flexDirection: 'column',
-                alignItems: 'flex-end',
-                justifyContent: "space-evenly"
-              }}>
+              <View
+                style={{
+                  width: '100%',
+                  height: heightScale(screen.width * 0.22),
+                  flexDirection: 'column',
+                  alignItems: 'flex-end',
+                  justifyContent: 'space-evenly',
+                }}
+              >
                 <View
                   style={{
                     backgroundColor: colors.primary,
-                    width: "50%",
+                    width: '50%',
                     height: heightScale(30),
                   }}
                 />
                 <View
                   style={{
                     backgroundColor: colors.primary,
-                    width: "30%",
+                    width: '30%',
                     height: heightScale(20),
                   }}
                 />
                 <View
                   style={{
                     backgroundColor: colors.primary,
-                    width: "60%",
+                    width: '60%',
                     height: heightScale(10),
                   }}
                 />
               </View>
             </View>
-            :
+          ) : (
             <Pressable
               android_ripple={{
                 borderless: false,
                 color: colors.secondary,
                 foreground: true,
               }}
-              onPress={() => navigation.navigate('MainTabs', { screen: 'Exams' })}
+              onPress={() =>
+                navigation.navigate('MainTabs', { screen: 'Exams' })
+              }
               style={[
                 {
                   alignItems: 'center',
                   backgroundColor: colors.secondary,
-                  elevation: 3, width: '90%',
+                  elevation: 3,
+                  width: '90%',
                   height: heightScale(screen.width * 0.25),
                   borderRadius: sizeScale(8),
                   flexDirection: 'row',
@@ -438,7 +495,6 @@ export default function Home() {
                 },
               ]}
             >
-
               <View
                 style={[
                   {
@@ -472,36 +528,38 @@ export default function Home() {
                 >
                   {contentItems[0]?.length} {contentItems[0]?.sub}
                 </Text>
-                <View style={{
-                  flexDirection: "row",
-                  justifyContent: 'center',
-                  alignItems: "center",
-                  width: '100%',
-
-                }}>
-                  <View style={{
-                    width: '90%',
-                    height: heightScale(8),
-                    backgroundColor: colors.text.secondary,
-                    borderRadius: sizeScale(10),
-                    flexDirection: "row-reverse",
-                    justifyContent: 'flex-start',
-                    alignItems: "center",
-                    overflow: 'hidden'
-                  }}>
-                    <View style={{
-                      width: '5%',
-                      height: '100%',
-                      backgroundColor: 'green',
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <View
+                    style={{
+                      width: '90%',
+                      height: heightScale(8),
+                      backgroundColor: colors.text.secondary,
                       borderRadius: sizeScale(10),
-                      borderTopEndRadius: 0,
-                      borderBottomRightRadius: 0,
-
-                    }} />
-
+                      flexDirection: 'row-reverse',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: '5%',
+                        height: '100%',
+                        backgroundColor: 'green',
+                        borderRadius: sizeScale(10),
+                        borderTopEndRadius: 0,
+                        borderBottomRightRadius: 0,
+                      }}
+                    />
                   </View>
                 </View>
-
               </View>
               <View
                 style={[
@@ -537,25 +595,29 @@ export default function Home() {
                   />
                 )}
               </View>
-            </Pressable>}
+            </Pressable>
+          )}
           {contentItems.map((item: any, index: number) => {
             if (index === 0) return null;
             if (!firebaseLoaded) {
               return (
-                <View style={{
-                  alignItems: 'center',
-                  backgroundColor: 'transparent',
-                  width: '90%',
-                  height: heightScale(screen.width * 0.25),
-                  borderRadius: sizeScale(8),
-                  flexDirection: 'row-reverse',
-                  justifyContent: 'flex-start',
-                  overflow: 'hidden',
-                  padding: sizeScale(10),
-                  gap: sizeScale(15)
-                }}>
+                <View
+                  key={`shimmer-0-${item.cond}`}
+                  style={{
+                    alignItems: 'center',
+                    backgroundColor: 'transparent',
+                    width: '90%',
+                    height: heightScale(screen.width * 0.25),
+                    borderRadius: sizeScale(8),
+                    flexDirection: 'row-reverse',
+                    justifyContent: 'flex-start',
+                    overflow: 'hidden',
+                    padding: sizeScale(10),
+                    gap: sizeScale(15),
+                  }}
+                >
                   <ShimmerPlaceHolder
-                    key={`shimmer-${index}`}
+
                     style={{
                       width: widthScale(screen.width * 0.22),
                       height: heightScale(screen.width * 0.22),
@@ -567,16 +629,18 @@ export default function Home() {
                       colors.secondary,
                     ]}
                   />
-                  <View style={{
-                    width: "100%",
-                    height: heightScale(screen.width * 0.22),
-                    flexDirection: 'column',
-                    alignItems: 'flex-end',
-                    justifyContent: "space-evenly"
-                  }}>
+                  <View
+                    style={{
+                      width: '100%',
+                      height: heightScale(screen.width * 0.22),
+                      flexDirection: 'column',
+                      alignItems: 'flex-end',
+                      justifyContent: 'space-evenly',
+                    }}
+                  >
                     <ShimmerPlaceHolder
                       style={{
-                        width: "50%",
+                        width: '50%',
                         height: heightScale(30),
                       }}
                       shimmerColors={[
@@ -587,7 +651,7 @@ export default function Home() {
                     />
                     <ShimmerPlaceHolder
                       style={{
-                        width: "30%",
+                        width: '30%',
                         height: heightScale(20),
                       }}
                       shimmerColors={[
@@ -597,7 +661,8 @@ export default function Home() {
                       ]}
                     />
                   </View>
-                </View>)
+                </View>
+              );
             }
             return (
               <Pressable
@@ -607,7 +672,7 @@ export default function Home() {
                   foreground: true,
                 }}
                 onPress={() => contentItemsPress(item)}
-                key={`key-${index}`}
+                key={`key-1-${item.cond}`}
                 style={[
                   {
                     alignItems: 'center',
@@ -620,7 +685,6 @@ export default function Home() {
                     justifyContent: 'center',
                     overflow: 'hidden',
                   },
-
                 ]}
               >
                 <View
@@ -717,35 +781,36 @@ export default function Home() {
           style={{
             width: '85%',
             alignItems: 'center',
-            justifyContent: 'flex-end',
-            flexDirection: 'row',
+            justifyContent: 'space-between',
+            flexDirection: 'row-reverse',
             columnGap: sizeScale(5),
           }}
         >
           <View
             style={{
-              flexDirection: 'column',
+              flexDirection: 'row-reverse',
               alignItems: 'center',
               justifyContent: 'center',
+              columnGap: sizeScale(5),
             }}
           >
             <MaterialCommunityIcons
-              name="arrow-top-left"
+              name="youtube"
               color={colors.text.secondary}
-              size={sizeScale(18)}
+              size={sizeScale(25)}
             />
+            <Text
+              style={{
+                fontFamily: 'Cairo',
+                color: colors.text.secondary,
+                fontSize: sizeScale(16),
+                textAlign: 'center',
+              }}
+            >
+              مصادر خارجية
+            </Text>
           </View>
 
-          <Text
-            style={{
-              fontFamily: 'Cairo',
-              color: colors.text.secondary,
-              fontSize: sizeScale(16),
-              textAlign: 'center',
-            }}
-          >
-            مصادر خارجية
-          </Text>
         </View>
         <ScrollView
           horizontal={true}
@@ -761,7 +826,8 @@ export default function Home() {
           style={{
             flex: 1,
             width: '95%',
-          }}>
+          }}
+        >
           <View
             style={{
               alignItems: 'center',
@@ -769,10 +835,10 @@ export default function Home() {
               flexDirection: 'row',
               width: '90%',
               flex: 1,
-              gap: sizeScale(7),
+              columnGap: sizeScale(10),
             }}
           >
-            {extSources.map((item: any, index: number) => {
+            {extChannels.map((item: any, index: number) => {
               if (!firebaseLoaded) {
                 return (
                   <ShimmerPlaceHolder
@@ -787,13 +853,14 @@ export default function Home() {
                       '#6161617c',
                       colors.secondary,
                     ]}
-                  />)
+                  />
+                );
               }
               return (
                 <Pressable
                   android_ripple={{
                     borderless: false,
-                    color: colors.primary,
+                    color: colors.text.secondary,
                     foreground: true,
                   }}
                   onPress={() => {
@@ -804,29 +871,44 @@ export default function Home() {
                   key={`key-${index}`}
                   style={[
                     {
+                        backgroundColor: colors.secondary,
                       alignItems: 'center',
-                      backgroundColor: colors.secondary,
-                      width: heightScale(screen.width * 0.25),
-                      height: heightScale(screen.width * 0.25),
-                      padding: sizeScale(10),
-                      borderRadius: sizeScale(8),
+                      width: heightScale(screen.width * 0.2),
+                      paddingHorizontal: sizeScale(10),
+                      borderRadius: sizeScale(10),
                       flexDirection: 'column',
                       justifyContent: 'center',
                       overflow: 'hidden',
                       elevation: 5,
-                      columnGap: sizeScale(0),
+                      rowGap: sizeScale(5),
                     },
                   ]}
                 >
-                  <Image
-                    style={{
-                      width: widthScale(screen.width * 0.15),
-                      height: widthScale(screen.width * 0.15),
-                      borderRadius: sizeScale(50),
-                      resizeMode: 'cover',
-                    }}
-                    source={{ uri: item?.img }}
-                  />
+                  <View
+                    style={[
+                      {
+                        alignItems: 'center',
+                        width: heightScale(screen.width * 0.2),
+                        height: heightScale(screen.width * 0.2),
+                        padding: sizeScale(10),
+                        borderRadius: sizeScale(10),
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        overflow: 'hidden',
+                        columnGap: sizeScale(0),
+                      },
+                    ]}
+                  >
+                    <Image
+                      style={{
+                        width: widthScale(screen.width * 0.15),
+                        height: widthScale(screen.width * 0.15),
+                        borderRadius: sizeScale(50),
+                        resizeMode: 'cover',
+                      }}
+                      source={{ uri: item?.img }}
+                    />
+                  </View>
                   <View
                     style={{
                       flexDirection: 'column',
@@ -844,14 +926,13 @@ export default function Home() {
                         textAlign: 'right',
                       }}
                     >
-                      title
+                      {item.label}
                     </Text>
                   </View>
                 </Pressable>
               );
             })}
           </View>
-
         </ScrollView>
         <View
           style={{
@@ -868,7 +949,7 @@ export default function Home() {
             if (!firebaseLoaded) {
               return (
                 <ShimmerPlaceHolder
-                  key={`shimmer-${index}`}
+                  key={`shimmer-1-${index}`}
                   style={{
                     width: '100%',
                     height: heightScale(screen.width * 0.25),
@@ -879,7 +960,8 @@ export default function Home() {
                     '#6161617c',
                     colors.secondary,
                   ]}
-                />)
+                />
+              );
             }
             return (
               <Pressable
@@ -893,7 +975,7 @@ export default function Home() {
                     'https://www.youtube.com/playlist?list=PLIuGUVzSi-K4754yPL6zul8QbGiK9xYNR',
                   );
                 }}
-                key={`key-${index}`}
+                key={`key-0-${index}`}
                 style={[
                   {
                     alignItems: 'center',
@@ -945,8 +1027,8 @@ export default function Home() {
             );
           })}
         </View>
-      </ScrollView >
-    </View >
+      </ScrollView>
+    </View>
   );
 }
 

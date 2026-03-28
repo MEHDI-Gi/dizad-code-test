@@ -37,6 +37,31 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/armeabi-v7a/CMakeFiles/cmake.verify_globs")
 endif()
 
+# react_codegen_SRCS at /home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-clipboard/clipboard/android/build/generated/source/codegen/jni/CMakeLists.txt:9 (file)
+file(GLOB NEW_GLOB LIST_DIRECTORIES true "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-clipboard/clipboard/android/build/generated/source/codegen/jni/*.cpp")
+set(OLD_GLOB
+  "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-clipboard/clipboard/android/build/generated/source/codegen/jni/rnclipboard-generated.cpp"
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/armeabi-v7a/CMakeFiles/cmake.verify_globs")
+endif()
+
+# react_codegen_SRCS at /home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-clipboard/clipboard/android/build/generated/source/codegen/jni/CMakeLists.txt:9 (file)
+file(GLOB NEW_GLOB LIST_DIRECTORIES true "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-clipboard/clipboard/android/build/generated/source/codegen/jni/react/renderer/components/rnclipboard/*.cpp")
+set(OLD_GLOB
+  "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-clipboard/clipboard/android/build/generated/source/codegen/jni/react/renderer/components/rnclipboard/ComponentDescriptors.cpp"
+  "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-clipboard/clipboard/android/build/generated/source/codegen/jni/react/renderer/components/rnclipboard/EventEmitters.cpp"
+  "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-clipboard/clipboard/android/build/generated/source/codegen/jni/react/renderer/components/rnclipboard/Props.cpp"
+  "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-clipboard/clipboard/android/build/generated/source/codegen/jni/react/renderer/components/rnclipboard/ShadowNodes.cpp"
+  "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-clipboard/clipboard/android/build/generated/source/codegen/jni/react/renderer/components/rnclipboard/States.cpp"
+  "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-clipboard/clipboard/android/build/generated/source/codegen/jni/react/renderer/components/rnclipboard/rnclipboardJSI-generated.cpp"
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "/home/mehdi/Desktop/dizad-code-test/android/app/.cxx/Debug/55z2j586/armeabi-v7a/CMakeFiles/cmake.verify_globs")
+endif()
+
 # react_codegen_SRCS at /home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-community/blur/android/build/generated/source/codegen/jni/CMakeLists.txt:9 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-community/blur/android/build/generated/source/codegen/jni/*.cpp")
 set(OLD_GLOB

@@ -1,6 +1,6 @@
-import { TouchableWithoutFeedback, FlatList, Alert, Keyboard, ActivityIndicator, Text, Image, TouchableOpacity, StyleSheet, View, Pressable, ScrollView, ListRenderItemInfo } from 'react-native';
+import { TouchableWithoutFeedback, FlatList, Keyboard, ActivityIndicator, Text, Image, StyleSheet, View, Pressable, ScrollView, ListRenderItemInfo } from 'react-native';
 import { DataContext } from '../context/contextData';
-import React, { useRef, useState, useContext, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -245,19 +245,21 @@ export default function Login({ navigation }: LoginProps) {
             rowGap: 10,
           }}>
             {contentItems.map((item, index) => (
-              <View style={[{
-                flexDirection: 'row',
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: 'transparent',
-                zIndex: 1,
-                columnGap: 10,
-                opacity: 0.5,
-              }, index === visualIndex - 1 && {
-                opacity: 1,
-                paddingRight: 8,
-              }]}>
-                <Text key={index} style={{
+              <View
+                key={item.cond}
+                style={[{
+                  flexDirection: 'row',
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: 'transparent',
+                  zIndex: 1,
+                  columnGap: 10,
+                  opacity: 0.5,
+                }, index === visualIndex - 1 && {
+                  opacity: 1,
+                  paddingRight: 8,
+                }]}>
+                <Text style={{
                   fontFamily: 'Cairo-Bold',
                   color: colors.static.text.primary,
                   fontSize: sizeScale(18),

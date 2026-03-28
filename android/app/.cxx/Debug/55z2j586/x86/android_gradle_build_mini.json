@@ -1,6 +1,7 @@
 {
   "buildFiles": [
     "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/CMakeLists.txt",
+    "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-clipboard/clipboard/android/build/generated/source/codegen/jni/CMakeLists.txt",
     "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-community/blur/android/build/generated/source/codegen/jni/CMakeLists.txt",
     "/home/mehdi/Desktop/dizad-code-test/node_modules/@react-native-google-signin/google-signin/android/build/generated/source/codegen/jni/CMakeLists.txt",
     "/home/mehdi/Desktop/dizad-code-test/node_modules/react-native-gesture-handler/android/build/generated/source/codegen/jni/CMakeLists.txt",
@@ -78,6 +79,11 @@
     },
     "react_codegen_rnasyncstorage::@1596841e19ec5b9eeffe": {
       "artifactName": "react_codegen_rnasyncstorage",
+      "abi": "x86",
+      "runtimeFiles": []
+    },
+    "react_codegen_rnclipboard::@6385240493dfcaf22ab7": {
+      "artifactName": "react_codegen_rnclipboard",
       "abi": "x86",
       "runtimeFiles": []
     },
