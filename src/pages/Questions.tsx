@@ -1,6 +1,5 @@
 import React, { useRef, useState, useContext, useEffect, useCallback, useMemo } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Pressable, Image, StatusBar, ActivityIndicator, DrawerLayoutAndroid, Dimensions, Modal, FlatList, ListRenderItemInfo } from 'react-native';
-import { TextInput, Button, IconButton, MD3Colors, Icon, Appbar } from 'react-native-paper';
 import { DataContext } from '../context/contextData.tsx';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -18,7 +17,6 @@ import BottomTab from '../components/elements/BottomTab.tsx';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import { BlurView } from '@react-native-community/blur';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ItemsModal from '../components/ItemsModal.tsx';
 import { useAd } from '../hooks/useAd.ts';
 import { useColors } from '../hooks/useColors.ts';
 import Ionicons from 'react-native-vector-icons/Ionicons';

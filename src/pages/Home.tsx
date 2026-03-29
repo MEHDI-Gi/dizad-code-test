@@ -17,7 +17,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { useGoogleSignIn } from '../context/auth.ts';
 import VipBadge from '../components/elements/VipBadge.tsx';
-
 import { useNavigation } from '@react-navigation/native';
 import FreeBadge from '../components/elements/FreeBadge.tsx';
 import { useSize } from '../hooks/useSize.ts';
@@ -148,9 +147,9 @@ export default function Home() {
   ];
   const extChannels = [
     {
+      icon: 'car',
       label:
-        '',
-      img: examsCover,
+        'أصناف',
       sub: '',
     },
     { label: '', img: examsCover ?? null, sub: '' },
@@ -777,42 +776,8 @@ export default function Home() {
           })}
         </View>
 
-        <View
-          style={{
-            width: '85%',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexDirection: 'row-reverse',
-            columnGap: sizeScale(5),
-          }}
-        >
-          <View
-            style={{
-              flexDirection: 'row-reverse',
-              alignItems: 'center',
-              justifyContent: 'center',
-              columnGap: sizeScale(5),
-            }}
-          >
-            <MaterialCommunityIcons
-              name="youtube"
-              color={colors.text.secondary}
-              size={sizeScale(25)}
-            />
-            <Text
-              style={{
-                fontFamily: 'Cairo',
-                color: colors.text.secondary,
-                fontSize: sizeScale(16),
-                textAlign: 'center',
-              }}
-            >
-              مصادر خارجية
-            </Text>
-          </View>
 
-        </View>
-        <ScrollView
+        {/* <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -827,18 +792,100 @@ export default function Home() {
             flex: 1,
             width: '95%',
           }}
+        > */}
+        <View
+          style={{
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
+            flexDirection: 'row',
+            flexWrap: "wrap",
+            width: '90%',
+            flex: 1,
+            gap: sizeScale(10),
+          }}
         >
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-              flexDirection: 'row',
-              width: '90%',
-              flex: 1,
-              columnGap: sizeScale(10),
-            }}
-          >
-            {extChannels.map((item: any, index: number) => {
+          {extChannels.map((item: any, index: number) => {
+            if (!firebaseLoaded) {
+              return (
+                <ShimmerPlaceHolder
+                  key={`shimmer-${index}`}
+                  style={{
+                    width: '100%',
+                    height: heightScale(screen.width * 0.25),
+                    borderRadius: sizeScale(8),
+                  }}
+                  shimmerColors={[
+                    colors.secondary,
+                    '#6161617c',
+                    colors.secondary,
+                  ]}
+                />
+              );
+            }
+            return (
+              <Pressable
+                android_ripple={{
+                  borderless: false,
+                  color: colors.text.secondary,
+                  foreground: true,
+                }}
+                onPress={() => {
+                  Linking.openURL(
+                    'https://www.youtube.com/playlist?list=PLIuGUVzSi-K4754yPL6zul8QbGiK9xYNR',
+                  );
+                }}
+                key={`key-${index}`}
+                style={[
+                  {
+                    backgroundColor: colors.secondary,
+                    alignItems: 'center',
+                    paddingHorizontal: sizeScale(15),
+                    paddingVertical: sizeScale(10),
+                    borderRadius: sizeScale(10),
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    overflow: 'hidden',
+                    elevation: 5,
+                    columnGap: sizeScale(14)
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    {
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      overflow: 'hidden',
+                    },
+                  ]}
+                >
+                  <MaterialCommunityIcons
+                    name={item.icon}
+                    color={colors.text.secondary}
+                    size={sizeScale(25)}
+                  />
+                </View>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: 'Cairo-Bold',
+                      color: colors.text.primary,
+                      fontSize: sizeScale(14),
+                      textAlign: 'right',
+                    }}
+                  >
+                    {item.label}
+                  </Text>
+                </View>
+              </Pressable>
+            );
+          })}
+          {/* {extChannels.map((item: any, index: number) => {
               if (!firebaseLoaded) {
                 return (
                   <ShimmerPlaceHolder
@@ -931,9 +978,44 @@ export default function Home() {
                   </View>
                 </Pressable>
               );
-            })}
+            })} */}
+        </View>
+        {/* </ScrollView> */}
+        <View
+          style={{
+            width: '85%',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row-reverse',
+            columnGap: sizeScale(5),
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'row-reverse',
+              alignItems: 'center',
+              justifyContent: 'center',
+              columnGap: sizeScale(5),
+            }}
+          >
+            <MaterialCommunityIcons
+              name="youtube"
+              color={colors.text.secondary}
+              size={sizeScale(25)}
+            />
+            <Text
+              style={{
+                fontFamily: 'Cairo',
+                color: colors.text.secondary,
+                fontSize: sizeScale(16),
+                textAlign: 'center',
+              }}
+            >
+              مصادر خارجية
+            </Text>
           </View>
-        </ScrollView>
+
+        </View>
         <View
           style={{
             alignItems: 'center',
