@@ -1,4 +1,4 @@
-import { TouchableWithoutFeedback, FlatList, Keyboard, ActivityIndicator, Text, Image, StyleSheet, View, Pressable, ScrollView, ListRenderItemInfo } from 'react-native';
+import { TouchableWithoutFeedback, FlatList, Keyboard, ActivityIndicator, Text, Image, StyleSheet, View, Pressable, } from 'react-native';
 import { DataContext } from '../context/contextData';
 import React, { useRef, useState, useContext, useEffect } from 'react';
 

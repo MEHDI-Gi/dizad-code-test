@@ -132,7 +132,7 @@ export default function PriorityItems({ route }: any) {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
             }}>
-            <View style={{
+            {!priorityModal && <View style={{
                 height: 50,
                 position: 'absolute',
                 left: 0,
@@ -177,8 +177,7 @@ export default function PriorityItems({ route }: any) {
                     }}>
                     <MaterialIcons name='close' color={colors.text.secondary} size={25} />
                 </Pressable>
-            </View>
-
+            </View>}
 
             < ScrollView
                 horizontal={false}
@@ -342,8 +341,6 @@ export default function PriorityItems({ route }: any) {
                 onRequestClose={() => setPriorityModal(false)}
                 transparent
                 animationType="slide">
-
-
                 <View style={{
                     flex: 1,
                     width: "100%",
@@ -662,6 +659,7 @@ export default function PriorityItems({ route }: any) {
                     />
                 </View>
             </Modal >
+
         </View >
     );
 }

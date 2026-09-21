@@ -25,7 +25,6 @@ import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { useVip } from '../hooks/useVip';
 import { useFirebaseData } from '../hooks/useFirebaseData';
 import { Dimensions } from 'react-native';
-
 const DataContext = createContext<any>(null);
 
 interface DataProviderProps {
@@ -177,106 +176,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
     reset: false,
   };
   const [isActIndicator, setIsActIndicator] = useState<boolean>(false);
-
-
-
-  const languagesList = {
-    arabic: {
-      langAr: 'العربية',
-      langEn: 'الإنجليزية',
-      settingsEdt: 'إعدادات',
-      profileEdt: 'تعديل الملف الشخصي',
-      leaderBoard: 'لوحة المتصدرين',
-      langEdt: 'اللغة',
-      soundEdt: 'الصوت',
-      vibrateEdt: 'الإهتزاز',
-      apparenceEdt: 'المضهر',
-      reportEdt: 'الإبلاغ عن مشكلة',
-      reportPlh: 'يمكنك ان تكتب مشكلة هنا ...',
-      lang: '',
-      email: 'البريد الإلكتروني',
-      restEdt: 'اعادة ضبط',
-      deleteEdt: 'حذف الحساب',
-      logout: 'تسجيل الخروج',
-      soundEnable: 'تم تفعيل الصوت',
-      soundDisable: 'تم تعطيل الصوت',
-      vibrateEnable: 'تم تفعيل الإهتزاز',
-      vibrateDisable: 'تم تعطيل الإهتزاز',
-      dark: 'داكن',
-      light: 'فاتح',
-      gradient: 'تدرج',
-
-      // Statistics
-      rank: 'التصنيف',
-      correct: 'الصحيحة',
-      wrong: 'الخاطئة',
-      fast: 'السرعة',
-      quest: 'الاسئلة',
-      questIndex: 'الحالي',
-
-      // Levels
-      level: 'المرحلة',
-      quests: 'أسئلة',
-
-      //SnackBars
-      languageChanged: 'تم تغيير اللغة بنجاح',
-      accountDeleted: 'تم حذف الحساب بنجاح',
-      dataReseted: 'تم حذف البيانات بنجاح',
-      themeChanged: 'تم تغيير المضهر الى',
-      logoutDone: 'تم تسجيل الخروج',
-    },
-    english: {
-      // Profile
-      langEn: 'English',
-      langAr: 'Arabic',
-      settingsEdt: 'Settings',
-      profileEdt: 'Edit Profile',
-      leaderBoard: 'Leaderboard',
-      langEdt: 'Language',
-      soundEdt: 'Sound',
-      vibrateEdt: 'Vibrate',
-      apparenceEdt: 'Appearance',
-      reportEdt: 'Report Issue',
-      restEdt: 'Reset',
-      reportPlh: 'Write your report here...',
-      email: 'Email',
-
-      deleteEdt: 'Delete Account',
-      logout: 'Logout',
-      soundEnable: 'Sound Enable',
-      soundDisable: 'Sound Disable',
-      vibrateEnable: 'Vibration Enable',
-      vibrateDisable: 'Vibration Disable',
-      dark: 'Dark',
-      light: 'Light',
-      gradient: 'Gradient',
-
-      // Statistics
-      rank: 'Rank',
-      correct: 'Correct',
-      wrong: 'Wrong',
-      fast: 'Fast',
-      quest: 'Questions',
-      questIndex: 'Index',
-      // Levels
-      level: 'Level',
-      quests: 'Questions',
-      lang: '',
-
-      // SnackBars
-      languageChanged: 'Language Changed successfully',
-      accountDeleted: 'Account Deleted successfully',
-      dataReseted: 'Data Reseted successfully',
-      themeChanged: 'Theme Changed to',
-      logoutDone: 'logout successfully',
-    },
-  };
-
-  type Language = 'arabic' | 'english';
-  type LanguageTexts = typeof languagesList.arabic; // Infers all text properties
-
-  const texts: LanguageTexts = languagesList[language as Language];
-
 
   const sessionViewed = useRef<Set<string>>(new Set());
 
@@ -640,8 +539,6 @@ const DataProvider = ({ children }: DataProviderProps) => {
       setSound,
       isGradient,
       setIsGradient,
-      languagesList,
-      texts,
       isAccountDeleted,
       setIsAccountDeleted,
       snackVisibility,

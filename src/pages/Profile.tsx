@@ -43,57 +43,42 @@ import { useColors } from '../hooks/useColors.ts';
 import { useTheme } from '../hooks/useTheme.ts';
 import { useVip } from '../hooks/useVip.ts';
 import { useUserAccuracy } from '../hooks/useUserAccuracy.ts';
+import { useTexts } from '../hooks/useTexts.ts';
 import { set } from '@react-native-firebase/database';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useSize } from '../hooks/useSize.ts';
+import ContactUs from './profile/ContactUs.tsx';
 const Profile = () => {
-  const { screen,
-    widthScale,
-    heightScale,
-    sizeScale,
-  } = useSize();
+  const { screen, widthScale, heightScale, sizeScale } = useSize();
+  const texts = useTexts();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const colors = useColors();
   const { userVip } = useVip();
-  const { currentTheme, setCurrentTheme, THEME_DARK, THEME_LIGHT, } = useTheme()
+  const { currentTheme, setCurrentTheme, THEME_DARK, THEME_LIGHT } = useTheme();
   const { userAccuracy } = useUserAccuracy();
   const {
-    user, initializing, signIn, logout,
-    dataLevelIndex,
+    user,
+    initializing,
+    signIn,
+    logout,
     setSnackbarState,
     setUpdateNextLevelState,
-    selectedImageUri,
     userName,
     userImage,
-    setHelpPoint,
-    setLivesHeart,
-    setQuestIndex,
     setGlobTrueAns,
     setGlobFalseAns,
-    setIsActIndicator,
     updateQuestIndex,
     setIsPicAdd,
-    resetAnswerStats,
     vibrate,
     playSound,
     sound,
     isGradient,
     language,
-    texts,
     setUserPlan,
-    snackInfo,
     setSnackOptions,
-    loadingOptions,
     setLoadingOptions,
-    loadScreen,
     setLoadScreen,
-    memberSince,
-    leaderBoardIcon,
-    setLeaderBoardIcon,
-    livesHeart,
-    setUserImage,
-    setLanguage,
     setVibrate,
     resetBookmarks,
 
@@ -102,25 +87,36 @@ const Profile = () => {
     handleLogout,
     isLogout,
     dataAsync,
-
+    setLanguage,
     setIsGradient,
     apparence,
     setApparence,
     setColors,
     colorsList,
-    setUpgradeTutu
+    setUpgradeTutu,
   } = useContext(DataContext);
 
   const [initTheme, setInitTheme] = useState<boolean>(false);
-
+  function toggleTheme() {
+    const newTheme = currentTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
+    setCurrentTheme(newTheme as any);
+  }
+  useEffect(() => {
+    if (initTheme) {
+      setTimeout(() => {
+        setInitTheme(false);
+        toggleTheme();
+      }, 500);
+    }
+  }, [initTheme]);
   function SettingsCard(props: any) {
     const switchProps = {
-      width: 28,
-      height: 16,
+      width: widthScale(28),
+      height: heightScale(16),
       borderColor: colors.text.secondary,
-      borderWidth: 1,
-      radioWidth: 10,
-      radioHeight: 10,
+      borderWidth: sizeScale(1),
+      radioWidth: sizeScale(10),
+      radioHeight: sizeScale(10),
       direction: language === 'english' ? 'row-reverse' : 'row',
     };
     const RightContent = () => {
@@ -129,8 +125,7 @@ const Profile = () => {
           <MaterialCommunityIcons
             name={'content-copy'}
             color={props.color}
-            size={18}
-
+            size={sizeScale(18)}
           />
         );
       }
@@ -165,6 +160,77 @@ const Profile = () => {
           />
         );
       }
+      if (props.language) {
+        return (
+          <View
+            style={{
+              flexDirection: 'row',
+              borderRadius: sizeScale(5),
+              width: widthScale(60),
+              height: '55%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'hidden',
+            }}
+          >
+            <View
+              style={[
+                {
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  alignContent: 'center',
+
+                  height: '100%',
+                },
+                language === 'arabic'
+                  ? { backgroundColor: colors.active, flex: 0.6 }
+                  : { backgroundColor: colors.text.secondary, flex: 0.4 },
+              ]}
+            >
+              <Text
+                style={[
+                  {
+                    textAlign: 'center',
+                    fontFamily: 'Cairo-Bold',
+                    fontSize: sizeScale(15),
+                    marginTop: sizeScale(-3),
+                  },
+                  language === 'english'
+                    ? { color: colors.staticText.dark.primary }
+                    : { color: colors.staticText.dark.primary },
+                ]}
+              >
+                ع
+              </Text>
+            </View>
+            <View
+              style={[
+                {
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '100%',
+                },
+                language === 'english'
+                  ? { backgroundColor: colors.active, flex: 0.6 }
+                  : { backgroundColor: colors.text.secondary, flex: 0.4 },
+              ]}
+            >
+              <Text
+                style={[
+                  {
+                    fontWeight: 'bold',
+                  },
+                  language === 'english'
+                    ? { color: colors.staticText.dark.primary }
+                    : {},
+                ]}
+              >
+                En
+              </Text>
+            </View>
+          </View>
+        );
+      }
       // return (
       //   <MaterialIcons
       //     name="arrow-back-ios"
@@ -184,6 +250,7 @@ const Profile = () => {
         style={{
           alignItems: 'center',
           width: '100%',
+          height: heightScale(47),
           borderBottomColor: colors.secondary,
           borderBottomWidth:
             props.index >= Object.keys(props.objectKey)?.length - 1 ? 0 : 0,
@@ -195,8 +262,8 @@ const Profile = () => {
       >
         <View
           style={{
-            width: 47,
-            height: 47,
+            width: widthScale(47),
+            height: '100%',
             alignItems: 'center',
             justifyContent: 'center',
           }}
@@ -205,7 +272,7 @@ const Profile = () => {
             <MaterialCommunityIcons
               name={props.icon}
               color={props.color}
-              size={18}
+              size={sizeScale(18)}
               style={
                 props.itemId === 4 && { transform: [{ rotate: '-30deg' }] }
               }
@@ -214,7 +281,7 @@ const Profile = () => {
             <MaterialIcons
               name={props.icon}
               color={props.color}
-              size={18}
+              size={sizeScale(18)}
               style={
                 props.itemId === 4 && { transform: [{ rotate: '-30deg' }] }
               }
@@ -226,7 +293,7 @@ const Profile = () => {
             {
               alignItems: 'center',
               flex: 1,
-              height: 47,
+              height: '100%',
               flexDirection: 'row',
               justifyContent:
                 language === 'english' ? 'flex-start' : 'flex-end',
@@ -236,8 +303,8 @@ const Profile = () => {
           <Text
             style={{
               color: props.labelColor,
-              fontSize: 15,
-              fontFamily: 'Cairo_600SemiBold',
+              fontSize: sizeScale(15),
+              fontFamily: 'Cairo-SemiBold',
             }}
           >
             {props.label}
@@ -246,9 +313,9 @@ const Profile = () => {
         <View
           style={[
             {
-              width: 47,
-              height: 47,
-              alignItems: 'center',
+              flex: 1,
+              height: '100%',
+              alignItems: language === 'english' ? 'flex-end' : 'flex-start',
               justifyContent: 'center',
             },
           ]}
@@ -303,15 +370,8 @@ const Profile = () => {
       iconSet: 'MaterialCommunityIcons',
     },
     {
-      label: texts.reportEdt,
-      condition: 'report',
-      icon: 'report',
-      color: 'gray',
-      iconSet: 'MaterialIcons',
-    },
-    {
-      label: 'Contact Us',
-      condition: 'contact',
+      label: texts.contactUsEdt,
+      condition: 'contactUs',
       icon: 'message',
       color: 'gray',
       iconSet: 'MaterialIcons',
@@ -396,10 +456,12 @@ const Profile = () => {
     if (sound) playSound('settingsButton');
     switch (item.condition) {
       case 'id':
-
         break;
       case 'language':
-        logAllStoredData();
+        setLanguage((prev: String) =>
+          prev === 'arabic' ? 'english' : 'arabic',
+        );
+        //navigation.navigate('Language');
         break;
       case 'vibrate':
         // setInitTheme(true);
@@ -410,9 +472,6 @@ const Profile = () => {
         break;
       case 'dark':
         setInitTheme(true);
-        const newTheme = currentTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
-        setCurrentTheme(newTheme as any);
-
         break;
 
       case 'sound':
@@ -420,9 +479,10 @@ const Profile = () => {
         setSound((prev: any) => !prev);
         break;
 
-      case 'report':
-        navigation.navigate('Report');
+      case 'contactUs':
+        navigation.navigate('ContactUs');
         break;
+
       default:
         break;
     }
@@ -488,26 +548,6 @@ const Profile = () => {
     );
   }
 
-  if (initTheme) {
-    setTimeout(() => {
-      setInitTheme(false);
-    }, 500);
-    return (
-      <View
-        style={[
-          {
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: colors.primary,
-          },
-        ]}
-      >
-        <ActivityIndicator size={30} />
-      </View>
-    );
-  }
-
   return (
     <View
       style={{
@@ -517,7 +557,7 @@ const Profile = () => {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.primary,
-        paddingHorizontal: 20,
+        paddingHorizontal: sizeScale(20),
       }}
     >
       <View
@@ -528,7 +568,7 @@ const Profile = () => {
           height: 70,
           backgroundColor: 'transparent',
           justifyContent: 'space-between',
-          paddingHorizontal: 5,
+          paddingHorizontal: sizeScale(5),
         }}
       >
         <View
@@ -536,14 +576,14 @@ const Profile = () => {
             alignItems: 'center',
             justifyContent: 'center',
             flexDirection: 'row',
-            height: 50,
-            gap: 10,
+            height: heightScale(50),
+            gap: sizeScale(10),
           }}
         >
           <View
             style={{
-              width: 35,
-              height: 35,
+              width: widthScale(35),
+              height: heightScale(35),
               justifyContent: 'center',
               alignItems: 'center',
             }}
@@ -551,18 +591,16 @@ const Profile = () => {
             {userImage ? (
               <Image
                 style={{
-                  width: 35,
-                  height: 35,
-                  borderRadius: 8,
-                  borderColor: 'lightgray',
-                  borderWidth: 0,
+                  width: widthScale(35),
+                  height: heightScale(35),
+                  borderRadius: sizeScale(8),
                 }}
                 source={{ uri: userImage }}
               />
             ) : (
               <MaterialIcons
                 name="person"
-                size={25}
+                size={sizeScale(25)}
                 color={colors.text.primary}
               />
             )}
@@ -580,68 +618,79 @@ const Profile = () => {
                 flexDirection: 'row',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
-                gap: 8
+                gap: sizeScale(8),
               }}
             >
-
               <Text
                 style={{
                   color: colors.text.primary,
-                  fontSize: 17,
+                  fontSize: sizeScale(17),
                   fontWeight: '700',
                   alignItems: 'center',
                 }}
               >
                 {userName}
               </Text>
-              {!userVip ?
-                (<FreeBadge
-                  width={35}
-                  height={15}
+              {!userVip ? (
+                <FreeBadge
+                  width={widthScale(35)}
+                  height={heightScale(15)}
                   backColor={colors.secondary}
-                  elevation={0} />)
-                : userVip ?
-                  (<VipBadge
-                    width={27}
-                    height={15}
-                    title={true}
-                    iconSize={12}
-                    iconColor={'#dba400'}
-                    radius={2}
-                    backColor={colors.secondary}
-                    titleColor={colors.text.primary}
-                    elevation={0}
-                    textSize={10}
-                    icon={false}
-                  />) : null}
+                  elevation={0}
+                />
+              ) : userVip ? (
+                <VipBadge
+                  width={sizeScale(27)}
+                  height={heightScale(15)}
+                  title={true}
+                  iconSize={sizeScale(12)}
+                  iconColor={'#dba400'}
+                  radius={sizeScale(2)}
+                  backColor={colors.secondary}
+                  titleColor={colors.text.primary}
+                  elevation={0}
+                  textSize={sizeScale(10)}
+                  icon={false}
+                />
+              ) : null}
             </View>
 
-            <View style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              overflow: 'hidden',
-              columnGap: 3
-            }}>
-              {userAccuracy ?
-                <Text style={[{
-                  color: colors.text.primary,
-                  fontSize: sizeScale(13),
-                  textAlign: 'center',
-                }]}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflow: 'hidden',
+                columnGap: 3,
+              }}
+            >
+              {userAccuracy ? (
+                <Text
+                  style={[
+                    {
+                      color: colors.text.primary,
+                      fontSize: sizeScale(13),
+                      textAlign: 'center',
+                    },
+                  ]}
+                >
                   {userAccuracy}
                 </Text>
-                :
-                <Text style={[{
-                  color: colors.text.primary,
-                  fontSize: sizeScale(13),
-                  textAlign: 'center',
-                }]}>
+              ) : (
+                <Text
+                  style={[
+                    {
+                      color: colors.text.primary,
+                      fontSize: sizeScale(13),
+                      textAlign: 'center',
+                    },
+                  ]}
+                >
                   0
                 </Text>
-              }
+              )}
               <FontAwesome5
-                name='percentage'
+                name="percentage"
                 size={sizeScale(13)}
                 color={colors.text.secondary}
               />
@@ -659,9 +708,9 @@ const Profile = () => {
             backgroundColor: colors.secondary,
             alignItems: 'center',
             justifyContent: 'center',
-            width: 30,
-            height: 30,
-            borderRadius: 8,
+            width: widthScale(30),
+            height: heightScale(30),
+            borderRadius: sizeScale(8),
             overflow: 'hidden',
           }}
           onPress={() => {
@@ -669,7 +718,11 @@ const Profile = () => {
             if (sound) playSound('settingsButton');
           }}
         >
-          <MaterialIcons name="close" color={colors.text.secondary} size={22} />
+          <MaterialIcons
+            name="close"
+            color={colors.text.secondary}
+            size={sizeScale(22)}
+          />
         </Pressable>
       </View>
 
@@ -683,7 +736,7 @@ const Profile = () => {
             justifyContent: 'center',
             marginTop: 0,
             zIndex: 1,
-            paddingHorizontal: 20,
+            paddingHorizontal: sizeScale(20),
           }}
         >
           <Text
@@ -692,7 +745,7 @@ const Profile = () => {
               flex: 1,
               textAlign: 'left',
               color: colors.text.primary,
-              fontSize: 12,
+              fontSize: sizeScale(12),
               fontWeight: '300',
               alignItems: 'center',
             }}
@@ -709,7 +762,7 @@ const Profile = () => {
                 justifyContent: 'space-evenly',
                 borderRadius: 8,
                 overflow: 'hidden',
-                height: 35,
+                height: heightScale(35),
               },
             ]}
             android_ripple={{ color: colors.primary, borderless: false }}
@@ -732,7 +785,7 @@ const Profile = () => {
             )}
             <View
               style={{
-                width: 35,
+                width: widthScale(35),
                 height: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -741,8 +794,8 @@ const Profile = () => {
               <Image
                 source={require('../assets/icons/google.png')}
                 style={{
-                  width: 18,
-                  height: 18,
+                  width: widthScale(18),
+                  height: heightScale(18),
                 }}
               />
             </View>
@@ -751,13 +804,13 @@ const Profile = () => {
                 height: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
-                paddingRight: 10,
+                paddingRight: sizeScale(10),
               }}
             >
               <Text
                 style={{
                   color: 'white',
-                  fontSize: 15,
+                  fontSize: sizeScale(15),
                   fontWeight: '600',
                 }}
               >
@@ -787,10 +840,9 @@ const Profile = () => {
             alignItems: 'center',
             justifyContent: 'center',
             borderWidth: 0,
-            borderRadius: 10,
+            borderRadius: sizeScale(10),
             overflow: 'hidden',
             gap: 5,
-
           }}
         >
           {settingsList.map((item, index) => (
@@ -808,6 +860,7 @@ const Profile = () => {
               dark={item.condition === 'dark'}
               vibre={item.condition === 'vibrate'}
               sound={item.condition === 'sound'}
+              language={item.condition === 'language'}
             />
           ))}
           <Pressable
@@ -824,14 +877,16 @@ const Profile = () => {
               justifyContent: 'space-between',
               flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
             }}
-            onPress={() => { (userVip) ? setUserPlan('free') : setUserPlan('lifetime') }}
+            onPress={() => {
+              userVip ? setUserPlan('free') : setUserPlan('lifetime');
+            }}
           >
             <View
               style={[
                 {
                   alignItems: 'center',
                   flex: 1,
-                  height: 47,
+                  height: heightScale(47),
                   flexDirection: 'row',
                   justifyContent:
                     language === 'english' ? 'flex-start' : 'flex-end',
@@ -841,14 +896,13 @@ const Profile = () => {
               <Text
                 style={{
                   color: 'grey',
-                  fontSize: 15,
+                  fontSize: sizeScale(15),
                   fontFamily: 'Cairo_600SemiBold',
                 }}
               >
                 VIP
               </Text>
             </View>
-
           </Pressable>
           <Pressable
             android_ripple={{
@@ -864,14 +918,16 @@ const Profile = () => {
               justifyContent: 'space-between',
               flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
             }}
-            onPress={() => { setUpgradeTutu(true) }}
+            onPress={() => {
+              setUpgradeTutu(true);
+            }}
           >
             <View
               style={[
                 {
                   alignItems: 'center',
                   flex: 1,
-                  height: 47,
+                  height: heightScale(47),
                   flexDirection: 'row',
                   justifyContent:
                     language === 'english' ? 'flex-start' : 'flex-end',
@@ -881,14 +937,13 @@ const Profile = () => {
               <Text
                 style={{
                   color: 'grey',
-                  fontSize: 15,
+                  fontSize: sizeScale(15),
                   fontFamily: 'Cairo_600SemiBold',
                 }}
               >
                 UPGRADE TUTU
               </Text>
             </View>
-
           </Pressable>
           {DangerSettingsList.map((item, index) => (
             <SettingsCard
@@ -896,9 +951,9 @@ const Profile = () => {
               index={index}
               objectKey={DangerSettingsList}
               label={item.label}
-              labelColor={'#9f7070'}
+              labelColor={'#783b3b'}
               icon={item.icon}
-              color={'#9f707096'}
+              color={'#d25b5b96'}
               press={() => dangerSettingsListPress(item)}
             />
           ))}
@@ -917,6 +972,39 @@ const Profile = () => {
         </View>
       </ScrollView>
       <CopyrightsFooter />
+      <Modal
+        visible={initTheme}
+        transparent
+        onRequestClose={() => setInitTheme(false)}
+      >
+        <View
+          style={[
+            {
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'transparent',
+            },
+          ]}
+        >
+          <View
+            style={[
+              {
+                elevation: 10,
+                borderRadius: sizeScale(8),
+                position: 'absolute',
+                width: widthScale(screen.width * 0.9),
+                height: heightScale(80),
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: colors.primary,
+              },
+            ]}
+          >
+            <ActivityIndicator size={30} />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };

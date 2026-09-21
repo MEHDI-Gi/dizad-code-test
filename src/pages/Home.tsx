@@ -13,6 +13,7 @@ import {
 import { DataContext } from '../context/contextData.tsx';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { useGoogleSignIn } from '../context/auth.ts';
@@ -24,7 +25,7 @@ import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import { useColors } from '../hooks/useColors.ts';
 import { useVip } from '../hooks/useVip.ts';
 import { useUserAccuracy } from '../hooks/useUserAccuracy.ts';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import PermitCategories from './layout/home/PermitCategories.tsx';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Home() {
@@ -43,6 +44,7 @@ export default function Home() {
     examData,
     firebaseLoaded,
     imgBase,
+    language,
   } = useContext(DataContext);
 
   const navigation = useNavigation<any>();
@@ -143,27 +145,6 @@ export default function Home() {
     { label: '', img: examsCover ?? null, sub: '' },
     { label: '', img: questCover ?? null, sub: '' },
     { label: '', img: questCover ?? null, sub: '' },
-
-  ];
-  const extChannels = [
-    {
-      icon: 'car',
-      label:
-        'أصناف',
-      sub: '',
-    },
-    { label: '', img: examsCover ?? null, sub: '' },
-    { label: '', img: questCover ?? null, sub: '' },
-    { label: '', img: questCover ?? null, sub: '' },
-    {
-      label:
-        "",
-      img: examsCover,
-      sub: '',
-    },
-    { label: '', img: examsCover ?? null, sub: '' },
-    { label: '', img: questCover ?? null, sub: '' },
-    { label: '', img: questCover ?? null, sub: '' },
   ];
 
   return (
@@ -171,9 +152,9 @@ export default function Home() {
       style={[
         styles.container,
         {
-          width: screen.width,
+          width: screen?.width,
           flex: 1,
-          backgroundColor: colors.primary,
+          backgroundColor: colors?.primary,
           justifyContent: 'space-between',
           alignItems: 'center',
         },
@@ -616,7 +597,6 @@ export default function Home() {
                   }}
                 >
                   <ShimmerPlaceHolder
-
                     style={{
                       width: widthScale(screen.width * 0.22),
                       height: heightScale(screen.width * 0.22),
@@ -776,6 +756,7 @@ export default function Home() {
           })}
         </View>
 
+        <PermitCategories />
 
         {/* <ScrollView
           horizontal={true}
@@ -793,193 +774,7 @@ export default function Home() {
             width: '95%',
           }}
         > */}
-        <View
-          style={{
-            alignItems: 'flex-start',
-            justifyContent: 'flex-start',
-            flexDirection: 'row',
-            flexWrap: "wrap",
-            width: '90%',
-            flex: 1,
-            gap: sizeScale(10),
-          }}
-        >
-          {extChannels.map((item: any, index: number) => {
-            if (!firebaseLoaded) {
-              return (
-                <ShimmerPlaceHolder
-                  key={`shimmer-${index}`}
-                  style={{
-                    width: '100%',
-                    height: heightScale(screen.width * 0.25),
-                    borderRadius: sizeScale(8),
-                  }}
-                  shimmerColors={[
-                    colors.secondary,
-                    '#6161617c',
-                    colors.secondary,
-                  ]}
-                />
-              );
-            }
-            return (
-              <Pressable
-                android_ripple={{
-                  borderless: false,
-                  color: colors.text.secondary,
-                  foreground: true,
-                }}
-                onPress={() => {
-                  Linking.openURL(
-                    'https://www.youtube.com/playlist?list=PLIuGUVzSi-K4754yPL6zul8QbGiK9xYNR',
-                  );
-                }}
-                key={`key-${index}`}
-                style={[
-                  {
-                    backgroundColor: colors.secondary,
-                    alignItems: 'center',
-                    paddingHorizontal: sizeScale(15),
-                    paddingVertical: sizeScale(10),
-                    borderRadius: sizeScale(10),
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    overflow: 'hidden',
-                    elevation: 5,
-                    columnGap: sizeScale(14)
-                  },
-                ]}
-              >
-                <View
-                  style={[
-                    {
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      overflow: 'hidden',
-                    },
-                  ]}
-                >
-                  <MaterialCommunityIcons
-                    name={item.icon}
-                    color={colors.text.secondary}
-                    size={sizeScale(25)}
-                  />
-                </View>
-                <View
-                  style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontFamily: 'Cairo-Bold',
-                      color: colors.text.primary,
-                      fontSize: sizeScale(14),
-                      textAlign: 'right',
-                    }}
-                  >
-                    {item.label}
-                  </Text>
-                </View>
-              </Pressable>
-            );
-          })}
-          {/* {extChannels.map((item: any, index: number) => {
-              if (!firebaseLoaded) {
-                return (
-                  <ShimmerPlaceHolder
-                    key={`shimmer-${index}`}
-                    style={{
-                      width: '100%',
-                      height: heightScale(screen.width * 0.25),
-                      borderRadius: sizeScale(8),
-                    }}
-                    shimmerColors={[
-                      colors.secondary,
-                      '#6161617c',
-                      colors.secondary,
-                    ]}
-                  />
-                );
-              }
-              return (
-                <Pressable
-                  android_ripple={{
-                    borderless: false,
-                    color: colors.text.secondary,
-                    foreground: true,
-                  }}
-                  onPress={() => {
-                    Linking.openURL(
-                      'https://www.youtube.com/playlist?list=PLIuGUVzSi-K4754yPL6zul8QbGiK9xYNR',
-                    );
-                  }}
-                  key={`key-${index}`}
-                  style={[
-                    {
-                        backgroundColor: colors.secondary,
-                      alignItems: 'center',
-                      width: heightScale(screen.width * 0.2),
-                      paddingHorizontal: sizeScale(10),
-                      borderRadius: sizeScale(10),
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      overflow: 'hidden',
-                      elevation: 5,
-                      rowGap: sizeScale(5),
-                    },
-                  ]}
-                >
-                  <View
-                    style={[
-                      {
-                        alignItems: 'center',
-                        width: heightScale(screen.width * 0.2),
-                        height: heightScale(screen.width * 0.2),
-                        padding: sizeScale(10),
-                        borderRadius: sizeScale(10),
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        overflow: 'hidden',
-                        columnGap: sizeScale(0),
-                      },
-                    ]}
-                  >
-                    <Image
-                      style={{
-                        width: widthScale(screen.width * 0.15),
-                        height: widthScale(screen.width * 0.15),
-                        borderRadius: sizeScale(50),
-                        resizeMode: 'cover',
-                      }}
-                      source={{ uri: item?.img }}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'column',
-                      alignItems: 'flex-end',
-                      justifyContent: 'center',
-                      flex: 1,
-                      zIndex: 2,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontFamily: 'Cairo',
-                        color: colors.text.primary,
-                        fontSize: sizeScale(14),
-                        textAlign: 'right',
-                      }}
-                    >
-                      {item.label}
-                    </Text>
-                  </View>
-                </Pressable>
-              );
-            })} */}
-        </View>
+
         {/* </ScrollView> */}
         <View
           style={{
@@ -1014,7 +809,6 @@ export default function Home() {
               مصادر خارجية
             </Text>
           </View>
-
         </View>
         <View
           style={{

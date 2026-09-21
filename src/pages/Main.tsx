@@ -1,22 +1,20 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer, useRoute } from '@react-navigation/native';
-import { createNativeStackNavigator, } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { enableScreens } from 'react-native-screens';
 enableScreens();
 const Stack = createNativeStackNavigator();
-import mobileAds, { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import mobileAds, {
+  BannerAd,
+  BannerAdSize,
+} from 'react-native-google-mobile-ads';
 import AdFooter from '../context/AdFooter.tsx';
 import { DataContext } from '../context/contextData';
-
-import Apparence from './profile/Apparence.tsx';
-import Vibrate from './profile/Vibrate.tsx';
-import Sound from './profile/Sound.tsx';
 import Language from './profile/Language.tsx';
-import Report from './profile/Report.tsx';
+import ContactUs from './profile/ContactUs.tsx';
 import SnackBar from '../components/elements/SnackBar.tsx';
 import UpgradeCard from '../components/UpgradeCard.tsx';
-
 
 import Home from './Home.tsx';
 import Login from './Login';
@@ -39,92 +37,118 @@ import UpgradeWarn from '../components/UpgradeWarn.tsx';
 import { useVip } from '../hooks/useVip.ts';
 import TutuUpgrade from '../components/TutuUpgrade.tsx';
 export default function Main() {
-    const colors = useColors();
-    const {
-        freeCard,
-        vipCard,
-        upgradeCard,
-        statisticsCard,
-        snackOptions,
-        user,
-        upgradeWarn,
-        upgradeTutu
-    } = useContext(DataContext);
-    const { userVip } = useVip();
+  const colors = useColors();
+  const {
+    freeCard,
+    vipCard,
+    upgradeCard,
+    statisticsCard,
+    snackOptions,
+    user,
+    upgradeWarn,
+    upgradeTutu,
+  } = useContext(DataContext);
+  const { userVip } = useVip();
 
-    const [adLoaded, setAdLoaded] = useState<boolean>(false);
-    useEffect(() => {
-        mobileAds()
-            .initialize()
-            .then(adapterStatuses => {
-                console.log('AdMob initialized', adapterStatuses);
-                setAdLoaded(true);
-            });
-    }, []);
-    usePeriodicAd();
-    const [splash, setSplash] = useState(true);
+  const [adLoaded, setAdLoaded] = useState<boolean>(false);
+  useEffect(() => {
+    mobileAds()
+      .initialize()
+      .then(adapterStatuses => {
+        console.log('AdMob initialized', adapterStatuses);
+        setAdLoaded(true);
+      });
+  }, []);
+  usePeriodicAd();
+  const [splash, setSplash] = useState(true);
 
-    useEffect(() => {
-        setTimeout(() => setSplash(false), 2000);
-    }, []);
+  useEffect(() => {
+    setTimeout(() => setSplash(false), 2000);
+  }, []);
 
-    if (splash) return <SplashScreen />;
+  if (splash) return <SplashScreen />;
 
-
-    return (
-        <View style={[styles.container, {
-            opacity: 1,
-            backgroundColor: colors.primary
-        }]}>
-
-            {freeCard && <FreeCard />}
-            {vipCard && <VipCard />}
-            {upgradeCard && <UpgradeCard />}
-            {upgradeTutu && <TutuUpgrade />}
-            {upgradeWarn && <UpgradeWarn />}
-            <NavigationContainer>
-                <Stack.Navigator
-                    screenOptions={{
-                        gestureEnabled: true,
-                        animation: 'fade',
-                        headerStyle: {
-                            backgroundColor: colors.primary,
-                        },
-                        headerTintColor: colors.priText,
-                    }}
-                >
-                    <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-                    <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-                    <Stack.Screen name="SignsItems" component={SignsItems} options={{ headerShown: false }} />
-                    <Stack.Screen name="PriorityItems" component={PriorityItems} options={{ headerShown: false }} />
-                    <Stack.Screen name="Report" component={Report} options={{ headerShown: false }} />
-                    <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
-                    <Stack.Screen name="Vibrate" component={Vibrate} options={{ headerShown: false }} />
-                    <Stack.Screen name="Sound" component={Sound} options={{ headerShown: false }} />
-                    <Stack.Screen name="Apparence" component={Apparence} options={{ headerShown: false }} />
-                    <Stack.Screen name="Language" component={Language} options={{ headerShown: false }} />
-                </Stack.Navigator>
-            </NavigationContainer>
-            {/* <SnackBar
+  return (
+    <View
+      style={[
+        styles.container,
+        {
+          opacity: 1,
+          backgroundColor: colors.primary,
+        },
+      ]}
+    >
+      {freeCard && <FreeCard />}
+      {vipCard && <VipCard />}
+      {upgradeCard && <UpgradeCard />}
+      {upgradeTutu && <TutuUpgrade />}
+      {upgradeWarn && <UpgradeWarn />}
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            gestureEnabled: true,
+            animation: 'fade',
+            headerStyle: {
+              backgroundColor: colors.primary,
+            },
+            headerTintColor: colors.priText,
+          }}
+        >
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="MainTabs"
+            component={MainTabs}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SignsItems"
+            component={SignsItems}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="PriorityItems"
+            component={PriorityItems}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ContactUs"
+            component={ContactUs}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Language"
+            component={Language}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+      {/* <SnackBar
                 label={snackOptions.label}
                 icon={snackOptions.icon}
                 bottom={adLoaded ? '15%' : '10%'}
             /> */}
-            {!userVip && <AdFooter adLoaded={adLoaded} setAdLoaded={setAdLoaded} />}
-
-        </View>
-    );
+      {!userVip && <AdFooter adLoaded={adLoaded} setAdLoaded={setAdLoaded} />}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    adsContainer: {
-        zIndex: 99,
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+  container: {
+    flex: 1,
+  },
+  adsContainer: {
+    zIndex: 99,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
-
