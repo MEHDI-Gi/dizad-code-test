@@ -58,7 +58,7 @@ export const languagesList = {
     soundEdt: 'Sound',
     vibrateEdt: 'Vibrate',
     apparenceEdt: 'Appearance',
-    contactUsEdt: 'contactUs Issue',
+    contactUsEdt: 'Contact us',
     restEdt: 'Reset',
     contactUsPlh: 'Write your contactUs here...',
     email: 'Email',

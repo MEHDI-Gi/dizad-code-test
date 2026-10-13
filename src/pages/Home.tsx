@@ -9,6 +9,7 @@ import {
   Image,
   Linking,
   ActivityIndicator,
+  StatusBar,
 } from 'react-native';
 import { DataContext } from '../context/contextData.tsx';
 import LinearGradient from 'react-native-linear-gradient';
@@ -82,7 +83,7 @@ export default function Home() {
   const contentItems = [
     {
       cond: 'Exm',
-      label: 'إمتحان (Quiz)',
+      label: 'إمتحان',
       img: examsCover ?? null,
       sub: '',
       length: totalExm,
@@ -160,6 +161,7 @@ export default function Home() {
         },
       ]}
     >
+
       <View
         style={[
           {

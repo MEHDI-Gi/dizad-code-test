@@ -10,7 +10,7 @@ export const colorsList: any = {
         secondary: '#adadadff',
       },
       dark: {
-        $primary: '#181818ff',
+        primary: '#181818ff',
         secondary: '#494949ff',
       },
     },
@@ -69,7 +69,7 @@ export const colorsList: any = {
         secondary: '#adadadff',
       },
       dark: {
-        $primary: '#181818ff',
+        primary: '#181818ff',
         secondary: '#494949ff',
       },
     },

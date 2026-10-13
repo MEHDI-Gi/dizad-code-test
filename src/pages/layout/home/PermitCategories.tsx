@@ -10,6 +10,7 @@ import {
   Linking,
   ActivityIndicator,
   Modal,
+  StatusBar,
 } from 'react-native';
 import { DataContext } from '../../../context/contextData.tsx';
 import LinearGradient from 'react-native-linear-gradient';
@@ -32,7 +33,7 @@ export default function PermitCategories() {
   const { userVip, setUserPlan } = useVip();
   const { userAccuracy } = useUserAccuracy();
   const colors = useColors();
-
+  const navigation = useNavigation<any>();
   const {
     userName,
     userImage,
@@ -135,7 +136,6 @@ export default function PermitCategories() {
                   flexDirection: 'row',
                   justifyContent: 'space-evenly',
                   overflow: 'hidden',
-                  elevation: 5,
                 },
               ]}
             >
@@ -200,7 +200,7 @@ export default function PermitCategories() {
             color: colors.primary,
             foreground: true,
           }}
-          onPress={() => {}}
+          onPress={() => navigation.navigate('Types')}
           style={[
             {
               backgroundColor: colors.secondary,
@@ -212,7 +212,6 @@ export default function PermitCategories() {
               flexDirection: 'row-reverse',
               justifyContent: 'center',
               overflow: 'hidden',
-              elevation: 5,
               columnGap: sizeScale(14),
             },
           ]}
@@ -267,7 +266,7 @@ export default function PermitCategories() {
             justifyContent: 'center',
           }}
         >
-          <Pressable
+          {/* <Pressable
             style={{
               top: 0,
               bottom: 0,
@@ -279,17 +278,78 @@ export default function PermitCategories() {
               backgroundColor: 'transparent',
             }}
             onPress={() => setOpenModal(!openModal)}
-          />
+          /> */}
           <View
             style={{
-              borderRadius: sizeScale(8),
+              paddingTop: sizeScale(20),
+              // borderRadius: sizeScale(8),
               overflow: 'hidden',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
               elevation: 5,
               backgroundColor: colors.secondary,
-              width: widthScale(screen.width * 0.9),
-              height: heightScale(screen.height * 0.7),
+              flex: 1,
+              width: '100%',
             }}
-          ></View>
+          >
+            <View
+              style={{
+                width: '100%',
+                overflow: 'hidden',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: language === 'english' ? 'row-reverse' : 'row',
+              }}
+            >
+              <Pressable
+                android_ripple={{
+                  borderless: false,
+                  color: colors.primary,
+                  foreground: true,
+                }}
+                onPress={() => setOpenModal(false)}
+                style={[
+                  {
+                    borderRadius: sizeScale(50),
+                    backgroundColor: 'transparent',
+                    marginRight: sizeScale(5),
+                    width: sizeScale(50),
+                    height: sizeScale(50),
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    overflow: 'hidden',
+                  },
+                ]}
+              >
+                <MaterialCommunityIcons
+                  name={'close'}
+                  color={colors.text.secondary}
+                  size={sizeScale(28)}
+                />
+              </Pressable>
+              <View
+                style={[
+                  {
+                    flex: 1,
+                    alignItems: 'flex-start',
+                    justifyContent: 'center',
+                    overflow: 'hidden',
+                  },
+                ]}
+              >
+                <Text
+                  style={{
+                    fontFamily:
+                      language == 'english' ? 'sans-serif' : 'Cairo-Bold',
+                    color: colors.text.secondary,
+                    fontSize: sizeScale(16),
+                  }}
+                >
+                  Permit Categories
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
       </Modal>
     </View>

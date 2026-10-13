@@ -369,26 +369,19 @@ const Profile = () => {
       color: 'gray',
       iconSet: 'MaterialCommunityIcons',
     },
-    {
-      label: texts.contactUsEdt,
-      condition: 'contactUs',
-      icon: 'message',
-      color: 'gray',
-      iconSet: 'MaterialIcons',
-    },
   ];
   const DangerSettingsList = [
     {
       label: texts.restEdt,
       condition: 'reset data',
       icon: 'refresh',
-      color: '#9f707096',
+      color: colors.text.secondary,
     },
     {
       label: texts.deleteEdt,
       condition: 'delete account',
       icon: 'delete',
-      color: '#9f707096',
+      color: colors.text.secondary,
     },
   ];
 
@@ -487,6 +480,20 @@ const Profile = () => {
         break;
     }
   };
+  const ContactList = [
+    {
+      text: 'Email',
+      icon: 'email',
+    },
+    {
+      text: 'Whatsapp',
+      icon: 'call',
+    },
+    {
+      text: 'Telegram',
+      icon: 'telegram',
+    },
+  ];
 
   const [logoutLoad, setLogoutLoad] = useState<boolean>(false);
   function logoutFun() {
@@ -580,7 +587,7 @@ const Profile = () => {
             gap: sizeScale(10),
           }}
         >
-          <View
+{false &&           <View
             style={{
               width: widthScale(35),
               height: heightScale(35),
@@ -604,7 +611,7 @@ const Profile = () => {
                 color={colors.text.primary}
               />
             )}
-          </View>
+          </View>}
 
           <View
             style={{
@@ -822,6 +829,7 @@ const Profile = () => {
       )}
       <ScrollView
         showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         horizontal={false}
         contentContainerStyle={[
           {
@@ -863,100 +871,91 @@ const Profile = () => {
               language={item.condition === 'language'}
             />
           ))}
-          <Pressable
-            android_ripple={{
-              color: colors.primary,
-              borderless: false,
-              foreground: true,
-            }}
+          <View
             style={{
-              alignItems: 'center',
+              flexDirection: 'row',
               width: '100%',
-              borderBottomColor: colors.secondary,
-              overflow: 'hidden',
-              justifyContent: 'space-between',
-              flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
-            }}
-            onPress={() => {
-              userVip ? setUserPlan('free') : setUserPlan('lifetime');
+              gap: sizeScale(15),
             }}
           >
-            <View
-              style={[
-                {
-                  alignItems: 'center',
-                  flex: 1,
-                  height: heightScale(47),
-                  flexDirection: 'row',
-                  justifyContent:
-                    language === 'english' ? 'flex-start' : 'flex-end',
-                },
-              ]}
-            >
-              <Text
-                style={{
-                  color: 'grey',
-                  fontSize: sizeScale(15),
-                  fontFamily: 'Cairo_600SemiBold',
+            {DangerSettingsList.map((item, index) => (
+              // <SettingsCard
+              //   key={item.condition}
+              //   index={index}
+              //   objectKey={DangerSettingsList}
+              //   label={item.label}
+              //   labelColor={colors.text.primary}
+              //   icon={item.icon}
+              //   color={item.color}
+              //   press={() => dangerSettingsListPress(item)}
+              // />
+              <Pressable
+                android_ripple={{
+                  color: colors.primary,
+                  borderless: false,
+                  foreground: true,
                 }}
-              >
-                VIP
-              </Text>
-            </View>
-          </Pressable>
-          <Pressable
-            android_ripple={{
-              color: colors.primary,
-              borderless: false,
-              foreground: true,
-            }}
-            style={{
-              alignItems: 'center',
-              width: '100%',
-              borderBottomColor: colors.secondary,
-              overflow: 'hidden',
-              justifyContent: 'space-between',
-              flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
-            }}
-            onPress={() => {
-              setUpgradeTutu(true);
-            }}
-          >
-            <View
-              style={[
-                {
-                  alignItems: 'center',
-                  flex: 1,
-                  height: heightScale(47),
-                  flexDirection: 'row',
-                  justifyContent:
-                    language === 'english' ? 'flex-start' : 'flex-end',
-                },
-              ]}
-            >
-              <Text
                 style={{
-                  color: 'grey',
-                  fontSize: sizeScale(15),
-                  fontFamily: 'Cairo_600SemiBold',
+                  flex: 1,
+                  alignItems: 'center',
+                  height: heightScale(47),
+                  borderRadius: sizeScale(8),
+                  overflow: 'hidden',
+                  justifyContent: 'center',
+                  flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
                 }}
+                onPress={() => dangerSettingsListPress(item)}
               >
-                UPGRADE TUTU
-              </Text>
-            </View>
-          </Pressable>
-          {DangerSettingsList.map((item, index) => (
-            <SettingsCard
-              key={item.condition}
-              index={index}
-              objectKey={DangerSettingsList}
-              label={item.label}
-              labelColor={'#783b3b'}
-              icon={item.icon}
-              color={'#d25b5b96'}
-              press={() => dangerSettingsListPress(item)}
-            />
-          ))}
+                <View
+                  style={{
+                    flex: 0.4,
+                    height: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: colors.secondary,
+                  }}
+                >
+                  {item.icon === 'MaterialCommunityIcons' ? (
+                    <MaterialCommunityIcons
+                      name={item?.icon}
+                      color={item?.color}
+                      size={sizeScale(18)}
+                    />
+                  ) : (
+                    <MaterialIcons
+                      name={item.icon}
+                      color={item.color}
+                      size={sizeScale(18)}
+                    />
+                  )}
+                </View>
+                <View
+                  style={[
+                    {
+                      backgroundColor: colors.secondary,
+
+                      alignItems: 'center',
+                      flex: 1,
+                      height: '100%',
+                      flexDirection: 'row',
+                      justifyContent:
+                        language === 'english' ? 'flex-start' : 'flex-end',
+                    },
+                  ]}
+                >
+                  <Text
+                    style={{
+                      color: colors.text.primary,
+                      fontSize: sizeScale(15),
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {item.label}
+                  </Text>
+                </View>
+              </Pressable>
+            ))}
+          </View>
           <SettingsCard
             label={texts.logout}
             labelColor={colors.text.primary}
@@ -971,6 +970,52 @@ const Profile = () => {
           />
         </View>
       </ScrollView>
+      <View
+        style={{
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'row',
+          gap: sizeScale(10),
+        }}
+      >
+        {ContactList.map((items, index) => (
+          <Pressable
+            android_ripple={{
+              borderless: false,
+              foreground: true,
+              color: colors.primary,
+            }}
+            key={items.text}
+            style={{
+              flex: 1,
+              borderRadius: sizeScale(10),
+              backgroundColor: colors.secondary,
+              height: heightScale(49),
+              flexDirection: 'row-reverse',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <View
+              style={{
+                flex: 1,
+                height: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflow: 'hidden',
+              }}
+            >
+              <MaterialIcons
+                name={items.icon}
+                color={items?.color ?? colors.text.primary}
+                size={sizeScale(25)}
+              />
+            </View>
+          </Pressable>
+        ))}
+      </View>
+
       <CopyrightsFooter />
       <Modal
         visible={initTheme}

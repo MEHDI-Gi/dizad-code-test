@@ -36,6 +36,7 @@ import { useColors } from '../hooks/useColors.ts';
 import UpgradeWarn from '../components/UpgradeWarn.tsx';
 import { useVip } from '../hooks/useVip.ts';
 import TutuUpgrade from '../components/TutuUpgrade.tsx';
+import Types from './Types.tsx';
 export default function Main() {
   const colors = useColors();
   const {
@@ -112,6 +113,11 @@ export default function Main() {
           <Stack.Screen
             name="PriorityItems"
             component={PriorityItems}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Types"
+            component={Types}
             options={{ headerShown: false }}
           />
           <Stack.Screen
