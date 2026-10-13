@@ -111,12 +111,16 @@ const Profile = () => {
   }, [initTheme]);
   function SettingsCard(props: any) {
     const switchProps = {
-      width: widthScale(28),
-      height: heightScale(16),
-      borderColor: colors.text.secondary,
-      borderWidth: sizeScale(1),
-      radioWidth: sizeScale(10),
-      radioHeight: sizeScale(10),
+      width: widthScale(50),
+      height: heightScale(25),
+      borderColor: colors.primary,
+      borderWidth: sizeScale(0),
+      radiusWidth: sizeScale(10),
+      backColor: colors.text.secondary,
+      radiusHeight: heightScale(28),
+      radiusOut: sizeScale(5),
+      radiusIn: sizeScale(5),
+      paddingOut: sizeScale(0),
       direction: language === 'english' ? 'row-reverse' : 'row',
     };
     const RightContent = () => {
@@ -133,8 +137,9 @@ const Profile = () => {
         return (
           <Switch
             {...switchProps}
-            radioFlex={vibrate ? 'flex-start' : 'flex-end'}
-            radioColor={vibrate ? colors.button.primary : colors.text.secondary}
+            radiusFlex={vibrate ? 'flex-start' : 'flex-end'}
+            radiusColor={vibrate ? colors.active : colors.secondary}
+            radiusWidth={sizeScale(vibrate ? 27 : 20)}
           />
         );
       }
@@ -142,12 +147,11 @@ const Profile = () => {
         return (
           <Switch
             {...switchProps}
-            radioFlex={currentTheme === THEME_DARK ? 'flex-start' : 'flex-end'}
-            radioColor={
-              currentTheme === THEME_DARK
-                ? colors.button.primary
-                : colors.text.secondary
+            radiusFlex={currentTheme === THEME_DARK ? 'flex-start' : 'flex-end'}
+            radiusColor={
+              currentTheme === THEME_DARK ? colors.active : colors.secondary
             }
+            radiusWidth={sizeScale(currentTheme === THEME_DARK ? 27 : 20)}
           />
         );
       }
@@ -155,8 +159,19 @@ const Profile = () => {
         return (
           <Switch
             {...switchProps}
-            radioFlex={sound ? 'flex-start' : 'flex-end'}
-            radioColor={sound ? colors.button.primary : colors.text.secondary}
+            radiusFlex={sound ? 'flex-start' : 'flex-end'}
+            radiusColor={sound ? colors.active : colors.secondary}
+            radiusWidth={sizeScale(sound ? 27 : 20)}
+          />
+        );
+      }
+      if (props.gradient) {
+        return (
+          <Switch
+            {...switchProps}
+            radiusFlex={isGradient ? 'flex-start' : 'flex-end'}
+            radiusColor={isGradient ? colors.button.primary : colors.secondary}
+            radiusWidth={sizeScale(isGradient ? 27 : 20)}
           />
         );
       }
@@ -247,17 +262,19 @@ const Profile = () => {
           borderless: false,
           foreground: true,
         }}
-        style={{
-          alignItems: 'center',
-          width: '100%',
-          height: heightScale(47),
-          borderBottomColor: colors.secondary,
-          borderBottomWidth:
-            props.index >= Object.keys(props.objectKey)?.length - 1 ? 0 : 0,
-          overflow: 'hidden',
-          justifyContent: 'space-between',
-          flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
-        }}
+        style={[
+          {
+            alignItems: 'center',
+            width: '100%',
+            height: heightScale(47),
+            borderBottomColor: colors.secondary,
+            borderBottomWidth:
+              props.index >= Object.keys(props.objectKey)?.length - 1 ? 0 : 0,
+            overflow: 'hidden',
+            justifyContent: 'space-between',
+            flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
+          },
+        ]}
         onPress={props.press}
       >
         <View
@@ -301,11 +318,20 @@ const Profile = () => {
           ]}
         >
           <Text
-            style={{
-              color: props.labelColor,
-              fontSize: sizeScale(15),
-              fontFamily: 'Cairo-SemiBold',
-            }}
+            style={[
+              {
+                color: props.labelColor,
+                fontSize: sizeScale(15),
+              },
+              language === 'english'
+                ? {
+                    fontWeight: 'bold',
+                    fontFamily: 'sans-serif',
+                  }
+                : {
+                    fontFamily: 'Cairo-SemiBold',
+                  },
+            ]}
           >
             {props.label}
           </Text>
@@ -317,6 +343,7 @@ const Profile = () => {
               height: '100%',
               alignItems: language === 'english' ? 'flex-end' : 'flex-start',
               justifyContent: 'center',
+              paddingHorizontal: sizeScale(10),
             },
           ]}
         >
@@ -327,7 +354,7 @@ const Profile = () => {
   }
   const settingsList = [
     {
-      label: 'ID Number',
+      label: texts.idNumberEdt,
       condition: 'id',
       icon: 'id-card',
       //content-copy
@@ -335,7 +362,7 @@ const Profile = () => {
       iconSet: 'MaterialCommunityIcons',
     },
     {
-      label: 'Statistics',
+      label: texts.statisticsEdt,
       condition: 'statistics',
       icon: 'chart-box',
       color: 'gray',
@@ -363,16 +390,23 @@ const Profile = () => {
       iconSet: 'MaterialCommunityIcons',
     },
     {
-      label: 'Dark Mode',
+      label: texts.darkModeEdt,
       condition: 'dark',
       icon: 'moon-waning-crescent',
+      color: 'gray',
+      iconSet: 'MaterialCommunityIcons',
+    },
+    {
+      label: texts.gradientEdt,
+      condition: 'gradient',
+      icon: 'gradient',
       color: 'gray',
       iconSet: 'MaterialCommunityIcons',
     },
   ];
   const DangerSettingsList = [
     {
-      label: texts.restEdt,
+      label: texts.resetDataEdt,
       condition: 'reset data',
       icon: 'refresh',
       color: colors.text.secondary,
@@ -472,6 +506,10 @@ const Profile = () => {
         setSound((prev: any) => !prev);
         break;
 
+      case 'gradient':
+        setIsGradient((prev: any) => !prev);
+        break;
+
       case 'contactUs':
         navigation.navigate('ContactUs');
         break;
@@ -484,14 +522,17 @@ const Profile = () => {
     {
       text: 'Email',
       icon: 'email',
+      color: '#EA4335',
     },
     {
       text: 'Whatsapp',
       icon: 'call',
+      color: '#25D366',
     },
     {
       text: 'Telegram',
       icon: 'telegram',
+      color: '#24A1DE',
     },
   ];
 
@@ -567,6 +608,20 @@ const Profile = () => {
         paddingHorizontal: sizeScale(20),
       }}
     >
+      {isGradient && (
+        <LinearGradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+          }}
+          colors={[colors.primary, '#152331']}
+        />
+      )}
       <View
         style={{
           alignItems: 'center',
@@ -587,31 +642,33 @@ const Profile = () => {
             gap: sizeScale(10),
           }}
         >
-{false &&           <View
-            style={{
-              width: widthScale(35),
-              height: heightScale(35),
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {userImage ? (
-              <Image
-                style={{
-                  width: widthScale(35),
-                  height: heightScale(35),
-                  borderRadius: sizeScale(8),
-                }}
-                source={{ uri: userImage }}
-              />
-            ) : (
-              <MaterialIcons
-                name="person"
-                size={sizeScale(25)}
-                color={colors.text.primary}
-              />
-            )}
-          </View>}
+          {false && (
+            <View
+              style={{
+                width: widthScale(35),
+                height: heightScale(35),
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {userImage ? (
+                <Image
+                  style={{
+                    width: widthScale(35),
+                    height: heightScale(35),
+                    borderRadius: sizeScale(8),
+                  }}
+                  source={{ uri: userImage }}
+                />
+              ) : (
+                <MaterialIcons
+                  name="person"
+                  size={sizeScale(25)}
+                  color={colors.text.primary}
+                />
+              )}
+            </View>
+          )}
 
           <View
             style={{
@@ -848,9 +905,8 @@ const Profile = () => {
             alignItems: 'center',
             justifyContent: 'center',
             borderWidth: 0,
-            borderRadius: sizeScale(10),
             overflow: 'hidden',
-            gap: 5,
+            gap: sizeScale(6),
           }}
         >
           {settingsList.map((item, index) => (
@@ -869,6 +925,7 @@ const Profile = () => {
               vibre={item.condition === 'vibrate'}
               sound={item.condition === 'sound'}
               language={item.condition === 'language'}
+              gradient={item.condition === 'gradient'}
             />
           ))}
           <View
@@ -903,6 +960,7 @@ const Profile = () => {
                   overflow: 'hidden',
                   justifyContent: 'center',
                   flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
+                  backgroundColor: 'maroon',
                 }}
                 onPress={() => dangerSettingsListPress(item)}
               >
@@ -912,7 +970,6 @@ const Profile = () => {
                     height: '100%',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: colors.secondary,
                   }}
                 >
                   {item.icon === 'MaterialCommunityIcons' ? (
@@ -932,8 +989,6 @@ const Profile = () => {
                 <View
                   style={[
                     {
-                      backgroundColor: colors.secondary,
-
                       alignItems: 'center',
                       flex: 1,
                       height: '100%',
@@ -944,11 +999,20 @@ const Profile = () => {
                   ]}
                 >
                   <Text
-                    style={{
-                      color: colors.text.primary,
-                      fontSize: sizeScale(15),
-                      fontWeight: 'bold',
-                    }}
+                    style={[
+                      {
+                        color: colors.text.primary,
+                        fontSize: sizeScale(15),
+                      },
+                      language === 'english'
+                        ? {
+                            fontWeight: 'bold',
+                            fontFamily: 'sans-serif',
+                          }
+                        : {
+                            fontFamily: 'Cairo-SemiBold',
+                          },
+                    ]}
                   >
                     {item.label}
                   </Text>
@@ -956,7 +1020,7 @@ const Profile = () => {
               </Pressable>
             ))}
           </View>
-          <SettingsCard
+          {/* <SettingsCard
             label={texts.logout}
             labelColor={colors.text.primary}
             objectKey={0}
@@ -967,7 +1031,7 @@ const Profile = () => {
                 handleLogout(navigation);
               }
             }}
-          />
+          /> */}
         </View>
       </ScrollView>
       <View
@@ -975,45 +1039,170 @@ const Profile = () => {
           width: '100%',
           alignItems: 'center',
           justifyContent: 'center',
-          flexDirection: 'row',
           gap: sizeScale(10),
         }}
       >
-        {ContactList.map((items, index) => (
-          <Pressable
-            android_ripple={{
-              borderless: false,
-              foreground: true,
-              color: colors.primary,
-            }}
-            key={items.text}
-            style={{
-              flex: 1,
-              borderRadius: sizeScale(10),
-              backgroundColor: colors.secondary,
-              height: heightScale(49),
-              flexDirection: 'row-reverse',
+        <Pressable
+          android_ripple={{
+            color: colors.primary,
+            borderless: false,
+            foreground: true,
+          }}
+          style={[
+            {
+              marginTop: sizeScale(10),
+              marginBottom: sizeScale(10),
               alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <View
+              backgroundColor: colors.active,
+              width: '100%',
+              height: heightScale(47),
+              overflow: 'hidden',
+              justifyContent: 'flex-start',
+              flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
+              borderRadius: 20,
+            },
+          ]}
+          onPress={() => {
+            if (user) {
+              handleLogout(navigation);
+            }
+          }}
+        >
+          {isGradient && (
+            <LinearGradient
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
               style={{
-                flex: 1,
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                right: 0,
+                left: 0,
+              }}
+              colors={[colors.active, 'orange']}
+            />
+          )}
+          {/* <View
+              style={{
+                width: widthScale(47),
                 height: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
-                overflow: 'hidden',
               }}
             >
               <MaterialIcons
-                name={items.icon}
-                color={items?.color ?? colors.text.primary}
-                size={sizeScale(25)}
+                name={'logout'}
+                color={colors.staticText.dark.primary}
+                size={sizeScale(18)}
               />
-            </View>
-          </Pressable>
-        ))}
+            </View> */}
+          <View
+            style={[
+              {
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                right: 0,
+                left: 0,
+                alignItems: 'center',
+                flexDirection: 'row',
+                justifyContent: 'center',
+              },
+            ]}
+          >
+            <Text
+              style={[
+                {
+                  color: colors.staticText.dark.primary,
+                  fontSize: sizeScale(15),
+                },
+                language === 'english'
+                  ? {
+                      fontWeight: 'bold',
+                      fontFamily: 'sans-serif',
+                    }
+                  : {
+                      fontFamily: 'Cairo-Bold',
+                    },
+              ]}
+            >
+              {texts.logout}
+            </Text>
+          </View>
+        </Pressable>
+
+        <View
+          style={{
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Text
+            style={[
+              {
+                color: colors.text.secondary,
+                fontSize: 12,
+              },
+              language === 'english'
+                ? {
+                    fontWeight: 'bold',
+                    fontFamily: 'sans-serif',
+                  }
+                : {
+                    fontFamily: 'Cairo-Bold',
+                  },
+            ]}
+          >
+            {texts.contactUsEdt}
+          </Text>
+        </View>
+        <View
+          style={{
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'row',
+            gap: sizeScale(15),
+          }}
+        >
+          {ContactList.map((items, index) => (
+            <Pressable
+              android_ripple={{
+                borderless: false,
+                foreground: true,
+                color: colors.primary,
+              }}
+              key={items.text}
+              style={{
+                // flex: 1,
+                borderRadius: sizeScale(10),
+                backgroundColor: items.color ?? colors.secondary,
+                height: heightScale(40),
+                width: widthScale(40),
+                flexDirection: 'row-reverse',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  height: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden',
+                }}
+              >
+                <MaterialIcons
+                  name={items.icon}
+                  color={colors.static.text.primary}
+                  size={sizeScale(25)}
+                />
+              </View>
+            </Pressable>
+          ))}
+        </View>
       </View>
 
       <CopyrightsFooter />

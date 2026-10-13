@@ -4,29 +4,46 @@ import { DataContext } from '../context/contextData';
 // 1. Defined without `as const` so properties infer type `string` instead of exact literal strings
 export const languagesList = {
   arabic: {
+    exmTitle: 'إمتحان',
+    sgnTitle: 'إشارات',
+    qstTitle: 'أسئلة',
+    priTitle: 'أولوية',
+
+    bottomTabs: {
+      bookmarks: 'محفوظة',
+      home: 'رئيسية',
+      learn: 'تعلم',
+      exam: 'إمتحان',
+    },
+
     langAr: 'العربية',
     langEn: 'الإنجليزية',
     settingsEdt: 'إعدادات',
     profileEdt: 'تعديل الملف الشخصي',
     leaderBoard: 'لوحة المتصدرين',
-    langEdt: 'اللغة',
-    soundEdt: 'الصوت',
-    vibrateEdt: 'الإهتزاز',
-    apparenceEdt: 'المظهر',
-    contactUsEdt: 'الإبلاغ عن مشكلة',
+
+    idNumberEdt: 'ID رقم',
+    langEdt: 'لغة',
+    soundEdt: 'صوت',
+    vibrateEdt: 'إهتزاز',
+    apparenceEdt: 'مظهر',
+    contactUsEdt: 'تواصل معنا',
+    resetDataEdt: 'اعادة ضبط',
+    deleteEdt: 'حذف الحساب',
+    gradientEdt: 'تدرج',
+    darkModeEdt: 'وضع الداكن',
+    statisticsEdt: 'إحصائيات',
+    email: 'البريد الإلكتروني',
+    logout: 'تسجيل الخروج',
+
     contactUsPlh: 'يمكنك ان تكتب مشكلة هنا ...',
     lang: '',
-    email: 'البريد الإلكتروني',
-    restEdt: 'اعادة ضبط',
-    deleteEdt: 'حذف الحساب',
-    logout: 'تسجيل الخروج',
     soundEnable: 'تم تفعيل الصوت',
     soundDisable: 'تم تعطيل الصوت',
     vibrateEnable: 'تم تفعيل الإهتزاز',
     vibrateDisable: 'تم تعطيل الإهتزاز',
     dark: 'داكن',
     light: 'فاتح',
-    gradient: 'تدرج',
 
     // Statistics
     rank: 'التصنيف',
@@ -48,18 +65,35 @@ export const languagesList = {
     logoutDone: 'تم تسجيل الخروج',
   },
   english: {
+    exmTitle: 'Exam',
+    sgnTitle: 'Signs',
+    qstTitle: 'Questions',
+    priTitle: 'Priority',
+
+    bottomTabs: {
+      bookmarks: 'Bookmarks',
+      home: 'Home',
+      learn: 'Learn',
+      exam: 'Exam',
+    },
+
     // Profile
     langEn: 'English',
     langAr: 'Arabic',
+
+    idNumberEdt: 'ID Number',
     settingsEdt: 'Settings',
     profileEdt: 'Edit Profile',
+    gradientEdt: 'Gradient',
     leaderBoard: 'Leaderboard',
     langEdt: 'Language',
     soundEdt: 'Sound',
     vibrateEdt: 'Vibrate',
     apparenceEdt: 'Appearance',
     contactUsEdt: 'Contact us',
-    restEdt: 'Reset',
+    darkModeEdt: 'Dark Mode',
+    statisticsEdt: 'Statistics',
+    resetDataEdt: 'Reset Data',
     contactUsPlh: 'Write your contactUs here...',
     email: 'Email',
 
@@ -71,7 +105,6 @@ export const languagesList = {
     vibrateDisable: 'Vibration Disable',
     dark: 'Dark',
     light: 'Light',
-    gradient: 'Gradient',
 
     // Statistics
     rank: 'Rank',

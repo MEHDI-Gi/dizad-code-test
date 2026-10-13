@@ -27,6 +27,8 @@ import { useColors } from '../hooks/useColors.ts';
 import { useVip } from '../hooks/useVip.ts';
 import { useUserAccuracy } from '../hooks/useUserAccuracy.ts';
 import PermitCategories from './layout/home/PermitCategories.tsx';
+import { useTexts } from '../hooks/useTexts.ts';
+import { BlurView } from '@react-native-community/blur';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Home() {
@@ -35,6 +37,7 @@ export default function Home() {
   const { userVip, setUserPlan } = useVip();
   const { userAccuracy } = useUserAccuracy();
   const colors = useColors();
+  const texts = useTexts();
 
   const {
     userName,
@@ -46,6 +49,7 @@ export default function Home() {
     firebaseLoaded,
     imgBase,
     language,
+    isGradient,
   } = useContext(DataContext);
 
   const navigation = useNavigation<any>();
@@ -83,28 +87,28 @@ export default function Home() {
   const contentItems = [
     {
       cond: 'Exm',
-      label: 'إمتحان',
+      label: texts?.exmTitle,
       img: examsCover ?? null,
       sub: '',
       length: totalExm,
     },
     {
       cond: 'Sgn',
-      label: 'إشارات',
+      label: texts?.sgnTitle,
       img: signsCover ?? null,
       sub: '',
       length: totalSgn,
     },
     {
       cond: 'Qst',
-      label: 'أسئلة',
+      label: texts?.qstTitle,
       img: questCover ?? null,
       sub: '',
       length: totalQst,
     },
     {
       cond: 'Pri',
-      label: 'أولوية',
+      label: texts?.priTitle,
       img: priorityCover ?? null,
       sub: '',
       length: totalPri,
@@ -161,7 +165,20 @@ export default function Home() {
         },
       ]}
     >
-
+      {isGradient && (
+        <LinearGradient
+          start={{ x: 1, y: 1 }}
+          end={{ x: 0, y: 0 }}
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+          }}
+          colors={[colors.primary, '#152331']}
+        />
+      )}
       <View
         style={[
           {
@@ -175,15 +192,23 @@ export default function Home() {
         ]}
       >
         <View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            top: 0,
-            backgroundColor: colors.primary,
-            opacity: 0.9,
-          }}
+          style={[
+            {
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              top: 0,
+              backgroundColor: colors.primary,
+            },
+            isGradient
+              ? {
+                  opacity: 0,
+                }
+              : {
+                  opacity: 0.9,
+                },
+          ]}
         />
         <View
           style={[
@@ -388,16 +413,19 @@ export default function Home() {
         >
           {!firebaseLoaded ? (
             <View
-              style={{
-                alignItems: 'center',
-                width: '90%',
-                height: heightScale(screen.width * 0.25),
-                borderRadius: 8,
-                flexDirection: 'row-reverse',
-                justifyContent: 'flex-start',
-                overflow: 'hidden',
-                gap: sizeScale(15),
-              }}
+              style={[
+                {
+                  flexDirection: language === 'english' ? 'row' : 'row-reverse',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  width: '90%',
+                  height: heightScale(screen.width * 0.25),
+                  borderRadius: 8,
+
+                  overflow: 'hidden',
+                  gap: sizeScale(15),
+                },
+              ]}
             >
               <ShimmerPlaceHolder
                 style={{
@@ -413,20 +441,29 @@ export default function Home() {
                 ]}
               />
               <View
-                style={{
-                  width: widthScale(screen.width * 0.22),
-                  height: heightScale(screen.width * 0.22),
-                  marginRight: sizeScale(10),
-                  borderRadius: sizeScale(8),
-                  backgroundColor: colors.primary,
-                }}
+                style={[
+                  language === 'english'
+                    ? {
+                        marginLeft: sizeScale(10),
+                      }
+                    : {
+                        marginRight: sizeScale(10),
+                      },
+                  {
+                    width: widthScale(screen.width * 0.22),
+                    height: heightScale(screen.width * 0.22),
+                    borderRadius: sizeScale(8),
+                    backgroundColor: colors.primary,
+                  },
+                ]}
               />
               <View
                 style={{
                   width: '100%',
                   height: heightScale(screen.width * 0.22),
                   flexDirection: 'column',
-                  alignItems: 'flex-end',
+                  alignItems:
+                    language === 'english' ? 'flex-start' : 'flex-end',
                   justifyContent: 'space-evenly',
                 }}
               >
@@ -464,6 +501,13 @@ export default function Home() {
                 navigation.navigate('MainTabs', { screen: 'Exams' })
               }
               style={[
+                language === 'english'
+                  ? {
+                      flexDirection: 'row-reverse',
+                    }
+                  : {
+                      flexDirection: 'row',
+                    },
                 {
                   alignItems: 'center',
                   backgroundColor: colors.secondary,
@@ -471,16 +515,35 @@ export default function Home() {
                   width: '90%',
                   height: heightScale(screen.width * 0.25),
                   borderRadius: sizeScale(8),
-                  flexDirection: 'row',
                   justifyContent: 'center',
                   overflow: 'hidden',
                 },
               ]}
             >
+              {isGradient && (
+                <LinearGradient
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    bottom: 0,
+                    right: 0,
+                    left: 0,
+                  }}
+                  colors={[colors.primary, '#152331']}
+                />
+              )}
               <View
                 style={[
+                  language === 'english'
+                    ? {
+                        alignItems: 'flex-start',
+                      }
+                    : {
+                        alignItems: 'flex-end',
+                      },
                   {
-                    alignItems: 'flex-end',
                     justifyContent: 'center',
                     backgroundColor: 'transparent',
                     width: '100%',
@@ -519,16 +582,24 @@ export default function Home() {
                   }}
                 >
                   <View
-                    style={{
-                      width: '90%',
-                      height: heightScale(8),
-                      backgroundColor: colors.text.secondary,
-                      borderRadius: sizeScale(10),
-                      flexDirection: 'row-reverse',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                      overflow: 'hidden',
-                    }}
+                    style={[
+                      language === 'english'
+                        ? {
+                            justifyContent: 'flex-start',
+                          }
+                        : {
+                            justifyContent: 'flex-end',
+                          },
+                      {
+                        flexDirection: 'row',
+                        width: '100%',
+                        height: heightScale(8),
+                        backgroundColor: colors.text.secondary,
+                        borderRadius: sizeScale(10),
+                        alignItems: 'center',
+                        overflow: 'hidden',
+                      },
+                    ]}
                   >
                     <View
                       style={{
@@ -585,18 +656,21 @@ export default function Home() {
               return (
                 <View
                   key={`shimmer-0-${item.cond}`}
-                  style={{
-                    alignItems: 'center',
-                    backgroundColor: 'transparent',
-                    width: '90%',
-                    height: heightScale(screen.width * 0.25),
-                    borderRadius: sizeScale(8),
-                    flexDirection: 'row-reverse',
-                    justifyContent: 'flex-start',
-                    overflow: 'hidden',
-                    padding: sizeScale(10),
-                    gap: sizeScale(15),
-                  }}
+                  style={[
+                    {
+                      alignItems: 'center',
+                      backgroundColor: 'transparent',
+                      flexDirection:
+                        language === 'english' ? 'row' : 'row-reverse',
+                      width: '90%',
+                      height: heightScale(screen.width * 0.25),
+                      borderRadius: sizeScale(8),
+                      justifyContent: 'flex-start',
+                      overflow: 'hidden',
+                      padding: sizeScale(10),
+                      gap: sizeScale(15),
+                    },
+                  ]}
                 >
                   <ShimmerPlaceHolder
                     style={{
@@ -615,7 +689,8 @@ export default function Home() {
                       width: '100%',
                       height: heightScale(screen.width * 0.22),
                       flexDirection: 'column',
-                      alignItems: 'flex-end',
+                      alignItems:
+                        language === 'english' ? 'flex-start' : 'flex-end',
                       justifyContent: 'space-evenly',
                     }}
                   >
@@ -655,40 +730,73 @@ export default function Home() {
                 onPress={() => contentItemsPress(item)}
                 key={`key-1-${item.cond}`}
                 style={[
+                  language === 'english'
+                    ? {
+                        flexDirection: 'row-reverse',
+                      }
+                    : {
+                        flexDirection: 'row',
+                      },
                   {
                     alignItems: 'center',
                     backgroundColor: 'transparent',
                     width: '90%',
                     height: heightScale(screen.width * 0.25),
-
                     borderRadius: sizeScale(8),
-                    flexDirection: 'row',
                     justifyContent: 'center',
                     overflow: 'hidden',
                   },
                 ]}
               >
+                {isGradient && (
+                  <LinearGradient
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      bottom: 0,
+                      right: 0,
+                      left: 0,
+                    }}
+                    colors={[colors.primary, '#152331']}
+                  />
+                )}
                 <View
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    zIndex: 2,
-                    padding: sizeScale(15),
-                  }}
+                  style={[
+                    language === 'english'
+                      ? {
+                          right: 0,
+                        }
+                      : {
+                          left: 0,
+                        },
+                    {
+                      position: 'absolute',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: 2,
+                      padding: sizeScale(15),
+                    },
+                  ]}
                 >
                   <SimpleLineIcons
-                    name="arrow-left"
+                    name={language === 'english' ? 'arrow-right' : 'arrow-left'}
                     color={colors.text.secondary}
                     size={sizeScale(10)}
                   />
                 </View>
                 <View
                   style={[
+                    language === 'english'
+                      ? {
+                          alignItems: 'flex-start',
+                        }
+                      : {
+                          alignItems: 'flex-end',
+                        },
                     {
-                      alignItems: 'flex-end',
                       justifyContent: 'center',
                       backgroundColor: 'transparent',
                       width: '100%',
@@ -871,6 +979,20 @@ export default function Home() {
                   },
                 ]}
               >
+                {isGradient && (
+                  <LinearGradient
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      bottom: 0,
+                      right: 0,
+                      left: 0,
+                    }}
+                    colors={[colors.primary, '#152331']}
+                  />
+                )}
                 <Image
                   style={{
                     width: widthScale(screen.width * 0.35),

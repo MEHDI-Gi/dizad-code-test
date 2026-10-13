@@ -1,5 +1,16 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, StyleSheet, ScrollView, Pressable, Image, StatusBar, DrawerLayoutAndroid } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  Image,
+  StatusBar,
+  DrawerLayoutAndroid,
+} from 'react-native';
 import { DataContext } from '../../context/contextData';
 import LinearGradient from 'react-native-linear-gradient';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -9,40 +20,69 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { useColors } from '../../hooks/useColors';
 
-
 export default function VipBadge(props: any) {
-    const {
-        userAccuracy,
-        setHeartsCard,
-        quizData,
-        vipCard, setVipCard
-    } = useContext(DataContext);
-    const colors = useColors();
+  const {
+    userAccuracy,
+    isGradient,
+    setHeartsCard,
+    quizData,
+    vipCard,
+    setVipCard,
+  } = useContext(DataContext);
+  const colors = useColors();
 
-    return (
-        <Pressable
-            android_ripple={{ color: colors.primary, borderless: false }}
-            style={{
-                width: props.width,
-                height: props.height,
-                backgroundColor: props.backColor,
-                borderRadius: props.radius,
-                overflow: 'hidden',
-                flexDirection: 'row',
-                alignItems: "center",
-                justifyContent: "space-evenly",
-                elevation: props.elevation
-            }}
-            onPress={() => { setVipCard(true) }}>
+  return (
+    <Pressable
+      android_ripple={{ color: colors.primary, borderless: false }}
+      style={{
+        width: props.width,
+        height: props.height,
+        backgroundColor: props.backColor,
+        borderRadius: props.radius,
+        overflow: 'hidden',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        elevation: props.elevation,
+      }}
+      onPress={() => {
+        setVipCard(true);
+      }}
+    >
+      {isGradient && (
+        <LinearGradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+          }}
+          colors={[colors.primary, '#152331']}
+        />
+      )}
 
-            {props.title && <Text style={{ color: props.titleColor, fontSize: props.textSize, fontWeight: 'bold', marginHorizontal: 3, }}>
-                VIP
-            </Text>}
-            {props.icon && <Ionicons
-                size={props.iconSize}
-                name='diamond-sharp'
-                color={props.iconColor}
-            />}
-        </Pressable>
-    )
+      {props.title && (
+        <Text
+          style={{
+            color: props.titleColor,
+            fontSize: props.textSize,
+            fontWeight: 'bold',
+            marginHorizontal: 3,
+          }}
+        >
+          VIP
+        </Text>
+      )}
+      {props.icon && (
+        <Ionicons
+          size={props.iconSize}
+          name="diamond-sharp"
+          color={props.iconColor}
+        />
+      )}
+    </Pressable>
+  );
 }

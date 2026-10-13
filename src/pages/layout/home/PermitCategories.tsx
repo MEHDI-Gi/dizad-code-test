@@ -44,6 +44,7 @@ export default function PermitCategories() {
     firebaseLoaded,
     imgBase,
     language,
+    isGradient,
   } = useContext(DataContext);
 
   const permitCategories = [
@@ -139,6 +140,20 @@ export default function PermitCategories() {
                 },
               ]}
             >
+              {isGradient && (
+                <LinearGradient
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    bottom: 0,
+                    right: 0,
+                    left: 0,
+                  }}
+                  colors={[colors.primary, '#152331']}
+                />
+              )}
               <View
                 style={[
                   {
@@ -216,6 +231,20 @@ export default function PermitCategories() {
             },
           ]}
         >
+          {isGradient && (
+            <LinearGradient
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                right: 0,
+                left: 0,
+              }}
+              colors={[colors.primary, '#152331']}
+            />
+          )}
           <View
             style={[
               {
