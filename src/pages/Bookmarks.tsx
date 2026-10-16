@@ -1,5 +1,27 @@
-import React, { useRef, useState, useContext, useEffect, useMemo, useCallback } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Pressable, Image, StatusBar, ActivityIndicator, DrawerLayoutAndroid, Dimensions, FlatList, Modal, ListRenderItemInfo } from 'react-native';
+import React, {
+  useRef,
+  useState,
+  useContext,
+  useEffect,
+  useMemo,
+  useCallback,
+} from 'react';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  Image,
+  StatusBar,
+  ActivityIndicator,
+  DrawerLayoutAndroid,
+  Dimensions,
+  FlatList,
+  Modal,
+  ListRenderItemInfo,
+} from 'react-native';
 import { DataContext } from '../context/contextData.tsx';
 import { useSize } from '../hooks/useSize.ts';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -17,32 +39,24 @@ import BookmarkedQuestions from './layout/BookmarkedQuestions.tsx';
 import BookmarkedPriority from './layout/BookmarkedPriority.tsx';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
-const title = "المحفوظات"
-
+const title = 'المحفوظات';
 
 export default function Bookmarks() {
-
-    return (
-        <SubTab.Navigator
-            tabBar={(props) => <BookmarksTab {...props} />}
-            initialRouteName="Bookmarks_Signs"
-            tabBarPosition="top"
-        >
-            <SubTab.Screen name="Bookmarks_Signs" >
-                {() => <BookmarkedSigns />}
-
-            </SubTab.Screen>
-            <SubTab.Screen name="Bookmarks_Questions">
-                {() => <BookmarkedQuestions />}
-            </SubTab.Screen>
-            <SubTab.Screen name="Bookmarks_Priority" >
-                {() => <BookmarkedPriority />}
-
-            </SubTab.Screen>
-        </SubTab.Navigator>
-    );
-};
-
-
-
-
+  return (
+    <SubTab.Navigator
+      tabBar={props => <BookmarksTab {...props} />}
+      initialRouteName="Bookmarks_Signs"
+      tabBarPosition="top"
+    >
+      <SubTab.Screen name="Bookmarks_Signs">
+        {() => <BookmarkedSigns />}
+      </SubTab.Screen>
+      <SubTab.Screen name="Bookmarks_Questions">
+        {() => <BookmarkedQuestions />}
+      </SubTab.Screen>
+      <SubTab.Screen name="Bookmarks_Priority">
+        {() => <BookmarkedPriority />}
+      </SubTab.Screen>
+    </SubTab.Navigator>
+  );
+}

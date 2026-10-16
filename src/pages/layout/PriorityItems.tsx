@@ -256,8 +256,8 @@ export default function PriorityItems({ route }: any) {
           width: '100%',
         }}
         contentContainerStyle={{
-          paddingTop: 50,
-          paddingBottom: 20,
+          paddingTop: sizeScale(50),
+          paddingBottom: sizeScale(20),
           alignItems: 'center',
           justifyContent: 'center',
           alignContent: 'center',
@@ -269,9 +269,9 @@ export default function PriorityItems({ route }: any) {
             flexWrap: 'wrap',
             alignItems: 'flex-start',
             justifyContent: 'center',
-            paddingVertical: 10,
-            gap: 10,
-            marginBottom: 40,
+            paddingVertical: sizeScale(10),
+            gap: sizeScale(10),
+            marginBottom: sizeScale(40),
           }}
         >
           {priorityItemsList?.map((item: any, index: number) => {

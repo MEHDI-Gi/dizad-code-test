@@ -403,7 +403,7 @@ const Profile = () => {
       condition: 'gradient',
       icon: 'gradient',
       color: 'gray',
-      iconSet: 'MaterialCommunityIcons',
+      iconSet: 'MaterialIcons',
     },
   ];
   const DangerSettingsList = [
@@ -577,7 +577,21 @@ const Profile = () => {
           },
         ]}
       >
-        <ActivityIndicator size={30} />
+        {isGradient && (
+          <LinearGradient
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              right: 0,
+              left: 0,
+            }}
+            colors={[colors.primary, '#152331']}
+          />
+        )}
+        <ActivityIndicator size={30} color={'#8da012'} />
       </View>
     );
   }
@@ -967,6 +981,20 @@ const Profile = () => {
                 }}
                 onPress={() => dangerSettingsListPress(item)}
               >
+                {isGradient && (
+                  <LinearGradient
+                    start={{ x: 1, y: 1 }}
+                    end={{ x: 0, y: 0 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      bottom: 0,
+                      right: 0,
+                      left: 0,
+                    }}
+                    colors={[colors.secondary, '#152331']}
+                  />
+                )}
                 <View
                   style={{
                     flex: 0.4,
@@ -1167,6 +1195,7 @@ const Profile = () => {
             justifyContent: 'center',
             flexDirection: 'row',
             gap: sizeScale(15),
+            marginBottom: sizeScale(5),
           }}
         >
           {ContactList.map((items, index) => (

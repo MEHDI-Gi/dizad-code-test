@@ -11,11 +11,12 @@ buildscript {
         google()
         mavenCentral()
     }
-    dependencies {
+dependencies {
         classpath("com.google.gms:google-services:4.4.2")
-        classpath("com.android.tools.build:gradle")
+        // Specify a compatible AGP version explicitly (e.g., 8.5.1 for SDK 36 setup)
+        classpath("com.android.tools.build:gradle:8.3.2") 
         classpath("com.facebook.react:react-native-gradle-plugin")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.20")
     }
 }
 

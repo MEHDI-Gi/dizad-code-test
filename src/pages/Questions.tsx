@@ -147,20 +147,8 @@ export default function Questions() {
     minimumViewTime: 100, // Must stay visible for 0.5s
   }).current;
 
-  // 2. Memoize the config (Crucial for RN FlatList)
 
-  const itemsSideColors = [
-    '#4a2b14ff', // Saddle Brown
-    '#36344aff', // Dark Slate Blue
-    '#4f6031ff', // Dark Olive Green
-    '#756230ff', // Dark Goldenrod
-    '#6e1c2dff', // Crimson
-    '#2F4F4F',
-  ];
-  const sideColors = (index: number) =>
-    itemsSideColors[index % itemsSideColors.length] ?? 'white';
-
-  const ad = useAd();
+  // const ad = useAd();
 
   return (
     <View
@@ -391,6 +379,20 @@ export default function Questions() {
                     overflow: 'hidden',
                   }}
                 >
+                  {isGradient && (
+                    <LinearGradient
+                      start={{ x: 1, y: 1 }}
+                      end={{ x: 0, y: 0 }}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        bottom: 0,
+                        right: 0,
+                        left: 0,
+                      }}
+                      colors={[colors.primary, '#152331']}
+                    />
+                  )}
                   <View
                     style={{
                       width: '100%',
@@ -425,26 +427,26 @@ export default function Questions() {
                           backgroundColor: colors.primary,
                         }}
                       >
-                        <LinearGradient
-                          colors={['#00ffff', '#189191', '#00ffff']}
-                          start={{ x: 1, y: 0 }}
-                          end={{ x: 0, y: 1 }}
-                          style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            zIndex: 1,
-                            opacity: 0.2,
-                          }}
-                        />
+                        {isGradient && (
+                          <LinearGradient
+                            start={{ x: 1, y: 1 }}
+                            end={{ x: 0, y: 0 }}
+                            style={{
+                              position: 'absolute',
+                              top: 0,
+                              bottom: 0,
+                              right: 0,
+                              left: 0,
+                            }}
+                            colors={[colors.secondary, '#152331']}
+                          />
+                        )}
 
                         <Text
                           style={{
                             fontFamily: 'Cairo-Bold',
                             color: colors.text.primary,
-                            fontSize: sizeScale(17),
+                            fontSize: sizeScale(16),
                             textAlign: 'center',
                           }}
                         >
@@ -475,11 +477,10 @@ export default function Questions() {
                         style={{
                           fontFamily: 'Cairo-Bold',
                           color: colors.text.secondary,
-                          fontSize: sizeScale(18),
+                          fontSize: sizeScale(16),
                           textAlign: 'right',
                           alignSelf: 'flex-end',
                           padding: sizeScale(5),
-                          backgroundColor: colors.primary,
                         }}
                       >
                         - {item}

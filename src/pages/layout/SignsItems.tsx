@@ -205,6 +205,20 @@ const SignsItems = () => {
         { backgroundColor: colors.primary, position: 'relative' },
       ]}
     >
+      {isGradient && (
+        <LinearGradient
+          start={{ x: 1, y: 1 }}
+          end={{ x: 0, y: 0 }}
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+          }}
+          colors={[colors.primary, '#152331']}
+        />
+      )}
       <View
         style={{
           height: heightScale(50),
@@ -225,7 +239,7 @@ const SignsItems = () => {
             right: 0,
             top: 0,
             backgroundColor: colors.primary,
-            opacity: 0.9,
+            opacity: 0.5,
           }}
         />
         <Text
@@ -329,6 +343,20 @@ const SignsItems = () => {
                     },
                   ]}
                 >
+                  {isGradient && (
+                    <LinearGradient
+                      start={{ x: 1, y: 1 }}
+                      end={{ x: 0, y: 0 }}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        bottom: 0,
+                        right: 0,
+                        left: 0,
+                      }}
+                      colors={[colors.secondary, '#152331']}
+                    />
+                  )}
                   {!userVip && index > 9 ? (
                     <View
                       style={{
@@ -361,6 +389,7 @@ const SignsItems = () => {
                       />
                     </View>
                   ) : null}
+
                   <View
                     style={[
                       {
@@ -368,45 +397,30 @@ const SignsItems = () => {
                         justifyContent: 'center',
                         width: '100%',
                         height: '100%',
+                        overflow: 'hidden',
+                        borderRadius: 5,
                       },
                     ]}
                   >
-                    <View
-                      style={[
-                        {
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          backgroundColor:
-                            signsItemsIndex === 5
-                              ? colors.primary
-                              : colors.secondary,
+                    {item?.img ? (
+                      <Image
+                        resizeMode="contain"
+                        style={{
+                          width: '75%',
+                          height: '75%',
+                        }}
+                        source={{ uri: item?.img }}
+                      />
+                    ) : !openSignsModal ? (
+                      <ShimmerPlaceHolder
+                        style={{
                           width: '90%',
                           height: '90%',
-                          overflow: 'hidden',
                           borderRadius: 5,
-                        },
-                      ]}
-                    >
-                      {item?.img ? (
-                        <Image
-                          resizeMode="contain"
-                          style={{
-                            width: '90%',
-                            height: '90%',
-                          }}
-                          source={{ uri: item?.img }}
-                        />
-                      ) : !openSignsModal ? (
-                        <ShimmerPlaceHolder
-                          style={{
-                            width: '90%',
-                            height: '90%',
-                            borderRadius: 5,
-                          }}
-                          shimmerColors={colors.shimmer.first}
-                        />
-                      ) : null}
-                    </View>
+                        }}
+                        shimmerColors={colors.shimmer.first}
+                      />
+                    ) : null}
                   </View>
                 </Pressable>
               );
@@ -694,7 +708,9 @@ const SignsItems = () => {
                       }}
                     >
                       <MaterialCommunityIcons
-                        name={language === 'english' ? "arrow-left" : "arrow-right"}
+                        name={
+                          language === 'english' ? 'arrow-left' : 'arrow-right'
+                        }
                         color={colors.text.primary}
                         size={sizeScale(25)}
                       />

@@ -141,7 +141,7 @@ export default function LessonsSubTabs({
               ]}
               onPress={onPress}
             >
-              {isFocused & isGradient && (
+              {isFocused && isGradient && (
                 <LinearGradient
                   start={{ x: 1, y: 1 }}
                   end={{ x: 0, y: 0 }}

@@ -1,4 +1,14 @@
-import { TouchableWithoutFeedback, FlatList, Keyboard, ActivityIndicator, Text, Image, StyleSheet, View, Pressable, } from 'react-native';
+import {
+  TouchableWithoutFeedback,
+  FlatList,
+  Keyboard,
+  ActivityIndicator,
+  Text,
+  Image,
+  StyleSheet,
+  View,
+  Pressable,
+} from 'react-native';
 import { DataContext } from '../context/contextData';
 import React, { useRef, useState, useContext, useEffect } from 'react';
 
@@ -15,23 +25,15 @@ type LoginProps = {
   navigation: any;
 };
 export default function Login({ navigation }: LoginProps) {
-
   const colors = useColors();
-  const {
-    user, initializing, signIn,
-    imgBase,
-  } = useContext(DataContext);
-  const { screen,
-    widthScale,
-    heightScale,
-    sizeScale,
-  } = useSize();
-
+  const { user, initializing, signIn, imgBase, isGradient } =
+    useContext(DataContext);
+  const { screen, widthScale, heightScale, sizeScale } = useSize();
 
   const [isAuthProcessing, setIsAuthProcessing] = useState(false);
 
   const title = 'رخصتي';
-  const sub = 'تعليم قوانين المرور الجزائرية'
+  const sub = 'تعليم قوانين المرور الجزائرية';
 
   const questCover = `${imgBase}/cover/qst.png`;
   const examsCover = `${imgBase}/cover/exm.png`;
@@ -43,7 +45,7 @@ export default function Login({ navigation }: LoginProps) {
     try {
       await signIn();
     } catch (error) {
-      console.error("Sign In Failed", error);
+      console.error('Sign In Failed', error);
     } finally {
       setIsAuthProcessing(false);
     }
@@ -53,7 +55,7 @@ export default function Login({ navigation }: LoginProps) {
     if (initializing) return;
 
     if (user) {
-      console.log("User detected, redirecting...");
+      console.log('User detected, redirecting...');
       navigation.reset({
         index: 0,
         routes: [{ name: 'MainTabs' }],
@@ -61,46 +63,46 @@ export default function Login({ navigation }: LoginProps) {
     }
   }, [user, initializing]); // Only depend on these two
 
-
   const contentItems = [
     {
       cond: 'Exm',
       label: 'إمتحان',
       img: examsCover ?? null,
       sub: '',
-      icon: 'graduation-cap', set: 'Entypo'
+      icon: 'graduation-cap',
+      set: 'Entypo',
     },
     {
       cond: 'Sgn',
       label: 'إشارات',
       img: signsCover ?? null,
       sub: '',
-      icon: 'trail-sign', set: 'Ionicons'
-
+      icon: 'trail-sign',
+      set: 'Ionicons',
     },
     {
       cond: 'Qst',
       label: 'أسئلة',
       img: questCover ?? null,
       sub: '',
-      icon: 'card-text', set: 'MaterialCommunityIcons'
-
+      icon: 'card-text',
+      set: 'MaterialCommunityIcons',
     },
     {
       cond: 'Pri',
       label: 'أولوية',
       img: priorityCover ?? null,
       sub: '',
-      icon: 'road-variant', set: 'MaterialCommunityIcons'
-
-    }
+      icon: 'road-variant',
+      set: 'MaterialCommunityIcons',
+    },
   ];
 
   const flatListRef = useRef<FlatList>(null);
   const dataWithClones = [
     contentItems[contentItems.length - 1],
     ...contentItems,
-    contentItems[0]
+    contentItems[0],
   ];
   const [visualIndex, setVisualIndex] = useState(1);
 
@@ -131,7 +133,10 @@ export default function Login({ navigation }: LoginProps) {
     }
     // If user swiped backward into the "Clone of Last" at the start
     else if (index === 0) {
-      flatListRef.current?.scrollToIndex({ index: contentItems.length, animated: false });
+      flatListRef.current?.scrollToIndex({
+        index: contentItems.length,
+        animated: false,
+      });
       setVisualIndex(contentItems.length);
     } else {
       setVisualIndex(index);
@@ -142,24 +147,47 @@ export default function Login({ navigation }: LoginProps) {
 
   if (user || initializing) {
     return (
-      <View style={[{ flex: 1, justifyContent: 'center', alignItems: 'center' }, { backgroundColor: colors.primary }]}>
-        <ActivityIndicator size="large" color={'#ff00c3'} />
+      <View
+        style={[
+          { flex: 1, justifyContent: 'center', alignItems: 'center' },
+          { backgroundColor: colors.primary },
+        ]}
+      >
+        {isGradient && (
+          <LinearGradient
+            start={{ x: 1, y: 1 }}
+            end={{ x: 0, y: 0 }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              right: 0,
+              left: 0,
+            }}
+            colors={[colors.primary, '#152331']}
+          />
+        )}
+        <ActivityIndicator size="large" color={'#86c335'} />
       </View>
     );
   }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={[styles.container, { backgroundColor: colors.static.primary }]}>
-        <View style={{
-          width: screen.width,
-          height: screen.width * 0.5,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: 'transparent',
-          zIndex: 1,
-          overflow: 'hidden'
-        }}>
+      <View
+        style={[styles.container, { backgroundColor: colors.static.primary }]}
+      >
+        <View
+          style={{
+            width: screen.width,
+            height: screen.width * 0.5,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'transparent',
+            zIndex: 1,
+            overflow: 'hidden',
+          }}
+        >
           <FlatList
             ref={flatListRef}
             data={dataWithClones}
@@ -172,29 +200,34 @@ export default function Login({ navigation }: LoginProps) {
               offset: screen.width * index,
               index,
             })}
-            onScrollToIndexFailed={() => { }} // Prevents the crash in your screenshot
+            onScrollToIndexFailed={() => {}} // Prevents the crash in your screenshot
             renderItem={({ item }) => (
               <View style={{ width: screen.width }}>
-                <Image source={{ uri: item?.img }} style={{ width: '100%', height: "100%" }}
-                  resizeMode="cover" />
+                <Image
+                  source={{ uri: item?.img }}
+                  style={{ width: '100%', height: '100%' }}
+                  resizeMode="cover"
+                />
               </View>
             )}
           />
         </View>
 
-        <View style={{
-          flexDirection: 'column',
-          width: "100%",
-          zIndex: 10,
-          paddingHorizontal: sizeScale(20),
-          paddingVertical: sizeScale(20),
-          justifyContent: "flex-end",
-          alignItems: "flex-end",
-          backgroundColor: colors.static.primary,
-          rowGap: sizeScale(10),
-          borderBottomStartRadius: sizeScale(50),
-          overflow: 'hidden'
-        }}>
+        <View
+          style={{
+            flexDirection: 'column',
+            width: '100%',
+            zIndex: 10,
+            paddingHorizontal: sizeScale(20),
+            paddingVertical: sizeScale(20),
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+            backgroundColor: colors.static.primary,
+            rowGap: sizeScale(10),
+            borderBottomStartRadius: sizeScale(50),
+            overflow: 'hidden',
+          }}
+        >
           <LinearGradient
             colors={['#00ffff', colors.static.primary]}
             start={{ x: 2, y: 0 }}
@@ -206,125 +239,161 @@ export default function Login({ navigation }: LoginProps) {
               right: 0,
               bottom: 0,
               zIndex: 1,
-              opacity: 0.2
+              opacity: 0.2,
             }}
           />
-          <Text style={{
-            fontFamily: 'Cairo-Bold',
-            color: colors.static.third,
-            fontSize: sizeScale(25),
-            zIndex: 3,
-
-          }}>{title}</Text>
-          <Text style={{
-            fontFamily: 'Cairo-Medium',
-            color: colors.static.text.primary,
-            fontSize: sizeScale(20),
-            zIndex: 3,
-          }}>{sub}</Text>
+          <Text
+            style={{
+              fontFamily: 'Cairo-Bold',
+              color: colors.static.third,
+              fontSize: sizeScale(25),
+              zIndex: 3,
+            }}
+          >
+            {title}
+          </Text>
+          <Text
+            style={{
+              fontFamily: 'Cairo-Medium',
+              color: colors.static.text.primary,
+              fontSize: sizeScale(20),
+              zIndex: 3,
+            }}
+          >
+            {sub}
+          </Text>
         </View>
-        <View style={{
-          backgroundColor: colors.static.primary,
-          flex: 1,
-          width: "100%",
-          justifyContent: 'center',
-          alignItems: "center",
-          position: 'relative',
-          paddingHorizontal: sizeScale(40),
-          paddingVertical: sizeScale(20),
-          zIndex: 1,
-        }}>
-
-          <View style={{
-            flexDirection: 'column',
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "flex-end",
-            backgroundColor: 'transparent',
+        <View
+          style={{
+            backgroundColor: colors.static.primary,
+            flex: 1,
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'relative',
+            paddingHorizontal: sizeScale(40),
+            paddingVertical: sizeScale(20),
             zIndex: 1,
-            rowGap: 10,
-          }}>
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'column',
+              width: '100%',
+              justifyContent: 'center',
+              alignItems: 'flex-end',
+              backgroundColor: 'transparent',
+              zIndex: 1,
+              rowGap: 10,
+            }}
+          >
             {contentItems.map((item, index) => (
               <View
                 key={item.cond}
-                style={[{
-                  flexDirection: 'row',
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: 'transparent',
-                  zIndex: 1,
-                  columnGap: 10,
-                  opacity: 0.5,
-                }, index === visualIndex - 1 && {
-                  opacity: 1,
-                  paddingRight: 8,
-                }]}>
-                <Text style={{
-                  fontFamily: 'Cairo-Bold',
-                  color: colors.static.text.primary,
-                  fontSize: sizeScale(18),
-                }}>{item.label}</Text>
-                {
-                  item.set === 'MaterialCommunityIcons' ?
-                    <MaterialCommunityIcons
-                      name={item.icon}
-                      size={iconsSizes}
-                      color={colors.static.text.primary}
-                    /> : item.set === 'Ionicons' ?
-                      <Ionicons
-                        name={item.icon}
-                        size={iconsSizes}
-                        color={colors.static.text.primary}
-                      /> :
-                      <Entypo
-                        name={item.icon}
-                        size={iconsSizes}
-                        color={colors.static.text.primary}
-                      />
-                }
+                style={[
+                  {
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'transparent',
+                    zIndex: 1,
+                    columnGap: 10,
+                    opacity: 0.5,
+                  },
+                  index === visualIndex - 1 && {
+                    opacity: 1,
+                    paddingRight: 8,
+                  },
+                ]}
+              >
+                <Text
+                  style={{
+                    fontFamily: 'Cairo-Bold',
+                    color: colors.static.text.primary,
+                    fontSize: sizeScale(18),
+                  }}
+                >
+                  {item.label}
+                </Text>
+                {item.set === 'MaterialCommunityIcons' ? (
+                  <MaterialCommunityIcons
+                    name={item.icon}
+                    size={iconsSizes}
+                    color={colors.static.text.primary}
+                  />
+                ) : item.set === 'Ionicons' ? (
+                  <Ionicons
+                    name={item.icon}
+                    size={iconsSizes}
+                    color={colors.static.text.primary}
+                  />
+                ) : (
+                  <Entypo
+                    name={item.icon}
+                    size={iconsSizes}
+                    color={colors.static.text.primary}
+                  />
+                )}
               </View>
             ))}
           </View>
-          <View style={{
-            width: '100%',
-            flex: 1,
-            backgroundColor: 'transparent',
-            flexDirection: "column",
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            zIndex: 1,
-            gap: 15
-          }}>
+          <View
+            style={{
+              width: '100%',
+              flex: 1,
+              backgroundColor: 'transparent',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              zIndex: 1,
+              gap: 15,
+            }}
+          >
             <Pressable
               disabled={isAuthProcessing}
-              style={[{
-                backgroundColor: colors.static.secondary,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-evenly',
-                borderRadius: 8,
-                overflow: 'hidden',
-                height: heightScale(45),
-                width: '100%'
-              }, { opacity: isAuthProcessing ? 0.7 : 1 },
+              style={[
+                {
+                  backgroundColor: colors.static.secondary,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-evenly',
+                  borderRadius: 8,
+                  overflow: 'hidden',
+                  height: heightScale(45),
+                  width: '100%',
+                },
+                { opacity: isAuthProcessing ? 0.7 : 1 },
               ]}
-              android_ripple={{ foreground: true, color: colors.static.primary, borderless: false }}
+              android_ripple={{
+                foreground: true,
+                color: colors.static.primary,
+                borderless: false,
+              }}
               onPress={handleGoogleSignIn}
             >
-              {!isAuthProcessing ?
+              {!isAuthProcessing ? (
                 <Image
                   source={require('../assets/icons/google.png')}
-                  style={[{
-                    width: widthScale(22),
-                    height: heightScale(22),
-                  }]}
-                /> :
-                <ActivityIndicator color="#ffffff" />}
+                  style={[
+                    {
+                      width: widthScale(22),
+                      height: heightScale(22),
+                    },
+                  ]}
+                />
+              ) : (
+                <ActivityIndicator color="#ffffff" />
+              )}
             </Pressable>
-            <Text style={[{
-              fontSize: sizeScale(15), fontWeight: '600', color: colors.static.text.secondary
-            }
-            ]}>
+            <Text
+              style={[
+                {
+                  fontSize: sizeScale(15),
+                  fontWeight: '600',
+                  color: colors.static.text.secondary,
+                },
+              ]}
+            >
               Continue with Google
             </Text>
           </View>
@@ -332,15 +401,14 @@ export default function Login({ navigation }: LoginProps) {
         <CopyrightsFooter />
       </View>
     </TouchableWithoutFeedback>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
-    alignItems: "center",
+    alignItems: 'center',
     zIndex: 1,
   },
-
 });
