@@ -243,8 +243,8 @@ export default function Home() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: colors.secondary,
-                width: widthScale(35),
-                height: heightScale(35),
+                width: widthScale(36),
+                height: heightScale(36),
               }}
               onPress={() => {
                 if (sound) playSound('settingsButton');
@@ -531,7 +531,7 @@ export default function Home() {
                     right: 0,
                     left: 0,
                   }}
-                  colors={[colors.primary, '#152331']}
+                  colors={[colors.secondary, '#152331']}
                 />
               )}
               <View
@@ -748,20 +748,6 @@ export default function Home() {
                   },
                 ]}
               >
-                {isGradient && (
-                  <LinearGradient
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      bottom: 0,
-                      right: 0,
-                      left: 0,
-                    }}
-                    colors={[colors.primary, '#152331']}
-                  />
-                )}
                 <View
                   style={[
                     language === 'english'
@@ -886,7 +872,7 @@ export default function Home() {
         > */}
 
         {/* </ScrollView> */}
-        <View
+      {false &&  <View
           style={{
             width: '85%',
             alignItems: 'center',
@@ -919,8 +905,8 @@ export default function Home() {
               مصادر خارجية
             </Text>
           </View>
-        </View>
-        <View
+        </View>}
+{false &&        <View
           style={{
             alignItems: 'center',
             justifyContent: 'space-evenly',
@@ -1027,7 +1013,7 @@ export default function Home() {
             );
           })}
         </View>
-      </ScrollView>
+}      </ScrollView>
     </View>
   );
 }

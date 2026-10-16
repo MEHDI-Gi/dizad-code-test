@@ -128,7 +128,7 @@ const Profile = () => {
         return (
           <MaterialCommunityIcons
             name={'content-copy'}
-            color={props.color}
+            color={colors.text.secondary}
             size={sizeScale(18)}
           />
         );
@@ -138,7 +138,7 @@ const Profile = () => {
           <Switch
             {...switchProps}
             radiusFlex={vibrate ? 'flex-start' : 'flex-end'}
-            radiusColor={vibrate ? colors.active : colors.secondary}
+            radiusColor={vibrate ? colors.active.primary : colors.secondary}
             radiusWidth={sizeScale(vibrate ? 27 : 20)}
           />
         );
@@ -149,7 +149,9 @@ const Profile = () => {
             {...switchProps}
             radiusFlex={currentTheme === THEME_DARK ? 'flex-start' : 'flex-end'}
             radiusColor={
-              currentTheme === THEME_DARK ? colors.active : colors.secondary
+              currentTheme === THEME_DARK
+                ? colors.active.primary
+                : colors.secondary
             }
             radiusWidth={sizeScale(currentTheme === THEME_DARK ? 27 : 20)}
           />
@@ -160,7 +162,7 @@ const Profile = () => {
           <Switch
             {...switchProps}
             radiusFlex={sound ? 'flex-start' : 'flex-end'}
-            radiusColor={sound ? colors.active : colors.secondary}
+            radiusColor={sound ? colors.active.primary : colors.secondary}
             radiusWidth={sizeScale(sound ? 27 : 20)}
           />
         );
@@ -170,7 +172,7 @@ const Profile = () => {
           <Switch
             {...switchProps}
             radiusFlex={isGradient ? 'flex-start' : 'flex-end'}
-            radiusColor={isGradient ? colors.button.primary : colors.secondary}
+            radiusColor={isGradient ? colors.active.primary : colors.secondary}
             radiusWidth={sizeScale(isGradient ? 27 : 20)}
           />
         );
@@ -198,7 +200,7 @@ const Profile = () => {
                   height: '100%',
                 },
                 language === 'arabic'
-                  ? { backgroundColor: colors.active, flex: 0.6 }
+                  ? { backgroundColor: colors.active.primary, flex: 0.6 }
                   : { backgroundColor: colors.text.secondary, flex: 0.4 },
               ]}
             >
@@ -226,7 +228,7 @@ const Profile = () => {
                   height: '100%',
                 },
                 language === 'english'
-                  ? { backgroundColor: colors.active, flex: 0.6 }
+                  ? { backgroundColor: colors.active.primary, flex: 0.6 }
                   : { backgroundColor: colors.text.secondary, flex: 0.4 },
               ]}
             >
@@ -235,9 +237,9 @@ const Profile = () => {
                   {
                     fontWeight: 'bold',
                   },
-                  language === 'english'
-                    ? { color: colors.staticText.dark.primary }
-                    : {},
+                  currentTheme === 'dark'
+                    ? { color: colors.text.primary }
+                    : { color: colors.text.primary },
                 ]}
               >
                 En
@@ -769,13 +771,14 @@ const Profile = () => {
             foreground: true,
           }}
           style={{
-            backgroundColor: colors.secondary,
+            overflow: 'hidden',
+            borderRadius: 8,
             alignItems: 'center',
             justifyContent: 'center',
-            width: widthScale(30),
-            height: heightScale(30),
-            borderRadius: sizeScale(8),
-            overflow: 'hidden',
+            width: widthScale(35),
+            height: heightScale(35),
+            backgroundColor: colors.secondary,
+            elevation: 2,
           }}
           onPress={() => {
             navigation.navigate('MainTabs', { screen: 'Home' });
@@ -960,7 +963,7 @@ const Profile = () => {
                   overflow: 'hidden',
                   justifyContent: 'center',
                   flexDirection: language === 'arabic' ? 'row-reverse' : 'row',
-                  backgroundColor: 'maroon',
+                  backgroundColor: colors.secondary,
                 }}
                 onPress={() => dangerSettingsListPress(item)}
               >
@@ -1070,8 +1073,8 @@ const Profile = () => {
         >
           {isGradient && (
             <LinearGradient
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
+              start={{ x: 0, y: 1 }}
+              end={{ x: 1, y: 0 }}
               style={{
                 position: 'absolute',
                 top: 0,
@@ -1079,7 +1082,7 @@ const Profile = () => {
                 right: 0,
                 left: 0,
               }}
-              colors={[colors.active, 'orange']}
+              colors={[colors.active.primary, colors.active.secondary]}
             />
           )}
           {/* <View

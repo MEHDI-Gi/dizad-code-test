@@ -89,66 +89,70 @@ export default function Types() {
         alignItems: 'center',
         justifyContent: 'flex-start',
         elevation: 5,
-        backgroundColor: colors.secondary,
+        backgroundColor: colors.primary,
         flex: 1,
         width: '100%',
       }}
     >
       <View
         style={{
-          width: '100%',
-          overflow: 'hidden',
+          height: heightScale(50),
+          position: 'absolute',
+          left: 0, // <- ADD THIS
+          right: 0,
+          top: 0,
+          zIndex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          flexDirection: language === 'english' ? 'row-reverse' : 'row',
         }}
       >
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0, // <- ADD THIS
+            left: 0, // <- ADD THIS
+            right: 0,
+            top: 0,
+            backgroundColor: colors.primary,
+            opacity: 0.9,
+          }}
+        />
+        <Text
+          style={{
+            fontFamily: 'Cairo-Bold',
+            color: colors.text.primary,
+            fontSize: sizeScale(16),
+          }}
+        >
+          Permit Categories
+        </Text>
         <Pressable
           android_ripple={{
-            borderless: false,
-            color: colors.primary,
+            color: colors.secondary,
+            borderless: true,
             foreground: true,
           }}
-          onPress={() => navigation.navigate('MainTabs')}
-          style={[
-            {
-              borderRadius: sizeScale(50),
-              backgroundColor: 'transparent',
-              marginRight: sizeScale(5),
-              width: sizeScale(50),
-              height: sizeScale(50),
-              alignItems: 'center',
-              justifyContent: 'center',
-              overflow: 'hidden',
-            },
-          ]}
+          style={{
+            position: 'absolute',
+            alignItems: 'center',
+            justifyContent: 'center',
+            right: 0,
+            width: widthScale(30),
+            height: heightScale(30),
+            overflow: 'hidden',
+            marginHorizontal: 15,
+          }}
+          onPress={() => {
+            navigation.navigate('MainTabs', { screen: 'Lessons' });
+            if (sound) playSound('settingsButton');
+          }}
         >
-          <MaterialCommunityIcons
-            name={'close'}
+          <MaterialIcons
+            name="close"
             color={colors.text.secondary}
-            size={sizeScale(28)}
+            size={sizeScale(25)}
           />
         </Pressable>
-        <View
-          style={[
-            {
-              flex: 1,
-              alignItems: 'flex-start',
-              justifyContent: 'center',
-              overflow: 'hidden',
-            },
-          ]}
-        >
-          <Text
-            style={{
-              fontFamily: language == 'english' ? 'sans-serif' : 'Cairo-Bold',
-              color: colors.text.secondary,
-              fontSize: sizeScale(16),
-            }}
-          >
-            Permit Categories
-          </Text>
-        </View>
       </View>
       <View
         style={{

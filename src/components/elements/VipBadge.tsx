@@ -60,7 +60,7 @@ export default function VipBadge(props: any) {
             right: 0,
             left: 0,
           }}
-          colors={[colors.primary, '#152331']}
+          colors={[colors.secondary, '#152331']}
         />
       )}
 

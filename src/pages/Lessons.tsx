@@ -1,13 +1,31 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Pressable, Image, StatusBar, ActivityIndicator, DrawerLayoutAndroid, Dimensions } from 'react-native';
-import { TextInput, Button, IconButton, MD3Colors, Icon, Appbar } from 'react-native-paper';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  Image,
+  StatusBar,
+  ActivityIndicator,
+  DrawerLayoutAndroid,
+  Dimensions,
+} from 'react-native';
+import {
+  TextInput,
+  Button,
+  IconButton,
+  MD3Colors,
+  Icon,
+  Appbar,
+} from 'react-native-paper';
 import { DataContext } from '../context/contextData.tsx';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
 
 import { useSize } from '../hooks/useSize.ts';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -25,28 +43,26 @@ import { useColors } from '../hooks/useColors.ts';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 export default function Lessons() {
-    const colors = useColors();
-    const { lessons, screen, bookmarksSizes } = useSize();
-    const {
+  const colors = useColors();
+  const { lessons, screen, bookmarksSizes } = useSize();
+  const { firebaseLoaded, bookmarks, isGradient } = useContext(DataContext);
 
-        firebaseLoaded,
-        bookmarks,
-    } = useContext(DataContext);
-
-    return (
-        <View style={{
-            backgroundColor: colors.primary,
-            flex: 1, width: screen.width,
-        }}>
-            <SubTab.Navigator
-                tabBar={(props) => <LessonsSubTabs {...props} />}
-                initialRouteName="Signs"
-                tabBarPosition="top"
-            >
-                <SubTab.Screen name="Signs" component={Signs} />
-                <SubTab.Screen name="Questions" component={Questions} />
-                <SubTab.Screen name="Priority" component={Priority} />
-            </SubTab.Navigator>
-        </View >
-    );
-};
+  return (
+    <View
+      style={{
+        flex: 1,
+        width: screen.width,
+      }}
+    >
+      <SubTab.Navigator
+        tabBar={props => <LessonsSubTabs {...props} />}
+        initialRouteName="Signs"
+        tabBarPosition="top"
+      >
+        <SubTab.Screen name="Signs" component={Signs} />
+        <SubTab.Screen name="Questions" component={Questions} />
+        <SubTab.Screen name="Priority" component={Priority} />
+      </SubTab.Navigator>
+    </View>
+  );
+}

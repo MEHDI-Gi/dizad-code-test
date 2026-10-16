@@ -151,7 +151,7 @@ export default function PermitCategories() {
                     right: 0,
                     left: 0,
                   }}
-                  colors={[colors.primary, '#152331']}
+                  colors={[colors.secondary, '#152331']}
                 />
               )}
               <View
@@ -242,7 +242,7 @@ export default function PermitCategories() {
                 right: 0,
                 left: 0,
               }}
-              colors={[colors.primary, '#152331']}
+              colors={[colors.secondary, '#152331']}
             />
           )}
           <View

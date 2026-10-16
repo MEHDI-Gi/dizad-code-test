@@ -143,9 +143,10 @@ export default function BottomTab({
           right: 0,
           top: 0,
           backgroundColor: colors.primary,
-          opacity: 0.9,
+          opacity: 0.8,
         }}
       />
+
       <View
         style={{
           elevation: 4,
@@ -195,6 +196,20 @@ export default function BottomTab({
               ]}
               onPress={onPress}
             >
+              {isFocused & isGradient && (
+                <LinearGradient
+                  start={{ x: 1, y: 0 }}
+                  end={{ x: 0, y: 1 }}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    bottom: 0,
+                    right: 0,
+                    left: 0,
+                  }}
+                  colors={[colors.active.primary, colors.active.secondary]}
+                />
+              )}
               <View
                 style={[
                   {

@@ -2,7 +2,7 @@ import { useTheme } from './useTheme';
 export const colorsList: any = {
   darkColors: {
     primary: '#16161e',
-    secondary: '#1a1b26',
+    secondary: '#282a3a',
     exm: '#282a3a',
     staticText: {
       light: {
@@ -14,7 +14,10 @@ export const colorsList: any = {
         secondary: '#494949ff',
       },
     },
-    active: '#dba400',
+    active: {
+      primary: '#dba400',
+      secondary: 'rgb(135, 105, 15)',
+    },
     static: {
       primary: '#16161e',
       secondary: '#1a1b26',
@@ -73,7 +76,10 @@ export const colorsList: any = {
         secondary: '#494949ff',
       },
     },
-    active: '#dba400',
+    active: {
+      primary: '#dba400',
+      secondary: 'rgb(135, 105, 15)',
+    },
     static: {
       primary: '#16161e',
       secondary: '#1a1b26',
