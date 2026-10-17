@@ -60,17 +60,59 @@ export default function Switch(props: any) {
         alignItems: 'center',
         justifyContent: props.radiusFlex,
         backgroundColor: props.backColor,
-    }}
+      }}
     >
+      {props.enTextState && language !== 'english' && (
+        <View
+          style={{
+            position: 'absolute',
+            left: 0,
+            width: props.enTextWidth,
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Text
+            style={[
+              {
+                textAlign: 'center',
+                fontFamily: 'Cairo-Bold',
+                fontSize: sizeScale(15),
+                color: colors.staticText.dark.primary,
+              },
+            ]}
+          >
+            En
+          </Text>
+        </View>
+      )}
       <View
         style={{
-            width: props.radiusWidth,
-            height: props.radiusHeight,
-            borderRadius: props.radiusIn,
-            backgroundColor: props.radiusColor,
-            elevation: 3,
+          width: props.radiusWidth,
+          height: props.radiusHeight,
+          borderRadius: props.radiusIn,
+          backgroundColor: props.radiusColor,
+          elevation: 3,
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
-      />
+      >
+        {props.enTextState && language === 'english' && (
+          <Text
+            style={[
+              {
+                textAlign: 'center',
+                fontFamily: 'Cairo-Bold',
+                fontSize: sizeScale(15),
+                color: colors.staticText.dark.primary,
+              },
+            ]}
+          >
+            En
+          </Text>
+        )}
+      </View>
     </View>
   );
 }

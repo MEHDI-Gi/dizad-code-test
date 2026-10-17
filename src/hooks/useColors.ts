@@ -18,6 +18,11 @@ export const colorsList: any = {
       primary: '#dba400',
       secondary: 'rgb(135, 105, 15)',
     },
+    switch: {
+      primary: '#dba400',
+      secondary: '#6161617c',
+      background: '#adadadff',
+    },
     static: {
       primary: '#16161e',
       secondary: '#1a1b26',
@@ -41,6 +46,10 @@ export const colorsList: any = {
         prim: '#2b2b2bff',
         second: '#a98003ff',
       },
+    },
+    gradient: {
+      primary: ['#16161e', '#152331'],
+      secondary: ['#282a3a', '#152331'],
     },
     shimmer: {
       first: ['#6161617c', '#2b2b2bff', '#6161617c'],
@@ -80,6 +89,11 @@ export const colorsList: any = {
       primary: '#dba400',
       secondary: 'rgb(135, 105, 15)',
     },
+    switch: {
+      primary: '#dba400',
+      secondary: '#474646',
+      background: '#adadadff',
+    },
     static: {
       primary: '#16161e',
       secondary: '#1a1b26',
@@ -106,6 +120,10 @@ export const colorsList: any = {
     },
     shimmer: {
       colors: ['#eaeaeaff', 'white', '#eaeaeaff'],
+    },
+    gradient: {
+      primary: ['#FFFFFF', '#F0F4F8'], // Fresh, clean light-to-soft-slate background
+      secondary: ['#E2E8F0', '#F0F4F8'], // Slightly deeper neutral surface for secondary cards/accents
     },
     bottomTab: {
       color: '#dba400',

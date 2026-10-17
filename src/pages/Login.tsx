@@ -164,7 +164,7 @@ export default function Login({ navigation }: LoginProps) {
               right: 0,
               left: 0,
             }}
-            colors={[colors.primary, '#152331']}
+            colors={colors.gradient.primary}
           />
         )}
         <ActivityIndicator size="large" color={'#86c335'} />

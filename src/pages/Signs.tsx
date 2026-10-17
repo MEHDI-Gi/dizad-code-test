@@ -96,7 +96,7 @@ export default function Signs() {
             right: 0,
             left: 0,
           }}
-          colors={[colors.primary, '#152331']}
+          colors={colors.gradient.primary}
         />
       )}
       <ScrollView
@@ -145,7 +145,7 @@ export default function Signs() {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       overflow: 'hidden',
-                      elevation: 5,
+                      elevation: !isGradient ? 5 : 0,
                       columnGap: sizeScale(8),
                     },
                   ]}
@@ -161,7 +161,7 @@ export default function Signs() {
                         right: 0,
                         left: 0,
                       }}
-                      colors={[colors.secondary, '#152331']}
+                      colors={colors.gradient.secondary}
                     />
                   )}
                   <View

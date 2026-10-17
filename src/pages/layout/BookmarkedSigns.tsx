@@ -150,7 +150,7 @@ export default function BookmarkedSigns() {
             right: 0,
             left: 0,
           }}
-          colors={[colors.primary, '#152331']}
+          colors={colors.gradient.primary}
         />
       )}
       <ScrollView
@@ -164,7 +164,7 @@ export default function BookmarkedSigns() {
           alignItems: 'center',
           justifyContent: 'center',
           alignContent: 'center',
-          paddingTop: sizeScale(50),
+          paddingTop: sizeScale(60),
           paddingBottom: sizeScale(120),
         }}
       >
@@ -208,7 +208,7 @@ export default function BookmarkedSigns() {
                     backgroundColor: colors.secondary,
                     overflow: 'hidden',
                     opacity: 1,
-                    elevation: 5,
+                    elevation: !isGradient ? 5 : 0,
                     alignItems: 'center',
                     justifyContent: 'center',
                   },
@@ -225,7 +225,7 @@ export default function BookmarkedSigns() {
                       right: 0,
                       left: 0,
                     }}
-                    colors={[colors.secondary, '#152331']}
+                    colors={colors.gradient.secondary}
                   />
                 )}
                 <View

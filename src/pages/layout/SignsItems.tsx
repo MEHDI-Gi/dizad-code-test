@@ -191,6 +191,20 @@ const SignsItems = () => {
           backgroundColor: colors.primary,
         }}
       >
+        {isGradient && (
+          <LinearGradient
+            start={{ x: 1, y: 1 }}
+            end={{ x: 0, y: 0 }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              right: 0,
+              left: 0,
+            }}
+            colors={colors.gradient.primary}
+          />
+        )}
         <ActivityIndicator size="large" />
       </View>
     );
@@ -216,7 +230,7 @@ const SignsItems = () => {
             right: 0,
             left: 0,
           }}
-          colors={[colors.primary, '#152331']}
+          colors={colors.gradient.primary}
         />
       )}
       <View
@@ -339,7 +353,7 @@ const SignsItems = () => {
                       alignSelf: 'flex-start',
                       overflow: 'hidden',
                       opacity: 1,
-                      elevation: 5,
+                      elevation: !isGradient ? 5 : 0,
                     },
                   ]}
                 >
@@ -354,7 +368,7 @@ const SignsItems = () => {
                         right: 0,
                         left: 0,
                       }}
-                      colors={[colors.secondary, '#152331']}
+                      colors={colors.gradient.secondary}
                     />
                   )}
                   {!userVip && index > 9 ? (

@@ -147,7 +147,6 @@ export default function Questions() {
     minimumViewTime: 100, // Must stay visible for 0.5s
   }).current;
 
-
   // const ad = useAd();
 
   return (
@@ -171,7 +170,7 @@ export default function Questions() {
             right: 0,
             left: 0,
           }}
-          colors={[colors.primary, '#152331']}
+          colors={colors.gradient.primary}
         />
       )}
       <FlatList
@@ -216,7 +215,7 @@ export default function Questions() {
                 borderRadius: sizeScale(8),
                 overflow: 'hidden',
                 backgroundColor: colors.secondary,
-                elevation: 5,
+                elevation: !isGradient ? 5 : 0,
               },
             ]}
           >
@@ -231,7 +230,7 @@ export default function Questions() {
                   right: 0,
                   left: 0,
                 }}
-                colors={[colors.secondary, '#152331']}
+                colors={colors.gradient.secondary}
               />
             )}
             {!userVip && index > 9 ? (
@@ -390,7 +389,7 @@ export default function Questions() {
                         right: 0,
                         left: 0,
                       }}
-                      colors={[colors.primary, '#152331']}
+                      colors={colors.gradient.primary}
                     />
                   )}
                   <View
@@ -438,7 +437,7 @@ export default function Questions() {
                               right: 0,
                               left: 0,
                             }}
-                            colors={[colors.secondary, '#152331']}
+                            colors={colors.gradient.secondary}
                           />
                         )}
 

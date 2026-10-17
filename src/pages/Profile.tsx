@@ -1,50 +1,30 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
 import {
-  Alert,
   Modal,
   ActivityIndicator,
-  TouchableWithoutFeedback,
-  Keyboard,
   Pressable,
-  TextInput,
-  Dimensions,
-  StatusBar,
   Text,
   Image,
-  TouchableOpacity,
-  SafeAreaView,
-  StyleSheet,
   View,
-  KeyboardAvoidingView,
   ScrollView,
-  Platform,
-  Vibration,
 } from 'react-native';
 import { DataContext } from '../context/contextData';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Switch from '../components/elements/Switch.tsx';
-import Statistics from '../components/Statistics.tsx';
 import LinearGradient from 'react-native-linear-gradient';
-import SnackBar from '../components/elements/SnackBar';
-// import Sound from 'react-native-sound';
-import { useGoogleSignIn } from '../context/auth.ts';
 import VipBadge from '../components/elements/VipBadge';
 import CopyrightsFooter from '../components/CopyrightsFooter';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types';
-import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 import FreeBadge from '../components/elements/FreeBadge.tsx';
 import { useColors } from '../hooks/useColors.ts';
 import { useTheme } from '../hooks/useTheme.ts';
 import { useVip } from '../hooks/useVip.ts';
 import { useUserAccuracy } from '../hooks/useUserAccuracy.ts';
 import { useTexts } from '../hooks/useTexts.ts';
-import { set } from '@react-native-firebase/database';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useSize } from '../hooks/useSize.ts';
 import ContactUs from './profile/ContactUs.tsx';
@@ -59,7 +39,6 @@ const Profile = () => {
   const { userAccuracy } = useUserAccuracy();
   const {
     user,
-    initializing,
     signIn,
     logout,
     setSnackbarState,
@@ -75,25 +54,16 @@ const Profile = () => {
     sound,
     isGradient,
     language,
-    setUserPlan,
     setSnackOptions,
     setLoadingOptions,
     setLoadScreen,
     setVibrate,
     resetBookmarks,
-
     setSound,
-
     handleLogout,
     isLogout,
-    dataAsync,
     setLanguage,
     setIsGradient,
-    apparence,
-    setApparence,
-    setColors,
-    colorsList,
-    setUpgradeTutu,
   } = useContext(DataContext);
 
   const [initTheme, setInitTheme] = useState<boolean>(false);
@@ -101,22 +71,22 @@ const Profile = () => {
     const newTheme = currentTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
     setCurrentTheme(newTheme as any);
   }
-  useEffect(() => {
-    if (initTheme) {
-      setTimeout(() => {
-        setInitTheme(false);
-        toggleTheme();
-      }, 500);
-    }
-  }, [initTheme]);
+  // useEffect(() => {
+  //   if (initTheme) {
+  //     setTimeout(() => {
+  //       setInitTheme(false);
+  //       toggleTheme();
+  //     }, 500);
+  //   }
+  // }, [initTheme]);
   function SettingsCard(props: any) {
     const switchProps = {
       width: widthScale(50),
       height: heightScale(25),
-      borderColor: colors.primary,
-      borderWidth: sizeScale(0),
+      // borderColor: colors.primary,
+      // borderWidth: sizeScale(0),
       radiusWidth: sizeScale(10),
-      backColor: colors.text.secondary,
+      backColor: colors.switch.background,
       radiusHeight: heightScale(28),
       radiusOut: sizeScale(5),
       radiusIn: sizeScale(5),
@@ -138,7 +108,7 @@ const Profile = () => {
           <Switch
             {...switchProps}
             radiusFlex={vibrate ? 'flex-start' : 'flex-end'}
-            radiusColor={vibrate ? colors.active.primary : colors.secondary}
+            radiusColor={vibrate ? colors.switch.primary : '#474646'}
             radiusWidth={sizeScale(vibrate ? 27 : 20)}
           />
         );
@@ -149,11 +119,23 @@ const Profile = () => {
             {...switchProps}
             radiusFlex={currentTheme === THEME_DARK ? 'flex-start' : 'flex-end'}
             radiusColor={
-              currentTheme === THEME_DARK
-                ? colors.active.primary
-                : colors.secondary
+              currentTheme === THEME_DARK ? colors.active.primary : '#474646'
             }
             radiusWidth={sizeScale(currentTheme === THEME_DARK ? 27 : 20)}
+          />
+        );
+      }
+      if (props.language) {
+        return (
+          <Switch
+            {...switchProps}
+            enTextState={true}
+            enTextWidth={sizeScale(27)}
+            radiusFlex={language === 'english' ? 'flex-start' : 'flex-end'}
+            radiusColor={
+              language === 'english' ? colors.switch.primary : '#474646'
+            }
+            radiusWidth={sizeScale(language === 'english' ? 27 : 20)}
           />
         );
       }
@@ -162,7 +144,7 @@ const Profile = () => {
           <Switch
             {...switchProps}
             radiusFlex={sound ? 'flex-start' : 'flex-end'}
-            radiusColor={sound ? colors.active.primary : colors.secondary}
+            radiusColor={sound ? colors.switch.primary : '#474646'}
             radiusWidth={sizeScale(sound ? 27 : 20)}
           />
         );
@@ -172,82 +154,82 @@ const Profile = () => {
           <Switch
             {...switchProps}
             radiusFlex={isGradient ? 'flex-start' : 'flex-end'}
-            radiusColor={isGradient ? colors.active.primary : colors.secondary}
+            radiusColor={isGradient ? colors.switch.primary : '#474646'}
             radiusWidth={sizeScale(isGradient ? 27 : 20)}
           />
         );
       }
-      if (props.language) {
-        return (
-          <View
-            style={{
-              flexDirection: 'row',
-              borderRadius: sizeScale(5),
-              width: widthScale(60),
-              height: '55%',
-              alignItems: 'center',
-              justifyContent: 'center',
-              overflow: 'hidden',
-            }}
-          >
-            <View
-              style={[
-                {
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  alignContent: 'center',
+      // if (props.language) {
+      //   return (
+      //     <View
+      //       style={{
+      //         flexDirection: 'row',
+      //         borderRadius: sizeScale(5),
+      //         width: widthScale(60),
+      //         height: '55%',
+      //         alignItems: 'center',
+      //         justifyContent: 'center',
+      //         overflow: 'hidden',
+      //       }}
+      //     >
+      //       <View
+      //         style={[
+      //           {
+      //             alignItems: 'center',
+      //             justifyContent: 'center',
+      //             alignContent: 'center',
 
-                  height: '100%',
-                },
-                language === 'arabic'
-                  ? { backgroundColor: colors.active.primary, flex: 0.6 }
-                  : { backgroundColor: colors.text.secondary, flex: 0.4 },
-              ]}
-            >
-              <Text
-                style={[
-                  {
-                    textAlign: 'center',
-                    fontFamily: 'Cairo-Bold',
-                    fontSize: sizeScale(15),
-                    marginTop: sizeScale(-3),
-                  },
-                  language === 'english'
-                    ? { color: colors.staticText.dark.primary }
-                    : { color: colors.staticText.dark.primary },
-                ]}
-              >
-                ع
-              </Text>
-            </View>
-            <View
-              style={[
-                {
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: '100%',
-                },
-                language === 'english'
-                  ? { backgroundColor: colors.active.primary, flex: 0.6 }
-                  : { backgroundColor: colors.text.secondary, flex: 0.4 },
-              ]}
-            >
-              <Text
-                style={[
-                  {
-                    fontWeight: 'bold',
-                  },
-                  currentTheme === 'dark'
-                    ? { color: colors.text.primary }
-                    : { color: colors.text.primary },
-                ]}
-              >
-                En
-              </Text>
-            </View>
-          </View>
-        );
-      }
+      //             height: '100%',
+      //           },
+      //           language === 'arabic'
+      //             ? { backgroundColor: colors.active.primary, flex: 0.6 }
+      //             : { backgroundColor: colors.text.secondary, flex: 0.4 },
+      //         ]}
+      //       >
+      //         <Text
+      //           style={[
+      //             {
+      //               textAlign: 'center',
+      //               fontFamily: 'Cairo-Bold',
+      //               fontSize: sizeScale(15),
+      //               marginTop: sizeScale(-3),
+      //             },
+      //             language === 'english'
+      //               ? { color: colors.staticText.dark.primary }
+      //               : { color: colors.staticText.dark.primary },
+      //           ]}
+      //         >
+      //           ع
+      //         </Text>
+      //       </View>
+      //       <View
+      //         style={[
+      //           {
+      //             alignItems: 'center',
+      //             justifyContent: 'center',
+      //             height: '100%',
+      //           },
+      //           language === 'english'
+      //             ? { backgroundColor: colors.active.primary, flex: 0.6 }
+      //             : { backgroundColor: colors.text.secondary, flex: 0.4 },
+      //         ]}
+      //       >
+      //         <Text
+      //           style={[
+      //             {
+      //               fontWeight: 'bold',
+      //             },
+      //             currentTheme === 'dark'
+      //               ? { color: colors.text.primary }
+      //               : { color: colors.text.primary },
+      //           ]}
+      //         >
+      //           En
+      //         </Text>
+      //       </View>
+      //     </View>
+      //   );
+      // }
       // return (
       //   <MaterialIcons
       //     name="arrow-back-ios"
@@ -421,7 +403,7 @@ const Profile = () => {
     },
   ];
 
-  const toggleVibrate = () => setVibrate((prev: boolean) => !prev);
+  // const toggleVibrate = () => setVibrate((prev: boolean) => !prev);
 
   function resetStorage() {
     setGlobTrueAns(0);
@@ -500,7 +482,7 @@ const Profile = () => {
         // }
         break;
       case 'dark':
-        setInitTheme(true);
+        toggleTheme();
         break;
 
       case 'sound':
@@ -538,33 +520,33 @@ const Profile = () => {
     },
   ];
 
-  const [logoutLoad, setLogoutLoad] = useState<boolean>(false);
-  function logoutFun() {
-    setLogoutLoad(true);
-    startTimer(() => {
-      setLogoutLoad(false);
-      navigation.navigate('Login');
-      setSnackbarState(true);
-      setSnackOptions({ label: texts.logoutDone, icon: 'logout' });
-    });
-  }
+  // const [logoutLoad, setLogoutLoad] = useState<boolean>(false);
+  // function logoutFun() {
+  //   setLogoutLoad(true);
+  //   startTimer(() => {
+  //     setLogoutLoad(false);
+  //     navigation.navigate('Login');
+  //     setSnackbarState(true);
+  //     setSnackOptions({ label: texts.logoutDone, icon: 'logout' });
+  //   });
+  // }
 
   useEffect(() => {
     return () => clearExistingTimer();
   }, []);
 
-  const logAllStoredData = async () => {
-    try {
-      const keys = await AsyncStorage.getAllKeys();
-      const stores = await AsyncStorage.multiGet(keys);
+  // const logAllStoredData = async () => {
+  //   try {
+  //     const keys = await AsyncStorage.getAllKeys();
+  //     const stores = await AsyncStorage.multiGet(keys);
 
-      stores.forEach(([key, value]) => {
-        console.log(`${key}: ${value}`);
-      });
-    } catch (error) {
-      console.error('Error fetching all AsyncStorage data:', error);
-    }
-  };
+  //     stores.forEach(([key, value]) => {
+  //       console.log(`${key}: ${value}`);
+  //     });
+  //   } catch (error) {
+  //     console.error('Error fetching all AsyncStorage data:', error);
+  //   }
+  // };
   if (!isLogout) {
     return (
       <View
@@ -588,29 +570,43 @@ const Profile = () => {
               right: 0,
               left: 0,
             }}
-            colors={[colors.primary, '#152331']}
+            colors={colors.gradient.background}
           />
         )}
         <ActivityIndicator size={30} color={'#8da012'} />
       </View>
     );
   }
-  if (logoutLoad) {
-    return (
-      <View
-        style={[
-          {
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: colors.primary,
-          },
-        ]}
-      >
-        <ActivityIndicator size={30} />
-      </View>
-    );
-  }
+  // if (logoutLoad) {
+  //   return (
+  //     <View
+  //       style={[
+  //         {
+  //           flex: 1,
+  //           alignItems: 'center',
+  //           justifyContent: 'center',
+  //           backgroundColor: colors.primary,
+  //         },
+  //       ]}
+  //     >
+  //       {isGradient && (
+  //         <LinearGradient
+  //           start={{ x: 0, y: 0 }}
+  //           end={{ x: 1, y: 1 }}
+  //           style={{
+  //             position: 'absolute',
+  //             top: 0,
+  //             bottom: 0,
+  //             right: 0,
+  //             left: 0,
+  //           }}
+  //           colors={colors.gradient.background}
+  //         />
+  //       )}
+  //       <ActivityIndicator size={30} />
+  //     </View>
+  //   );
+  // }
 
   return (
     <View
@@ -626,8 +622,8 @@ const Profile = () => {
     >
       {isGradient && (
         <LinearGradient
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
+          start={{ x: 1, y: 1 }}
+          end={{ x: 0, y: 0 }}
           style={{
             position: 'absolute',
             top: 0,
@@ -635,7 +631,7 @@ const Profile = () => {
             right: 0,
             left: 0,
           }}
-          colors={[colors.primary, '#152331']}
+          colors={colors.gradient.primary}
         />
       )}
       <View
@@ -861,7 +857,7 @@ const Profile = () => {
                   height: '100%',
                   opacity: 0.5,
                 }}
-                colors={['#2e487acc', colors.secondary]}
+                colors={colors.gradient.background}
               />
             )}
             <View
@@ -952,7 +948,7 @@ const Profile = () => {
               gap: sizeScale(15),
             }}
           >
-            {DangerSettingsList.map((item, index) => (
+            {DangerSettingsList.map(item => (
               // <SettingsCard
               //   key={item.condition}
               //   index={index}
@@ -992,7 +988,7 @@ const Profile = () => {
                       right: 0,
                       left: 0,
                     }}
-                    colors={[colors.secondary, '#152331']}
+                    colors={colors.gradient.secondary}
                   />
                 )}
                 <View
@@ -1084,7 +1080,7 @@ const Profile = () => {
               marginTop: sizeScale(10),
               marginBottom: sizeScale(10),
               alignItems: 'center',
-              backgroundColor: colors.active,
+              backgroundColor: colors.active.primary,
               width: '100%',
               height: heightScale(47),
               overflow: 'hidden',
@@ -1099,7 +1095,7 @@ const Profile = () => {
             }
           }}
         >
-          {isGradient && (
+          {currentTheme === 'dark' && isGradient && (
             <LinearGradient
               start={{ x: 0, y: 1 }}
               end={{ x: 1, y: 0 }}
@@ -1198,7 +1194,7 @@ const Profile = () => {
             marginBottom: sizeScale(5),
           }}
         >
-          {ContactList.map((items, index) => (
+          {ContactList.map(items => (
             <Pressable
               android_ripple={{
                 borderless: false,

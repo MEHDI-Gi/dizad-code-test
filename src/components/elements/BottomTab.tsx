@@ -42,7 +42,7 @@ export default function BottomTab({
 }: MaterialTopTabBarProps) {
   const { screen, widthScale, heightScale, sizeScale } = useSize();
 
-  const { isGradient, language } = useContext(DataContext);
+  const { isGradient, language, currentTheme } = useContext(DataContext);
   const colors = useColors();
   const texts = useTexts();
   const route = useRoute();
@@ -91,6 +91,7 @@ export default function BottomTab({
     isFocused: boolean,
     colors: any,
     texts: any,
+    isGradient: any,
   ) {
     switch (name) {
       case 'Bookmarks':
@@ -165,7 +166,13 @@ export default function BottomTab({
           const name = route.name; // 'Home', 'Signs', ...
 
           // map route to icon/label
-          const config = getTabConfig(name, isFocused, colors, texts);
+          const config = getTabConfig(
+            name,
+            isFocused,
+            colors,
+            texts,
+            isGradient,
+          );
 
           const onPress = () => {
             if (!isFocused) {
@@ -196,7 +203,7 @@ export default function BottomTab({
               ]}
               onPress={onPress}
             >
-              {isFocused & isGradient && (
+              {currentTheme === 'dark' && isFocused && isGradient && (
                 <LinearGradient
                   start={{ x: 1, y: 0 }}
                   end={{ x: 0, y: 1 }}

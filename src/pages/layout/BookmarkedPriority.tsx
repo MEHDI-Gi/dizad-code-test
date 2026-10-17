@@ -157,7 +157,7 @@ export default function BookmarkedPriority() {
             right: 0,
             left: 0,
           }}
-          colors={[colors.primary, '#152331']}
+          colors={colors.gradient.primary}
         />
       )}
       <ScrollView

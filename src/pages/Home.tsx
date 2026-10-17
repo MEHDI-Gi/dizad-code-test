@@ -176,7 +176,7 @@ export default function Home() {
             right: 0,
             left: 0,
           }}
-          colors={[colors.primary, '#152331']}
+          colors={colors.gradient.primary}
         />
       )}
       <View
@@ -362,7 +362,7 @@ export default function Home() {
           {!userVip ? (
             <FreeBadge
               backColor={colors.secondary}
-              elevation={3}
+              elevation={!isGradient ? 3 : 0}
               height={heightScale(28)}
               width={widthScale(45)}
             />
@@ -376,7 +376,7 @@ export default function Home() {
               radius={sizeScale(5)}
               backColor={colors.secondary}
               titleColor={colors.text.primary}
-              elevation={3}
+              elevation={!isGradient ? 3 : 0}
               textSize={sizeScale(12)}
               icon={true}
             />
@@ -511,7 +511,7 @@ export default function Home() {
                 {
                   alignItems: 'center',
                   backgroundColor: colors.secondary,
-                  elevation: 3,
+                  elevation: !isGradient ? 3 : 0,
                   width: '90%',
                   height: heightScale(screen.width * 0.25),
                   borderRadius: sizeScale(8),
@@ -531,7 +531,7 @@ export default function Home() {
                     right: 0,
                     left: 0,
                   }}
-                  colors={[colors.secondary, '#152331']}
+                  colors={colors.gradient.secondary}
                 />
               )}
               <View
@@ -851,9 +851,7 @@ export default function Home() {
             );
           })}
         </View>
-
         <PermitCategories />
-
         {/* <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -870,150 +868,153 @@ export default function Home() {
             width: '95%',
           }}
         > */}
-
         {/* </ScrollView> */}
-      {false &&  <View
-          style={{
-            width: '85%',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexDirection: 'row-reverse',
-            columnGap: sizeScale(5),
-          }}
-        >
+        {false && (
           <View
             style={{
-              flexDirection: 'row-reverse',
+              width: '85%',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'space-between',
+              flexDirection: 'row-reverse',
               columnGap: sizeScale(5),
             }}
           >
-            <MaterialCommunityIcons
-              name="youtube"
-              color={colors.text.secondary}
-              size={sizeScale(25)}
-            />
-            <Text
+            <View
               style={{
-                fontFamily: 'Cairo',
-                color: colors.text.secondary,
-                fontSize: sizeScale(16),
-                textAlign: 'center',
+                flexDirection: 'row-reverse',
+                alignItems: 'center',
+                justifyContent: 'center',
+                columnGap: sizeScale(5),
               }}
             >
-              مصادر خارجية
-            </Text>
-          </View>
-        </View>}
-{false &&        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'space-evenly',
-            flexDirection: 'row',
-            width: '90%',
-            flex: 1,
-            flexWrap: 'wrap',
-            gap: sizeScale(7),
-          }}
-        >
-          {extSources.map((item: any, index: number) => {
-            if (!firebaseLoaded) {
-              return (
-                <ShimmerPlaceHolder
-                  key={`shimmer-1-${index}`}
-                  style={{
-                    width: '100%',
-                    height: heightScale(screen.width * 0.25),
-                    borderRadius: sizeScale(8),
-                  }}
-                  shimmerColors={[
-                    colors.secondary,
-                    '#6161617c',
-                    colors.secondary,
-                  ]}
-                />
-              );
-            }
-            return (
-              <Pressable
-                android_ripple={{
-                  borderless: false,
-                  color: colors.primary,
-                  foreground: true,
+              <MaterialCommunityIcons
+                name="youtube"
+                color={colors.text.secondary}
+                size={sizeScale(25)}
+              />
+              <Text
+                style={{
+                  fontFamily: 'Cairo',
+                  color: colors.text.secondary,
+                  fontSize: sizeScale(16),
+                  textAlign: 'center',
                 }}
-                onPress={() => {
-                  Linking.openURL(
-                    'https://www.youtube.com/playlist?list=PLIuGUVzSi-K4754yPL6zul8QbGiK9xYNR',
-                  );
-                }}
-                key={`key-0-${index}`}
-                style={[
-                  {
-                    alignItems: 'center',
-                    backgroundColor: colors.secondary,
-                    width: '100%',
-                    height: heightScale(screen.width * 0.25),
-                    borderRadius: sizeScale(8),
-                    flexDirection: 'row-reverse',
-                    justifyContent: 'space-evenly',
-                    paddingHorizontal: sizeScale(20),
-                    paddingVertical: sizeScale(10),
-                    overflow: 'hidden',
-                    elevation: 5,
-                    columnGap: sizeScale(10),
-                  },
-                ]}
               >
-                {isGradient && (
-                  <LinearGradient
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
+                مصادر خارجية
+              </Text>
+            </View>
+          </View>
+        )}
+        {false && (
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
+              flexDirection: 'row',
+              width: '90%',
+              flex: 1,
+              flexWrap: 'wrap',
+              gap: sizeScale(7),
+            }}
+          >
+            {extSources.map((item: any, index: number) => {
+              if (!firebaseLoaded) {
+                return (
+                  <ShimmerPlaceHolder
+                    key={`shimmer-1-${index}`}
                     style={{
-                      position: 'absolute',
-                      top: 0,
-                      bottom: 0,
-                      right: 0,
-                      left: 0,
+                      width: '100%',
+                      height: heightScale(screen.width * 0.25),
+                      borderRadius: sizeScale(8),
                     }}
-                    colors={[colors.primary, '#152331']}
+                    shimmerColors={[
+                      colors.secondary,
+                      '#6161617c',
+                      colors.secondary,
+                    ]}
                   />
-                )}
-                <Image
-                  style={{
-                    width: widthScale(screen.width * 0.35),
-                    height: '100%',
-                    borderRadius: sizeScale(10),
-                    resizeMode: 'cover',
+                );
+              }
+              return (
+                <Pressable
+                  android_ripple={{
+                    borderless: false,
+                    color: colors.primary,
+                    foreground: true,
                   }}
-                  source={{ uri: item?.img }}
-                />
-                <View
-                  style={{
-                    flexDirection: 'column',
-                    alignItems: 'flex-end',
-                    justifyContent: 'center',
-                    flex: 1,
-                    rowGap: sizeScale(5),
-                    zIndex: 2,
+                  onPress={() => {
+                    Linking.openURL(
+                      'https://www.youtube.com/playlist?list=PLIuGUVzSi-K4754yPL6zul8QbGiK9xYNR',
+                    );
                   }}
+                  key={`key-0-${index}`}
+                  style={[
+                    {
+                      alignItems: 'center',
+                      backgroundColor: colors.secondary,
+                      width: '100%',
+                      height: heightScale(screen.width * 0.25),
+                      borderRadius: sizeScale(8),
+                      flexDirection: 'row-reverse',
+                      justifyContent: 'space-evenly',
+                      paddingHorizontal: sizeScale(20),
+                      paddingVertical: sizeScale(10),
+                      overflow: 'hidden',
+                      elevation: 5,
+                      columnGap: sizeScale(10),
+                    },
+                  ]}
                 >
-                  <Text
+                  {isGradient && (
+                    <LinearGradient
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        bottom: 0,
+                        right: 0,
+                        left: 0,
+                      }}
+                      colors={[colors.primary, '#152331']}
+                    />
+                  )}
+                  <Image
                     style={{
-                      fontFamily: 'Cairo',
-                      color: colors.text.primary,
-                      fontSize: sizeScale(14),
-                      textAlign: 'right',
+                      width: widthScale(screen.width * 0.35),
+                      height: '100%',
+                      borderRadius: sizeScale(10),
+                      resizeMode: 'cover',
+                    }}
+                    source={{ uri: item?.img }}
+                  />
+                  <View
+                    style={{
+                      flexDirection: 'column',
+                      alignItems: 'flex-end',
+                      justifyContent: 'center',
+                      flex: 1,
+                      rowGap: sizeScale(5),
+                      zIndex: 2,
                     }}
                   >
-                    {item.label}
-                  </Text>
-                </View>
-              </Pressable>
-            );
-          })}
-        </View>
-}      </ScrollView>
+                    <Text
+                      style={{
+                        fontFamily: 'Cairo',
+                        color: colors.text.primary,
+                        fontSize: sizeScale(14),
+                        textAlign: 'right',
+                      }}
+                    >
+                      {item.label}
+                    </Text>
+                  </View>
+                </Pressable>
+              );
+            })}
+          </View>
+        )}{' '}
+      </ScrollView>
     </View>
   );
 }

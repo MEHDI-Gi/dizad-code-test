@@ -152,7 +152,7 @@ export default function BookmarksSubTab({
                     right: 0,
                     left: 0,
                   }}
-                  colors={[colors.secondary, '#152331']}
+                  colors={colors.gradient.secondary}
                 />
               )}
               <View

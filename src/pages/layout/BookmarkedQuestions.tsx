@@ -145,7 +145,7 @@ export default function BookmarkedQuestions() {
             right: 0,
             left: 0,
           }}
-          colors={[colors.primary, '#152331']}
+          colors={colors.gradient.primary}
         />
       )}
       <ScrollView
@@ -153,7 +153,7 @@ export default function BookmarkedQuestions() {
           rowGap: sizeScale(10),
           alignItems: 'center',
           justifyContent: 'flex-start',
-          paddingTop: sizeScale(50),
+          paddingTop: sizeScale(60),
           paddingBottom: sizeScale(120),
         }}
         style={{
@@ -190,7 +190,7 @@ export default function BookmarkedQuestions() {
               borderRadius: sizeScale(8),
               overflow: 'hidden',
               backgroundColor: colors.secondary,
-              elevation: 5,
+              elevation: !isGradient ? 5 : 0,
             }}
           >
             {isGradient && (
@@ -204,7 +204,7 @@ export default function BookmarkedQuestions() {
                   right: 0,
                   left: 0,
                 }}
-                colors={[colors.secondary, '#152331']}
+                colors={colors.gradient.secondary}
               />
             )}
             <View

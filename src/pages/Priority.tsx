@@ -52,7 +52,7 @@ export default function Priority() {
     lessonsData,
     setPriorityItemsIndex,
     imgBase,
-    isGradient
+    isGradient,
   } = useContext(DataContext);
 
   const itemsSideColors = [
@@ -156,7 +156,7 @@ export default function Priority() {
             right: 0,
             left: 0,
           }}
-          colors={[colors.primary, '#152331']}
+          colors={colors.gradient.primary}
         />
       )}
       <ScrollView

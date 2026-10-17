@@ -35,7 +35,7 @@ export function MainTabs() {
     if (!user) {
         return (
             <View style={[{ flex: 1, zIndex: 9, alignItems: "center", justifyContent: 'center', backgroundColor: colors.primary }]}>
-                <ActivityIndicator size={30} color={'#1eff00'} />
+                <ActivityIndicator size={30} color={'#633f1f'} />
             </View>
         )
     }
