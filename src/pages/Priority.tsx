@@ -140,7 +140,7 @@ export default function Priority() {
   return (
     <View
       style={{
-        backgroundColor: 'transparent',
+        backgroundColor: colors.primary,
         flex: 1,
         width: screen.width,
       }}

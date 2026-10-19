@@ -152,7 +152,7 @@ export default function Questions() {
   return (
     <View
       style={{
-        backgroundColor: 'transparent',
+        backgroundColor: colors.primary,
         flex: 1,
         width: screen.width,
         alignItems: 'center',
@@ -411,49 +411,47 @@ export default function Questions() {
                         source={{ uri: item.cover }}
                       />
                     ) : null}
+                  </View>
 
-                    {item?.label && (
-                      <View
+                  {item?.label && (
+                    <View
+                      style={{
+                        width: '100%',
+                        padding: sizeScale(10),
+                        // borderRadius: sizeScale(18),
+                        // borderBottomLeftRadius: 0,
+                        // borderBottomRightRadius: 0,
+                        overflow: 'hidden',
+                        backgroundColor: colors.secondary,
+                      }}
+                    >
+                      {isGradient && (
+                        <LinearGradient
+                          start={{ x: 1, y: 1 }}
+                          end={{ x: 0, y: 0 }}
+                          style={{
+                            position: 'absolute',
+                            top: 0,
+                            bottom: 0,
+                            right: 0,
+                            left: 0,
+                          }}
+                          colors={colors.gradient.secondary}
+                        />
+                      )}
+
+                      <Text
                         style={{
-                          position: 'absolute',
-                          bottom: 0,
-                          width: '100%',
-                          padding: sizeScale(10),
-                          // borderRadius: sizeScale(18),
-                          // borderBottomLeftRadius: 0,
-                          // borderBottomRightRadius: 0,
-                          overflow: 'hidden',
-                          backgroundColor: colors.primary,
+                          fontFamily: 'Cairo-Bold',
+                          color: colors.text.primary,
+                          fontSize: sizeScale(16),
+                          textAlign: 'center',
                         }}
                       >
-                        {isGradient && (
-                          <LinearGradient
-                            start={{ x: 1, y: 1 }}
-                            end={{ x: 0, y: 0 }}
-                            style={{
-                              position: 'absolute',
-                              top: 0,
-                              bottom: 0,
-                              right: 0,
-                              left: 0,
-                            }}
-                            colors={colors.gradient.secondary}
-                          />
-                        )}
-
-                        <Text
-                          style={{
-                            fontFamily: 'Cairo-Bold',
-                            color: colors.text.primary,
-                            fontSize: sizeScale(16),
-                            textAlign: 'center',
-                          }}
-                        >
-                          {item.label}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
+                        {item.label}
+                      </Text>
+                    </View>
+                  )}
 
                   <ScrollView
                     style={{
@@ -507,8 +505,7 @@ export default function Questions() {
                     style={{
                       alignItems: 'center',
                       justifyContent: 'flex-end',
-                      flexDirection:
-                        language === 'english' ? 'row-reverse' : 'row',
+                      flexDirection: 'row',
                       width: '100%',
                       height: heightScale(70),
                       paddingHorizontal: sizeScale(15),
@@ -578,9 +575,7 @@ export default function Questions() {
                       }}
                     >
                       <MaterialCommunityIcons
-                        name={
-                          language === 'english' ? 'arrow-left' : 'arrow-right'
-                        }
+                        name={'arrow-right'}
                         color={colors.text.primary}
                         size={sizeScale(25)}
                       />

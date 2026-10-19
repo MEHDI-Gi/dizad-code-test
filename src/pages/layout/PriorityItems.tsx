@@ -699,14 +699,14 @@ export default function PriorityItems({ route }: any) {
                         {
                           alignItems: 'center',
                           justifyContent: 'flex-end',
-                          flexDirection:
-                            language === 'english' ? 'row-reverse' : 'row',
+                          flexDirection: 'row',
                           width: '100%',
                           height: heightScale(70),
                           paddingHorizontal: sizeScale(15),
                           gap: sizeScale(8),
                         },
                         fullImage && {
+                          flexDirection: 'row-reverse',
                           position: 'absolute',
                           zIndex: 1,
                           right: 0,
@@ -830,11 +830,7 @@ export default function PriorityItems({ route }: any) {
                         }}
                       >
                         <MaterialCommunityIcons
-                          name={
-                            !fullImage && language === 'english'
-                              ? 'arrow-left'
-                              : 'arrow-right'
-                          }
+                          name={'arrow-right'}
                           color={colors.text.primary}
                           size={sizeScale(25)}
                         />

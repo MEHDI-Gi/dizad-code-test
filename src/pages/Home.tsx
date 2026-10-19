@@ -852,23 +852,6 @@ export default function Home() {
           })}
         </View>
         <PermitCategories />
-        {/* <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            paddingTop: sizeScale(0),
-            paddingBottom: sizeScale(10),
-            rowGap: sizeScale(10),
-          }}
-          style={{
-            flex: 1,
-            width: '95%',
-          }}
-        > */}
-        {/* </ScrollView> */}
         {false && (
           <View
             style={{

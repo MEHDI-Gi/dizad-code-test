@@ -143,7 +143,7 @@ export default function Login({ navigation }: LoginProps) {
     }
   };
 
-  const iconsSizes = widthScale(20);
+  const iconsSizes = widthScale(15);
 
   if (user || initializing) {
     return (
@@ -153,20 +153,19 @@ export default function Login({ navigation }: LoginProps) {
           { backgroundColor: colors.primary },
         ]}
       >
-        {isGradient && (
-          <LinearGradient
-            start={{ x: 1, y: 1 }}
-            end={{ x: 0, y: 0 }}
-            style={{
-              position: 'absolute',
-              top: 0,
-              bottom: 0,
-              right: 0,
-              left: 0,
-            }}
-            colors={colors.gradient.primary}
-          />
-        )}
+        <LinearGradient
+          start={{ x: 1, y: 1 }}
+          end={{ x: 0, y: 0 }}
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+          }}
+          colors={colors.gradient.primary}
+        />
+
         <ActivityIndicator size="large" color={'#86c335'} />
       </View>
     );
@@ -177,10 +176,22 @@ export default function Login({ navigation }: LoginProps) {
       <View
         style={[styles.container, { backgroundColor: colors.static.primary }]}
       >
+        <LinearGradient
+          start={{ x: 1, y: 1 }}
+          end={{ x: 0, y: 0 }}
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+          }}
+          colors={colors.gradient.primary}
+        />
         <View
           style={{
             width: screen.width,
-            height: screen.width * 0.5,
+            height: screen.width * 0.3,
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: 'transparent',
@@ -218,35 +229,19 @@ export default function Login({ navigation }: LoginProps) {
             flexDirection: 'column',
             width: '100%',
             zIndex: 10,
-            paddingHorizontal: sizeScale(20),
+            paddingHorizontal: sizeScale(30),
             paddingVertical: sizeScale(20),
             justifyContent: 'flex-end',
             alignItems: 'flex-end',
-            backgroundColor: colors.static.primary,
             rowGap: sizeScale(10),
-            borderBottomStartRadius: sizeScale(50),
             overflow: 'hidden',
           }}
         >
-          <LinearGradient
-            colors={['#00ffff', colors.static.primary]}
-            start={{ x: 2, y: 0 }}
-            end={{ x: 0, y: 3 }}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              zIndex: 1,
-              opacity: 0.2,
-            }}
-          />
           <Text
             style={{
               fontFamily: 'Cairo-Bold',
               color: colors.static.third,
-              fontSize: sizeScale(25),
+              fontSize: sizeScale(22),
               zIndex: 3,
             }}
           >
@@ -256,7 +251,7 @@ export default function Login({ navigation }: LoginProps) {
             style={{
               fontFamily: 'Cairo-Medium',
               color: colors.static.text.primary,
-              fontSize: sizeScale(20),
+              fontSize: sizeScale(16),
               zIndex: 3,
             }}
           >
@@ -265,7 +260,6 @@ export default function Login({ navigation }: LoginProps) {
         </View>
         <View
           style={{
-            backgroundColor: colors.static.primary,
             flex: 1,
             width: '100%',
             justifyContent: 'center',
@@ -310,7 +304,7 @@ export default function Login({ navigation }: LoginProps) {
                   style={{
                     fontFamily: 'Cairo-Bold',
                     color: colors.static.text.primary,
-                    fontSize: sizeScale(18),
+                    fontSize: sizeScale(14),
                   }}
                 >
                   {item.label}
@@ -357,7 +351,7 @@ export default function Login({ navigation }: LoginProps) {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-evenly',
-                  borderRadius: 8,
+                  borderRadius: sizeScale(8),
                   overflow: 'hidden',
                   height: heightScale(45),
                   width: '100%',
@@ -371,6 +365,18 @@ export default function Login({ navigation }: LoginProps) {
               }}
               onPress={handleGoogleSignIn}
             >
+              <LinearGradient
+                start={{ x: 1, y: 1 }}
+                end={{ x: 0, y: 0 }}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  bottom: 0,
+                  right: 0,
+                  left: 0,
+                }}
+                colors={colors.gradient.secondary}
+              />
               {!isAuthProcessing ? (
                 <Image
                   source={require('../assets/icons/google.png')}
@@ -388,13 +394,13 @@ export default function Login({ navigation }: LoginProps) {
             <Text
               style={[
                 {
-                  fontSize: sizeScale(15),
+                  fontSize: sizeScale(13),
                   fontWeight: '600',
                   color: colors.static.text.secondary,
                 },
               ]}
             >
-              Continue with Google
+              continue with Google
             </Text>
           </View>
         </View>

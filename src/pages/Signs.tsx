@@ -138,6 +138,7 @@ export default function Signs() {
                   onPress={() => LessonsContentPress(item)}
                   style={[
                     {
+                      backgroundColor: colors.secondary,
                       width: '90%',
                       height: heightScale(screen.width * 0.23),
                       borderRadius: sizeScale(8),

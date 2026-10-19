@@ -311,47 +311,18 @@ export default function BookmarkedQuestions() {
                     overflow: 'hidden',
                   }}
                 >
-                  <Pressable
-                    android_ripple={{
-                      borderless: false,
-                      color: colors.primary,
-                      foreground: true,
-                    }}
-                    style={{
-                      zIndex: 1,
-                      backgroundColor: colors.secondary,
-                      width: widthScale(30),
-                      height: heightScale(30),
-                      borderRadius: sizeScale(8),
-                      top: heightScale(8),
-                      right: widthScale(8),
-                      position: 'absolute',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      overflow: 'hidden',
-                      opacity: 0.8,
-                    }}
-                    onPress={() => {
-                      // setQuestionsItemsIndex(index);
-                      setQuestionsModal(false);
-                    }}
-                  >
-                    <MaterialIcons
-                      name="close"
-                      color={colors.text.primary}
-                      size={20}
-                    />
-                  </Pressable>
                   <View
                     style={{
                       width: '100%',
-                      height: heightScale(screen.height * 0.5),
+                      height: heightScale(
+                      screen.height * 0.5,
+                      ),
                       position: 'relative',
                       overflow: 'hidden',
                       alignItems: 'center',
                     }}
                   >
-                    {item?.cover ? (
+                    {item?.cover && (
                       <Image
                         style={{
                           width: '100%',
@@ -360,50 +331,47 @@ export default function BookmarkedQuestions() {
                         resizeMode="stretch"
                         source={{ uri: item.cover }}
                       />
-                    ) : null}
-
-                    {item?.label && (
-                      <View
-                        style={{
-                          position: 'absolute',
-                          bottom: 0,
-                          width: '100%',
-                          padding: sizeScale(10),
-                          borderRadius: sizeScale(18),
-                          borderBottomLeftRadius: 0,
-                          borderBottomRightRadius: 0,
-                          overflow: 'hidden',
-                          backgroundColor: colors.primary,
-                        }}
-                      >
+                    )}
+                  </View>
+                  {item?.label && (
+                    <View
+                      style={{
+                        width: '100%',
+                        padding: sizeScale(10),
+                        // borderRadius: sizeScale(18),
+                        // borderBottomLeftRadius: 0,
+                        // borderBottomRightRadius: 0,
+                        overflow: 'hidden',
+                        backgroundColor: colors.secondary,
+                      }}
+                    >
+                      {isGradient && (
                         <LinearGradient
-                          colors={['#00ffff', colors.primary]}
-                          start={{ x: 2, y: 0 }}
-                          end={{ x: 0, y: 3 }}
+                          start={{ x: 1, y: 1 }}
+                          end={{ x: 0, y: 0 }}
                           style={{
                             position: 'absolute',
                             top: 0,
-                            left: 0,
-                            right: 0,
                             bottom: 0,
-                            zIndex: 1,
-                            opacity: 0.2,
+                            right: 0,
+                            left: 0,
                           }}
+                          colors={colors.gradient.secondary}
                         />
+                      )}
 
-                        <Text
-                          style={{
-                            fontFamily: 'Cairo',
-                            color: colors.text.primary,
-                            fontSize: sizeScale(18),
-                            textAlign: 'center',
-                          }}
-                        >
-                          {item.label}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
+                      <Text
+                        style={{
+                          fontFamily: 'Cairo-Bold',
+                          color: colors.text.primary,
+                          fontSize: sizeScale(16),
+                          textAlign: 'center',
+                        }}
+                      >
+                        {item.label}
+                      </Text>
+                    </View>
+                  )}
 
                   <ScrollView
                     style={{
@@ -426,7 +394,7 @@ export default function BookmarkedQuestions() {
                         style={{
                           fontFamily: 'Cairo-Bold',
                           color: colors.text.secondary,
-                          fontSize: sizeScale(18),
+                          fontSize: sizeScale(16),
                           textAlign: 'right',
                           alignSelf: 'flex-end',
                           padding: sizeScale(5),
@@ -456,15 +424,13 @@ export default function BookmarkedQuestions() {
 
                   <View
                     style={{
-                      position: 'absolute',
-                      bottom: 0,
                       alignItems: 'center',
                       justifyContent: 'flex-end',
                       flexDirection: 'row',
                       width: '100%',
                       height: heightScale(70),
-                      paddingHorizontal: sizeScale(10),
-                      columnGap: sizeScale(10),
+                      paddingHorizontal: sizeScale(15),
+                      gap: sizeScale(8),
                     }}
                   >
                     <View
@@ -478,6 +444,33 @@ export default function BookmarkedQuestions() {
                         opacity: 0.9,
                       }}
                     />
+                    <Pressable
+                      android_ripple={{
+                        borderless: false,
+                        color: colors.primary,
+                        foreground: true,
+                      }}
+                      style={{
+                        overflow: 'hidden',
+                        borderRadius: 8,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: widthScale(40),
+                        height: heightScale(40),
+                        backgroundColor: colors.secondary,
+                        elevation: 2,
+                      }}
+                      onPress={() => {
+                        // setQuestionsItemsIndex(index);
+                        setQuestionsModal(false);
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        name={'arrow-right'}
+                        color={colors.text.primary}
+                        size={sizeScale(25)}
+                      />
+                    </Pressable>
 
                     {/* <Pressable
                                             android_ripple={{ color: colors.primary, borderless: false, foreground: true }}

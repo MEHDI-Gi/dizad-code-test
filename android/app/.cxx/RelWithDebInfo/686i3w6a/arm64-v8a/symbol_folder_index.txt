@@ -1,1 +1,0 @@
-/home/mehdi/Desktop/DizadCodeTest/android/app/build/intermediates/cxx/RelWithDebInfo/686i3w6a/obj/arm64-v8a

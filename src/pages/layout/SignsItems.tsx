@@ -650,8 +650,7 @@ const SignsItems = () => {
                     style={{
                       alignItems: 'center',
                       justifyContent: 'flex-end',
-                      flexDirection:
-                        language === 'english' ? 'row-reverse' : 'row',
+                      flexDirection: 'row',
                       width: '100%',
                       height: heightScale(70),
                       paddingHorizontal: sizeScale(10),
@@ -722,9 +721,7 @@ const SignsItems = () => {
                       }}
                     >
                       <MaterialCommunityIcons
-                        name={
-                          language === 'english' ? 'arrow-left' : 'arrow-right'
-                        }
+                        name={'arrow-right'}
                         color={colors.text.primary}
                         size={sizeScale(25)}
                       />

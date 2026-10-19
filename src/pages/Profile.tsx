@@ -701,6 +701,7 @@ const Profile = () => {
                 style={{
                   color: colors.text.primary,
                   fontSize: sizeScale(17),
+
                   fontWeight: '700',
                   alignItems: 'center',
                 }}

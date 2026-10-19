@@ -325,37 +325,6 @@ export default function BookmarkedSigns() {
                   justifyContent: 'center',
                 }}
               >
-                <Pressable
-                  android_ripple={{
-                    borderless: false,
-                    color: colors.primary,
-                    foreground: true,
-                  }}
-                  style={{
-                    zIndex: 1,
-                    backgroundColor: colors.secondary,
-                    width: widthScale(30),
-                    height: heightScale(30),
-                    borderRadius: sizeScale(8),
-                    top: sizeScale(8),
-                    right: sizeScale(8),
-                    position: 'absolute',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    overflow: 'hidden',
-                    opacity: 0.8,
-                  }}
-                  onPress={() => {
-                    // setQuestionsItemsIndex(index);
-                    setOpenSignsModal(false);
-                  }}
-                >
-                  <MaterialIcons
-                    name="close"
-                    color={colors.text.primary}
-                    size={sizeScale(20)}
-                  />
-                </Pressable>
                 <View
                   style={{
                     width: '100%',
@@ -494,6 +463,34 @@ export default function BookmarkedSigns() {
                       gap: sizeScale(8),
                     }}
                   >
+                    <Pressable
+                      android_ripple={{
+                        borderless: false,
+                        color: colors.primary,
+                        foreground: true,
+                      }}
+                      style={{
+                        overflow: 'hidden',
+                        borderRadius: 8,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: widthScale(40),
+                        height: heightScale(40),
+                        backgroundColor: colors.secondary,
+                        elevation: 2,
+                      }}
+                      onPress={() => {
+                        // setQuestionsItemsIndex(index);
+                        setOpenSignsModal(false);
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        name={'arrow-right'}
+                        color={colors.text.primary}
+                        size={sizeScale(25)}
+                      />
+                    </Pressable>
+
                     {/* <Pressable
                                             android_ripple={{ color: colors.primary, borderless: false, foreground: true }}
                                             style={{
