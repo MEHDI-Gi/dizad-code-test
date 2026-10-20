@@ -573,7 +573,7 @@ const Profile = () => {
             colors={colors.gradient.background}
           />
         )}
-        <ActivityIndicator size={30} color={'#8da012'} />
+        <ActivityIndicator size={30} color={colors.active.primary}  />
       </View>
     );
   }

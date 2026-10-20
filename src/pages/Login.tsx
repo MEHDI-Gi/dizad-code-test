@@ -153,20 +153,22 @@ export default function Login({ navigation }: LoginProps) {
           { backgroundColor: colors.primary },
         ]}
       >
-        <LinearGradient
-          start={{ x: 1, y: 1 }}
-          end={{ x: 0, y: 0 }}
-          style={{
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-          }}
-          colors={colors.gradient.primary}
-        />
+        {isGradient && (
+          <LinearGradient
+            start={{ x: 1, y: 1 }}
+            end={{ x: 0, y: 0 }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              right: 0,
+              left: 0,
+            }}
+            colors={colors.gradient.primary}
+          />
+        )}
 
-        <ActivityIndicator size="large" color={'#86c335'} />
+        <ActivityIndicator size="large" color={colors.active.primary} />
       </View>
     );
   }

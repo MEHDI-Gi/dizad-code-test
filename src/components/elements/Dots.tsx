@@ -31,10 +31,7 @@ import { useAd } from '../../hooks/useAd';
 
 export default function Dots() {
     const { userPlan, setUserPlan } = useVip()
-    const {
-        upgradeWarn, setUpgradeWarn,
-        setUpgradeCard
-    } = useContext(DataContext);
+
     const colors = useColors();
     const { screen,
         widthScale,

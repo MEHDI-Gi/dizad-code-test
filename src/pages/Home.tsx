@@ -47,6 +47,7 @@ export default function Home() {
     lessonsData,
     examData,
     firebaseLoaded,
+    setFirebaseLoaded,
     imgBase,
     language,
     isGradient,
@@ -114,7 +115,6 @@ export default function Home() {
       length: totalPri,
     },
   ];
-
   const contentItemsPress = (item: any) => {
     switch (item.cond) {
       case 'Sgn':
@@ -142,14 +142,13 @@ export default function Home() {
   };
   const extSources = [
     {
-      label:
-        'قانون المرور / اشارات المرور / تقاطعات الطرق و نظام الأولوية في الجزائر',
+      label: 'Books',
       img: examsCover,
       sub: '',
     },
-    { label: '', img: examsCover ?? null, sub: '' },
-    { label: '', img: questCover ?? null, sub: '' },
-    { label: '', img: questCover ?? null, sub: '' },
+    { label: 'Videos', img: priorityCover ?? null, sub: '' },
+    { label: 'News', img: questCover ?? null, sub: '' },
+    { label: 'Web Sites', img: signsCover ?? null, sub: '' },
   ];
 
   return (
@@ -838,7 +837,11 @@ export default function Home() {
                     />
                   ) : (
                     <ShimmerPlaceHolder
-                      style={{ width: '100%', height: '100%' }}
+                      style={{
+                        width: '85%',
+                        height: '85%',
+                        borderRadius: sizeScale(10),
+                      }}
                       shimmerColors={[
                         colors.secondary,
                         '#6161617c',
@@ -852,43 +855,43 @@ export default function Home() {
           })}
         </View>
         <PermitCategories />
-        {false && (
+        {true && (
           <View
             style={{
               width: '85%',
               alignItems: 'center',
               justifyContent: 'space-between',
-              flexDirection: 'row-reverse',
+              flexDirection: 'row',
               columnGap: sizeScale(5),
             }}
           >
             <View
               style={{
-                flexDirection: 'row-reverse',
+                flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
                 columnGap: sizeScale(5),
               }}
             >
               <MaterialCommunityIcons
-                name="youtube"
+                name="newspaper"
                 color={colors.text.secondary}
-                size={sizeScale(25)}
+                size={sizeScale(20)}
               />
               <Text
                 style={{
-                  fontFamily: 'Cairo',
+                  fontFamily: '',
                   color: colors.text.secondary,
-                  fontSize: sizeScale(16),
+                  fontSize: sizeScale(14),
                   textAlign: 'center',
                 }}
               >
-                مصادر خارجية
+                externel source
               </Text>
             </View>
           </View>
         )}
-        {false && (
+        {true && (
           <View
             style={{
               alignItems: 'center',
@@ -935,13 +938,11 @@ export default function Home() {
                     {
                       alignItems: 'center',
                       backgroundColor: colors.secondary,
-                      width: '100%',
+                      width: '48%',
                       height: heightScale(screen.width * 0.25),
                       borderRadius: sizeScale(8),
-                      flexDirection: 'row-reverse',
+                      flexDirection: 'row',
                       justifyContent: 'space-evenly',
-                      paddingHorizontal: sizeScale(20),
-                      paddingVertical: sizeScale(10),
                       overflow: 'hidden',
                       elevation: 5,
                       columnGap: sizeScale(10),
@@ -962,19 +963,21 @@ export default function Home() {
                       colors={[colors.primary, '#152331']}
                     />
                   )}
-                  <Image
-                    style={{
-                      width: widthScale(screen.width * 0.35),
-                      height: '100%',
-                      borderRadius: sizeScale(10),
-                      resizeMode: 'cover',
-                    }}
-                    source={{ uri: item?.img }}
-                  />
+                  {false && (
+                    <Image
+                      style={{
+                        width: widthScale(screen.width * 0.35),
+                        height: '100%',
+                        borderRadius: sizeScale(10),
+                        resizeMode: 'cover',
+                      }}
+                      source={{ uri: item?.img }}
+                    />
+                  )}
                   <View
                     style={{
                       flexDirection: 'column',
-                      alignItems: 'flex-end',
+                      alignItems: 'center',
                       justifyContent: 'center',
                       flex: 1,
                       rowGap: sizeScale(5),
@@ -982,12 +985,21 @@ export default function Home() {
                     }}
                   >
                     <Text
-                      style={{
-                        fontFamily: 'Cairo',
-                        color: colors.text.primary,
-                        fontSize: sizeScale(14),
-                        textAlign: 'right',
-                      }}
+                      style={[
+                        language !== 'english'
+                          ? {
+                              fontFamily: 'Cairo',
+                            }
+                          : {
+                              fontFamily: '',
+                              fontWeight: 'bold',
+                            },
+                        {
+                          color: colors.text.primary,
+                          fontSize: sizeScale(14),
+                          textAlign: 'right',
+                        },
+                      ]}
                     >
                       {item.label}
                     </Text>
@@ -996,7 +1008,7 @@ export default function Home() {
               );
             })}
           </View>
-        )}{' '}
+        )}
       </ScrollView>
     </View>
   );

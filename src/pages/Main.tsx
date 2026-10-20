@@ -47,6 +47,7 @@ export default function Main() {
     snackOptions,
     user,
     upgradeWarn,
+    setUpgradeWarn,
     upgradeTutu,
   } = useContext(DataContext);
   const { userVip } = useVip();

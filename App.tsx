@@ -10,7 +10,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DataProvider } from './src/context/contextData';
 
 import Main from './src/pages/Main';
-import { useEffect } from 'react';
+import Updates from './src/components/Updates';
+import { useEffect, useState } from 'react';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 function App() {
   // useEffect(() => {
@@ -30,6 +31,11 @@ function App() {
   }, []);
 
   const isDarkMode = useColorScheme() === 'dark';
+  const update = false; // Replace with your logic to determine if an update is available
+
+  if (update) {
+    return <Updates />;
+  }
 
   return (
     <SafeAreaProvider>
