@@ -7,6 +7,8 @@ import {
   Image,
   View,
   ScrollView,
+  Alert,
+  Linking,
 } from 'react-native';
 import { DataContext } from '../context/contextData';
 import { useNavigation } from '@react-navigation/native';
@@ -353,7 +355,7 @@ const Profile = () => {
       iconSet: 'MaterialCommunityIcons',
     },
     {
-      label: texts.langEdt,
+      label: 'English | عربي',
       condition: 'language',
       icon: 'translate',
       color: 'gray',
@@ -502,34 +504,42 @@ const Profile = () => {
         break;
     }
   };
-  const ContactList = [
+  const contactList = [
     {
       text: 'Email',
       icon: 'email',
       color: '#EA4335',
+      condition: 'email',
     },
     {
       text: 'Whatsapp',
       icon: 'call',
       color: '#25D366',
+      condition: 'whatsapp',
     },
     {
       text: 'Telegram',
       icon: 'telegram',
       color: '#24A1DE',
+      condition: 'telegram',
     },
   ];
+  const contactListPress = (item: any) => {
+    switch (item.condition) {
+      case 'email':
+        Linking.openURL(`mailto:guenifimehdi070@gmail.com?subject=${encodeURIComponent('rokhsati user')}`);
 
-  // const [logoutLoad, setLogoutLoad] = useState<boolean>(false);
-  // function logoutFun() {
-  //   setLogoutLoad(true);
-  //   startTimer(() => {
-  //     setLogoutLoad(false);
-  //     navigation.navigate('Login');
-  //     setSnackbarState(true);
-  //     setSnackOptions({ label: texts.logoutDone, icon: 'logout' });
-  //   });
-  // }
+        break;
+      case 'whatsapp':
+        Linking.openURL('https://wa.me/0655465785');
+        break;
+      case 'telegram':
+        Linking.openURL('https://t.me/0655465785');
+        break;
+      default:
+        break;
+    }
+  };
 
   useEffect(() => {
     return () => clearExistingTimer();
@@ -573,7 +583,7 @@ const Profile = () => {
             colors={colors.gradient.background}
           />
         )}
-        <ActivityIndicator size={30} color={colors.active.primary}  />
+        <ActivityIndicator size={30} color={colors.active.primary} />
       </View>
     );
   }
@@ -1195,7 +1205,7 @@ const Profile = () => {
             marginBottom: sizeScale(5),
           }}
         >
-          {ContactList.map(items => (
+          {contactList.map(items => (
             <Pressable
               android_ripple={{
                 borderless: false,
@@ -1212,6 +1222,9 @@ const Profile = () => {
                 flexDirection: 'row-reverse',
                 alignItems: 'center',
                 justifyContent: 'center',
+              }}
+              onPress={() => {
+                contactListPress(items);
               }}
             >
               <View

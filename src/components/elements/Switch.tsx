@@ -62,31 +62,6 @@ export default function Switch(props: any) {
         backgroundColor: props.backColor,
       }}
     >
-      {props.enTextState && language !== 'english' && (
-        <View
-          style={{
-            position: 'absolute',
-            left: 0,
-            width: props.enTextWidth,
-            height: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Text
-            style={[
-              {
-                textAlign: 'center',
-                fontFamily: 'Cairo-Bold',
-                fontSize: sizeScale(15),
-                color: colors.staticText.dark.primary,
-              },
-            ]}
-          >
-            En
-          </Text>
-        </View>
-      )}
       <View
         style={{
           width: props.radiusWidth,
@@ -97,22 +72,7 @@ export default function Switch(props: any) {
           alignItems: 'center',
           justifyContent: 'center',
         }}
-      >
-        {props.enTextState && language === 'english' && (
-          <Text
-            style={[
-              {
-                textAlign: 'center',
-                fontFamily: 'Cairo-Bold',
-                fontSize: sizeScale(15),
-                color: colors.staticText.dark.primary,
-              },
-            ]}
-          >
-            En
-          </Text>
-        )}
-      </View>
+      />
     </View>
   );
 }

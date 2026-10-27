@@ -488,12 +488,11 @@ export default function Questions() {
                         key={index}
                         style={{
                           fontFamily: 'Cairo',
-                          color: 'orange',
+                          color: 'darkorange',
                           fontSize: sizeScale(16),
-                          textAlign: 'right',
+                          textAlign: 'center',
                           alignSelf: 'flex-end',
                           padding: sizeScale(5),
-                          backgroundColor: colors.primary,
                         }}
                       >
                         {item}

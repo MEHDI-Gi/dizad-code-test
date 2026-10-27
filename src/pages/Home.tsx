@@ -804,7 +804,6 @@ export default function Home() {
                   <Text
                     style={{
                       fontFamily: 'Cairo',
-
                       color: colors.text.secondary,
                       fontSize: sizeScale(14),
                     }}
@@ -844,6 +843,7 @@ export default function Home() {
                       }}
                       shimmerColors={[
                         colors.secondary,
+
                         '#6161617c',
                         colors.secondary,
                       ]}
@@ -944,7 +944,7 @@ export default function Home() {
                       flexDirection: 'row',
                       justifyContent: 'space-evenly',
                       overflow: 'hidden',
-                      elevation: 5,
+                      elevation: !isGradient ? 5 : 0,
                       columnGap: sizeScale(10),
                     },
                   ]}
@@ -960,7 +960,7 @@ export default function Home() {
                         right: 0,
                         left: 0,
                       }}
-                      colors={[colors.primary, '#152331']}
+                      colors={colors.gradient.secondary}
                     />
                   )}
                   {false && (
