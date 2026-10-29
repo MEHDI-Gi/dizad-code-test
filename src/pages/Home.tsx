@@ -10,6 +10,7 @@ import {
   Linking,
   ActivityIndicator,
   StatusBar,
+  Modal,
 } from 'react-native';
 import { DataContext } from '../context/contextData.tsx';
 import LinearGradient from 'react-native-linear-gradient';
@@ -29,6 +30,7 @@ import { useUserAccuracy } from '../hooks/useUserAccuracy.ts';
 import PermitCategories from './layout/home/PermitCategories.tsx';
 import { useTexts } from '../hooks/useTexts.ts';
 import { BlurView } from '@react-native-community/blur';
+import Dots from '../components/elements/Dots.tsx';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export default function Home() {
@@ -140,17 +142,45 @@ export default function Home() {
         break;
     }
   };
+  const [isExternalModalVisible, setIsExternalModalVisible] =
+    React.useState(false);
   const extSources = [
     {
-      label: 'Books',
-      img: examsCover,
+      title: 'Videos',
+      icon: 'youtube',
+      color: '#FF0000',
       sub: '',
     },
-    { label: 'Videos', img: priorityCover ?? null, sub: '' },
-    { label: 'News', img: questCover ?? null, sub: '' },
-    { label: 'Web Sites', img: signsCover ?? null, sub: '' },
+    {
+      title: 'Links',
+      icon: 'link',
+      color: '#00FF00',
+      sub: '',
+    },
+    {
+      title: 'News',
+      icon: 'newspaper',
+      color: '#0000FF',
+      sub: '',
+    },
+    { title: 'Web Sites', icon: 'web', color: '#FFFF00', sub: '' },
   ];
-
+  const constExtSourcesPress = (item: any) => {
+    switch (item.title) {
+      case 'Videos':
+        setIsExternalModalVisible(true);
+        break;
+      case 'Links':
+        setIsExternalModalVisible(true);
+        break;
+      case 'News':
+        setIsExternalModalVisible(true);
+        break;
+      case 'Web Sites':
+        setIsExternalModalVisible(true);
+        break;
+    }
+  };
   return (
     <View
       style={[
@@ -202,7 +232,7 @@ export default function Home() {
             },
             isGradient
               ? {
-                  opacity: 0,
+                  opacity: 0.5,
                 }
               : {
                   opacity: 0.9,
@@ -297,7 +327,7 @@ export default function Home() {
                   <Text
                     style={{
                       fontSize: sizeScale(16),
-                      fontWeight: '500',
+                      fontWeight: '700',
                       color: colors.text.primary,
                     }}
                   >
@@ -307,7 +337,7 @@ export default function Home() {
                   <Text
                     style={{
                       fontSize: sizeScale(16),
-                      fontWeight: '500',
+                      fontWeight: '700',
                       color: colors.text.primary,
                     }}
                   >
@@ -928,21 +958,17 @@ export default function Home() {
                     color: colors.primary,
                     foreground: true,
                   }}
-                  onPress={() => {
-                    Linking.openURL(
-                      'https://www.youtube.com/playlist?list=PLIuGUVzSi-K4754yPL6zul8QbGiK9xYNR',
-                    );
-                  }}
+                  onPress={() => constExtSourcesPress(item)}
                   key={`key-0-${index}`}
                   style={[
                     {
                       alignItems: 'center',
                       backgroundColor: colors.secondary,
                       width: '48%',
-                      height: heightScale(screen.width * 0.25),
                       borderRadius: sizeScale(8),
+                      height: heightScale(screen.width * 0.25),
                       flexDirection: 'row',
-                      justifyContent: 'space-evenly',
+                      justifyContent: 'center',
                       overflow: 'hidden',
                       elevation: !isGradient ? 5 : 0,
                       columnGap: sizeScale(10),
@@ -963,24 +989,27 @@ export default function Home() {
                       colors={colors.gradient.secondary}
                     />
                   )}
-                  {false && (
-                    <Image
+                  {true && (
+                    <View
                       style={{
-                        width: widthScale(screen.width * 0.35),
-                        height: '100%',
-                        borderRadius: sizeScale(10),
-                        resizeMode: 'cover',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 2,
                       }}
-                      source={{ uri: item?.img }}
-                    />
+                    >
+                      <MaterialCommunityIcons
+                        name={item?.icon}
+                        color={item?.color ?? colors.text.secondary}
+                        size={sizeScale(28)}
+                      />
+                    </View>
                   )}
                   <View
                     style={{
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      flex: 1,
-                      rowGap: sizeScale(5),
                       zIndex: 2,
                     }}
                   >
@@ -1001,12 +1030,161 @@ export default function Home() {
                         },
                       ]}
                     >
-                      {item.label}
+                      {item.title}
                     </Text>
                   </View>
                 </Pressable>
               );
             })}
+            <Modal
+              visible={isExternalModalVisible}
+              animationType="slide"
+              transparent={true}
+              statusBarTranslucent={true}
+              onRequestClose={() => {
+                setIsExternalModalVisible(false);
+              }}
+            >
+              <View
+                style={[
+                  {
+                    width: '100%',
+                    height: '100%',
+                    top: 0,
+                    position: 'absolute',
+                    zIndex: 99999,
+                    alignContent: 'center',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  },
+                ]}
+              >
+                <Pressable
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    top: 0,
+                    position: 'absolute',
+                    backgroundColor: '#0000002f',
+                  }}
+                  onPress={() => {
+                    setIsExternalModalVisible(false);
+                  }}
+                />
+                <View
+                  style={[
+                    {
+                      width: '90%',
+                      height: '90%',
+                      backgroundColor: colors.secondary,
+                      zIndex: 99999,
+                      borderRadius: 10,
+                      alignContent: 'center',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      elevation: 5,
+                      overflow: 'hidden',
+                    },
+                  ]}
+                >
+                  {isGradient && (
+                    <LinearGradient
+                      start={{ x: 1, y: 1 }}
+                      end={{ x: 0, y: 0 }}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        bottom: 0,
+                        right: 0,
+                        left: 0,
+                      }}
+                      colors={colors.gradient.secondary}
+                    />
+                  )}
+                  <View
+                    style={{
+                      width: '100%',
+                      height: 40,
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      flexDirection: 'row',
+                    }}
+                  >
+                    <Dots />
+                    <View
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        height: '100%',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Text style={{ color: 'white', fontWeight: '800' }}>
+                        Videos
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        width: 50,
+                        height: '100%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexDirection: 'row',
+                      }}
+                    >
+                      <Pressable
+                        android_ripple={{
+                          color: colors.primary,
+                          borderless: false,
+                          foreground: true,
+                        }}
+                        onPress={() => {
+                          setIsExternalModalVisible(false);
+                        }}
+                        style={{
+                          width: 50,
+                          height: 50,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <MaterialCommunityIcons
+                          name="close"
+                          color={'lightgray'}
+                          size={20}
+                        />
+                      </Pressable>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      width: '100%',
+                      paddingVertical: sizeScale(10),
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: '100%',
+                        paddingHorizontal: sizeScale(20),
+                        paddingVertical: sizeScale(10),
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                        gap: sizeScale(6),
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                      }}
+                    ></View>
+                  </View>
+                </View>
+              </View>
+            </Modal>
           </View>
         )}
       </ScrollView>

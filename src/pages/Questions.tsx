@@ -181,7 +181,7 @@ export default function Questions() {
           alignItems: 'center',
           justifyContent: 'flex-start',
           alignContent: 'center',
-          width: '100%',
+          width: screen.width,
           paddingVertical: 60,
           gap: 10,
         }}
@@ -215,7 +215,7 @@ export default function Questions() {
                 borderRadius: sizeScale(8),
                 overflow: 'hidden',
                 backgroundColor: colors.secondary,
-                elevation: !isGradient ? 5 : 0,
+                elevation: !isGradient ? 3 : 0,
               },
             ]}
           >

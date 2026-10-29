@@ -146,7 +146,7 @@ export default function Signs() {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       overflow: 'hidden',
-                      elevation: !isGradient ? 5 : 0,
+                        elevation: !isGradient ? 3 : 0,
                       columnGap: sizeScale(8),
                     },
                   ]}

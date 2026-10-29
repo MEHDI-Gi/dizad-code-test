@@ -527,7 +527,11 @@ const Profile = () => {
   const contactListPress = (item: any) => {
     switch (item.condition) {
       case 'email':
-        Linking.openURL(`mailto:guenifimehdi070@gmail.com?subject=${encodeURIComponent('rokhsati user')}`);
+        Linking.openURL(
+          `mailto:guenifimehdi070@gmail.com?subject=${encodeURIComponent(
+            'rokhsati user',
+          )}`,
+        );
 
         break;
       case 'whatsapp':
@@ -664,13 +668,15 @@ const Profile = () => {
             gap: sizeScale(10),
           }}
         >
-          {false && (
+          {true && (
             <View
               style={{
                 width: widthScale(35),
                 height: heightScale(35),
                 justifyContent: 'center',
                 alignItems: 'center',
+                borderRadius: sizeScale(5),
+                overflow: 'hidden',
               }}
             >
               {userImage ? (
@@ -678,7 +684,6 @@ const Profile = () => {
                   style={{
                     width: widthScale(35),
                     height: heightScale(35),
-                    borderRadius: sizeScale(8),
                   }}
                   source={{ uri: userImage }}
                 />

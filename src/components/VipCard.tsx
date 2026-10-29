@@ -27,6 +27,9 @@ import { useColors } from '../hooks/useColors';
 import { useVip } from '../hooks/useVip';
 import { useSize } from '../hooks/useSize';
 import Dots from './elements/Dots';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function VipCard() {
   const { userPlan, setUserPlan } = useVip();
@@ -56,10 +59,10 @@ export default function VipCard() {
   const { lessons, screen, widthScale, heightScale, sizeScale } = useSize();
   const colors = useColors();
   const vipItems = [
-    { label: 'Unlimited Hearts' },
-    { label: 'Unlock all Theams' },
-    { label: 'Get 50 Help Points every 24h' },
-    { label: 'Unlock all Quiz Categories' },
+    { label: 'All Quiz Exams' },
+    { label: 'All Signs' },
+    { label: 'All Questions' },
+    { label: 'All Priorities' },
     { label: 'No Ads' },
   ];
 
@@ -148,8 +151,8 @@ export default function VipCard() {
                 justifyContent: 'center',
               }}
             >
-              <Text style={{ color: 'white', fontWeight: '800' }}>
-                VIP member
+              <Text style={{ color: colors.text.primary, fontWeight: '800' }}>
+                VIP Member
               </Text>
             </View>
             <View
@@ -179,7 +182,7 @@ export default function VipCard() {
               >
                 <MaterialCommunityIcons
                   name="close"
-                  color={'lightgray'}
+                  color={colors.text.secondary}
                   size={20}
                 />
               </Pressable>
@@ -215,9 +218,12 @@ export default function VipCard() {
                       justifyContent: 'flex-start',
                       borderColor: 'gray',
                       borderWidth: 0,
+                      width: '48%',
                       height: heightScale(30),
                       borderRadius: 8,
-                      backgroundColor: colors.primary,
+                      backgroundColor: !isGradient
+                        ? colors.primary
+                        : colors.secondary,
                     }}
                   >
                     <View
@@ -228,9 +234,9 @@ export default function VipCard() {
                         height: heightScale(40),
                       }}
                     >
-                      <MaterialCommunityIcons
-                        name="check-circle"
-                        color="orange"
+                      <FontAwesome
+                        name="unlock"
+                        color="darkorange"
                         size={sizeScale(16)}
                       />
                     </View>
@@ -264,10 +270,10 @@ export default function VipCard() {
               flexDirection: 'row',
             }}
           >
-            <Text style={{ color: 'lightgray', fontWeight: '600' }}>
+            <Text style={{ color: colors.text.secondary, fontWeight: '600' }}>
               VIP Membership TimeLeft:{' '}
             </Text>
-            <Text style={{ color: 'white', fontWeight: '700' }}>
+            <Text style={{ color: colors.text.secondary, fontWeight: '700' }}>
               {userPlan === 'monthly'
                 ? '30 day'
                 : userPlan === 'yearly'
