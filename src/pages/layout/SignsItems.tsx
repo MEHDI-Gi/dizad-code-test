@@ -345,8 +345,8 @@ const SignsItems = () => {
                   }}
                   style={[
                     {
-                      width: widthScale(screen.width * 0.3225),
-                      height: heightScale(screen.width * 0.3225),
+                      width: widthScale(116),
+                      height: heightScale(116),
                       borderRadius: sizeScale(8),
                       flexDirection: 'column',
                       backgroundColor: colors.secondary,

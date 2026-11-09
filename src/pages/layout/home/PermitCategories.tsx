@@ -136,7 +136,7 @@ export default function PermitCategories() {
                   backgroundColor: colors.secondary,
                   alignItems: 'center',
                   flex: 1,
-                  height: heightScale(screen.width * 0.12),
+                  height: heightScale(screen.width * 0.11),
                   borderRadius: sizeScale(10),
                   flexDirection: 'row',
                   justifyContent: item.label ? 'space-evenly' : 'center',
@@ -144,8 +144,8 @@ export default function PermitCategories() {
                 },
                 index === permitCategories.length - 1 && {
                   flex: 0,
-                  width: widthScale(screen.width * 0.12),
-                  height: heightScale(screen.width * 0.12),
+                  width: widthScale(screen.width * 0.11),
+                  height: heightScale(screen.width * 0.11),
                 },
               ]}
             >

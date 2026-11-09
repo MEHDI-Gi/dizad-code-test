@@ -158,22 +158,26 @@ export default function BookmarkedSigns() {
         showsVerticalScrollIndicator={false}
         style={{
           flex: 1,
-          width: '95%',
+          width: '100%',
         }}
         contentContainerStyle={{
+          paddingTop: sizeScale(50),
+          paddingBottom: sizeScale(20),
           alignItems: 'center',
           justifyContent: 'center',
           alignContent: 'center',
-          paddingTop: sizeScale(60),
-          paddingBottom: sizeScale(120),
         }}
       >
         <View
           style={{
             flexDirection: 'row',
             flexWrap: 'wrap',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             justifyContent: 'flex-start',
+            paddingHorizontal: sizeScale(10),
+            paddingVertical: sizeScale(10),
+            gap: sizeScale(10),
+            marginBottom: sizeScale(40),
           }}
         >
           {signsContent?.map((item, index) => {
@@ -200,10 +204,9 @@ export default function BookmarkedSigns() {
                 }}
                 style={[
                   {
-                    width: widthScale(screen.width * 0.2283),
-                    height: heightScale(screen.width * 0.2283),
+                    width: widthScale(116),
+                    height: heightScale(116),
                     borderRadius: 8,
-                    margin: sizeScale(5),
                     flexDirection: 'column',
                     backgroundColor: colors.secondary,
                     overflow: 'hidden',
